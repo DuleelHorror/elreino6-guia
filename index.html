@@ -1,0 +1,646 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>El Reino 6 — Guía del Reino</title>
+<style>
+  :root{
+    /* claro (por defecto) — neutro con sesgo lavanda, elegido no heredado */
+    --ground:#f3f1f8; --surface:#ffffff; --surface-2:#ece8f5; --sunken:#f7f5fb;
+    --ink:#1e1828; --ink-soft:#585070; --ink-faint:#877e9d;
+    --line:#e1dcef; --line-strong:#ccc4e0;
+    --arcane:#6b46d0; --arcane-2:#8a63ea; --glow:rgba(120,80,240,.16);
+    --gold:#a9701d; --gold-2:#c68a2c;
+    --sci:#177f86; --folk:#4a8f2f; --danger:#c1443b;
+    --shadow:0 1px 2px rgba(40,25,70,.05), 0 10px 34px rgba(70,45,120,.09);
+    --chip:#f1edfa;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{
+      --ground:#131019; --surface:#1c1730; --surface-2:#271f3d; --sunken:#171223;
+      --ink:#ede9f8; --ink-soft:#b6accd; --ink-faint:#8b81a6;
+      --line:#302846; --line-strong:#43385f;
+      --arcane:#9c82ff; --arcane-2:#b7a3ff; --glow:rgba(140,105,255,.26);
+      --gold:#e6b25a; --gold-2:#f0c479;
+      --sci:#4ac9d0; --folk:#87cc62; --danger:#ec7d75;
+      --shadow:0 1px 2px rgba(0,0,0,.45), 0 16px 44px rgba(0,0,0,.4);
+      --chip:#241d3a;
+    }
+  }
+  :root[data-theme="light"]{
+    --ground:#f3f1f8; --surface:#ffffff; --surface-2:#ece8f5; --sunken:#f7f5fb;
+    --ink:#1e1828; --ink-soft:#585070; --ink-faint:#877e9d;
+    --line:#e1dcef; --line-strong:#ccc4e0;
+    --arcane:#6b46d0; --arcane-2:#8a63ea; --glow:rgba(120,80,240,.16);
+    --gold:#a9701d; --gold-2:#c68a2c;
+    --sci:#177f86; --folk:#4a8f2f; --danger:#c1443b;
+    --shadow:0 1px 2px rgba(40,25,70,.05), 0 10px 34px rgba(70,45,120,.09);
+    --chip:#f1edfa;
+  }
+  :root[data-theme="dark"]{
+    --ground:#131019; --surface:#1c1730; --surface-2:#271f3d; --sunken:#171223;
+    --ink:#ede9f8; --ink-soft:#b6accd; --ink-faint:#8b81a6;
+    --line:#302846; --line-strong:#43385f;
+    --arcane:#9c82ff; --arcane-2:#b7a3ff; --glow:rgba(140,105,255,.26);
+    --gold:#e6b25a; --gold-2:#f0c479;
+    --sci:#4ac9d0; --folk:#87cc62; --danger:#ec7d75;
+    --shadow:0 1px 2px rgba(0,0,0,.45), 0 16px 44px rgba(0,0,0,.4);
+    --chip:#241d3a;
+  }
+
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+  body{
+    margin:0; background:var(--ground); color:var(--ink);
+    font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+    font-size:17px; line-height:1.62; -webkit-font-smoothing:antialiased;
+  }
+  .serif{font-family:ui-serif,"Palatino Linotype","Book Antiqua",Palatino,Georgia,serif}
+  code,.mono{font-family:ui-monospace,"Cascadia Code",Consolas,monospace;
+    font-size:.86em; background:var(--chip); color:var(--arcane-2);
+    padding:.08em .42em; border-radius:5px; border:1px solid var(--line);
+    white-space:nowrap;}
+
+  /* layout */
+  .wrap{max-width:1000px; margin:0 auto; padding:0 22px}
+  .prose{max-width:70ch}
+  section{padding:66px 0; border-top:1px solid var(--line)}
+  section:first-of-type{border-top:0}
+  h2{font-family:ui-serif,Palatino,Georgia,serif; font-weight:600;
+     font-size:clamp(1.7rem,4vw,2.5rem); line-height:1.12; margin:.15em 0 .5em;
+     text-wrap:balance; letter-spacing:-.01em}
+  h3{font-family:ui-serif,Palatino,Georgia,serif; font-weight:600;
+     font-size:1.24rem; margin:0 0 .35em; letter-spacing:-.005em}
+  p{margin:0 0 1em}
+  .eyebrow{font-size:.72rem; text-transform:uppercase; letter-spacing:.18em;
+    font-weight:700; color:var(--arcane); display:inline-flex; gap:.55em; align-items:center}
+  .eyebrow .n{font-family:ui-monospace,monospace; color:var(--gold); background:none;
+    border:0; padding:0}
+  .lead{font-size:1.14rem; color:var(--ink-soft)}
+  a{color:var(--arcane)}
+
+  /* top bar */
+  .bar{position:sticky; top:0; z-index:30; background:color-mix(in srgb,var(--ground) 86%, transparent);
+    backdrop-filter:blur(10px); border-bottom:1px solid var(--line)}
+  .bar-in{max-width:1000px; margin:0 auto; padding:11px 22px; display:flex; align-items:center; gap:16px}
+  .crest{font-size:1.15rem; font-family:ui-serif,Palatino,Georgia,serif; font-weight:600;
+    display:flex; align-items:center; gap:.5em; white-space:nowrap}
+  .crest .torre{color:var(--arcane)}
+  nav.toc{display:flex; gap:2px; overflow-x:auto; scrollbar-width:none; margin-left:auto}
+  nav.toc::-webkit-scrollbar{display:none}
+  nav.toc a{color:var(--ink-soft); text-decoration:none; font-size:.82rem; font-weight:600;
+    padding:6px 11px; border-radius:8px; white-space:nowrap}
+  nav.toc a:hover{color:var(--ink); background:var(--surface-2)}
+  nav.toc a.on{color:var(--arcane); background:var(--chip)}
+
+  /* hero */
+  .hero{position:relative; padding:88px 0 60px; overflow:hidden; border-top:0}
+  .hero::before{content:""; position:absolute; inset:-30% 0 auto 0; height:520px;
+    background:radial-gradient(60% 70% at 50% 0%, var(--glow), transparent 70%); pointer-events:none}
+  .hero .kick{font-size:.78rem; letter-spacing:.24em; text-transform:uppercase;
+    color:var(--gold); font-weight:700}
+  .hero h1{font-family:ui-serif,Palatino,Georgia,serif; font-weight:600;
+    font-size:clamp(2.6rem,8vw,5rem); line-height:.98; margin:.2em 0 .28em;
+    letter-spacing:-.02em; text-wrap:balance}
+  .hero h1 .six{color:var(--arcane); position:relative}
+  .hero .sub{font-size:1.22rem; color:var(--ink-soft); max-width:60ch}
+  .metabar{display:flex; flex-wrap:wrap; gap:10px; margin-top:30px}
+  .stat{background:var(--surface); border:1px solid var(--line); border-radius:12px;
+    padding:12px 16px; box-shadow:var(--shadow)}
+  .stat b{display:block; font-family:ui-serif,Palatino,serif; font-size:1.5rem; line-height:1;
+    color:var(--arcane); font-variant-numeric:tabular-nums}
+  .stat span{font-size:.78rem; color:var(--ink-faint); text-transform:uppercase; letter-spacing:.08em}
+
+  /* cards + grids */
+  .grid{display:grid; gap:16px; margin-top:26px}
+  .g2{grid-template-columns:repeat(auto-fit,minmax(270px,1fr))}
+  .g3{grid-template-columns:repeat(auto-fit,minmax(215px,1fr))}
+  .card{background:var(--surface); border:1px solid var(--line); border-radius:16px;
+    padding:22px; box-shadow:var(--shadow)}
+  .card.tint{background:linear-gradient(180deg,var(--surface),var(--sunken))}
+
+  .pill{display:inline-flex; align-items:center; gap:.4em; font-size:.72rem; font-weight:700;
+    letter-spacing:.03em; padding:3px 10px; border-radius:999px; border:1px solid var(--line-strong)}
+  .pill.sci{color:var(--sci); border-color:color-mix(in srgb,var(--sci) 40%,var(--line))}
+  .pill.folk{color:var(--folk); border-color:color-mix(in srgb,var(--folk) 40%,var(--line))}
+  .pill.gold{color:var(--gold)}
+  .pill.arc{color:var(--arcane)}
+  .pill.red{color:var(--danger)}
+
+  /* faction split */
+  .factions{display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:26px}
+  @media(max-width:640px){.factions{grid-template-columns:1fr}}
+  .fac{border-radius:16px; padding:24px; border:1px solid var(--line); background:var(--surface); box-shadow:var(--shadow)}
+  .fac.sci{border-top:3px solid var(--sci)}
+  .fac.folk{border-top:3px solid var(--folk)}
+  .fac h3{display:flex; align-items:center; gap:.5em}
+  .fac ul{margin:.6em 0 0; padding-left:1.1em}
+  .fac li{margin:.3em 0; color:var(--ink-soft)}
+
+  /* plugin group */
+  .pgroup{margin-top:26px}
+  .pgroup h4{font-size:.76rem; text-transform:uppercase; letter-spacing:.14em; font-weight:800;
+    color:var(--ink-faint); margin:0 0 12px; padding-bottom:8px; border-bottom:1px solid var(--line)}
+  .plist{display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:10px}
+  .plug{background:var(--surface); border:1px solid var(--line); border-radius:12px; padding:13px 15px}
+  .plug b{display:block; font-size:.95rem}
+  .plug span{font-size:.85rem; color:var(--ink-soft)}
+
+  /* class cards */
+  .cls{position:relative; overflow:hidden}
+  .cls .glyph{font-size:2rem; line-height:1}
+  .cls .top{display:flex; justify-content:space-between; align-items:flex-start; gap:10px; margin-bottom:10px}
+  .cls h3{margin:0}
+  .cls .role{font-size:.8rem; color:var(--gold); font-weight:700; letter-spacing:.02em}
+  .cls p{font-size:.92rem; color:var(--ink-soft); margin:.4em 0 .8em}
+  .diff{display:inline-flex; gap:3px; align-items:center; font-size:.72rem; color:var(--ink-faint); font-weight:700}
+  .dot{width:7px; height:7px; border-radius:50%; background:var(--line-strong)}
+  .dot.on{background:var(--arcane)}
+
+  /* timeline (la espina) */
+  .spine{margin-top:30px; position:relative; padding-left:34px}
+  .spine::before{content:""; position:absolute; left:11px; top:6px; bottom:6px; width:2px;
+    background:linear-gradient(var(--arcane),var(--line))}
+  .step{position:relative; padding:0 0 26px}
+  .step::before{content:""; position:absolute; left:-28px; top:3px; width:16px; height:16px;
+    border-radius:50%; background:var(--surface); border:3px solid var(--arcane); box-shadow:0 0 0 4px var(--ground)}
+  .step.future::before{border-color:var(--line-strong)}
+  .step h3{margin-bottom:.1em}
+  .step .who{font-size:.82rem; color:var(--arcane); font-weight:700}
+  .step p{font-size:.94rem; color:var(--ink-soft); margin:.35em 0 0}
+  .step.future h3,.step.future .who{color:var(--ink-faint)}
+
+  /* npc roster */
+  .npc{display:flex; flex-direction:column; gap:8px}
+  .npc .head{display:flex; align-items:center; gap:12px}
+  .npc .av{width:46px; height:46px; border-radius:12px; display:grid; place-items:center; font-size:1.5rem;
+    background:var(--surface-2); border:1px solid var(--line); flex:none}
+  .npc .nm{font-family:ui-serif,Palatino,serif; font-weight:600; font-size:1.1rem; line-height:1.1}
+  .npc .rl{font-size:.78rem; color:var(--ink-faint)}
+  .npc p{font-size:.9rem; color:var(--ink-soft); margin:.2em 0 0}
+
+  /* quests */
+  .quest{border-left:3px solid var(--gold); padding-left:18px; margin-top:22px}
+  .quest h3{margin-bottom:.15em}
+  .quest .meta{font-size:.82rem; color:var(--ink-faint); margin-bottom:.5em}
+  .steps{display:flex; flex-wrap:wrap; gap:7px; margin-top:8px}
+  .steps span{font-size:.8rem; background:var(--surface-2); border:1px solid var(--line);
+    padding:4px 10px; border-radius:8px; color:var(--ink-soft)}
+  .reward{color:var(--gold); font-weight:700}
+
+  /* callout */
+  .note{background:var(--sunken); border:1px solid var(--line); border-left:3px solid var(--arcane);
+    border-radius:0 12px 12px 0; padding:16px 20px; margin-top:22px}
+  .note b{color:var(--arcane)}
+
+  /* economy */
+  .ledger{width:100%; border-collapse:collapse; margin-top:20px; font-size:.92rem}
+  .ledger th,.ledger td{text-align:left; padding:10px 12px; border-bottom:1px solid var(--line)}
+  .ledger th{font-size:.72rem; text-transform:uppercase; letter-spacing:.1em; color:var(--ink-faint)}
+  .ledger td:last-child,.ledger th:last-child{text-align:right; font-variant-numeric:tabular-nums}
+  .ledger tr.tot td{font-weight:800; color:var(--gold); border-bottom:0}
+
+  ul.clean{list-style:none; padding:0; margin:18px 0 0; display:grid; gap:10px}
+  ul.clean li{display:flex; gap:12px; align-items:flex-start; color:var(--ink-soft)}
+  ul.clean .mk{color:var(--arcane); font-weight:800; flex:none}
+
+  footer{border-top:1px solid var(--line); padding:40px 0 70px; color:var(--ink-faint); font-size:.9rem}
+
+  .reveal{opacity:0; transform:translateY(14px); transition:opacity .6s ease, transform .6s ease}
+  .reveal.in{opacity:1; transform:none}
+  @media (prefers-reduced-motion:reduce){.reveal{opacity:1; transform:none; transition:none}}
+</style>
+</head>
+<body>
+
+<div class="bar">
+  <div class="bar-in">
+    <span class="crest"><span class="torre">🗼</span> El Reino <span style="color:var(--arcane)">6</span></span>
+    <nav class="toc" aria-label="Secciones">
+      <a href="#idea">La idea</a>
+      <a href="#facciones">Facciones</a>
+      <a href="#montado">Cómo está montado</a>
+      <a href="#plugins">Plugins</a>
+      <a href="#clases">Clases</a>
+      <a href="#magia">Magia</a>
+      <a href="#arranque">Arranque</a>
+      <a href="#reparto">Reparto</a>
+      <a href="#misiones">Misiones</a>
+      <a href="#maria">La maría</a>
+      <a href="#economia">Economía</a>
+      <a href="#futuro">Futuro</a>
+    </nav>
+  </div>
+</div>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="kick">Guía para el administrador · Servidor de Minecraft</div>
+    <h1 class="serif">El Reino <span class="six">6</span></h1>
+    <p class="sub">Todo lo que hemos construido, cómo está pensado y hacia dónde va. Escrito en fácil, sin tecnicismos, para que se entienda de un vistazo.</p>
+    <div class="metabar">
+      <div class="stat"><b>1.21.8</b><span>Paper · Java 25</span></div>
+      <div class="stat"><b>~26</b><span>Plugins</span></div>
+      <div class="stat"><b>5</b><span>Clases jugables</span></div>
+      <div class="stat"><b>5</b><span>NPCs con misión</span></div>
+      <div class="stat"><b>3</b><span>Líneas de misiones</span></div>
+      <div class="stat"><b>🥜</b><span>Moneda: Cacahuate</span></div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section id="idea">
+    <div class="prose reveal">
+      <div class="eyebrow"><span class="n">01</span> La idea</div>
+      <h2>Un RPG con mucho humor alrededor de una torre que da miedo</h2>
+      <p class="lead">El Reino 6 no es un survival normal: es un <strong>juego de rol</strong> con clases, poderes, magia, misiones y una historia, todo bañado en <strong>humor absurdo y humor negro</strong>. La gracia es que el mundo se siente vivo y ridículo a la vez.</p>
+      <p>La historia arranca así: unos <strong>científicos</strong> detectan una <strong>Torre Negra</strong> que zumba por las noches y sospechan que está detrás de cosas raras que pasan en ciudades lejanas. Van a investigarla y se encuentran un pueblo alrededor, medio paleto, que jura que la torre "siempre estuvo ahí y da suerte".</p>
+      <p><strong>El jugador entra como un recluta recién contratado</strong> para ayudar a investigar. Eso justifica que, desde el minuto uno, todo el mundo le dé tareas y lo meta en el lío. Y como dato de fondo: <em>El Reino 6 es el sexto servidor = otro universo</em>, un detalle que un personaje muy concreto (el Loco del Pueblo) conoce… y por eso todos lo tratan de loco.</p>
+    </div>
+  </section>
+
+  <section id="facciones">
+    <div class="prose reveal">
+      <div class="eyebrow"><span class="n">02</span> Las dos facciones</div>
+      <h2>El circo: los de fuera contra los del pueblo</h2>
+      <p>Toda la tensión (y la comedia) del Reino nace del choque entre dos bandos. Cuando un personaje te manda con otro, siempre se nota esa relación: un científico te manda <em>de mala gana</em> al "curandero loco" del pueblo, un aldeano se cachondea de los de bata… nunca "ve a hablar con X porque sí".</p>
+    </div>
+    <div class="factions">
+      <div class="fac sci reveal">
+        <h3><span class="pill sci">🔬 Forasteros</span></h3>
+        <p style="margin:.7em 0 0; color:var(--ink-soft)">Vinieron de fuera por la Torre. <strong>Científicos</strong> (racionalistas, ateos: "esto es CIENCIA, no magia") y <strong>obreros</strong> (la mano de obra práctica, hartos de los de bata).</p>
+        <ul>
+          <li>Niegan la magia aunque no sepan explicar la torre.</li>
+          <li>Miran al pueblo por encima del hombro.</li>
+          <li>Ejemplos: Toni (obrero), Anselmo (RRHH), el Científico jefe.</li>
+        </ul>
+      </div>
+      <div class="fac folk reveal">
+        <h3><span class="pill folk">🪄 Autóctonos</span></h3>
+        <p style="margin:.7em 0 0; color:var(--ink-soft)">El pueblo de toda la vida, que nunca salió de aquí. Para ellos <strong>la magia es lo más normal del mundo</strong>, y están medio cabreados con los científicos por el jaleo de las excavaciones.</p>
+        <ul>
+          <li>La magia y la alquimia son cosa suya.</li>
+          <li>Ejemplos: la Alquimista, el Semental, el Loco del Pueblo.</li>
+          <li>El Loco encima sabe lo del multiverso → nadie le cree.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="montado">
+    <div class="prose reveal">
+      <div class="eyebrow"><span class="n">03</span> Cómo está montado</div>
+      <h2>Lo técnico, explicado en fácil</h2>
+      <p>El servidor vive en una empresa de hosting (<strong>Kinetic</strong>). Nosotros no editamos el servidor a ciegas: trabajamos desde nuestro ordenador con una copia local y una herramienta segura que sube y baja los archivos.</p>
+      <ul class="clean">
+        <li><span class="mk">→</span><span><b>Paper 1.21.8 + Java 25.</b> Es la versión "punto dulce" donde funcionan todos los plugins que queremos. Subir de versión rompía la mitad, así que está fijada a propósito.</span></li>
+        <li><span class="mk">→</span><span><b>Siempre con copia de seguridad.</b> Antes de tocar cualquier archivo se guarda el original con fecha. Nada se pierde: si algo sale mal, se vuelve atrás.</span></li>
+        <li><span class="mk">→</span><span><b>Todo documentado.</b> Cada NPC, misión, objeto y "lección aprendida" queda escrito en fichas de control. Por eso el Reino se puede seguir aunque crezca y crezca.</span></li>
+        <li><span class="mk">→</span><span><b>Los "paquetes de texturas"</b> (los dibujos de los objetos nuevos) se alojan en internet (GitHub) porque el hosting no los sirve bien por sí solo.</span></li>
+      </ul>
+      <div class="note reveal"><b>En una frase:</b> el servidor es la fuente de la verdad; nosotros llevamos un espejo local, tocamos con red de seguridad, y lo apuntamos todo. Así dos personas pueden llevarlo sin pisarse.</div>
+      <div class="note reveal"><b>🗺️ Mapa web del Reino:</b> puedes ver el mundo desde cualquier navegador → <a href="https://duleelhorror.github.io/elreino6-map/">duleelhorror.github.io/elreino6-map</a>. (Como el hosting no da un puerto para el mapa, se genera y se sube a internet; se actualiza cuando lo regeneramos, no en tiempo real.)</div>
+      <div class="note reveal"><b>🌍 Varios mundos:</b> el servidor ya puede tener <strong>mundos separados</strong> (recursos, creativo, la Torre del Mago…) conectados por <strong>portales</strong> por los que se camina. Meter un mapa ya construido es tan fácil como subir su carpeta e importarlo.</div>
+    </div>
+  </section>
+
+  <section id="plugins">
+    <div class="prose reveal">
+      <div class="eyebrow"><span class="n">04</span> Los plugins</div>
+      <h2>Las piezas que le dan superpoderes al juego</h2>
+      <p>Un <strong>plugin</strong> es como una app que le añade una función al servidor. Tenemos unos 26 encajados entre sí. Estos son los importantes, por para qué sirven:</p>
+    </div>
+
+    <div class="pgroup reveal">
+      <h4>El corazón RPG (el "MMO")</h4>
+      <div class="plist">
+        <div class="plug"><b>MMOCore</b><span>Clases, nivel, maná y la barra de poderes.</span></div>
+        <div class="plug"><b>MMOItems</b><span>Armas y armaduras con estadísticas y efectos.</span></div>
+        <div class="plug"><b>MythicLib</b><span>La base que comparten los dos + el motor de hechizos.</span></div>
+        <div class="plug"><b>MythicMobs</b><span>Ayudante: consume los ingredientes al lanzar magia.</span></div>
+      </div>
+    </div>
+
+    <div class="pgroup reveal">
+      <h4>Misiones, NPCs y objetos</h4>
+      <div class="plist">
+        <div class="plug"><b>Quests (PikaMug)</b><span>Todas las misiones y la historia.</span></div>
+        <div class="plug"><b>Citizens</b><span>Los personajes (NPCs) con los que hablas.</span></div>
+        <div class="plug"><b>ItemsAdder</b><span>Objetos nuevos con dibujo propio (ingredientes, monedas…).</span></div>
+        <div class="plug"><b>ExecutableItems</b><span>Objetos que, al usarlos, ejecutan una acción por ti.</span></div>
+      </div>
+    </div>
+
+    <div class="pgroup reveal">
+      <h4>Mundo, orden y economía</h4>
+      <div class="plist">
+        <div class="plug"><b>LuckPerms</b><span>Quién puede hacer qué (permisos).</span></div>
+        <div class="plug"><b>WorldGuard / WorldEdit</b><span>Proteger zonas y construir rápido.</span></div>
+        <div class="plug"><b>Essentials + Vault</b><span>Utilidades básicas y el "puente" del dinero.</span></div>
+        <div class="plug"><b>QuickShop-Hikari</b><span>Tiendas de cofre para comprar y vender.</span></div>
+        <div class="plug"><b>RealisticSeasons</b><span>Estaciones del año y clima.</span></div>
+        <div class="plug"><b>Multiverse (+Portals)</b><span>Varios mundos y portales físicos para viajar entre ellos.</span></div>
+        <div class="plug"><b>Mapa web (squaremap)</b><span>El mapa del mundo en el navegador (enlace más abajo).</span></div>
+        <div class="plug"><b>CommandWhitelist</b><span>Bloquea los comandos a los jugadores (seguridad + inmersión).</span></div>
+      </div>
+    </div>
+
+    <div class="pgroup reveal">
+      <h4>Extras de sabor</h4>
+      <div class="plist">
+        <div class="plug"><b>QualityArmory</b><span>Armas de fuego personalizadas.</span></div>
+        <div class="plug"><b>MTVehicles / Vehicles</b><span>Coches y vehículos conducibles.</span></div>
+        <div class="plug"><b>HeadDatabase</b><span>Miles de cabezas decorativas.</span></div>
+        <div class="plug"><b>Vegas</b><span>Minijuegos de casino.</span></div>
+        <div class="plug"><b>SPdrug</b><span>El negocio (ilegal) de cultivar y procesar marihuana.</span></div>
+        <div class="plug"><b>TreeFeller</b><span>Talas un árbol entero de un solo hachazo.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="clases">
+    <div class="prose reveal">
+      <div class="eyebrow"><span class="n">05</span> Las clases</div>
+      <h2>Cinco clases ridículas, cada una un rol distinto</h2>
+      <p>Al elegir clase, el jugador decide su estilo de juego. Cada una tiene 4 poderes propios y un tono de humor. Van del tanque que aguanta todo al sanador difícil de dominar.</p>
+    </div>
+    <div class="grid g3">
+      <div class="card cls reveal">
+        <div class="top"><span class="glyph">🗂️</span><span class="pill gold">Tanque</span></div>
+        <h3 class="serif">El Funcionario</h3>
+        <div class="role">Aguanta y protege</div>
+        <p>El que no se muere ni queriendo. Escudos, aturdir y proteger al equipo con paciencia de ventanilla.</p>
+        <div class="diff">Dificultad <span class="dot on"></span><span class="dot"></span><span class="dot"></span> Fácil</div>
+      </div>
+      <div class="card cls reveal">
+        <div class="top"><span class="glyph">🤪</span><span class="pill red">Daño</span></div>
+        <h3 class="serif">El Loco</h3>
+        <div class="role">Bárbaro a saco</div>
+        <p>Puro daño cuerpo a cuerpo: golpes potenciados, tajos en círculo y furia. Pega primero, piensa nunca.</p>
+        <div class="diff">Dificultad <span class="dot on"></span><span class="dot on"></span><span class="dot"></span> Media</div>
+      </div>
+      <div class="card cls reveal">
+        <div class="top"><span class="glyph">🔥</span><span class="pill arc">Mago</span></div>
+        <h3 class="serif">El Parrillero</h3>
+        <div class="role">Mago de fuego</div>
+        <p>Lanza fuego con nombres de asado (Chorizo Volador, Meteoro de Choripán). Usa <strong>ingredientes de alquimia</strong> para castear.</p>
+        <div class="diff">Dificultad <span class="dot on"></span><span class="dot on"></span><span class="dot"></span> Media</div>
+      </div>
+      <div class="card cls reveal">
+        <div class="top"><span class="glyph">🧅</span><span class="pill gold">Tirador</span></div>
+        <h3 class="serif">El Abuelo Cebolleta</h3>
+        <div class="role">Arquero a distancia</div>
+        <p>Marca objetivos, debilita y dispara desde lejos. El abuelo cascarrabias que no falla un tiro.</p>
+        <div class="diff">Dificultad <span class="dot on"></span><span class="dot on"></span><span class="dot"></span> Fácil-media</div>
+      </div>
+      <div class="card cls reveal">
+        <div class="top"><span class="glyph">🍓</span><span class="pill folk">Sanador</span></div>
+        <h3 class="serif">El Yogur de Fresa</h3>
+        <div class="role">Cura al equipo</div>
+        <p>Magia probiótica: cura, regenera aliados y sostiene al grupo. La clase más difícil de dominar bien.</p>
+        <div class="diff">Dificultad <span class="dot on"></span><span class="dot on"></span><span class="dot on"></span> Difícil</div>
+      </div>
+      <div class="card cls tint reveal" style="display:grid; place-content:center; text-align:center">
+        <p style="margin:0; color:var(--ink-faint); font-size:.92rem">Cada jugador empieza sin clase y la desbloquea con el tutorial (ver <a href="#arranque">El arranque</a>). Así aprende el juego poco a poco.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="magia">
+    <div class="prose reveal">
+      <div class="eyebrow"><span class="n">06</span> La magia con ingredientes</div>
+      <h2>Hechizos que gastan alquimia, al estilo clásico</h2>
+      <p class="lead">Inspirado en un viejo juego de rol (Ultima Online): los hechizos <strong>consumen ingredientes</strong> cada vez que se lanzan. Sin ajo, sin perla negra… no hay magia.</p>
+      <p>Solo las <strong>clases mágicas</strong> usan ingredientes (por ahora el Parrillero; el Yogur está en camino). Las clases físicas (Funcionario, Loco, Abuelo) no gastan ingredientes: solo su maná. Un tanque con ajo no tenía sentido.</p>
+      <p>Hay <strong>8 ingredientes</strong>, los ocho clásicos, que se compran o se consiguen:</p>
+      <div class="steps" style="margin-top:14px">
+        <span>🧄 Ajo</span><span>🌑 Belladona</span><span>🌋 Ceniza Sulfurosa</span><span>🌿 Ginseng</span>
+        <span>🩸 Musgo de Sangre</span><span>⚫ Perla Negra</span><span>🌱 Raíz de Mandrágora</span><span>🕸️ Seda de Araña</span>
+      </div>
+      <div class="note reveal"><b>Ejemplo real (El Parrillero):</b> su hechizo "Chorizo Volador" gasta 1 Perla Negra; el "Meteoro de Choripán" gasta Seda de Araña + Ceniza Sulfurosa. Si te falta un ingrediente, el juego te avisa de cuál falta y no te deja lanzarlo.</div>
+      <div class="note reveal"><b>🛒 La Botica de la Bruja (¡ya funciona!):</b> junto a La Alquimista hay una <strong>cajita</strong> (un cofre). Al hacerle clic derecho abre una <strong>tienda con menú</strong> donde compras los 8 ingredientes a <strong>2 Cacahuates</strong> cada uno. Se paga con la moneda física y sin escribir ningún comando.</div>
+    </div>
+  </section>
+
+  <section id="inmersion">
+    <div class="prose reveal">
+      <div class="eyebrow"><span class="n">07</span> La regla de oro</div>
+      <h2>Nada de escribir comandos: todo son objetos chulos</h2>
+      <p>El Reino es 100% inmersivo. El jugador <strong>nunca teclea comandos raros</strong>. Cualquier acción que normalmente sería un comando se entrega como un <strong>objeto temático</strong> que, al usarlo, lo hace por él. Ejemplos que ya existen:</p>
+      <ul class="clean">
+        <li><span class="mk">📖</span><span><b>Diario de Misiones.</b> Un libro que, al abrirlo, te muestra tus misiones activas.</span></li>
+        <li><span class="mk">📜</span><span><b>Contrato del Reino.</b> Un papel para elegir tu clase.</span></li>
+        <li><span class="mk">🧭</span><span><b>Brújula mágica.</b> Te apunta al siguiente personaje con el que hablar (solo la ve quien hace la misión).</span></li>
+        <li><span class="mk">📓</span><span><b>Cuadernos / Diarios de cada NPC.</b> Guardan lo que te acaba de contar, por si se te olvida.</span></li>
+      </ul>
+      <p>Por eso los <strong>comandos están bloqueados</strong> para los jugadores (con el plugin CommandWhitelist): nadie puede teclear comandos ni invocar/duplicar cosas — <strong>todo va por objetos</strong>. Los objetos siguen funcionando (usan permisos temporales) y a los <strong>admins no les afecta</strong>. Así el juego es fácil para cualquiera y seguro a la vez.</p>
+    </div>
+  </section>
+
+  <section id="arranque">
+    <div class="prose reveal">
+      <div class="eyebrow"><span class="n">08</span> El arranque del jugador</div>
+      <h2>Una "espina" de tutoriales, uno detrás de otro</h2>
+      <p>El nuevo jugador aprende <strong>una mecánica cada vez</strong>, sin agobios. Cada tramo lo lleva un personaje que la explica y, al terminar su misión, la desbloquea. No se puede saltar pasos: cada uno exige haber hecho el anterior.</p>
+    </div>
+    <div class="spine">
+      <div class="step reveal">
+        <div class="who">Al entrar</div>
+        <h3 class="serif">Llegada</h3>
+        <p>Apareces junto a un puente. Recibes el <strong>Contrato de Trabajo</strong> (una oferta de empleo cutre y graciosa) y una brújula que te lleva al primer personaje. También un pequeño kit para no morir de hambre.</p>
+      </div>
+      <div class="step reveal">
+        <div class="who">Toni Tutorial Jr</div>
+        <h3 class="serif">Lo básico de Minecraft</h3>
+        <p>Picar, talar, craftear y cocinar, y qué es la moneda. Un tutorial de survival disfrazado de "eres el nuevo obrero de la obra".</p>
+      </div>
+      <div class="step reveal">
+        <div class="who">Maestro Anselmo</div>
+        <h3 class="serif">Elegir clase</h3>
+        <p>Te "evalúa" (matas unos zombis, le llevas papeleo) y te asigna tu puesto: te da el Contrato, la Ficha, el Grimorio y tu primer punto de clase.</p>
+      </div>
+      <div class="step reveal">
+        <div class="who">Semental de la Flecha</div>
+        <h3 class="serif">Usar tus poderes</h3>
+        <p>Tutorial de combate y casteo: te regala un arco y te enseña, paso a paso, a abrir la barra de poderes, el maná y el enfriamiento. Los bichos son el campo de prácticas.</p>
+      </div>
+      <div class="step future reveal">
+        <div class="who">La Alquimista · tutorial por montar</div>
+        <h3 class="serif">La magia con ingredientes</h3>
+        <p>Explicará los ingredientes de los hechizos. Su <strong>tienda (la Botica) ya está montada y funcionando</strong>: una cajita junto a ella vende los 8 ingredientes a 2 Cacahuates. Falta solo su mini-tutorial.</p>
+      </div>
+      <div class="step future reveal">
+        <div class="who">Más adelante</div>
+        <h3 class="serif">Talentos y la gran historia</h3>
+        <p>El árbol de talentos y, después, el arco principal: el misterio de la Torre Negra, la puerta sellada, la Torre del Mago…</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="reparto">
+    <div class="prose reveal">
+      <div class="eyebrow"><span class="n">09</span> El reparto</div>
+      <h2>Los personajes que ya viven en el Reino</h2>
+    </div>
+    <div class="grid g2">
+      <div class="card npc reveal">
+        <div class="head">
+          <div class="av">🦫</div>
+          <div><div class="nm">Toni Tutorial Jr</div><div class="rl">Capataz de la obra</div></div>
+        </div>
+        <div><span class="pill sci">🔬 Forastero</span></div>
+        <p>Un carpincho uruguayo con casco de obrero (bo, gurí, dale nomás). Te recibe como "el nuevo fichaje" y suelta curiosidades reales de capibaras. Enseña lo básico.</p>
+      </div>
+      <div class="card npc reveal">
+        <div class="head">
+          <div class="av">💅</div>
+          <div><div class="nm">Maestro Anselmo</div><div class="rl">Recursos Humanos</div></div>
+        </div>
+        <div><span class="pill sci">🔬 Forastero</span></div>
+        <p>De RRHH, muy queer y con mucha pluma ("osea, cari, guapo"). Niega la magia ("es termodinámica avanzada"). Te evalúa y te asigna la clase.</p>
+      </div>
+      <div class="card npc reveal">
+        <div class="head">
+          <div class="av">🏹</div>
+          <div><div class="nm">Semental de la Flecha</div><div class="rl">Maestro de arquería</div></div>
+        </div>
+        <div><span class="pill folk">🪄 Autóctono</span></div>
+        <p>Un arquero guarro y muy salido, con dobles sentidos constantes, pero entrañable. Te enseña a combatir y a usar tus poderes.</p>
+      </div>
+      <div class="card npc reveal">
+        <div class="head">
+          <div class="av">🌸</div>
+          <div><div class="nm">La Alquimista</div><div class="rl">Maga y camella relajada</div></div>
+        </div>
+        <div><span class="pill folk">🪄 Autóctona</span></div>
+        <p>Una hippie fumeta de paz y amor. Vende los ingredientes de magia… y por lo bajini te mete en el negocio de la marihuana: te manda a por semillas y luego te compra la cosecha.</p>
+      </div>
+      <div class="card npc reveal">
+        <div class="head">
+          <div class="av">🕳️</div>
+          <div><div class="nm">Nando el travieso</div><div class="rl">Camello de cueva</div></div>
+        </div>
+        <div><span class="pill folk">🪄 Autóctono</span></div>
+        <p>Un trapichero paranoico que vive en una cueva ("chsss, esto no ha pasao"). Es el único que te pasa las semillas de marihuana, con un alijo que lleva todo para empezar el cultivo.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="misiones">
+    <div class="prose reveal">
+      <div class="eyebrow"><span class="n">10</span> Las misiones</div>
+      <h2>Lo que hay montado y jugable ahora mismo</h2>
+      <p>Tres líneas de misiones encadenadas, una detrás de otra. Un detalle de diseño: <strong>tras cada tarea vuelves a hablar con el personaje</strong> (no te salta la siguiente "por la cara" en mitad del bosque), y cada misión te da un papel con su historia por si tienes dudas.</p>
+    </div>
+
+    <div class="quest reveal">
+      <h3 class="serif">El Nuevo Fichaje <span class="pill sci" style="vertical-align:middle">Toni</span></h3>
+      <div class="meta">Tutorial de survival · recolectar y entregar</div>
+      <p style="color:var(--ink-soft); margin:0">Ayudas a montar el campamento de los científicos: madera, una mesa de trabajo, piedra y comida.</p>
+      <div class="steps"><span>16 troncos</span><span>1 mesa</span><span>32 adoquines</span><span>6 filetes</span><span class="reward">🥜 18 Cacahuates</span></div>
+    </div>
+
+    <div class="quest reveal">
+      <h3 class="serif">Evaluación de Aptitudes <span class="pill sci" style="vertical-align:middle">Anselmo</span></h3>
+      <div class="meta">Combate + entrega · desbloquea tu clase</div>
+      <p style="color:var(--ink-soft); margin:0">Anselmo te evalúa: demuestras fuerza matando zombis, vuelves a informarle y le llevas el papeleo. Al final te asigna tu clase.</p>
+      <div class="steps"><span>Matar 3 zombis</span><span>Hablar con Anselmo</span><span>Entregar 1 pluma</span><span class="reward">🥜 7 + clase</span></div>
+    </div>
+
+    <div class="quest reveal">
+      <h3 class="serif">El Semental de la Flecha <span class="pill folk" style="vertical-align:middle">Semental</span></h3>
+      <div class="meta">Tutorial de casteo · 5 combates, cada uno enseña algo</div>
+      <p style="color:var(--ink-soft); margin:0">Cinco pruebas de combate. Cada una explica una parte de tus poderes: la barra, el maná, el enfriamiento y los ingredientes de los magos.</p>
+      <div class="steps"><span>5 zombis</span><span>5 esqueletos</span><span>5 arañas</span><span>3 creepers</span><span>Horda final</span><span class="reward">🥜 18 + arco</span></div>
+    </div>
+  </section>
+
+  <section id="maria">
+    <div class="prose reveal">
+      <div class="eyebrow"><span class="n">11</span> El negocio de la maría</div>
+      <h2>Un trapicheo ilegal, con humor</h2>
+      <p class="lead">El pueblo tiene su negocio B: cultivar y vender marihuana a escondidas de los científicos. Es un sistema completo (plugin <strong>SPdrug</strong>), pensado como una fuente de dinero para quien se lo curra.</p>
+      <p>Empieza cuando <strong>La Alquimista</strong> (la hippie) te mete en el ajo y te manda a por semillas a <strong>Nando el travieso</strong>, el camello de la cueva. Desde ahí, el jugador monta su plantación:</p>
+      <ul class="clean">
+        <li><span class="mk">1</span><span><b>Semillas.</b> Solo las da Nando (con su "alijo", que trae todo para empezar). No se consiguen de otra forma.</span></li>
+        <li><span class="mk">2</span><span><b>Plantar y esperar.</b> Se siembran en tierra de cultivo y tardan <strong>unas 4 horas</strong> en crecer (con una lámpara encima, la mitad).</span></li>
+        <li><span class="mk">3</span><span><b>Cosechar → secar → cocinar.</b> Se recoge la planta, se seca en un invernadero y se procesa en un laboratorio (con sus minijuegos).</span></li>
+        <li><span class="mk">4</span><span><b>Vender.</b> El producto final se lo vendes a La Alquimista por Cacahuates.</span></li>
+      </ul>
+      <div class="note reveal"><b>Por qué tarda tanto:</b> las 4 horas y los pasos son a propósito, para que la maría no inunde el mercado y siga valiendo dinero. Es un negocio para dedicarle tiempo, no un botón de dinero fácil.</div>
+    </div>
+  </section>
+
+  <section id="economia">
+    <div class="prose reveal">
+      <div class="eyebrow"><span class="n">12</span> La economía</div>
+      <h2>Los Cacahuates 🥜</h2>
+      <p>La moneda del Reino es un objeto físico llamado <strong>Cacahuate</strong>. Llevamos un "libro de cuentas" para que entre dinero sin que se descontrole (inflación). Ahora mismo el dinero entra por las misiones; más adelante saldrá en tiendas (alquimia, herrería, banco).</p>
+      <table class="ledger">
+        <thead><tr><th>De dónde entra (arranque)</th><th>Cacahuates</th></tr></thead>
+        <tbody>
+          <tr><td>El Nuevo Fichaje (Toni)</td><td>30</td></tr>
+          <tr><td>Evaluación de Aptitudes (Anselmo)</td><td>7</td></tr>
+          <tr><td>El Semental de la Flecha</td><td>18</td></tr>
+          <tr class="tot"><td>Total por jugador (una sola vez)</td><td>55</td></tr>
+        </tbody>
+      </table>
+      <div class="note reveal"><b>Primer sumidero ya activo:</b> la <strong>Botica de la Bruja</strong> (tienda de los 8 ingredientes a 2 Cacahuates) ya se lleva dinero del juego. <b>Pendiente para que dure meses:</b> misiones repetibles / diarias que den ingresos sostenidos, y más tiendas donde gastar (mejoras de equipo, banco, etc.).</div>
+    </div>
+  </section>
+
+  <section id="futuro">
+    <div class="prose reveal">
+      <div class="eyebrow"><span class="n">13</span> Hacia el futuro</div>
+      <h2>Lo que viene (el plan de expansión)</h2>
+      <p>El Reino se construye pieza a pieza, y cada personaje nuevo se diseña juntos antes de montarlo. Esto es lo que hay en la lista:</p>
+      <div class="grid g2" style="margin-top:22px">
+        <div class="card reveal"><h3 class="serif">⚗️ La Alquimista</h3><p style="color:var(--ink-soft); font-size:.94rem; margin:.3em 0 0">Su <strong>tienda (la Botica) ya está hecha</strong> ✅. Falta su mini-tutorial que explique los ingredientes.</p></div>
+        <div class="card reveal"><h3 class="serif">📚 El Sabio</h3><p style="color:var(--ink-soft); font-size:.94rem; margin:.3em 0 0">Una "enciclopedia con patas": le preguntas por una clase y te explica su rol y sus 4 hechizos.</p></div>
+        <div class="card reveal"><h3 class="serif">🗺️ Mapa de Talentos</h3><p style="color:var(--ink-soft); font-size:.94rem; margin:.3em 0 0">El objeto y el tutorial del árbol de talentos (mejorar poderes al subir de nivel).</p></div>
+        <div class="card reveal"><h3 class="serif">🌀 El Loco del Pueblo</h3><p style="color:var(--ink-soft); font-size:.94rem; margin:.3em 0 0">El personaje del meta-lore: sabe lo de los otros servidores/universos y nadie le cree.</p></div>
+        <div class="card reveal"><h3 class="serif">🗼 Arco de la Torre Negra</h3><p style="color:var(--ink-soft); font-size:.94rem; margin:.3em 0 0">La historia principal: la puerta sellada, la Torre del Mago ("¿magia o ciencia?") y la mina.</p></div>
+        <div class="card reveal"><h3 class="serif">🔁 Misiones diarias</h3><p style="color:var(--ink-soft); font-size:.94rem; margin:.3em 0 0">Encargos repetibles (tablón, barman) para mantener viva la economía a largo plazo.</p></div>
+        <div class="card reveal"><h3 class="serif">🍓 Magia del Yogur</h3><p style="color:var(--ink-soft); font-size:.94rem; margin:.3em 0 0">Darle al sanador sus hechizos con ingredientes, igual que el Parrillero.</p></div>
+        <div class="card reveal"><h3 class="serif">⚖️ Equilibrar el equipo</h3><p style="color:var(--ink-soft); font-size:.94rem; margin:.3em 0 0">Que las armas con poderes cuesten algo (maná/durabilidad) para que no queden rotas.</p></div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <p style="margin:0 0 .3em"><span class="serif" style="font-size:1.1rem; color:var(--ink)">El Reino 6</span> — documento vivo para el equipo de administración.</p>
+    <p style="margin:0">Se actualiza según crece el Reino. Cualquier duda de cómo está montado algo, está escrito en las fichas de control del proyecto. · Julio 2026</p>
+  </div>
+</footer>
+
+<script>
+  (function(){
+    var io = new IntersectionObserver(function(es){
+      es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
+    }, {rootMargin:"0px 0px -8% 0px", threshold:.08});
+    document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
+
+    var links = Array.prototype.slice.call(document.querySelectorAll('nav.toc a'));
+    var map = {};
+    links.forEach(function(a){ var id=a.getAttribute('href').slice(1); map[id]=a; });
+    var spy = new IntersectionObserver(function(es){
+      es.forEach(function(e){
+        if(e.isIntersecting){
+          links.forEach(function(a){a.classList.remove('on');});
+          if(map[e.target.id]) map[e.target.id].classList.add('on');
+        }
+      });
+    }, {rootMargin:"-45% 0px -50% 0px"});
+    document.querySelectorAll('main section, section#idea').forEach(function(s){ if(s.id) spy.observe(s); });
+  })();
+</script>
+
+</body>
+</html>
