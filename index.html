@@ -211,6 +211,42 @@
   .reveal{opacity:0; transform:translateY(14px); transition:opacity .6s ease, transform .6s ease}
   .reveal.in{opacity:1; transform:none}
   @media (prefers-reduced-motion:reduce){.reveal{opacity:1; transform:none; transition:none}}
+
+  /* quest map — node graph */
+  .qmap{margin-top:34px; display:flex; flex-direction:column; align-items:center}
+  .qtag{font-size:.72rem; text-transform:uppercase; letter-spacing:.16em; font-weight:800; color:var(--gold);
+    background:var(--chip); border:1px solid var(--line-strong); border-radius:999px; padding:6px 16px; text-align:center}
+  .qnode{width:100%; max-width:540px; background:var(--surface); border:1px solid var(--line);
+    border-left:4px solid var(--arcane); border-radius:14px; padding:13px 18px; box-shadow:var(--shadow)}
+  .qnode.sci{border-left-color:var(--sci)} .qnode.folk{border-left-color:var(--folk)} .qnode.gold{border-left-color:var(--gold)}
+  .qnode .qh{display:flex; align-items:baseline; justify-content:space-between; gap:10px}
+  .qnode .qt{font-family:ui-serif,Palatino,serif; font-weight:600; font-size:1.05rem; line-height:1.15}
+  .qnode .qwho{font-size:.72rem; font-weight:700; white-space:nowrap; color:var(--arcane)}
+  .qnode .qwho.sci{color:var(--sci)} .qnode .qwho.folk{color:var(--folk)} .qnode .qwho.gold{color:var(--gold)}
+  .qnode .qd{font-size:.85rem; color:var(--ink-soft); margin:.25em 0 0}
+  .qnode .qr{font-size:.78rem; color:var(--gold); font-weight:700; margin-top:6px}
+  .qconn{width:2px; height:24px; background:linear-gradient(var(--arcane),var(--arcane-2)); margin:3px auto}
+  .qfork{position:relative; width:100%; max-width:540px; height:30px}
+  .qfork i{position:absolute; background:var(--arcane)}
+  .qfork .v1{top:0; left:50%; width:2px; height:14px; transform:translateX(-50%)}
+  .qfork .h{top:14px; left:24%; right:24%; height:2px}
+  .qfork .v2{top:14px; width:2px; height:16px}
+  .qfork .v2.l{left:24%} .qfork .v2.r{right:24%}
+  .qcols{display:grid; grid-template-columns:1fr 1fr; gap:18px; width:100%; max-width:820px; align-items:start; margin-top:2px}
+  @media(max-width:620px){.qcols{grid-template-columns:1fr} .qfork{display:none}}
+  .qcol{display:flex; flex-direction:column; align-items:center}
+  .clabel{font-size:.74rem; text-transform:uppercase; letter-spacing:.1em; font-weight:800; color:var(--ink-faint); margin-bottom:12px; text-align:center}
+  .qcol .qnode{max-width:100%}
+  .qbadge{display:inline-block; font-size:.64rem; font-weight:800; letter-spacing:.05em; text-transform:uppercase;
+    padding:2px 8px; border-radius:6px; background:var(--chip); border:1px solid var(--line); color:var(--ink-faint); margin-left:6px; vertical-align:middle}
+
+  /* npc roster extras */
+  .zone{font-size:.76rem; text-transform:uppercase; letter-spacing:.12em; font-weight:800; color:var(--gold);
+    margin:30px 0 14px; padding-bottom:8px; border-bottom:1px solid var(--line); display:flex; align-items:center; gap:.5em}
+  .chips{display:flex; flex-wrap:wrap; gap:8px}
+  .nchip{display:inline-flex; align-items:center; gap:.45em; font-size:.88rem; background:var(--surface);
+    border:1px solid var(--line); border-radius:10px; padding:8px 13px; color:var(--ink-soft)}
+  .nchip b{color:var(--ink); font-weight:600}
 </style>
 </head>
 <body>
@@ -228,6 +264,7 @@
       <a href="#arranque">Arranque</a>
       <a href="#reparto">Reparto</a>
       <a href="#misiones">Misiones</a>
+      <a href="#mapa">Mapa de misiones</a>
       <a href="#maria">La maría</a>
       <a href="#economia">Economía</a>
       <a href="#futuro">Futuro</a>
@@ -244,8 +281,8 @@
       <div class="stat"><b>1.21.8</b><span>Paper · Java 25</span></div>
       <div class="stat"><b>~26</b><span>Plugins</span></div>
       <div class="stat"><b>5</b><span>Clases jugables</span></div>
-      <div class="stat"><b>5</b><span>NPCs con misión</span></div>
-      <div class="stat"><b>3</b><span>Líneas de misiones</span></div>
+      <div class="stat"><b>28</b><span>NPCs en el mundo</span></div>
+      <div class="stat"><b>9</b><span>Misiones jugables</span></div>
       <div class="stat"><b>🥜</b><span>Moneda: Cacahuate</span></div>
     </div>
   </div>
@@ -485,6 +522,7 @@
     <div class="prose reveal">
       <div class="eyebrow"><span class="n">09</span> El reparto</div>
       <h2>Los personajes que ya viven en el Reino</h2>
+      <p>En el mundo hay <strong>28 personajes (NPCs)</strong> colocados. Unos cuantos tienen <strong>misión y personalidad definida</strong> (los de abajo); el resto son <strong>vecinos que dan vida al pueblo</strong> y todavía esperan su historia. Se dividen en las dos facciones de siempre: <span class="pill sci">🔬 forasteros</span> y <span class="pill folk">🪄 autóctonos</span>.</p>
     </div>
     <div class="grid g2">
       <div class="card npc reveal">
@@ -528,20 +566,65 @@
         <p>Un camello que vive en una cueva inmunda… pero habla <strong>cultísimo y elegante</strong>, como un poeta con estudios (el chiste es justo ese contraste). Es el único que te pasa las <strong>semillas de marihuana</strong> (su "alijo"), y también te las revende sueltas si te quedas corto.</p>
       </div>
     </div>
+
+    <div class="zone">🏛️ Los funcionarios del Ayuntamiento <span class="pill sci">🔬 Forasteros</span></div>
+    <div class="prose reveal" style="margin:0 0 4px">
+      <p style="margin:0 0 6px">Seis oficinistas que <strong>no dan misión propia</strong>: son las ventanillas del circo burocrático de <em>El Permiso de Obra</em>. Te marean con sellos, firmas, tasas y esperas absurdas, cada uno con su jerga farragosa.</p>
+    </div>
+    <div class="chips reveal">
+      <span class="nchip">🎫 <b>Ujier</b> · recepción</span>
+      <span class="nchip">🖋️ <b>Sellos</b> · timbres</span>
+      <span class="nchip">📚 <b>Registrador</b> · archivo</span>
+      <span class="nchip">💰 <b>Interventor</b> · tasas</span>
+      <span class="nchip">🔍 <b>Inspector</b> · en la excavación</span>
+      <span class="nchip">🎩 <b>Ministro</b> · la firma final</span>
+    </div>
+
+    <div class="zone">⚓ El Puerto <span class="pill folk">🪄 Autóctono</span></div>
+    <div class="card npc reveal" style="max-width:560px">
+      <div class="head">
+        <div class="av">🐟</div>
+        <div><div class="nm">Bacalao Gabardinez</div><div class="rl">Pescador y barquero del puerto · (en diseño)</div></div>
+      </div>
+      <p>Un <strong>bacalao disfrazado de humano</strong> con gabardina y sombrero para que los otros peces no lo reconozcan. Necesita echarse un cubo de agua encima de vez en cuando para respirar y le encanta pescar… peces. Ya está colocado en el mundo; sus misiones (transporte en barco, pesca) están por diseñar.</p>
+    </div>
+
+    <div class="zone">🏘️ Los vecinos del Reino <span class="qbadge">ambiente · sin misión aún</span></div>
+    <div class="prose reveal" style="margin:0 0 4px">
+      <p style="margin:0 0 6px">Estos <strong>16 personajes</strong> ya están puestos en el pueblo para darle vida (mercado, iglesia, callejones…), pero todavía <strong>no tienen misión ni historia escrita</strong>. Son el siguiente material a diseñar: cada uno puede convertirse en un tendero, un tutor o una secundaria.</p>
+    </div>
+    <div class="chips reveal">
+      <span class="nchip">⛪ <b>Padre Elías</b></span>
+      <span class="nchip">⛪ <b>Sor Eufrasia</b></span>
+      <span class="nchip">⛪ <b>Sor Bete</b></span>
+      <span class="nchip">🔬 <b>Dra. Pizarrica</b></span>
+      <span class="nchip">🔬 <b>Dr. Papriko</b></span>
+      <span class="nchip">👨‍🍳 <b>Chef Calderón</b></span>
+      <span class="nchip">📢 <b>Rancio el Profeta</b></span>
+      <span class="nchip">🧓 <b>Olegario</b></span>
+      <span class="nchip">🧑‍🌾 <b>Aniceto Morcillo</b></span>
+      <span class="nchip">👵 <b>Vera Pedregal</b></span>
+      <span class="nchip">🏗️ <b>Lolo el Fundacional</b></span>
+      <span class="nchip">🧵 <b>Señor Trapo</b></span>
+      <span class="nchip">🕍 <b>Avraham Rosenberg</b></span>
+      <span class="nchip">🕍 <b>Yael Goldstein</b></span>
+      <span class="nchip">🐛 <b>Edelmiro Garrapata</b></span>
+      <span class="nchip">🥁 <b>Tung Tung Sahur</b></span>
+    </div>
   </section>
 
   <section id="misiones">
     <div class="prose reveal">
       <div class="eyebrow"><span class="n">10</span> Las misiones</div>
       <h2>Lo que hay montado y jugable ahora mismo</h2>
-      <p>Tres líneas de misiones encadenadas, una detrás de otra. Un detalle de diseño: <strong>tras cada tarea vuelves a hablar con el personaje</strong> (no te salta la siguiente "por la cara" en mitad del bosque), y cada misión te da un papel con su historia por si tienes dudas.</p>
+      <p><strong>9 misiones</strong> encadenadas, una detrás de otra. Un detalle de diseño: <strong>tras cada tarea vuelves a hablar con el personaje</strong> (no te salta la siguiente "por la cara" en mitad del bosque), y cada misión te da un papel con su historia por si tienes dudas. Justo debajo, en <a href="#mapa">El mapa de misiones</a>, se ve cómo se conectan todas.</p>
     </div>
 
     <div class="quest reveal">
       <h3 class="serif">El Nuevo Fichaje <span class="pill sci" style="vertical-align:middle">Toni</span></h3>
       <div class="meta">Tutorial de survival · recolectar y entregar</div>
       <p style="color:var(--ink-soft); margin:0">Ayudas a montar el campamento de los científicos: madera, una mesa de trabajo, piedra y comida.</p>
-      <div class="steps"><span>16 troncos</span><span>1 mesa</span><span>32 adoquines</span><span>6 filetes</span><span class="reward">🥜 18 Cacahuates</span></div>
+      <div class="steps"><span>16 troncos</span><span>1 mesa</span><span>32 adoquines</span><span>6 filetes</span><span class="reward">🥜 30 Cacahuates</span></div>
     </div>
 
     <div class="quest reveal">
@@ -557,11 +640,129 @@
       <p style="color:var(--ink-soft); margin:0">Cinco pruebas de combate. Cada una explica una parte de tus poderes: la barra, el maná, el enfriamiento y los ingredientes de los magos.</p>
       <div class="steps"><span>5 zombis</span><span>5 esqueletos</span><span>5 arañas</span><span>3 creepers</span><span>Horda final</span><span class="reward">🥜 18 + arco</span></div>
     </div>
+
+    <div class="quest reveal">
+      <h3 class="serif">La Alquimista <span class="pill folk" style="vertical-align:middle">Alquimista</span></h3>
+      <div class="meta">Recado · te da los primeros ingredientes de magia</div>
+      <p style="color:var(--ink-soft); margin:0">La viciada te mete en el ajo: le llevas un par de flores y te da un pack de ingredientes de alquimia… y te manda a por semillas al camello de la cueva.</p>
+      <div class="steps"><span>Entregar 1 amapola + 1 diente de león</span><span class="reward">🎁 Pack de reagentes + brújula a Nando</span></div>
+    </div>
+
+    <div class="quest reveal">
+      <h3 class="serif">Nando el travieso <span class="pill folk" style="vertical-align:middle">Nando</span></h3>
+      <div class="meta">Recado · consigues las semillas de marihuana</div>
+      <p style="color:var(--ink-soft); margin:0">El camello fino te fía el material a cambio de unos panes. Su "alijo" trae <strong>solo las semillas</strong> para empezar el cultivo.</p>
+      <div class="steps"><span>Entregar 3 panes</span><span class="reward">🎁 Alijo de semillas + recetario</span></div>
+    </div>
+
+    <div class="quest reveal">
+      <h3 class="serif">Saga de Cultivo <span class="pill folk" style="vertical-align:middle">Alquimista</span> <span class="qbadge">3 misiones</span></h3>
+      <div class="meta">Aprendizaje guiado · plantar → secar → cocinar la maría</div>
+      <p style="color:var(--ink-soft); margin:0">La Alquimista te enseña el negocio paso a paso, regalándote el invernadero y el laboratorio por el camino, y al final desbloquea la venta.</p>
+      <div class="steps"><span>I · La Huerta 🥜6</span><span>II · El Secadero 🥜8 + invernadero</span><span>III · El Laboratorio 🥜12 + laboratorio</span><span class="reward">+ ingredientes · desbloquea vender</span></div>
+    </div>
+
+    <div class="quest reveal">
+      <h3 class="serif">El Permiso de Obra <span class="pill sci" style="vertical-align:middle">Toni</span> <span class="qbadge">paralela</span></h3>
+      <div class="meta">Comedia burocrática · 6 ventanillas del Ayuntamiento</div>
+      <p style="color:var(--ink-soft); margin:0">Toni te manda a sacar un permiso y empieza el circo del papeleo: sellos, firmas, tasas, esperas absurdas y funcionarios que te marean de ventanilla en ventanilla. Es una misión <strong>opcional</strong>, no corta la historia.</p>
+      <div class="steps"><span>Ujier</span><span>Sellos</span><span>Registrador</span><span>Interventor</span><span>Inspector</span><span>Ministro</span><span class="reward">🥜 28 + gancho de la Torre Negra</span></div>
+    </div>
+  </section>
+
+  <section id="mapa">
+    <div class="prose reveal">
+      <div class="eyebrow"><span class="n">11</span> El mapa de misiones</div>
+      <h2>Cómo se conectan las misiones (el árbol)</h2>
+      <p>Cada misión <strong>desbloquea la siguiente</strong>: no se puede empezar una sin haber terminado la anterior, así el jugador avanza en orden y aprende paso a paso. Todo es una <strong>espina</strong> (una línea) que, al llegar a Nando, <strong>se abre en dos ramas</strong>: el cultivo de la maría por un lado y una misión opcional de puro humor por el otro.</p>
+    </div>
+
+    <div class="qmap reveal">
+      <span class="qtag">🚪 Inicio · nada más entrar al servidor</span>
+      <div class="qconn"></div>
+      <div class="qnode gold">
+        <div class="qh"><span class="qt">Contrato de Trabajo</span><span class="qwho gold">Sistema</span></div>
+        <div class="qd">Recibes el contrato (oferta cutre) y una brújula que te lleva a Toni.</div>
+      </div>
+      <div class="qconn"></div>
+      <div class="qnode sci">
+        <div class="qh"><span class="qt">El Nuevo Fichaje</span><span class="qwho sci">🔬 Toni</span></div>
+        <div class="qd">Tutorial de survival: talar, minar, craftear y cocinar.</div>
+        <div class="qr">🥜 30 · desbloquea a Anselmo</div>
+      </div>
+      <div class="qconn"></div>
+      <div class="qnode sci">
+        <div class="qh"><span class="qt">Evaluación de Aptitudes</span><span class="qwho sci">🔬 Anselmo</span></div>
+        <div class="qd">Te evalúa y te asigna tu clase (te da el kit del MMO).</div>
+        <div class="qr">🥜 7 + tu clase</div>
+      </div>
+      <div class="qconn"></div>
+      <div class="qnode folk">
+        <div class="qh"><span class="qt">El Semental de la Flecha</span><span class="qwho folk">🪄 Semental</span></div>
+        <div class="qd">Tutorial de combate y poderes en 5 pruebas. Te regala un arco.</div>
+        <div class="qr">🥜 18 + arco</div>
+      </div>
+      <div class="qconn"></div>
+      <div class="qnode folk">
+        <div class="qh"><span class="qt">La Alquimista</span><span class="qwho folk">🪄 Alquimista</span></div>
+        <div class="qd">Te da los primeros ingredientes de magia y te mete en el ajo.</div>
+        <div class="qr">🎁 Reagentes · te manda a Nando</div>
+      </div>
+      <div class="qconn"></div>
+      <div class="qnode folk">
+        <div class="qh"><span class="qt">Nando el travieso</span><span class="qwho folk">🪄 Nando</span></div>
+        <div class="qd">El camello te fía las semillas de marihuana. Aquí el camino se bifurca.</div>
+        <div class="qr">🎁 Alijo de semillas</div>
+      </div>
+
+      <div class="qfork" aria-hidden="true"><i class="v1"></i><i class="h"></i><i class="v2 l"></i><i class="v2 r"></i></div>
+
+      <div class="qcols">
+        <div class="qcol">
+          <div class="clabel">🌿 Rama A · El cultivo</div>
+          <div class="qnode folk">
+            <div class="qh"><span class="qt">La Huerta <span class="qbadge">I</span></span><span class="qwho folk">Alquimista</span></div>
+            <div class="qd">Aprendes a plantar y cosechar. Le llevas la materia.</div>
+            <div class="qr">🥜 6 + ingredientes</div>
+          </div>
+          <div class="qconn"></div>
+          <div class="qnode folk">
+            <div class="qh"><span class="qt">El Secadero <span class="qbadge">II</span></span><span class="qwho folk">Alquimista</span></div>
+            <div class="qd">Te regala el invernadero y enseña a secar (minijuego).</div>
+            <div class="qr">🥜 8 + invernadero</div>
+          </div>
+          <div class="qconn"></div>
+          <div class="qnode folk">
+            <div class="qh"><span class="qt">El Laboratorio <span class="qbadge">III</span></span><span class="qwho folk">Alquimista</span></div>
+            <div class="qd">Te regala el laboratorio y enseña a cocinar (minijuego).</div>
+            <div class="qr">🥜 12 + laboratorio</div>
+          </div>
+          <div class="qconn"></div>
+          <div class="qnode gold">
+            <div class="qh"><span class="qt">Vender maría</span><span class="qwho gold">∞ repetible</span></div>
+            <div class="qd">Ya puedes vender en el cofre: 🥜 8/unidad, tope 24 al día.</div>
+          </div>
+        </div>
+
+        <div class="qcol">
+          <div class="clabel">🏛️ Rama B · Opcional (paralela)</div>
+          <div class="qnode sci">
+            <div class="qh"><span class="qt">El Permiso de Obra</span><span class="qwho sci">🔬 Toni</span></div>
+            <div class="qd">El circo del papeleo: 6 ventanillas del Ayuntamiento (Ujier, Sellos, Registrador, Interventor, Inspector, Ministro), con sellos, tasas y esperas absurdas. No corta la historia principal.</div>
+            <div class="qr">🥜 28 + gancho de la Torre Negra</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="prose">
+      <div class="note reveal"><b>Cómo leerlo:</b> cada tarjeta es una misión y las líneas indican "necesitas la de arriba para empezar la de abajo". El color del borde dice de qué facción es el personaje: <span style="color:var(--sci); font-weight:700">azulado = forasteros</span>, <span style="color:var(--folk); font-weight:700">verde = pueblo</span>, <span style="color:var(--gold); font-weight:700">dorado = sistema/economía</span>.</div>
+    </div>
   </section>
 
   <section id="maria">
     <div class="prose reveal">
-      <div class="eyebrow"><span class="n">11</span> El negocio de la maría</div>
+      <div class="eyebrow"><span class="n">12</span> El negocio de la maría</div>
       <h2>Un trapicheo ilegal, con humor</h2>
       <p class="lead">El pueblo tiene su negocio B: cultivar y vender marihuana a escondidas de los científicos. Es un sistema completo (plugin <strong>SPdrug</strong>), pensado como una fuente de dinero para quien se lo curra.</p>
       <p>Empieza cuando <strong>La Alquimista</strong> (la viciada) te mete en el ajo y te manda a por semillas a <strong>Fernando</strong> (Nando), el camello de la cueva. Él te da el "alijo" con <strong>solo las semillas</strong>. Después, <strong>La Alquimista te enseña a cultivar paso a paso</strong> con una pequeña saga de misiones:</p>
@@ -577,7 +778,7 @@
 
   <section id="economia">
     <div class="prose reveal">
-      <div class="eyebrow"><span class="n">12</span> La economía</div>
+      <div class="eyebrow"><span class="n">13</span> La economía</div>
       <h2>Los Cacahuates 🥜</h2>
       <p>La moneda del Reino es un objeto físico llamado <strong>Cacahuate</strong>. Llevamos un "libro de cuentas" para que entre dinero sin que se descontrole (inflación). Ahora mismo el dinero entra por las misiones; más adelante saldrá en tiendas (alquimia, herrería, banco).</p>
       <table class="ledger">
@@ -586,7 +787,9 @@
           <tr><td>El Nuevo Fichaje (Toni)</td><td>30</td></tr>
           <tr><td>Evaluación de Aptitudes (Anselmo)</td><td>7</td></tr>
           <tr><td>El Semental de la Flecha</td><td>18</td></tr>
-          <tr class="tot"><td>Total por jugador (una sola vez)</td><td>55</td></tr>
+          <tr><td>Saga de Cultivo (Alquimista, 3 misiones)</td><td>26</td></tr>
+          <tr><td>El Permiso de Obra (Toni, opcional)</td><td>28</td></tr>
+          <tr class="tot"><td>Total por jugador (una sola vez)</td><td>109</td></tr>
         </tbody>
       </table>
       <div class="note reveal"><b>Primer sumidero ya activo:</b> la <strong>Botica de la Bruja</strong> (tienda de los 8 ingredientes a 2 Cacahuates) ya se lleva dinero del juego. <b>Pendiente para que dure meses:</b> misiones repetibles / diarias que den ingresos sostenidos, y más tiendas donde gastar (mejoras de equipo, banco, etc.).</div>
@@ -595,7 +798,7 @@
 
   <section id="futuro">
     <div class="prose reveal">
-      <div class="eyebrow"><span class="n">13</span> Hacia el futuro</div>
+      <div class="eyebrow"><span class="n">14</span> Hacia el futuro</div>
       <h2>Lo que viene (el plan de expansión)</h2>
       <p>El Reino se construye pieza a pieza, y cada personaje nuevo se diseña juntos antes de montarlo. Esto es lo que hay en la lista:</p>
       <div class="grid g2" style="margin-top:22px">
