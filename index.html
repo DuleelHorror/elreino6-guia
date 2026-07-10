@@ -247,9 +247,67 @@
   .nchip{display:inline-flex; align-items:center; gap:.45em; font-size:.88rem; background:var(--surface);
     border:1px solid var(--line); border-radius:10px; padding:8px 13px; color:var(--ink-soft)}
   .nchip b{color:var(--ink); font-weight:600}
+  /* ===== Modal de Novedades ===== */
+  .upd-ov{position:fixed; inset:0; z-index:200; display:none; align-items:center; justify-content:center;
+    padding:20px; background:rgba(15,10,28,.62); backdrop-filter:blur(4px)}
+  .upd-ov.on{display:flex}
+  .upd{background:var(--surface); border:1px solid var(--line-strong); border-radius:18px; max-width:580px;
+    width:100%; max-height:86vh; overflow:auto; box-shadow:var(--shadow); animation:updIn .34s ease}
+  @keyframes updIn{from{opacity:0; transform:translateY(14px) scale(.985)} to{opacity:1; transform:none}}
+  .upd-h{padding:22px 24px 16px; border-bottom:1px solid var(--line);
+    background:linear-gradient(135deg, var(--glow), transparent); position:relative}
+  .upd-h .eyebrow{color:var(--arcane); font-weight:700; letter-spacing:.05em; text-transform:uppercase; font-size:.73rem}
+  .upd-h h2{margin:.28em 0 0; font-size:1.42rem; color:var(--ink)}
+  .upd-h .date{color:var(--ink-faint); font-size:.85rem; margin-top:4px}
+  .upd-x{position:absolute; top:15px; right:16px; cursor:pointer; border:none; background:var(--chip);
+    color:var(--ink-soft); width:32px; height:32px; border-radius:9px; font-size:1rem; line-height:1}
+  .upd-x:hover{color:var(--ink)}
+  .upd-b{padding:14px 24px 8px}
+  .upd-b .u{display:flex; gap:.75em; padding:11px 0; border-bottom:1px solid var(--line)}
+  .upd-b .u:last-child{border-bottom:none}
+  .upd-b .u .ic{font-size:1.3rem; flex:none; width:1.5em; text-align:center; line-height:1.4}
+  .upd-b .u p{margin:0; color:var(--ink-soft); font-size:.94rem; line-height:1.5}
+  .upd-b .u p b{color:var(--ink); font-weight:650}
+  .upd-f{padding:14px 24px 22px; display:flex; justify-content:flex-end}
+  .upd-f button{background:var(--arcane); color:#fff; border:none; border-radius:11px; padding:11px 22px;
+    font-weight:700; cursor:pointer; font-size:.95rem}
+  .upd-f button:hover{background:var(--arcane-2)}
+  .upd-btn{position:fixed; bottom:18px; right:18px; z-index:150; background:var(--arcane); color:#fff;
+    border:none; border-radius:999px; padding:11px 18px; font-weight:700; cursor:pointer; box-shadow:var(--shadow);
+    display:inline-flex; align-items:center; gap:.5em; font-size:.9rem}
+  .upd-btn:hover{background:var(--arcane-2)}
 </style>
 </head>
 <body>
+
+<div class="upd-ov" id="updOv" role="dialog" aria-modal="true" aria-labelledby="updT">
+  <div class="upd">
+    <div class="upd-h">
+      <button class="upd-x" aria-label="Cerrar" onclick="er6CloseUpd()">✕</button>
+      <div class="eyebrow">✨ Novedades del Reino</div>
+      <h2 id="updT">¡Actualización en el juego!</h2>
+      <div class="date">10 de julio de 2026</div>
+    </div>
+    <div class="upd-b">
+      <div class="u"><span class="ic">💬</span><p><b>Los NPCs hablan en una CAJA</b>, ya no en el chat — el texto no se pierde entre mensajes y se lee tranquilo.</p></div>
+      <div class="u"><span class="ic">🕵️</span><p><b>Nueva saga: «Operación Carpincho»</b> (la empieza Toni). El pueblo destapa al <b>Ministro</b> corrupto, que quiere echar a todos con sus «Apartamentos Pan de Gamba». <b>6 misiones</b>: colarse en el archivo del Ayuntamiento, quemar las órdenes de desahucio, frenar a los <b>Precintadores</b> y el careo final contra el jefe.</p></div>
+      <div class="u"><span class="ic">🎰</span><p><b>Cofres de recompensa</b> con animación (estilo CSGO): <b>Cofre del Capincherío</b> (junto al Banco) y <b>Cofre de Bronce</b> (a la entrada del reino).</p></div>
+      <div class="u"><span class="ic">🛒</span><p><b>Mercadillo</b> con <b>6 tiendas</b> para comprar y vender: Metales, Joyería, Leñador, Cantero, Granjero y Ganadero.</p></div>
+      <div class="u"><span class="ic">🧟</span><p><b>Enemigos en la mina</b> (los matones del Ministro) para las misiones de combate.</p></div>
+      <div class="u"><span class="ic">🧩</span><p><b>Plugins nuevos</b>: cervezas artesanas (BreweryX), disfraces para jefes (LibsDisguises), hologramas y cofres. Y limpieza de plugins viejos que ya no se usaban.</p></div>
+    </div>
+    <div class="upd-f"><button onclick="er6CloseUpd()">¡Entendido!</button></div>
+  </div>
+</div>
+<button class="upd-btn" onclick="er6OpenUpd()" title="Ver novedades">✨ Novedades</button>
+<script>
+  var ER6_UPD = "2026-07-10";
+  function er6OpenUpd(){ document.getElementById('updOv').classList.add('on'); }
+  function er6CloseUpd(){ document.getElementById('updOv').classList.remove('on'); try{ localStorage.setItem('er6_upd_seen', ER6_UPD); }catch(e){} }
+  (function(){ var seen; try{ seen = localStorage.getItem('er6_upd_seen'); }catch(e){ seen = null; } if(seen !== ER6_UPD){ er6OpenUpd(); } })();
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') er6CloseUpd(); });
+  document.getElementById('updOv').addEventListener('click', function(e){ if(e.target === this) er6CloseUpd(); });
+</script>
 
 <div class="bar">
   <div class="bar-in">
@@ -475,6 +533,7 @@
         <li><span class="mk">📓</span><span><b>Cuadernos / Diarios de cada NPC.</b> Guardan lo que te acaba de contar, por si se te olvida.</span></li>
       </ul>
       <p>Por eso los <strong>comandos están bloqueados</strong> para los jugadores (con el plugin CommandWhitelist): nadie puede teclear comandos ni invocar/duplicar cosas — <strong>todo va por objetos</strong>. Los objetos siguen funcionando (usan permisos temporales) y a los <strong>admins no les afecta</strong>. Así el juego es fácil para cualquiera y seguro a la vez.</p>
+      <p style="margin-top:1.4rem"><span class="qbadge">✨ Nuevo</span> <strong>Los personajes ahora hablan en una caja de diálogo</strong>, no por el chat. Cuando un NPC te cuenta algo, aparece una ventana a pantalla completa con su nombre y su texto, y un botón <strong>“Continuar ▶”</strong> para ir pasando página a página. Así el lore <strong>no se pierde</strong> aunque haya gente charlando por el chat, y se lee mucho más cómodo. Es una función <strong>nativa</strong> de Minecraft (1.21.6+): sin mods ni descargas para el jugador.</p>
     </div>
   </section>
 
@@ -851,7 +910,21 @@
           <tr class="tot"><td>Total por jugador (una sola vez)</td><td>109</td></tr>
         </tbody>
       </table>
-      <div class="note reveal"><b>Primer sumidero ya activo:</b> la <strong>Botica de la Bruja</strong> (tienda de los 8 ingredientes a 2 Cacahuates) ya se lleva dinero del juego. <b>Pendiente para que dure meses:</b> misiones repetibles / diarias que den ingresos sostenidos, y más tiendas donde gastar (mejoras de equipo, banco, etc.).</div>
+      <div class="note reveal"><b>Primer sumidero ya activo:</b> la <strong>Botica de la Bruja</strong> (los 8 ingredientes a 2 Cacahuates) ya se lleva dinero del juego. <b>Ingreso repetible ya activo:</b> los <strong>oficios (Jobs)</strong>, aquí abajo. <b>Pendiente:</b> misiones diarias y más tiendas donde gastar (equipo, banco, etc.).</div>
+
+      <h3 style="margin-top:1.6rem">Los oficios (Jobs): el sueldo del día a día 🛠️</h3>
+      <p>Aparte de las misiones, hay <strong>5 oficios</strong> que pagan Cacahuates por currar: <strong>Minero, Leñador, Hortelano, Cazador y Pescador</strong>. Se desbloquean al terminar la misión <em>La Bolsa de Trabajo</em>. Es el ingreso del día a día (picar, talar, cosechar, cazar, pescar).</p>
+      <p style="color:var(--ink-soft)">Está pensado para que la gente se <strong>especialice</strong> y NO pueda ir cambiando de oficio a cada rato para exprimir todos los sueldos. Cuatro frenos lo impiden:</p>
+      <table class="ledger">
+        <thead><tr><th>Freno</th><th>Qué hace</th></tr></thead>
+        <tbody>
+          <tr><td>Máximo 3 oficios</td><td>Solo puedes tener <strong>3 de los 5</strong> a la vez. No ganas de todos.</td></tr>
+          <tr><td>Cambiar cuesta</td><td>Dejar un oficio te quita el <strong>30%</strong> de tu progreso en él.</td></tr>
+          <tr><td>Espera para volver</td><td><strong>10 minutos</strong> de cooldown antes de reengancharte a un oficio que dejaste.</td></tr>
+          <tr><td>Cuantos más, menos pagan</td><td>Con 3 oficios cada uno paga <strong>~10% menos</strong>. El especialista de 1 gana más por acción.</td></tr>
+        </tbody>
+      </table>
+      <div class="note reveal">Y encima hay un <strong>tope de 100 Cacahuates al día</strong> por jugador (se reinicia a medianoche). En resumen: puedes llevar hasta 3 oficios, pero repartirte rinde menos y cambiar de oficio duele — lo suyo es <strong>elegir y casarte con ellos</strong>.</div>
     </div>
   </section>
 
