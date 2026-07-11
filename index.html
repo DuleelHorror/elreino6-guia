@@ -290,6 +290,7 @@
     </div>
     <div class="upd-b">
       <div class="u"><span class="ic">🎟️</span><p><b>¡Nuevo Tablón de Encargos!</b> Cada día tienes <b>misiones diarias</b> (matar, minar, talar, pescar…). Al completarlas subes tu <b>Pase del Reino</b> y ganas <b>Fichas</b>, una moneda especial que gastas en la <b>Tienda de Fichas</b> para abrir el <b>Cofre de la Suerte</b> (una lootbox con premios). El nuevo motivo para volver cada día.</p></div>
+      <div class="u"><span class="ic">⚡</span><p><b>Para activar el Tablón, Toni te manda una misión:</b> «Luz para el Tablón». El chisme va a <b>«12 voltios»</b> y hay que bajar <b>2 palancas</b> del circuito (una <b>debajo del puente Mambutu</b> y otra <b>fuera de la iglesia</b>). Le llevas los fusibles y te da el <b>Enchufe</b> que lo desbloquea.</p></div>
       <div class="u"><span class="ic">🍺</span><p><b>Nueva saga: «El Bar Co»</b> — el <b>Señor Trapo</b> (un cerdo tabernero) te enseña a <b>fabricar cerveza</b> paso a paso en la bodega de su barco volcado: fermentar, destilar, añejar, sellar y servir.</p></div>
       <div class="u"><span class="ic">🕵️</span><p><b>Saga «Operación Carpincho»</b> — destapas al <b>Ministro</b> corrupto que quería echar al pueblo con sus «Apartamentos Pan de Gamba». <b>6 misiones</b> de infiltración, sabotaje y un careo final contra el jefe.</p></div>
       <div class="u"><span class="ic">🎰</span><p><b>Cofres con animación</b> (estilo CSGO): Capincherío, Bronce y el nuevo <b>Cofre de la Suerte</b> del Tablón.</p></div>
@@ -300,7 +301,7 @@
 </div>
 <button class="upd-btn" onclick="er6OpenUpd()" title="Ver novedades">✨ Novedades</button>
 <script>
-  var ER6_UPD = "2026-07-11";
+  var ER6_UPD = "2026-07-11b";
   function er6OpenUpd(){ document.getElementById('updOv').classList.add('on'); }
   function er6CloseUpd(){ document.getElementById('updOv').classList.remove('on'); try{ localStorage.setItem('er6_upd_seen', ER6_UPD); }catch(e){} }
   (function(){ var seen; try{ seen = localStorage.getItem('er6_upd_seen'); }catch(e){ seen = null; } if(seen !== ER6_UPD){ er6OpenUpd(); } })();
