@@ -286,22 +286,21 @@
       <button class="upd-x" aria-label="Cerrar" onclick="er6CloseUpd()">✕</button>
       <div class="eyebrow">✨ Novedades del Reino</div>
       <h2 id="updT">¡Actualización en el juego!</h2>
-      <div class="date">10 de julio de 2026</div>
+      <div class="date">11 de julio de 2026</div>
     </div>
     <div class="upd-b">
-      <div class="u"><span class="ic">💬</span><p><b>Los NPCs hablan en una CAJA</b>, ya no en el chat — el texto no se pierde entre mensajes y se lee tranquilo.</p></div>
-      <div class="u"><span class="ic">🕵️</span><p><b>Nueva saga: «Operación Carpincho»</b> (la empieza Toni). El pueblo destapa al <b>Ministro</b> corrupto, que quiere echar a todos con sus «Apartamentos Pan de Gamba». <b>6 misiones</b>: colarse en el archivo del Ayuntamiento, quemar las órdenes de desahucio, frenar a los <b>Precintadores</b> y el careo final contra el jefe.</p></div>
-      <div class="u"><span class="ic">🎰</span><p><b>Cofres de recompensa</b> con animación (estilo CSGO): <b>Cofre del Capincherío</b> (junto al Banco) y <b>Cofre de Bronce</b> (a la entrada del reino).</p></div>
-      <div class="u"><span class="ic">🛒</span><p><b>Mercadillo</b> con <b>6 tiendas</b> para comprar y vender: Metales, Joyería, Leñador, Cantero, Granjero y Ganadero.</p></div>
-      <div class="u"><span class="ic">🧟</span><p><b>Enemigos en la mina</b> (los matones del Ministro) para las misiones de combate.</p></div>
-      <div class="u"><span class="ic">🧩</span><p><b>Plugins nuevos</b>: cervezas artesanas (BreweryX), disfraces para jefes (LibsDisguises), hologramas y cofres. Y limpieza de plugins viejos que ya no se usaban.</p></div>
+      <div class="u"><span class="ic">🎟️</span><p><b>¡Nuevo Tablón de Encargos!</b> Cada día tienes <b>misiones diarias</b> (matar, minar, talar, pescar…). Al completarlas subes tu <b>Pase del Reino</b> y ganas <b>Fichas</b>, una moneda especial que gastas en la <b>Tienda de Fichas</b> para abrir el <b>Cofre de la Suerte</b> (una lootbox con premios). El nuevo motivo para volver cada día.</p></div>
+      <div class="u"><span class="ic">🍺</span><p><b>Nueva saga: «El Bar Co»</b> — el <b>Señor Trapo</b> (un cerdo tabernero) te enseña a <b>fabricar cerveza</b> paso a paso en la bodega de su barco volcado: fermentar, destilar, añejar, sellar y servir.</p></div>
+      <div class="u"><span class="ic">🕵️</span><p><b>Saga «Operación Carpincho»</b> — destapas al <b>Ministro</b> corrupto que quería echar al pueblo con sus «Apartamentos Pan de Gamba». <b>6 misiones</b> de infiltración, sabotaje y un careo final contra el jefe.</p></div>
+      <div class="u"><span class="ic">🎰</span><p><b>Cofres con animación</b> (estilo CSGO): Capincherío, Bronce y el nuevo <b>Cofre de la Suerte</b> del Tablón.</p></div>
+      <div class="u"><span class="ic">💬</span><p>Los NPCs hablan en una <b>caja de diálogo</b> (no en el chat) y el nuevo Pase está <b>en español</b>.</p></div>
     </div>
     <div class="upd-f"><button onclick="er6CloseUpd()">¡Entendido!</button></div>
   </div>
 </div>
 <button class="upd-btn" onclick="er6OpenUpd()" title="Ver novedades">✨ Novedades</button>
 <script>
-  var ER6_UPD = "2026-07-10";
+  var ER6_UPD = "2026-07-11";
   function er6OpenUpd(){ document.getElementById('updOv').classList.add('on'); }
   function er6CloseUpd(){ document.getElementById('updOv').classList.remove('on'); try{ localStorage.setItem('er6_upd_seen', ER6_UPD); }catch(e){} }
   (function(){ var seen; try{ seen = localStorage.getItem('er6_upd_seen'); }catch(e){ seen = null; } if(seen !== ER6_UPD){ er6OpenUpd(); } })();
@@ -337,10 +336,11 @@
     <p class="sub">Todo lo que hemos construido, cómo está pensado y hacia dónde va. Escrito en fácil, sin tecnicismos, para que se entienda de un vistazo.</p>
     <div class="metabar">
       <div class="stat"><b>1.21.8</b><span>Paper · Java 25</span></div>
-      <div class="stat"><b>~26</b><span>Plugins</span></div>
+      <div class="stat"><b>~28</b><span>Plugins</span></div>
       <div class="stat"><b>5</b><span>Clases jugables</span></div>
       <div class="stat"><b>28</b><span>NPCs en el mundo</span></div>
-      <div class="stat"><b>9</b><span>Misiones jugables</span></div>
+      <div class="stat"><b>20+</b><span>Misiones jugables</span></div>
+      <div class="stat"><b>🎟️</b><span>Diarias + Fichas</span></div>
       <div class="stat"><b>🥜</b><span>Moneda: Cacahuate</span></div>
     </div>
   </div>
@@ -407,7 +407,7 @@
     <div class="prose reveal">
       <div class="eyebrow"><span class="n">04</span> Los plugins</div>
       <h2>Las piezas que le dan superpoderes al juego</h2>
-      <p>Un <strong>plugin</strong> es como una app que le añade una función al servidor. Tenemos unos 26 encajados entre sí. Estos son los importantes, por para qué sirven:</p>
+      <p>Un <strong>plugin</strong> es como una app que le añade una función al servidor. Tenemos unos 28 encajados entre sí. Estos son los importantes, por para qué sirven:</p>
     </div>
 
     <div class="pgroup reveal">
@@ -441,6 +441,8 @@
         <div class="plug"><b>Multiverse (+Portals)</b><span>Varios mundos y portales físicos para viajar entre ellos.</span></div>
         <div class="plug"><b>Mapa web (squaremap)</b><span>El mapa del mundo en el navegador (enlace más abajo).</span></div>
         <div class="plug"><b>CommandWhitelist</b><span>Bloquea los comandos a los jugadores (seguridad + inmersión).</span></div>
+        <div class="plug"><b>BattlePass + PlayerPoints</b><span>El Pase y las misiones diarias (Tablón), con la moneda Fichas 🎟️.</span></div>
+        <div class="plug"><b>CrazyCrates</b><span>Cofres de recompensa con animación (lootboxes).</span></div>
       </div>
     </div>
 
@@ -735,7 +737,7 @@
     <div class="prose reveal">
       <div class="eyebrow"><span class="n">10</span> Las misiones</div>
       <h2>Lo que hay montado y jugable ahora mismo</h2>
-      <p><strong>9 misiones</strong> encadenadas, una detrás de otra. Un detalle de diseño: <strong>tras cada tarea vuelves a hablar con el personaje</strong> (no te salta la siguiente "por la cara" en mitad del bosque), y cada misión te da un papel con su historia por si tienes dudas. Justo debajo, en <a href="#mapa">El mapa de misiones</a>, se ve cómo se conectan todas.</p>
+      <p>El <strong>tutorial son 7 misiones encadenadas</strong>, y a partir de ahí se abren las <strong>sagas del pueblo</strong> (Operación Carpincho, El Bar Co…) y el nuevo <strong>Tablón de Encargos</strong> con misiones diarias. Un detalle de diseño: <strong>tras cada tarea vuelves a hablar con el personaje</strong> (no te salta la siguiente "por la cara" en mitad del bosque), y cada misión te da un papel con su historia por si tienes dudas. Justo debajo, en <a href="#mapa">El mapa de misiones</a>, se ve cómo se conectan las del arranque.</p>
     </div>
 
     <div class="quest reveal">
@@ -785,6 +787,30 @@
       <div class="meta">Comedia burocrática · 6 ventanillas del Ayuntamiento</div>
       <p style="color:var(--ink-soft); margin:0">Toni te manda a sacar un permiso y empieza el circo del papeleo: sellos, firmas, tasas, esperas absurdas y funcionarios que te marean de ventanilla en ventanilla. Es una misión <strong>opcional</strong>, no corta la historia.</p>
       <div class="steps"><span>Ujier</span><span>Sellos</span><span>Registrador</span><span>Interventor</span><span>Inspector</span><span>Ministro</span><span class="reward">🥜 28 + gancho de la Torre Negra</span></div>
+    </div>
+
+    <h3 class="serif" style="margin-top:2.4rem">El Acto 1 · las sagas del pueblo <span class="qbadge">tras el tutorial</span></h3>
+    <p style="color:var(--ink-soft); margin:.2em 0 0">Terminado el arranque, empiezan las líneas de los vecinos. Estas dos ya están jugables:</p>
+
+    <div class="quest reveal">
+      <h3 class="serif">Operación Carpincho <span class="pill sci" style="vertical-align:middle">Toni → el Ministro</span> <span class="qbadge">6 misiones</span></h3>
+      <div class="meta">Infiltración + combate · destapar al Ministro corrupto</div>
+      <p style="color:var(--ink-soft); margin:0">El Ministro congeló la obra con una excusa falsa para echar al pueblo y montar sus «Apartamentos Pan de Gamba». Te infiltras en el archivo del Ayuntamiento, quemas las órdenes de desahucio, frenas a los <strong>Precintadores</strong> y llegas al <strong>careo final contra el jefe</strong>.</p>
+      <div class="steps"><span>Colarse en el archivo</span><span>Quemar las órdenes</span><span>Vencer a los Precintadores</span><span>Careo con el Ministro</span><span class="reward">🥜 84 + Medalla del Capincherío</span></div>
+    </div>
+
+    <div class="quest reveal">
+      <h3 class="serif">El Bar Co <span class="pill folk" style="vertical-align:middle">Señor Trapo</span> <span class="qbadge">7 misiones</span></h3>
+      <div class="meta">Aprendizaje · fabricar cerveza artesana</div>
+      <p style="color:var(--ink-soft); margin:0">El Señor Trapo, un cerdo tabernero, te enseña a hacer <strong>cerveza</strong> paso a paso en la bodega de su barco volcado: fermentar en el caldero, destilar, añejar en barrica, sellar y servir. Incluso la mítica «Birra del Naufragio».</p>
+      <div class="steps"><span>Fermentar</span><span>Destilar</span><span>Añejar</span><span>Sellar</span><span>Birra del Naufragio</span><span class="reward">🥜 46 + jarra y delantal</span></div>
+    </div>
+
+    <div class="quest reveal" style="border-left-color:var(--arcane)">
+      <h3 class="serif">🎟️ Tablón de Encargos <span class="pill arc" style="vertical-align:middle">Diarias</span> <span class="qbadge">nuevo · repetible</span></h3>
+      <div class="meta">Loop diario · misiones que rotan cada día</div>
+      <p style="color:var(--ink-soft); margin:0">Un <strong>tablón físico</strong> te da <strong>misiones diarias aleatorias</strong> (matar bichos, minar, talar, pescar, correr…). Al completarlas subes tu <strong>Pase del Reino</strong> y ganas <strong>Fichas 🎟️</strong>, una moneda especial. Las Fichas se gastan en la <strong>Tienda de Fichas</strong> para comprar llaves del <strong>Cofre de la Suerte</strong> (una lootbox con premios). Es el enganche para volver cada día.</p>
+      <div class="steps"><span>4 encargos al día</span><span>Suben el Pase</span><span class="reward">🎟️ Fichas → Cofre de la Suerte</span></div>
     </div>
   </section>
 
@@ -900,17 +926,20 @@
       <h2>Los Cacahuates 🥜</h2>
       <p>La moneda del Reino es un objeto físico llamado <strong>Cacahuate</strong>. Llevamos un "libro de cuentas" para que entre dinero sin que se descontrole (inflación). Ahora mismo el dinero entra por las misiones; más adelante saldrá en tiendas (alquimia, herrería, banco).</p>
       <table class="ledger">
-        <thead><tr><th>De dónde entra (arranque)</th><th>Cacahuates</th></tr></thead>
+        <thead><tr><th>De dónde entra (misiones de historia)</th><th>Cacahuates</th></tr></thead>
         <tbody>
           <tr><td>El Nuevo Fichaje (Toni)</td><td>30</td></tr>
           <tr><td>Evaluación de Aptitudes (Anselmo)</td><td>7</td></tr>
           <tr><td>El Semental de la Flecha</td><td>18</td></tr>
           <tr><td>Saga de Cultivo (Alquimista, 3 misiones)</td><td>26</td></tr>
           <tr><td>El Permiso de Obra (Toni, opcional)</td><td>28</td></tr>
-          <tr class="tot"><td>Total por jugador (una sola vez)</td><td>109</td></tr>
+          <tr><td>Operación Carpincho (Toni → Ministro)</td><td>84</td></tr>
+          <tr><td>El Bar Co (Señor Trapo)</td><td>46</td></tr>
+          <tr class="tot"><td>Total por jugador (una sola vez)</td><td>239</td></tr>
         </tbody>
       </table>
-      <div class="note reveal"><b>Primer sumidero ya activo:</b> la <strong>Botica de la Bruja</strong> (los 8 ingredientes a 2 Cacahuates) ya se lleva dinero del juego. <b>Ingreso repetible ya activo:</b> los <strong>oficios (Jobs)</strong>, aquí abajo. <b>Pendiente:</b> misiones diarias y más tiendas donde gastar (equipo, banco, etc.).</div>
+      <div class="note reveal"><b>Sumideros ya activos:</b> la <strong>Botica de la Bruja</strong> (ingredientes) y el <strong>Mercadillo</strong> (6 tiendas). <b>Ingresos repetibles ya activos:</b> los <strong>oficios (Jobs)</strong> (aquí abajo) y el nuevo <strong>Tablón de Encargos</strong> (misiones diarias). <b>Pendiente:</b> más tiendas donde gastar (equipo, banco…).</div>
+      <div class="note reveal"><b>🎟️ Las Fichas son una moneda APARTE.</b> Las que ganas en las misiones diarias del <strong>Tablón</strong> NO son Cacahuates: son <strong>Fichas</strong>, una segunda moneda que solo cae ahí y solo se gasta en la <strong>Tienda de Fichas</strong> (llaves del Cofre de la Suerte). Van en un <strong>circuito cerrado</strong> a propósito, para que las diarias no inflen la economía de Cacahuates.</div>
 
       <h3 style="margin-top:1.6rem">Los oficios (Jobs): el sueldo del día a día 🛠️</h3>
       <p>Aparte de las misiones, hay <strong>5 oficios</strong> que pagan Cacahuates por currar: <strong>Minero, Leñador, Hortelano, Cazador y Pescador</strong>. Se desbloquean al terminar la misión <em>La Bolsa de Trabajo</em>. Es el ingreso del día a día (picar, talar, cosechar, cazar, pescar).</p>
@@ -939,7 +968,7 @@
         <div class="card reveal"><h3 class="serif">🗺️ Mapa de Talentos</h3><p style="color:var(--ink-soft); font-size:.94rem; margin:.3em 0 0">El objeto y el tutorial del árbol de talentos (mejorar poderes al subir de nivel).</p></div>
         <div class="card reveal"><h3 class="serif">🌀 Rancio el Profeta</h3><p style="color:var(--ink-soft); font-size:.94rem; margin:.3em 0 0">El Loco del Pueblo <strong>ya está colocado</strong> (junto a la fuente) con su lore de meta-relato. Falta darle misión y diálogos: es la llave de la gran historia.</p></div>
         <div class="card reveal"><h3 class="serif">🗼 Arco de la Torre Negra</h3><p style="color:var(--ink-soft); font-size:.94rem; margin:.3em 0 0">La historia principal: la puerta sellada, la Torre del Mago ("¿magia o ciencia?") y la mina.</p></div>
-        <div class="card reveal"><h3 class="serif">🔁 Misiones diarias</h3><p style="color:var(--ink-soft); font-size:.94rem; margin:.3em 0 0">Encargos repetibles (tablón, barman) para mantener viva la economía a largo plazo.</p></div>
+        <div class="card reveal"><h3 class="serif">⚔️ Más para el Tablón</h3><p style="color:var(--ink-soft); font-size:.94rem; margin:.3em 0 0">El <strong>Tablón de Encargos ya está vivo</strong> ✅. Lo siguiente: ampliarlo con objetivos de <strong>dungeon</strong> y <strong>boss raids</strong>, y más premios para el Cofre de la Suerte.</p></div>
         <div class="card reveal"><h3 class="serif">🍓 Magia del Yogur</h3><p style="color:var(--ink-soft); font-size:.94rem; margin:.3em 0 0">Darle al sanador sus hechizos con ingredientes, igual que el Parrillero.</p></div>
         <div class="card reveal"><h3 class="serif">⚖️ Equilibrar el equipo</h3><p style="color:var(--ink-soft); font-size:.94rem; margin:.3em 0 0">Que las armas con poderes cuesten algo (maná/durabilidad) para que no queden rotas.</p></div>
       </div>
