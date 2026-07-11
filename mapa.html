@@ -4405,8 +4405,8 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
       desc:'El gran misterio: la puerta sellada, la Torre del Mago («¿magia o ciencia?») y la mina. Por diseñar.'},
     {id:'invasion', label:'⚔️ El Despertar de la Torre', npc:'Evento (admin)', faction:'future', type:'Boss raid · evento (futuro)', status:'future',
       desc:'Invasión de Ecos del Multiverso: 3 oleadas + jefe. Autorado, pendiente de desplegar.'},
-    {id:'talentos', label:'🗺️ Mapa de Talentos', npc:'Sistema', faction:'future', type:'Árbol de talentos (futuro)', status:'future',
-      desc:'El objeto y el tutorial del árbol de talentos (mejorar poderes al subir de nivel).'},
+    {id:'talentos', label:'🗺️ Plan de Carrera', npc:'Maestro Anselmo', faction:'sci', type:'Tutorial de talentos (paralela)', coins:6, reward:'Mapa de Talentos + 1 punto de talento', status:'new',
+      steps:['Matar 6 zombis','Volver a hablar con Anselmo'], desc:'Anselmo (RRHH) te explica el árbol de talentos como tu «plan de carrera». Tras una «evaluación de desempeño» te da el Mapa de Talentos (abre /skilltrees) y 1 punto para estrenar. Paralela: cuando quieras tras elegir clase.'},
     {id:'sabio', label:'📚 El Sabio', npc:'⬜ NPC por crear', faction:'future', type:'Enciclopedia de clases (futuro)', status:'future',
       desc:'Una enciclopedia con patas: le preguntas por una clase y te explica su rol y sus 4 hechizos.'},
   ];
@@ -4417,7 +4417,8 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
     ['nando','permiso'],['permiso','bolsa'],['bolsa','jobs'],['bolsa','carpincho'],
     ['carpincho','barco'],['barco','tablon_luz'],['tablon_luz','tablon'],['tablon','tienda'],['tienda','cofre'],
     // futuro (punteadas)
-    ['permiso','torre','future'],['torre','invasion','future'],['clase','talentos','future'],['clase','sabio','future'],
+    ['clase','talentos'],
+    ['permiso','torre','future'],['torre','invasion','future'],['clase','sabio','future'],
   ];
 
   const elements = [];
