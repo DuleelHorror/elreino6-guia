@@ -326,6 +326,7 @@
       <a href="#mapa">Mapa de misiones</a>
       <a href="#maria">La maría</a>
       <a href="#economia">Economía</a>
+      <a href="#mazmorras">Mazmorras</a>
       <a href="#futuro">Futuro</a>
     </nav>
   </div>
@@ -338,7 +339,7 @@
     <p class="sub">Todo lo que hemos construido, cómo está pensado y hacia dónde va. Escrito en fácil, sin tecnicismos, para que se entienda de un vistazo.</p>
     <div class="metabar">
       <div class="stat"><b>1.21.8</b><span>Paper · Java 25</span></div>
-      <div class="stat"><b>~28</b><span>Plugins</span></div>
+      <div class="stat"><b>~29</b><span>Plugins</span></div>
       <div class="stat"><b>5</b><span>Clases jugables</span></div>
       <div class="stat"><b>28</b><span>NPCs en el mundo</span></div>
       <div class="stat"><b>20+</b><span>Misiones jugables</span></div>
@@ -1012,9 +1013,104 @@
     </div>
   </section>
 
+  <section id="mazmorras">
+    <div class="prose reveal">
+      <div class="eyebrow"><span class="n">14</span> Las mazmorras · para Pan (constructor)</div>
+      <h2>Mazmorras en grupo: cómo se montan</h2>
+      <p class="lead">Ya está funcionando el plugin de <strong>mazmorras instanceadas</strong> (InstancedDungeons). Esta parte es para <strong>Pan</strong>, que las va a construir: qué son, por qué van así y <strong>todo lo que hay que hacer</strong>, con los comandos.</p>
+
+      <h3 class="serif">¿Qué es una mazmorra "instanceada"?</h3>
+      <p>Una zona de aventura (pasillos, salas, un jefe) a la que <strong>entra un grupo de amigos</strong>. Lo de <em>instanceada</em> quiere decir que <strong>cada grupo juega su PROPIA copia</strong>: si entran unos y luego otros, cada party tiene su versión, sin verse ni molestarse. Al acabar, la copia se borra sola.</p>
+    </div>
+
+    <div class="note reveal" style="max-width:70ch"><b>⚠️ Ojo: NO se construye sola.</b> Ningún plugin decente "inventa" mazmorras al azar (eso son las procedurales: feas y sin soporte en nuestra versión). Se construye <strong>UNA vez</strong> un "molde" a mano —con cariño, para que quede chula— y el plugin lo <strong>clona</strong> para cada grupo. Se hace una sola vez y se reutiliza para siempre.</div>
+
+    <div class="prose reveal">
+      <h3 class="serif" style="margin-top:1.4em">Lo que tiene que hacer Pan (resumen)</h3>
+    </div>
+    <div class="grid g2" style="margin-top:8px">
+      <div class="card reveal"><h3 class="serif">1 · Crear el mundo-molde</h3><p style="color:var(--ink-soft);font-size:.94rem;margin:.3em 0 0">Un mundo vacío aparte donde construir la mazmorra sin estorbar al reino.</p></div>
+      <div class="card reveal"><h3 class="serif">2 · Construir la mazmorra</h3><p style="color:var(--ink-soft);font-size:.94rem;margin:.3em 0 0">Las salas, pasillos y la arena del jefe. A mano, o pegando una plantilla (schematic).</p></div>
+      <div class="card reveal"><h3 class="serif">3 · Marcar los puntos</h3><p style="color:var(--ink-soft);font-size:.94rem;margin:.3em 0 0">Con comandos: dónde aparece el grupo, la salida, el jefe, los generadores de bichos y los cofres.</p></div>
+      <div class="card reveal"><h3 class="serif">4 · Guardar y probar</h3><p style="color:var(--ink-soft);font-size:.94rem;margin:.3em 0 0">Guardar, validar y entrar con una party a probar. La puerta de entrada la monta Claude.</p></div>
+    </div>
+
+    <div class="prose reveal">
+      <h3 class="serif" style="margin-top:1.4em">Todos los comandos, explicados</h3>
+      <p>Todo se hace con <code>/dungeon</code> (atajo <code>/dg</code>), estando en OP. Van más o menos en este orden:</p>
+    </div>
+
+    <div class="grid g2">
+      <div class="card reveal">
+        <h3 class="serif">🌍 Preparar el molde</h3>
+        <ul style="list-style:none;padding:0;margin:.5em 0 0;font-size:.92rem;line-height:1.85">
+          <li><code>/mv create catacumbas_tpl normal -t flat</code><br><span style="color:var(--ink-faint)">crea el mundo vacío (plano) donde construir</span></li>
+          <li><code>/mv tp catacumbas_tpl</code><br><span style="color:var(--ink-faint)">te teletransporta ahí para construir</span></li>
+        </ul>
+      </div>
+      <div class="card reveal">
+        <h3 class="serif">🏗️ Crear y entrar al editor</h3>
+        <ul style="list-style:none;padding:0;margin:.5em 0 0;font-size:.92rem;line-height:1.85">
+          <li><code>/dungeon create &lt;id&gt; &lt;mundo&gt; boss</code><br><span style="color:var(--ink-faint)">crea la mazmorra sobre el molde. <code>boss</code> = se completa matando al jefe (<code>trigger</code> = por botón/placa)</span></li>
+          <li><code>/dungeon edit &lt;id&gt;</code><br><span style="color:var(--ink-faint)">entra en <strong>modo editor</strong> (te lleva al molde para marcar cosas)</span></li>
+        </ul>
+      </div>
+      <div class="card reveal">
+        <h3 class="serif">📍 Marcar los puntos (dentro del editor)</h3>
+        <ul style="list-style:none;padding:0;margin:.5em 0 0;font-size:.92rem;line-height:1.85">
+          <li><code>/dungeon setspawn</code><br><span style="color:var(--ink-faint)">donde aparece el grupo (ponte ahí y ejecútalo)</span></li>
+          <li><code>/dungeon setexit</code><br><span style="color:var(--ink-faint)">la salida</span></li>
+          <li><code>/dungeon setboss</code><br><span style="color:var(--ink-faint)">donde aparece el jefe</span></li>
+          <li><code>/dungeon addspawner &lt;id&gt;</code><br><span style="color:var(--ink-faint)">crea un generador de bichos en tu posición (ej. <code>s1</code>, <code>s2</code>…)</span></li>
+        </ul>
+      </div>
+      <div class="card reveal">
+        <h3 class="serif">🎁 Botín y coste</h3>
+        <ul style="list-style:none;padding:0;margin:.5em 0 0;font-size:.92rem;line-height:1.85">
+          <li><code>/dungeon lootchest give &lt;id&gt;</code><br><span style="color:var(--ink-faint)">te da un cofre especial para colocar donde quieras</span></li>
+          <li><code>/dungeon lootchest loot &lt;id&gt; add</code><br><span style="color:var(--ink-faint)">añade a ese cofre el objeto que tengas en la mano</span></li>
+          <li><code>/dungeon addcost</code><br><span style="color:var(--ink-faint)">pone un coste de entrada en Cacahuates (sumidero de economía)</span></li>
+          <li><code>/dungeon boss reward edit</code><br><span style="color:var(--ink-faint)">edita las recompensas del jefe</span></li>
+        </ul>
+      </div>
+      <div class="card reveal">
+        <h3 class="serif">💾 Guardar y comprobar</h3>
+        <ul style="list-style:none;padding:0;margin:.5em 0 0;font-size:.92rem;line-height:1.85">
+          <li><code>/dungeon save</code><br><span style="color:var(--ink-faint)">guarda todo lo del editor</span></li>
+          <li><code>/dungeon validate</code><br><span style="color:var(--ink-faint)">avisa si falta algo por configurar</span></li>
+          <li><code>/dungeon reload</code><br><span style="color:var(--ink-faint)">recarga los cambios</span></li>
+        </ul>
+      </div>
+      <div class="card reveal">
+        <h3 class="serif">🎮 Probarla</h3>
+        <ul style="list-style:none;padding:0;margin:.5em 0 0;font-size:.92rem;line-height:1.85">
+          <li><code>/dungeon open &lt;id&gt;</code><br><span style="color:var(--ink-faint)">abre un grupo para esa mazmorra</span></li>
+          <li><code>/dungeon join &lt;código&gt;</code> · <code>/dungeon start</code><br><span style="color:var(--ink-faint)">los amigos se unen con el código; el líder la empieza</span></li>
+          <li><code>/dungeon list</code> · <code>/dungeon instances</code><br><span style="color:var(--ink-faint)">ver mazmorras / copias activas</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="note reveal" style="max-width:70ch;margin-top:16px"><b>🧟 Ayudas útiles:</b> <code>/dungeon mythicmob &lt;id&gt;</code> lista los bichos/jefes disponibles (los de las Catacumbas ya están creados), y <code>/dungeon itemsadder &lt;id&gt;</code> los objetos custom para el botín. Los <strong>bichos concretos de cada generador los conecta Claude por archivo</strong> después de colocarlos tú; y las <strong>etapas avanzadas</strong> (rejas que se abren al matar X, misiones tipo "mata 10", holograma de objetivo) van con <code>/dungeon stage &lt;id&gt; …</code> — eso lo montamos juntos si la mazmorra lo pide.</div>
+
+    <div class="prose reveal">
+      <h3 class="serif" style="margin-top:1.4em">El piloto: Las Catacumbas de la Iglesia 🕯️</h3>
+      <p>La primera mazmorra va <strong>bajo la iglesia</strong>: una cripta de la "secta de la Torre" llena de no-muertos. La iglesia prohíbe bajar (lo consideran sagrado por la Torre); el Padre una vez se asomó y solo oyó murmullos… El jefe es un <strong>antiguo Padre de la iglesia</strong>, dantesco.</p>
+      <p><strong>Paleta de bloques</strong> (para que pegue con la iglesia): piedra y roca, ladrillo de piedra (agrietado, musgoso, cincelado), tablón y escaleras de <strong>abeto</strong>, <strong>toba</strong>, <strong>pizarra profunda</strong>, bloques de <strong>hueso</strong> y <strong>ventanales de cristal morado</strong>. Luz "de almas": faroles de alma, fuego de alma, velas y algo de amatista.</p>
+    </div>
+    <div class="grid g2" style="margin-top:8px">
+      <div class="card reveal"><h3 class="serif">1 · El Descenso</h3><p style="color:var(--ink-soft);font-size:.94rem;margin:.3em 0 0">Escalera de abeto + ladrillo, un cartel <em>"Prohibido el paso — sagrado"</em>, telarañas, farol de alma. Aquí <strong>aparece el grupo</strong>.</p></div>
+      <div class="card reveal"><h3 class="serif">2 · Cripta de los Capellanes</h3><p style="color:var(--ink-soft);font-size:.94rem;margin:.3em 0 0">Nichos con esqueletos, ladrillo agrietado/musgoso + pizarra, ventanal morado tenue. Primeros no-muertos + 1 cofre en una tumba.</p></div>
+      <div class="card reveal"><h3 class="serif">3 · El Osario</h3><p style="color:var(--ink-soft);font-size:.94rem;margin:.3em 0 0">Bloques de hueso, pizarra, agua estancada, murmullos. La Monja Errante que llora. Aquí puede ir una <strong>reja</strong> que se abre al limpiar la sala.</p></div>
+      <div class="card reveal"><h3 class="serif">4 · La Capilla Profana</h3><p style="color:var(--ink-soft);font-size:.94rem;margin:.3em 0 0">Sala grande con grandes ventanales morados, altar profanado, candelabros, fuego de alma. Arena del <strong>jefe: El Padre Podrido</strong> ✟ y el cofre final.</p></div>
+    </div>
+
+    <div class="note reveal" style="max-width:70ch;margin-top:16px"><b>🤝 Reparto:</b> <strong>Pan construye</strong> el molde y marca los puntos con los comandos de arriba. <strong>Claude</strong> conecta los bichos y el jefe, afina el botín y el coste, y monta la <strong>puerta de entrada inmersiva</strong> en la iglesia (un clic la abre; nada de teclear <code>/dungeon</code>). Cuando la cripta esté construida (aunque sea en gris), avisa y se cablea todo.</div>
+  </section>
+
   <section id="futuro">
     <div class="prose reveal">
-      <div class="eyebrow"><span class="n">14</span> Hacia el futuro</div>
+      <div class="eyebrow"><span class="n">15</span> Hacia el futuro</div>
       <h2>Lo que viene (el plan de expansión)</h2>
       <p>El Reino se construye pieza a pieza, y cada personaje nuevo se diseña juntos antes de montarlo. Esto es lo que hay en la lista:</p>
       <div class="grid g2" style="margin-top:22px">
