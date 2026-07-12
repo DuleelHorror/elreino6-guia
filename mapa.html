@@ -4357,7 +4357,6 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
 });
 </script>
 
-
 <script>
 (function(){
   // ===== DATOS DE LAS MISIONES (nodos) =====
@@ -4400,6 +4399,17 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
       desc:'Gastas las Fichas comprando llaves del Cofre de la Suerte.'},
     {id:'cofre', label:'🎰 Cofre de la Suerte', npc:'Sistema', faction:'arc', type:'Lootbox (animación)', reward:'Premios aleatorios', status:'new',
       desc:'Abres el cofre con la llave: materiales, Cacahuates, esmeraldas y armas.'},
+    // Secundarias / nuevas (2026-07-11)
+    {id:'pecio', label:'⚓ El Pescaíto Lerele', npc:'Semental de la Flecha', faction:'folk', type:'Secundaria · pesca un bicho raro', reward:'Plano de la Espada Pirata', status:'new',
+      steps:['Ir al pecio hundido','Coger el cofre (aparece el Pescaíto Lerele)','Traer el plano al Semental'], desc:'Un barco hundido esconde el plano de una espada pirata… y un bicho que lo guarda. Secundaria del Semental.'},
+    {id:'geologia', label:'🪨 La Geóloga Amargada', npc:'Doctora Pizarrica', faction:'sci', type:'Saga · 3 misiones (secundaria)', coins:15, reward:'Medalla de Geóloga', status:'new',
+      steps:['Muestras de Superficie','El Temblor Profundo (sismógrafo)','El Catálogo Mineral'], desc:'La doctora que odia cada piedra te manda catalogar rocas y medir el subsuelo. Secundaria tras Operación Carpincho.'},
+    {id:'banco', label:'🏦 Papeleo de la Nómina', npc:'Toni', faction:'sci', type:'Te manda a abrir cuenta', status:'new',
+      steps:['Ir a hablar con Yael, en el banco'], desc:'Para cobrar la nómina necesitas cuenta bancaria. Toni te manda a la ventanilla de Yael.'},
+    {id:'cuenta', label:'🏦 Abrir Cuenta en el Banco', npc:'Yael Goldstein', faction:'gold', type:'Saga · 17 comisiones cutres', reward:'Cartilla del Banco (acceso a la Bolsa)', status:'new',
+      steps:['17 pagos crecientes (2,3,4…30)','Total: pagas 200 Cacahuates','Excusas cada vez más absurdas'], desc:'La cajera pesada y avariciosa te clava comisión tras comisión (200🥜 en total) con excusas patéticas, hasta abrirte la cuenta. SUMIDERO económico.'},
+    {id:'mercado', label:'💹 La Bolsa del Reino', npc:'Sistema (The Endex)', faction:'gold', type:'Mercado de valores · repetible', reward:'Compra/vende · precios dinámicos', status:'new',
+      steps:['Clic en la campana de la Bolsa','Precios que suben y bajan solos','Eventos: cracks y fiebres'], desc:'El mercado dinámico: compra barato, vende caro. Precios que fluctúan y eventos locos. Se desbloquea al abrir la cuenta con Yael.'},
     // Futuro
     {id:'torre', label:'🗼 Arco de la Torre Negra', npc:'Los científicos', faction:'future', type:'Historia principal (futuro)', status:'future',
       desc:'El gran misterio: la puerta sellada, la Torre del Mago («¿magia o ciencia?») y la mina. Por diseñar.'},
@@ -4416,6 +4426,9 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
     ['nando','cultivo'],['cultivo','vender'],
     ['nando','permiso'],['permiso','bolsa'],['bolsa','jobs'],['bolsa','carpincho'],
     ['carpincho','barco'],['barco','tablon_luz'],['tablon_luz','tablon'],['tablon','tienda'],['tienda','cofre'],
+    // secundarias + saga del banco (2026-07-11)
+    ['semental','pecio'],['carpincho','geologia'],
+    ['tablon_luz','banco'],['banco','cuenta'],['cuenta','mercado'],
     // futuro (punteadas)
     ['clase','talentos'],
     ['permiso','torre','future'],['torre','invasion','future'],['clase','sabio','future'],
