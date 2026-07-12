@@ -50,7 +50,7 @@
   }
 
   *{box-sizing:border-box}
-  html{scroll-behavior:smooth}
+  html{scroll-behavior:smooth; scroll-padding-top:110px}
   @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
   body{
     margin:0; background:var(--ground); color:var(--ink);
@@ -84,14 +84,13 @@
   /* top bar */
   .bar{position:sticky; top:0; z-index:30; background:color-mix(in srgb,var(--ground) 86%, transparent);
     backdrop-filter:blur(10px); border-bottom:1px solid var(--line)}
-  .bar-in{max-width:1000px; margin:0 auto; padding:11px 22px; display:flex; align-items:center; gap:16px}
+  .bar-in{max-width:1000px; margin:0 auto; padding:9px 22px; display:flex; align-items:center; gap:12px; flex-wrap:wrap; row-gap:4px}
   .crest{font-size:1.15rem; font-family:ui-serif,Palatino,Georgia,serif; font-weight:600;
     display:flex; align-items:center; gap:.5em; white-space:nowrap}
   .crest .torre{color:var(--arcane)}
-  nav.toc{display:flex; gap:2px; overflow-x:auto; scrollbar-width:none; margin-left:auto}
-  nav.toc::-webkit-scrollbar{display:none}
-  nav.toc a{color:var(--ink-soft); text-decoration:none; font-size:.82rem; font-weight:600;
-    padding:6px 11px; border-radius:8px; white-space:nowrap}
+  nav.toc{display:flex; flex-wrap:wrap; gap:2px 3px; margin-left:auto; justify-content:flex-end}
+  nav.toc a{color:var(--ink-soft); text-decoration:none; font-size:.8rem; font-weight:600;
+    padding:5px 9px; border-radius:8px; white-space:nowrap}
   nav.toc a:hover{color:var(--ink); background:var(--surface-2)}
   nav.toc a.on{color:var(--arcane); background:var(--chip)}
 
