@@ -84,13 +84,37 @@
   /* top bar */
   .bar{position:sticky; top:0; z-index:30; background:color-mix(in srgb,var(--ground) 86%, transparent);
     backdrop-filter:blur(10px); border-bottom:1px solid var(--line)}
-  .bar-in{max-width:1000px; margin:0 auto; padding:9px 22px; display:flex; align-items:center; gap:12px; flex-wrap:wrap; row-gap:4px}
+  .bar-in{max-width:1000px; margin:0 auto; padding:10px 22px; display:flex; align-items:center; gap:12px}
   .crest{font-size:1.15rem; font-family:ui-serif,Palatino,Georgia,serif; font-weight:600;
     display:flex; align-items:center; gap:.5em; white-space:nowrap}
   .crest .torre{color:var(--arcane)}
-  nav.toc{display:flex; flex-wrap:wrap; gap:2px 3px; margin-left:auto; justify-content:flex-end}
-  nav.toc a{color:var(--ink-soft); text-decoration:none; font-size:.8rem; font-weight:600;
-    padding:5px 9px; border-radius:8px; white-space:nowrap}
+  .menu{position:relative; margin-left:auto}
+  .menu-btn{display:inline-flex; align-items:center; gap:.5em; font:inherit; font-size:.85rem;
+    font-weight:600; color:var(--ink-soft); background:var(--surface-2); border:1px solid var(--line);
+    border-radius:9px; padding:7px 13px; cursor:pointer;
+    transition:color .15s, border-color .15s, background .15s}
+  .menu-btn:hover{color:var(--ink); border-color:var(--arcane)}
+  .menu-btn[aria-expanded="true"]{color:var(--arcane); border-color:var(--arcane); background:var(--chip)}
+  .menu-btn .mi{font-size:1.02em; line-height:1}
+  .menu-btn .mi.x{display:none}
+  .menu-btn[aria-expanded="true"] .mi.b{display:none}
+  .menu-btn[aria-expanded="true"] .mi.x{display:inline}
+  .menu-panel{position:absolute; top:calc(100% + 9px); right:0; z-index:50;
+    background:color-mix(in srgb,var(--ground) 94%, #000); border:1px solid var(--line);
+    border-radius:14px; box-shadow:0 20px 48px rgba(0,0,0,.55); padding:14px 16px;
+    width:min(92vw,540px); display:grid; grid-template-columns:1fr 1fr; gap:4px 26px;
+    opacity:0; visibility:hidden; transform:translateY(-6px); pointer-events:none;
+    transition:opacity .16s ease, transform .16s ease}
+  .menu-panel.open{opacity:1; visibility:visible; transform:none; pointer-events:auto}
+  @media (prefers-reduced-motion:reduce){.menu-panel{transition:none}}
+  .menu-grp{display:flex; flex-direction:column; gap:1px}
+  .menu-h{font-size:.64rem; text-transform:uppercase; letter-spacing:.16em; font-weight:700;
+    color:var(--gold); padding:9px 8px 4px}
+  .menu-panel a{color:var(--ink-soft); text-decoration:none; font-size:.9rem; font-weight:600;
+    padding:7px 10px; border-radius:8px; white-space:nowrap}
+  .menu-panel a:hover{color:var(--ink); background:var(--surface-2)}
+  .menu-panel a.on{color:var(--arcane); background:var(--chip)}
+  @media (max-width:560px){.menu-panel{grid-template-columns:1fr; gap:1px}}
   nav.toc a:hover{color:var(--ink); background:var(--surface-2)}
   nav.toc a.on{color:var(--arcane); background:var(--chip)}
 
@@ -312,22 +336,39 @@
 <div class="bar">
   <div class="bar-in">
     <span class="crest"><span class="torre">🗼</span> El Reino <span style="color:var(--arcane)">6</span></span>
-    <nav class="toc" aria-label="Secciones">
-      <a href="#idea">La idea</a>
-      <a href="#facciones">Facciones</a>
-      <a href="#montado">Cómo está montado</a>
-      <a href="#plugins">Plugins</a>
-      <a href="#clases">Clases</a>
-      <a href="#magia">Magia</a>
-      <a href="#arranque">Arranque</a>
-      <a href="#reparto">Reparto</a>
-      <a href="#misiones">Misiones</a>
-      <a href="#mapa">Mapa de misiones</a>
-      <a href="#maria">La maría</a>
-      <a href="#economia">Economía</a>
-      <a href="#mazmorras">Mazmorras</a>
-      <a href="#futuro">Futuro</a>
-    </nav>
+    <div class="menu">
+      <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="menuPanel" aria-haspopup="true">
+        <span class="mi b" aria-hidden="true">☰</span><span class="mi x" aria-hidden="true">✕</span> Secciones
+      </button>
+      <div class="menu-panel" id="menuPanel" role="menu" aria-label="Secciones de la guía">
+        <div class="menu-grp">
+          <div class="menu-h">El mundo</div>
+          <a href="#idea" role="menuitem">La idea</a>
+          <a href="#facciones" role="menuitem">Las facciones</a>
+          <a href="#montado" role="menuitem">Cómo está montado</a>
+          <a href="#plugins" role="menuitem">Los plugins</a>
+        </div>
+        <div class="menu-grp">
+          <div class="menu-h">El juego</div>
+          <a href="#clases" role="menuitem">Las clases</a>
+          <a href="#magia" role="menuitem">La magia</a>
+          <a href="#arranque" role="menuitem">El arranque</a>
+          <a href="#reparto" role="menuitem">El reparto</a>
+        </div>
+        <div class="menu-grp">
+          <div class="menu-h">El contenido</div>
+          <a href="#misiones" role="menuitem">Las misiones</a>
+          <a href="#mapa" role="menuitem">Mapa de misiones</a>
+          <a href="#maria" role="menuitem">La maría</a>
+          <a href="#mazmorras" role="menuitem">Las mazmorras</a>
+        </div>
+        <div class="menu-grp">
+          <div class="menu-h">Números y planes</div>
+          <a href="#economia" role="menuitem">La economía</a>
+          <a href="#futuro" role="menuitem">Hacia el futuro</a>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -1141,7 +1182,7 @@
     }, {rootMargin:"0px 0px -8% 0px", threshold:.08});
     document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
 
-    var links = Array.prototype.slice.call(document.querySelectorAll('nav.toc a'));
+    var links = Array.prototype.slice.call(document.querySelectorAll('.menu-panel a'));
     var map = {};
     links.forEach(function(a){ var id=a.getAttribute('href').slice(1); map[id]=a; });
     var spy = new IntersectionObserver(function(es){
@@ -1153,6 +1194,20 @@
       });
     }, {rootMargin:"-45% 0px -50% 0px"});
     document.querySelectorAll('main section, section#idea').forEach(function(s){ if(s.id) spy.observe(s); });
+
+    // Menú desplegable de secciones
+    var mBtn = document.getElementById('menuBtn');
+    var mPanel = document.getElementById('menuPanel');
+    if(mBtn && mPanel){
+      var closeM = function(){ mPanel.classList.remove('open'); mBtn.setAttribute('aria-expanded','false'); };
+      var openM  = function(){ mPanel.classList.add('open');    mBtn.setAttribute('aria-expanded','true'); };
+      mBtn.addEventListener('click', function(e){ e.stopPropagation();
+        mPanel.classList.contains('open') ? closeM() : openM(); });
+      mPanel.addEventListener('click', function(e){ if(e.target.closest('a')) closeM(); });
+      document.addEventListener('click', function(e){
+        if(!mPanel.contains(e.target) && e.target!==mBtn && !mBtn.contains(e.target)) closeM(); });
+      document.addEventListener('keydown', function(e){ if(e.key==='Escape') closeM(); });
+    }
   })();
 </script>
 
