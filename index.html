@@ -359,10 +359,12 @@
           <a href="#mapa" role="menuitem">Mapa de misiones</a>
           <a href="#maria" role="menuitem">La maría</a>
           <a href="#mazmorras" role="menuitem">Las mazmorras</a>
+          <a href="#anclaje" role="menuitem">Red de Anclaje 🚧</a>
         </div>
         <div class="menu-grp">
           <div class="menu-h">Números y planes</div>
           <a href="#economia" role="menuitem">La economía</a>
+          <a href="#reino2" role="menuitem">Evento Reino 2 ❄️</a>
           <a href="#futuro" role="menuitem">Hacia el futuro</a>
         </div>
       </div>
@@ -1146,9 +1148,75 @@
     <div class="note reveal" style="max-width:70ch;margin-top:16px"><b>🤝 Reparto:</b> <strong>Pan construye</strong> el molde y marca los puntos con los comandos de arriba. <strong>Claude</strong> conecta los bichos y el jefe, afina el botín y el coste, y monta la <strong>puerta de entrada inmersiva</strong> en la iglesia (un clic la abre; nada de teclear <code>/dungeon</code>). Cuando la cripta esté construida (aunque sea en gris), avisa y se cablea todo.</div>
   </section>
 
+  <section id="reino2">
+    <div class="prose reveal">
+      <div class="eyebrow"><span class="n">15</span> Evento Reino 2 · para Pan (diseñador)</div>
+      <h2>Los Ramales Criogénicos de la Torre-Eco ❄️</h2>
+      <p class="lead">Pan preparó un documento para un <strong>evento del "Reino 2"</strong> (el Nuevo Reino, la torre helada). Esta es la <strong>primera pieza ya construida</strong>: los cuatro <strong>ramales criogénicos</strong> que el jugador tiene que encender. Está <strong>montado y listo, pero todavía SIN colocar en el mundo</strong> — falta que Pan diga dónde van las consolas. Todo esto es para Pan; Mikito no necesita tocar nada.</p>
+
+      <h3 class="serif">La historia, en corto</h3>
+      <p>El Reino 2 es una <strong>simulación</strong> que se volvió un universo de verdad. Un <strong>glaciar</strong> la rodea para refrigerar la máquina que la mantiene estable. Bajo el hielo hay <strong>cuatro tuberías</strong>, cada una hasta una <strong>célula criogénica</strong> con un <strong>ordenador</strong>. El jugador sigue cada tubería, pulsa el ordenador y <strong>activa el ramal</strong>. Con los cuatro encendidos, la "refrigeración primaria" queda completa. <strong>De momento eso NO enciende la Torre ni abre ningún teletransporte</strong> — esa parte se hará más adelante.</p>
+    </div>
+
+    <div class="note reveal" style="max-width:72ch"><b>✅ Qué está hecho ya:</b> todo el "cerebro" del sistema (un <strong>datapack</strong>, sin plugins). Las cuatro consolas, el menú que se abre al pulsarlas, encender las luces, el sonido, el mensaje, y que quede <strong>guardado para todo el servidor</strong> (aguanta reinicios). Funciona para jugadores normales (sin ser admin). <b>🔧 Qué falta:</b> tres datos que solo Pan sabe (abajo) y colocarlo en el mundo.</div>
+
+    <div class="prose reveal">
+      <h3 class="serif" style="margin-top:1.4em">Cómo se siente al jugarlo</h3>
+    </div>
+    <div class="grid g2" style="margin-top:8px">
+      <div class="card reveal"><h3 class="serif">1 · Pulsar el ordenador</h3><p style="color:var(--ink-soft);font-size:.94rem;margin:.3em 0 0">Cada célula tiene una cabeza con pinta de ordenador (la skin de HeadDatabase <strong>28990</strong>). Clic derecho → se abre una <strong>caja/menú</strong> con el nombre del ramal y su estado.</p></div>
+      <div class="card reveal"><h3 class="serif">2 · Activar el ramal</h3><p style="color:var(--ink-soft);font-size:.94rem;margin:.3em 0 0">Si está apagado, sale el botón <strong>⚡ ACTIVAR RAMAL</strong>. Al pulsarlo: suena un <strong>beacon</strong>, se encienden a la vez <strong>todas las bombillas</strong> de esa línea y el piloto final (una lámpara de rana), y aparece el <strong>mensaje</strong> de confirmación. Solo lo oyen/ven los que están cerca.</p></div>
+      <div class="card reveal"><h3 class="serif">3 · No se puede repetir</h3><p style="color:var(--ink-soft);font-size:.94rem;margin:.3em 0 0">Un ramal ya encendido no se activa otra vez (el menú muestra "ACTIVO" sin botón). Se puede en cualquier orden, y es <strong>global</strong>: si uno lo enciende, queda encendido para todos.</p></div>
+      <div class="card reveal"><h3 class="serif">4 · Los cuatro = completo</h3><p style="color:var(--ink-soft);font-size:.94rem;margin:.3em 0 0">Al encender los cuatro sale "REFRIGERACIÓN PRIMARIA 4/4" y queda guardado. Es la <strong>llave</strong> para el resto del evento (la Torre), que se montará después.</p></div>
+    </div>
+
+    <div class="prose reveal">
+      <h3 class="serif" style="margin-top:1.4em">🔧 Lo que necesito de Pan para terminarlo</h3>
+      <p>Tres cosas que el documento no traía y que solo se saben mirando el mundo:</p>
+    </div>
+    <div class="grid g2" style="margin-top:8px">
+      <div class="card reveal"><h3 class="serif">1 · Dónde van las 4 consolas</h3><p style="color:var(--ink-soft);font-size:.94rem;margin:.3em 0 0">Las coordenadas EXACTAS de las <strong>4 cabezas-ordenador</strong>. Ahora están puestas provisionalmente encima de cada piloto final; si van en otro sitio, Pan me pasa las 4 coords.</p></div>
+      <div class="card reveal"><h3 class="serif">2 · El bloque original del piloto</h3><p style="color:var(--ink-soft);font-size:.94rem;margin:.3em 0 0">Qué bloque hay ahora mismo en las 4 casillas que se convertirán en lámpara de rana (para que el "reiniciar pruebas" lo deje como estaba). Se mira con <code>/data get block X Y Z</code>.</p></div>
+      <div class="card reveal"><h3 class="serif">3 · Colocar las cabezas</h3><p style="color:var(--ink-soft);font-size:.94rem;margin:.3em 0 0">Poner las 4 cabezas HDB <strong>28990</strong> en su sitio. Con eso hecho, Claude despliega el datapack y lo deja funcionando.</p></div>
+    </div>
+
+    <div class="prose reveal">
+      <h3 class="serif" style="margin-top:1.4em">Los 4 ramales (dónde se encienden las luces)</h3>
+    </div>
+    <div class="grid g2" style="margin-top:8px">
+      <div class="card reveal"><h3 class="serif">CR-01 · Procesamiento</h3><p style="color:var(--ink-soft);font-size:.94rem;margin:.3em 0 0">4 bombillas de cobre + piloto final en <code>-10961 46 -7483</code>.</p></div>
+      <div class="card reveal"><h3 class="serif">CR-02 · Memoria</h3><p style="color:var(--ink-soft);font-size:.94rem;margin:.3em 0 0">7 bombillas de cobre + piloto final en <code>-10959 46 -7449</code>.</p></div>
+      <div class="card reveal"><h3 class="serif">CR-03 · Entorno</h3><p style="color:var(--ink-soft);font-size:.94rem;margin:.3em 0 0">3 bombillas de cobre + piloto final en <code>-10930 48 -7435</code>.</p></div>
+      <div class="card reveal"><h3 class="serif">CR-04 · Estabilización</h3><p style="color:var(--ink-soft);font-size:.94rem;margin:.3em 0 0">4 bombillas de cobre + piloto final en <code>-10911 47 -7429</code>.</p></div>
+    </div>
+
+    <div class="prose reveal">
+      <h3 class="serif" style="margin-top:1.4em">Comandos de admin (OP)</h3>
+      <p>Todo el sistema es un datapack llamado <code>reino2_criogenia</code>. Una vez desplegado y con las cabezas puestas:</p>
+    </div>
+    <div class="grid g2">
+      <div class="card reveal">
+        <h3 class="serif">⚙️ Poner en marcha</h3>
+        <ul style="list-style:none;padding:0;margin:.5em 0 0;font-size:.92rem;line-height:1.85">
+          <li><code>/function reino_r2_cryo:setup</code><br><span style="color:var(--ink-faint)">crea las 4 consolas (una vez, tras colocar las cabezas)</span></li>
+          <li><code>/tag @s add cryo_admin</code><br><span style="color:var(--ink-faint)">para recibir los avisos del sistema</span></li>
+        </ul>
+      </div>
+      <div class="card reveal">
+        <h3 class="serif">🔁 Pruebas</h3>
+        <ul style="list-style:none;padding:0;margin:.5em 0 0;font-size:.92rem;line-height:1.85">
+          <li><code>/function reino_r2_cryo:reset</code><br><span style="color:var(--ink-faint)">reinicia todo: los 4 apagados, luces fuera</span></li>
+          <li><code>/scoreboard players get #cr01 r2_cryo</code><br><span style="color:var(--ink-faint)">ver el estado de un ramal (0 = apagado, 1 = activo)</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="note reveal" style="max-width:72ch;margin-top:16px"><b>🤝 Reparto:</b> <strong>Pan</strong> me pasa las 3 cosas de arriba y coloca las cabezas. <strong>Claude</strong> despliega el datapack, corre el <code>setup</code>, revisa las protecciones (para que se pueda pulsar y no rompan las cabezas) y lo deja probado. Todo el detalle técnico está en la ficha <code>.claude/rules/evento-reino2-criogenia.md</code> del proyecto.</div>
+  </section>
+
   <section id="futuro">
     <div class="prose reveal">
-      <div class="eyebrow"><span class="n">15</span> Hacia el futuro</div>
+      <div class="eyebrow"><span class="n">16</span> Hacia el futuro</div>
       <h2>Lo que viene (el plan de expansión)</h2>
       <p>El Reino se construye pieza a pieza, y cada personaje nuevo se diseña juntos antes de montarlo. Esto es lo que hay en la lista:</p>
       <div class="grid g2" style="margin-top:22px">
