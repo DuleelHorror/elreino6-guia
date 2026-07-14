@@ -359,12 +359,12 @@
           <a href="#mapa" role="menuitem">Mapa de misiones</a>
           <a href="#maria" role="menuitem">La maría</a>
           <a href="#mazmorras" role="menuitem">Las mazmorras</a>
-          <a href="#anclaje" role="menuitem">Red de Anclaje 🚧</a>
         </div>
         <div class="menu-grp">
           <div class="menu-h">Números y planes</div>
           <a href="#economia" role="menuitem">La economía</a>
           <a href="#reino2" role="menuitem">Evento Reino 2 ❄️</a>
+          <a href="#anclaje" role="menuitem">Red de Anclaje 🚧</a>
           <a href="#futuro" role="menuitem">Hacia el futuro</a>
         </div>
       </div>
@@ -1214,9 +1214,76 @@
     <div class="note reveal" style="max-width:72ch;margin-top:16px"><b>🤝 Reparto:</b> <strong>Pan</strong> me pasa las 3 cosas de arriba y coloca las cabezas. <strong>Claude</strong> despliega el datapack, corre el <code>setup</code>, revisa las protecciones (para que se pueda pulsar y no rompan las cabezas) y lo deja probado. Todo el detalle técnico está en la ficha <code>.claude/rules/evento-reino2-criogenia.md</code> del proyecto.</div>
   </section>
 
+  <section id="anclaje">
+    <div class="prose reveal">
+      <div class="eyebrow"><span class="n">16</span> La Red de Anclaje · para Pan 🚧</div>
+      <h2>Viajar por el Reino con "esquejes de la Torre"</h2>
+      <div class="note reveal" style="max-width:74ch;background:rgba(180,120,255,.10);border-color:rgba(180,120,255,.35)"><b>🚧 EN CONSTRUCCIÓN — esto es cosa de Pan.</b> El sistema lo <strong>diseñó Pan</strong> y lo montamos a partir de su documento. La <strong>base ya está subida al server</strong>, pero <strong>todavía NO está terminado dentro del juego</strong>: faltan unos pasos y unas coordenadas que tiene que dar Pan (abajo). Hasta entonces, los jugadores no lo ven.</div>
+      <p class="lead">Un sistema de <strong>teletransporte</strong> entre los sitios importantes (el Reino, las Torres-Eco de otros Reinos, mazmorras, laboratorios, zonas bajo tierra, eventos…). En vez de globos o barcos —que no sirven bajo tierra ni en otros mundos—, se usan unos <strong>Fragmentos de Anclaje</strong> (mote: <em>"esquejes de la Torre"</em>): pequeñas torres rotas conectadas a la misma red.</p>
+
+      <h3 class="serif">¿Cómo funciona, en fácil?</h3>
+      <p>Cada zona importante tiene un <strong>Fragmento</strong> (una estructura chula que se toca con clic derecho). La primera vez, el jugador tiene que <strong>llegar andando y registrarlo</strong> ("descubrirlo"). A partir de ahí, desde cualquier otro Fragmento puede <strong>abrir un menú y viajar</strong> a los que ya haya descubierto. Al viajar se envuelve en una <strong>nube morada</strong> (como una fruta de chorus, pero más densa), suena un portal y aparece junto al Fragmento de destino. Algunos viajes son gratis y otros costarán Cacahuates.</p>
+    </div>
+
+    <div class="grid g2" style="margin-top:8px">
+      <div class="card reveal"><h3 class="serif">🔓 Descubrir visitando</h3><p style="color:var(--ink-soft);font-size:.94rem;margin:.3em 0 0">Un jugador nuevo NO puede viajar a un sitio donde nunca ha estado. Tiene que ir en persona y activar su Fragmento una vez. Eso se guarda por jugador y no se pierde.</p></div>
+      <div class="card reveal"><h3 class="serif">🎫 Eventos</h3><p style="color:var(--ink-soft);font-size:.94rem;margin:.3em 0 0">Algunos destinos (las Torres-Eco) solo se abren tras un evento. La <strong>Torre-Eco del Reino 2</strong> ya está enganchada al <strong>evento criogénico</strong> (sección anterior): no se puede viajar hasta completarlo.</p></div>
+      <div class="card reveal"><h3 class="serif">🥜 Precio</h3><p style="color:var(--ink-soft);font-size:.94rem;margin:.3em 0 0">Volver al Reino siempre gratis (para no quedarse tirado sin dinero). En esta primera versión <strong>todos los viajes son gratis</strong>; el cobro de verdad llega con la versión definitiva (abajo).</p></div>
+      <div class="card reveal"><h3 class="serif">🛡️ Sin trampas</h3><p style="color:var(--ink-soft);font-size:.94rem;margin:.3em 0 0">No se puede saltar el descubrimiento ni viajar a algo cerrado: el sistema lo comprueba antes de cada viaje. Funciona con jugadores normales (sin ser OP).</p></div>
+    </div>
+
+    <div class="prose reveal">
+      <h3 class="serif" style="margin-top:1.4em">Dos versiones (por qué se hace así)</h3>
+      <p>Es un sistema grande. Para no tardar meses, va en <strong>dos fases</strong>:</p>
+    </div>
+    <div class="grid g2" style="margin-top:8px">
+      <div class="card reveal"><h3 class="serif">1 · Versión de prueba (ahora) ✅ subida</h3><p style="color:var(--ink-soft);font-size:.94rem;margin:.3em 0 0">Hecha con las herramientas que ya domina el server (sin plugin nuevo). Sirve para <strong>ver y afinar la sensación</strong>: el efecto de la nube, el descubrir-por-visita y un par de destinos. Ya está en el server; falta encenderla en el juego.</p></div>
+      <div class="card reveal"><h3 class="serif">2 · Versión definitiva (después)</h3><p style="color:var(--ink-soft);font-size:.94rem;margin:.3em 0 0">Un <strong>plugin propio</strong> pequeño. Añade lo fino: cobro real con devolución si el viaje falla, menú que cambia solo según cada jugador, control de eventos y panel de admin. Se hace cuando la versión de prueba convenza.</p></div>
+    </div>
+
+    <div class="prose reveal">
+      <h3 class="serif" style="margin-top:1.4em">Lo que falta hacer DENTRO del juego (para Pan, en OP)</h3>
+      <p>La base está subida. Estos pasos hay que darlos in-game:</p>
+    </div>
+    <div class="grid g2">
+      <div class="card reveal">
+        <h3 class="serif">🔌 1 · Encender y probar el efecto</h3>
+        <ul style="list-style:none;padding:0;margin:.5em 0 0;font-size:.92rem;line-height:1.85">
+          <li><code>/reload</code><br><span style="color:var(--ink-faint)">carga el sistema (comprobar: <code>/datapack list</code> muestra <code>file/red_anclaje</code> encendido)</span></li>
+          <li><code>/cw reload</code><br><span style="color:var(--ink-faint)">aplica el permiso que usan los botones del menú</span></li>
+          <li><code>/function reino_anclaje:efecto_test</code><br><span style="color:var(--ink-faint)">te envuelve en la <strong>nube morada</strong> SIN viajar → para ver si el efecto gusta (si no, se afina)</span></li>
+        </ul>
+      </div>
+      <div class="card reveal">
+        <h3 class="serif">🏗️ 2 · Crear y colocar los Fragmentos</h3>
+        <ul style="list-style:none;padding:0;margin:.5em 0 0;font-size:.92rem;line-height:1.85">
+          <li><code>/function reino_anclaje:setup</code><br><span style="color:var(--ink-faint)">crea los Fragmentos (puntos tocables). Antes se ajustan sus coordenadas en el archivo si hace falta</span></li>
+          <li><span style="color:var(--ink-faint)">Construir el <strong>esqueje visible</strong> en cada sitio (piedra oscura / obsidiana llorona + grieta morada). El modelo bonito con textura va después.</span></li>
+        </ul>
+      </div>
+      <div class="card reveal">
+        <h3 class="serif">🎮 3 · Probar el viaje entero</h3>
+        <ul style="list-style:none;padding:0;margin:.5em 0 0;font-size:.92rem;line-height:1.85">
+          <li><span style="color:var(--ink-faint)">Clic derecho al Fragmento del Reino → menú → "El Reino" → nube → apareces en la plaza. (El del Reino ya tiene sus coordenadas puestas.)</span></li>
+          <li><span style="color:var(--ink-faint)">Probar también con una <strong>cuenta normal</strong> (sin OP) que el menú funciona.</span></li>
+        </ul>
+      </div>
+      <div class="card reveal" style="border-color:rgba(180,120,255,.45)">
+        <h3 class="serif">📍 4 · Lo que hace falta de Pan</h3>
+        <ul style="list-style:none;padding:0;margin:.5em 0 0;font-size:.92rem;line-height:1.85">
+          <li><span style="color:var(--ink-faint)"><strong>Las coordenadas de llegada</strong> (dónde aparece el jugador) de cada Fragmento: la Torre-Eco del Reino 2, la mazmorra, etc.</span></li>
+          <li><span style="color:var(--ink-faint)"><strong>La lista de destinos</strong> definitiva (qué sitios entran y cuáles cuestan Cacahuates).</span></li>
+          <li><span style="color:var(--ink-faint)">Con eso, Claude lo deja terminado: una línea por destino y a subir.</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="note reveal" style="max-width:72ch;margin-top:16px"><b>🤝 Reparto:</b> <strong>Pan</strong> diseñó el sistema, decide los destinos y pasa las coordenadas, y <strong>construye</strong> los esquejes donde quiera. <strong>Claude</strong> tiene montada toda la fontanería (menú, nube, descubrimiento, enganche con los eventos) y la deja lista según Pan vaya diciendo. Cuando la versión de prueba convenza, se hace el <strong>plugin definitivo</strong>. Detalle técnico en la ficha <code>.claude/rules/red-anclaje.md</code>.</div>
+  </section>
+
   <section id="futuro">
     <div class="prose reveal">
-      <div class="eyebrow"><span class="n">16</span> Hacia el futuro</div>
+      <div class="eyebrow"><span class="n">17</span> Hacia el futuro</div>
       <h2>Lo que viene (el plan de expansión)</h2>
       <p>El Reino se construye pieza a pieza, y cada personaje nuevo se diseña juntos antes de montarlo. Esto es lo que hay en la lista:</p>
       <div class="grid g2" style="margin-top:22px">
