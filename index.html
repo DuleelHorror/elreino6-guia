@@ -1227,7 +1227,8 @@
 
     <div class="grid g2" style="margin-top:8px">
       <div class="card reveal"><h3 class="serif">🔓 Descubrir visitando</h3><p style="color:var(--ink-soft);font-size:.94rem;margin:.3em 0 0">Un jugador nuevo NO puede viajar a un sitio donde nunca ha estado. Tiene que ir en persona y activar su Fragmento una vez. Eso se guarda por jugador y no se pierde.</p></div>
-      <div class="card reveal"><h3 class="serif">🎫 Eventos</h3><p style="color:var(--ink-soft);font-size:.94rem;margin:.3em 0 0">Algunos destinos (las Torres-Eco) solo se abren tras un evento. La <strong>Torre-Eco del Reino 2</strong> ya está enganchada al <strong>evento criogénico</strong> (sección anterior): no se puede viajar hasta completarlo.</p></div>
+      <div class="card reveal"><h3 class="serif">🔒 Se desbloquea con una saga</h3><p style="color:var(--ink-soft);font-size:.94rem;margin:.3em 0 0">El sistema puede quedar <strong>bloqueado hasta que el jugador complete una saga de misiones</strong> (que Pan decida). Ya está montado el "candado"; solo falta decir <strong>qué saga</strong> lo abre. Mientras tanto está abierto para probar.</p></div>
+      <div class="card reveal"><h3 class="serif">🚫 No te tp a donde estás</h3><p style="color:var(--ink-soft);font-size:.94rem;margin:.3em 0 0">En el menú <strong>no aparece el sitio donde ya estás</strong> (si estás en el Reino, no sale "El Reino"). Los nombres salen en blanco; <strong>El Reino</strong> en morado; y las zonas que aún no conoces salen como <em>"Conexión desconocida"</em>.</p></div>
       <div class="card reveal"><h3 class="serif">🥜 Precio</h3><p style="color:var(--ink-soft);font-size:.94rem;margin:.3em 0 0">Volver al Reino siempre gratis (para no quedarse tirado sin dinero). En esta primera versión <strong>todos los viajes son gratis</strong>; el cobro de verdad llega con la versión definitiva (abajo).</p></div>
       <div class="card reveal"><h3 class="serif">🛡️ Sin trampas</h3><p style="color:var(--ink-soft);font-size:.94rem;margin:.3em 0 0">No se puede saltar el descubrimiento ni viajar a algo cerrado: el sistema lo comprueba antes de cada viaje. Funciona con jugadores normales (sin ser OP).</p></div>
     </div>
@@ -1257,7 +1258,7 @@
       <div class="card reveal">
         <h3 class="serif">🏗️ 2 · Colocar los Fragmentos</h3>
         <ul style="list-style:none;padding:0;margin:.5em 0 0;font-size:.92rem;line-height:1.85">
-          <li><span style="color:var(--ink-faint)">Ponte <strong>exactamente donde quieras el nexo</strong> y ejecuta:</span><br><code>/function reino_anclaje:poner_reino</code><br><span style="color:var(--ink-faint)">coloca un <strong>nexo de reaparición ENCENDIDO</strong> (respawn anchor cargado, que brilla) con su zona de clic, y te apartas. Hay uno por destino: <code>poner_reino</code>, <code>poner_torre_mago</code>, <code>poner_torre_r2</code>, <code>poner_mazmorra_1</code>. Recordatorio de todos: <code>/function reino_anclaje:ayuda_fragmentos</code>.</span></li>
+          <li><span style="color:var(--ink-faint)">Ponte <strong>exactamente donde quieras el nexo</strong> y ejecuta:</span><br><code>/function reino_anclaje:poner_reino</code><br><span style="color:var(--ink-faint)">coloca un <strong>nexo de reaparición ENCENDIDO</strong> (respawn anchor cargado, que brilla) con su zona de clic y un <strong>cartel flotante</strong>, y te apartas. Ahora mismo hay dos: <code>poner_reino</code> y <code>poner_torre_mago</code>. Recordatorio: <code>/function reino_anclaje:ayuda_fragmentos</code>.</span></li>
           <li><span style="color:var(--ink-faint)">Clic derecho al nexo = abre la Red. Puedes construir un <strong>esqueje</strong> alrededor (piedra oscura / obsidiana llorona) para adornarlo.</span></li>
         </ul>
       </div>
@@ -1271,8 +1272,8 @@
       <div class="card reveal" style="border-color:rgba(180,120,255,.45)">
         <h3 class="serif">📍 4 · Lo que hace falta de Pan</h3>
         <ul style="list-style:none;padding:0;margin:.5em 0 0;font-size:.92rem;line-height:1.85">
-          <li><span style="color:var(--ink-faint)"><strong>Las coordenadas de llegada</strong> (dónde aparece el jugador) de cada Fragmento: la Torre-Eco del Reino 2, la mazmorra, etc.</span></li>
-          <li><span style="color:var(--ink-faint)"><strong>La lista de destinos</strong> definitiva (qué sitios entran y cuáles cuestan Cacahuates).</span></li>
+          <li><span style="color:var(--ink-faint)"><strong>Qué SAGA de misiones desbloquea el sistema</strong> (para activar el candado). Ya están puestos el Reino y la Torre del Mago con sus coordenadas.</span></li>
+          <li><span style="color:var(--ink-faint)"><strong>Más destinos</strong> cuando los quieras (Torres-Eco, mazmorras…): me pasas dónde aparece el jugador y si cuesta Cacahuates.</span></li>
           <li><span style="color:var(--ink-faint)">Con eso, Claude lo deja terminado: una línea por destino y a subir.</span></li>
         </ul>
       </div>
