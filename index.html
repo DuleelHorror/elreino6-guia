@@ -307,23 +307,23 @@
       <button class="upd-x" aria-label="Cerrar" onclick="er6CloseUpd()">✕</button>
       <div class="eyebrow">✨ Novedades del Reino</div>
       <h2 id="updT">¡Actualización en el juego!</h2>
-      <div class="date">11 de julio de 2026</div>
+      <div class="date">16 de julio de 2026</div>
     </div>
     <div class="upd-b">
-      <div class="u"><span class="ic">🎟️</span><p><b>¡Nuevo Tablón de Encargos!</b> Cada día tienes <b>misiones diarias</b> (matar, minar, talar, pescar…). Al completarlas subes tu <b>Pase del Reino</b> y ganas <b>Fichas</b>, una moneda especial que gastas en la <b>Tienda de Fichas</b> para abrir el <b>Cofre de la Suerte</b> (una lootbox con premios). El nuevo motivo para volver cada día.</p></div>
-      <div class="u"><span class="ic">⚡</span><p><b>Para activar el Tablón, Toni te manda una misión:</b> «Luz para el Tablón». El chisme va a <b>«12 voltios»</b> y hay que bajar <b>2 palancas</b> del circuito (una <b>debajo del puente Mambutu</b> y otra <b>fuera de la iglesia</b>). Le llevas los fusibles y te da el <b>Enchufe</b> que lo desbloquea.</p></div>
-      <div class="u"><span class="ic">🍺</span><p><b>Nueva saga: «El Bar Co»</b> — el <b>Señor Trapo</b> (un cerdo tabernero) te enseña a <b>fabricar cerveza</b> paso a paso en la bodega de su barco volcado: fermentar, destilar, añejar, sellar y servir.</p></div>
-      <div class="u"><span class="ic">🕵️</span><p><b>Saga «Operación Carpincho»</b> — destapas al <b>Ministro</b> corrupto que quería echar al pueblo con sus «Apartamentos Pan de Gamba». <b>6 misiones</b> de infiltración, sabotaje y un careo final contra el jefe.</p></div>
-      <div class="u"><span class="ic">🪨</span><p><b>Nueva saga: «El Pulso de la Piedra»</b> — la <b>Doctora Pizarrica</b> (una geóloga que odia las piedras) te presta un <b>sismógrafo</b> para medir, en lo más hondo de una mina, si los <b>temblores de la Torre</b> llegan al subsuelo. Un nuevo hilo del misterio de la Torre Negra.</p></div>
-      <div class="u"><span class="ic">🎰</span><p><b>Cofres con animación</b> (estilo CSGO): Capincherío, Bronce y el nuevo <b>Cofre de la Suerte</b> del Tablón.</p></div>
-      <div class="u"><span class="ic">💬</span><p>Los NPCs hablan en una <b>caja de diálogo</b> (no en el chat) y el nuevo Pase está <b>en español</b>.</p></div>
+      <div class="u"><span class="ic">🌪️</span><p><b>¡Eventos por el mundo!</b> Cada tanto pasa algo con aviso previo: <b>fiebre del oro</b>, <b>noche de horda</b>, <b>doble botín</b>, <b>expedición minera</b>, abundancia de hierro… buffs y retos que duran un rato. Si sales a currar, mira el aviso: igual es tu día de suerte.</p></div>
+      <div class="u"><span class="ic">⚰️</span><p><b>La muerte ya deja TUMBA</b> <i>(recién estrenado)</i>. Al morir, tus cosas se quedan en una tumba <b>en el sitio</b> y al reaparecer te llevas una brújula que te lleva hasta ella. ¿Con prisa? Un <b>Amuleto de Rescate</b> (un uso) o la <b>Ventanilla del Banco</b> te teletransportan a tu tumba.</p></div>
+      <div class="u"><span class="ic">🔒</span><p><b>Candados para tus cofres.</b> Pon un cartel en un cofre y queda cerrado: solo tú lo abres. Se acabó lo de fiarse.</p></div>
+      <div class="u"><span class="ic">🌳</span><p><b>Los árboles se replantan solos.</b> Talas el tronco entero de un hachazo y brota un arbolito nuevo. Nada de dejar el bosque pelado.</p></div>
+      <div class="u"><span class="ic">⚔️</span><p><b>PvP solo en el salvaje.</b> En el pueblo y las zonas habitadas <b>nadie te puede matar</b>; las peleas entre jugadores son solo fuera. Y las construcciones están protegidas (los creepers y el fuego ya no te tiran la casa).</p></div>
+      <div class="u"><span class="ic">🍂</span><p><b>Estaciones del año</b> <i>(encendiéndose)</i>: primavera, verano, otoño e invierno, con su clima, sus colores y sus bichos de temporada.</p></div>
+      <div class="u"><span class="ic">🗼</span><p><b>Red de Anclaje</b> <i>(en obras)</i>: viaje rápido entre sitios importantes con «esquejes de la Torre». Ya funciona la conexión al Reino y a la Torre del Mago; irán apareciendo más.</p></div>
     </div>
     <div class="upd-f"><button onclick="er6CloseUpd()">¡Entendido!</button></div>
   </div>
 </div>
 <button class="upd-btn" onclick="er6OpenUpd()" title="Ver novedades">✨ Novedades</button>
 <script>
-  var ER6_UPD = "2026-07-11b";
+  var ER6_UPD = "2026-07-16";
   function er6OpenUpd(){ document.getElementById('updOv').classList.add('on'); }
   function er6CloseUpd(){ document.getElementById('updOv').classList.remove('on'); try{ localStorage.setItem('er6_upd_seen', ER6_UPD); }catch(e){} }
   (function(){ var seen; try{ seen = localStorage.getItem('er6_upd_seen'); }catch(e){ seen = null; } if(seen !== ER6_UPD){ er6OpenUpd(); } })();
@@ -359,6 +359,7 @@
           <a href="#mapa" role="menuitem">Mapa de misiones</a>
           <a href="#maria" role="menuitem">La maría</a>
           <a href="#mazmorras" role="menuitem">Las mazmorras</a>
+          <a href="#mundo-vivo" role="menuitem">Vivir en el Reino 🆕</a>
         </div>
         <div class="menu-grp">
           <div class="menu-h">Números y planes</div>
@@ -379,7 +380,7 @@
     <p class="sub">Todo lo que hemos construido, cómo está pensado y hacia dónde va. Escrito en fácil, sin tecnicismos, para que se entienda de un vistazo.</p>
     <div class="metabar">
       <div class="stat"><b>1.21.8</b><span>Paper · Java 25</span></div>
-      <div class="stat"><b>~29</b><span>Plugins</span></div>
+      <div class="stat"><b>~32</b><span>Plugins</span></div>
       <div class="stat"><b>5</b><span>Clases jugables</span></div>
       <div class="stat"><b>28</b><span>NPCs en el mundo</span></div>
       <div class="stat"><b>20+</b><span>Misiones jugables</span></div>
@@ -486,6 +487,9 @@
         <div class="plug"><b>CommandWhitelist</b><span>Bloquea los comandos a los jugadores (seguridad + inmersión).</span></div>
         <div class="plug"><b>BattlePass + PlayerPoints</b><span>El Pase y las misiones diarias (Tablón), con la moneda Fichas 🎟️.</span></div>
         <div class="plug"><b>CrazyCrates</b><span>Cofres de recompensa con animación (lootboxes).</span></div>
+        <div class="plug"><b>WorldEvents</b><span>Eventos por el mundo: fiebre del oro, noche de horda, doble botín…</span></div>
+        <div class="plug"><b>UltimateGraves</b><span>Al morir dejas una tumba con tus cosas en el sitio.</span></div>
+        <div class="plug"><b>BlockLocker</b><span>Candados de cofres: proteges lo tuyo con un cartel.</span></div>
       </div>
     </div>
 
@@ -497,7 +501,7 @@
         <div class="plug"><b>HeadDatabase</b><span>Miles de cabezas decorativas.</span></div>
         <div class="plug"><b>Vegas</b><span>Minijuegos de casino.</span></div>
         <div class="plug"><b>SPdrug</b><span>El negocio (ilegal) de cultivar y procesar marihuana.</span></div>
-        <div class="plug"><b>TreeFeller</b><span>Talas un árbol entero de un solo hachazo.</span></div>
+        <div class="plug"><b>Timberella</b><span>Talas un árbol entero de un hachazo… y se replanta solo.</span></div>
       </div>
     </div>
   </section>
@@ -1282,9 +1286,25 @@
     <div class="note reveal" style="max-width:72ch;margin-top:16px"><b>🤝 Reparto:</b> <strong>Pan</strong> diseñó el sistema, decide los destinos y pasa las coordenadas, y <strong>construye</strong> los esquejes donde quiera. <strong>Claude</strong> tiene montada toda la fontanería (menú, nube, descubrimiento, enganche con los eventos) y la deja lista según Pan vaya diciendo. Cuando la versión de prueba convenza, se hace el <strong>plugin definitivo</strong>. Detalle técnico en la ficha <code>.claude/rules/red-anclaje.md</code>.</div>
   </section>
 
+  <section id="mundo-vivo">
+    <div class="prose reveal">
+      <div class="eyebrow"><span class="n">17</span> Vivir en el Reino</div>
+      <h2>Las reglas del mundo (lo nuevo del día a día)</h2>
+      <p>Más allá de las misiones, el Reino tiene sus propias reglas de convivencia y unos sistemas que hacen que el mundo se sienta vivo. Esto es lo que un jugador nota nada más entrar.</p>
+    </div>
+    <div class="grid g2" style="margin-top:22px">
+      <div class="card reveal"><h3 class="serif">🌪️ Eventos por el mundo</h3><p style="color:var(--ink-soft); font-size:.94rem; margin:.3em 0 0">Cada tanto salta un evento con <strong>aviso previo</strong>: <strong>fiebre del oro</strong>, <strong>noche de horda</strong>, <strong>doble botín</strong>, <strong>expedición minera</strong>, abundancia de hierro… Buffs y retos que duran un rato. No rompen el mundo (nada de meteoritos ni destrozos): son para picar más a gusto o buscarte la vida.</p></div>
+      <div class="card reveal"><h3 class="serif">⚰️ La muerte deja tumba <span class="pill gold">recién estrenado</span></h3><p style="color:var(--ink-soft); font-size:.94rem; margin:.3em 0 0">Cuando mueres, tus cosas se quedan en una <strong>tumba en el sitio</strong> donde caíste, y al reaparecer te llevas una <strong>brújula</strong> que te guía hasta ella. El castigo no es perderlo todo, es <strong>el viaje de vuelta</strong>. ¿Con prisa o con miedo? Un <strong>Amuleto de Rescate</strong> (un solo uso) o la <strong>Ventanilla del Banco</strong> te teletransportan a tu tumba.</p></div>
+      <div class="card reveal"><h3 class="serif">⚔️ PvP solo en el salvaje</h3><p style="color:var(--ink-soft); font-size:.94rem; margin:.3em 0 0">En el pueblo y las zonas habitadas <strong>ningún jugador te puede matar</strong>. Las peleas entre jugadores solo cuentan <strong>fuera</strong>, en el salvaje. Y las construcciones están protegidas: los <strong>creepers, el TNT y el fuego</strong> ya no te tiran la casa.</p></div>
+      <div class="card reveal"><h3 class="serif">🔒 Candados de cofres</h3><p style="color:var(--ink-soft); font-size:.94rem; margin:.3em 0 0">Pones un <strong>cartel</strong> en un cofre y queda cerrado con tu nombre: solo tú (y quien tú digas) lo abre. Tranquilidad para guardar tus cosas.</p></div>
+      <div class="card reveal"><h3 class="serif">🌳 Los árboles se replantan</h3><p style="color:var(--ink-soft); font-size:.94rem; margin:.3em 0 0">Talas el <strong>árbol entero de un hachazo</strong> y brota un arbolito nuevo en su sitio. Recoges madera rápido sin dejar el bosque hecho un solar.</p></div>
+      <div class="card reveal"><h3 class="serif">🍂 Estaciones del año <span class="pill folk">encendiéndose</span></h3><p style="color:var(--ink-soft); font-size:.94rem; margin:.3em 0 0">El Reino vive las <strong>cuatro estaciones</strong>: primavera, verano, otoño e invierno, cada una con su <strong>clima</strong>, sus colores en los árboles y sus <strong>bichos de temporada</strong> (zorros y lobos en invierno, ranas y luciérnagas en primavera…). Se están terminando de encender estos días.</p></div>
+    </div>
+  </section>
+
   <section id="futuro">
     <div class="prose reveal">
-      <div class="eyebrow"><span class="n">17</span> Hacia el futuro</div>
+      <div class="eyebrow"><span class="n">18</span> Hacia el futuro</div>
       <h2>Lo que viene (el plan de expansión)</h2>
       <p>El Reino se construye pieza a pieza, y cada personaje nuevo se diseña juntos antes de montarlo. Esto es lo que hay en la lista:</p>
       <div class="grid g2" style="margin-top:22px">
@@ -1296,6 +1316,17 @@
         <div class="card reveal"><h3 class="serif">⚔️ Más para el Tablón</h3><p style="color:var(--ink-soft); font-size:.94rem; margin:.3em 0 0">El <strong>Tablón de Encargos ya está vivo</strong> ✅. Lo siguiente: ampliarlo con objetivos de <strong>dungeon</strong> y <strong>boss raids</strong>, y más premios para el Cofre de la Suerte.</p></div>
         <div class="card reveal"><h3 class="serif">🍓 Magia del Yogur</h3><p style="color:var(--ink-soft); font-size:.94rem; margin:.3em 0 0">Darle al sanador sus hechizos con ingredientes, igual que el Parrillero.</p></div>
         <div class="card reveal"><h3 class="serif">⚖️ Equilibrar el equipo</h3><p style="color:var(--ink-soft); font-size:.94rem; margin:.3em 0 0">Que las armas con poderes cuesten algo (maná/durabilidad) para que no queden rotas.</p></div>
+      </div>
+
+      <h3 class="serif" style="margin:34px 0 4px">🔜 En camino (preparándose)</h3>
+      <p style="color:var(--ink-soft)">Mecánicas ya elegidas y montándose entre bambalinas. Cada una llegará con su propia mini-saga que la desbloquea.</p>
+      <div class="grid g2" style="margin-top:16px">
+        <div class="card reveal"><h3 class="serif">🖐️ El Gremio de los Dedos Largos</h3><p style="color:var(--ink-soft); font-size:.94rem; margin:.3em 0 0">Carterismo: robar por la espalda a otro jugador (agacharse, acercarse y rebuscar). El toque golfo del barrio pobre, gateado por una saga.</p></div>
+        <div class="card reveal"><h3 class="serif">🏷️ La Lonja del Reino</h3><p style="color:var(--ink-soft); font-size:.94rem; margin:.3em 0 0">Casa de subastas entre jugadores: pones tus cosas a la venta y otros pujan. Un mercado de verdad, con su comisión.</p></div>
+        <div class="card reveal"><h3 class="serif">💀 Cazarrecompensas</h3><p style="color:var(--ink-soft); font-size:.94rem; margin:.3em 0 0">Pones precio a la cabeza de alguien pagando de tu bolsillo; quien lo cace, cobra. Picante del hampa (solo con PvP, en el salvaje).</p></div>
+        <div class="card reveal"><h3 class="serif">💍 Bodas</h3><p style="color:var(--ink-soft); font-size:.94rem; margin:.3em 0 0">Casarte con otro jugador ante el cura del pueblo: teletransporte a tu pareja y algún bonus. Comunidad y drama garantizado.</p></div>
+        <div class="card reveal"><h3 class="serif">🎩 Cosméticos</h3><p style="color:var(--ink-soft); font-size:.94rem; margin:.3em 0 0">Sombreros, partículas, mascotas, emotes y monturas. Puro postureo (no dan poder): los básicos por Cacahuates, los chulos por misión, pase o cofre.</p></div>
+        <div class="card reveal"><h3 class="serif">🎣 Torneos de pesca</h3><p style="color:var(--ink-soft); font-size:.94rem; margin:.3em 0 0">Peces raros que coleccionar y torneos con premios, de la mano del <strong>Bacalao Gabardinez</strong> (un pez disfrazado de humano) en el Puerto.</p></div>
       </div>
     </div>
   </section>

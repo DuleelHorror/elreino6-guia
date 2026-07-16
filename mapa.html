@@ -4419,6 +4419,19 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
       steps:['Matar 6 zombis','Volver a hablar con Anselmo'], desc:'Anselmo (RRHH) te explica el árbol de talentos como tu «plan de carrera». Tras una «evaluación de desempeño» te da el Mapa de Talentos (abre /skilltrees) y 1 punto para estrenar. Paralela: cuando quieras tras elegir clase.'},
     {id:'sabio', label:'📚 El Sabio', npc:'⬜ NPC por crear', faction:'future', type:'Enciclopedia de clases (futuro)', status:'future',
       desc:'Una enciclopedia con patas: le preguntas por una clase y te explica su rol y sus 4 hechizos.'},
+    // En camino (2026-07-16): mecánicas ya elegidas, cada una con su saga por montar
+    {id:'gremio', label:'🖐️ Gremio de los Dedos Largos', npc:'⬜ saga por montar', faction:'future', type:'Robo / carterismo (en camino)', status:'future',
+      desc:'Robar por la espalda a otros jugadores (agacharse, acercarse y rebuscar). El toque golfo del barrio pobre, gateado por una saga.'},
+    {id:'caza', label:'💀 Cazarrecompensas', npc:'⬜ saga por montar', faction:'future', type:'PvP · suma cero (en camino)', status:'future',
+      desc:'Pones precio a la cabeza de alguien pagando de tu bolsillo; quien lo cace, cobra. Solo con PvP, en el salvaje.'},
+    {id:'lonja', label:'🏷️ La Lonja del Reino', npc:'⬜ saga por montar', faction:'future', type:'Casa de subastas (en camino)', status:'future',
+      desc:'Subastas entre jugadores: pones tus cosas a la venta y otros pujan. Un mercado de verdad, con su comisión.'},
+    {id:'bodas', label:'💍 Bodas', npc:'⬜ el cura del pueblo', faction:'future', type:'Social (en camino)', status:'future',
+      desc:'Casarte con otro jugador ante el cura: teletransporte a tu pareja y algún bonus.'},
+    {id:'cosmeticos', label:'🎩 Cosméticos', npc:'Sistema', faction:'future', type:'Postureo (en camino)', status:'future',
+      desc:'Sombreros, partículas, mascotas, emotes y monturas. No dan poder: puro estilo (por Cacahuates, misión, pase o cofre).'},
+    {id:'pesca', label:'🎣 Torneos de Pesca', npc:'⬜ Bacalao Gabardinez', faction:'future', type:'Pesca · torneos (en camino)', status:'future',
+      desc:'Peces raros que coleccionar y torneos con premios, de la mano del pez disfrazado de humano, en el Puerto.'},
   ];
   // ===== CONEXIONES (aristas): source -> target =====
   const E = [
@@ -4432,6 +4445,9 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
     // futuro (punteadas)
     ['clase','talentos'],
     ['permiso','torre','future'],['torre','invasion','future'],['clase','sabio','future'],
+    // en camino (2026-07-16), colgadas del nodo más lógico
+    ['nando','gremio','future'],['gremio','caza','future'],['mercado','lonja','future'],
+    ['banco','bodas','future'],['cofre','cosmeticos','future'],['pecio','pesca','future'],
   ];
 
   const elements = [];
