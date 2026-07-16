@@ -4417,8 +4417,8 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
       desc:'El gran misterio: la puerta sellada, la Torre del Mago («¿magia o ciencia?») y la mina. Por diseñar.'},
     {id:'invasion', label:'⚔️ El Despertar de la Torre', npc:'Evento (admin)', faction:'future', type:'Boss raid · evento (futuro)', status:'future',
       desc:'Invasión de Ecos del Multiverso: 3 oleadas + jefe. Autorado, pendiente de desplegar.'},
-    {id:'talentos', label:'🗺️ Plan de Carrera', npc:'Maestro Anselmo', faction:'sci', type:'Tutorial de talentos (paralela)', coins:6, reward:'Mapa de Talentos + 1 punto de talento', status:'new',
-      steps:['Matar 6 zombis','Volver a hablar con Anselmo'], desc:'Anselmo (RRHH) te explica el árbol de talentos como tu «plan de carrera». Tras una «evaluación de desempeño» te da el Mapa de Talentos (abre /skilltrees) y 1 punto para estrenar. Paralela: cuando quieras tras elegir clase.'},
+    {id:'talentos', label:'🗺️ Plan de Carrera', npc:'Maestro Anselmo', faction:'sci', type:'Tutorial de talentos (obligatorio)', coins:6, reward:'Mapa de Talentos + 1 punto de talento', status:'live',
+      steps:['Matar 6 zombis','Volver a hablar con Anselmo'], desc:'Anselmo (RRHH) te explica el árbol de talentos como tu «plan de carrera». Tras una «evaluación de desempeño» te da el Mapa de Talentos (abre /skilltrees) y 1 punto para estrenar. Va en la espina obligatoria: entre el Semental y la Alquimista.'},
     {id:'sabio', label:'📚 El Sabio', npc:'⬜ NPC por crear', faction:'future', type:'Enciclopedia de clases (futuro)', status:'future',
       desc:'Una enciclopedia con patas: le preguntas por una clase y te explica su rol y sus 4 hechizos.'},
     // En camino (2026-07-16): mecánicas ya elegidas, cada una con su saga por montar
@@ -4437,15 +4437,14 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
   ];
   // ===== CONEXIONES (aristas): source -> target =====
   const E = [
-    ['contrato','fichaje'],['fichaje','clase'],['clase','semental'],['semental','alquimista'],['alquimista','nando'],
+    ['contrato','fichaje'],['fichaje','clase'],['clase','semental'],['semental','talentos'],['talentos','alquimista'],['alquimista','nando'],
     ['nando','cultivo'],['cultivo','vender'],
     ['nando','permiso'],['permiso','bolsa'],['bolsa','jobs'],['bolsa','carpincho'],
     ['carpincho','barco'],['barco','tablon_luz'],['tablon_luz','tablon'],['tablon','tienda'],['tienda','cofre'],
     // secundarias + saga del banco (2026-07-11) + Red de Anclaje (2026-07-15)
-    ['semental','pecio'],['carpincho','geologia'],['carpincho','anclaje'],
+    ['bolsa','pecio'],['carpincho','geologia'],['cuenta','anclaje'],
     ['tablon_luz','banco'],['banco','cuenta'],['cuenta','mercado'],
     // futuro (punteadas)
-    ['clase','talentos'],
     ['permiso','torre','future'],['torre','invasion','future'],['clase','sabio','future'],
     // en camino (2026-07-16), colgadas del nodo más lógico
     ['nando','gremio','future'],['gremio','caza','future'],['mercado','lonja','future'],
