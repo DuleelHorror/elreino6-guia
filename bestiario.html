@@ -45,6 +45,10 @@
     padding:1rem 1.1rem;margin-bottom:1.2rem;box-shadow:var(--shadow)}
   .intro h1{font-family:ui-serif,Palatino,Georgia,serif;margin:.1rem 0 .5rem;font-size:1.5rem}
   .intro p{margin:.4rem 0;color:var(--ink-soft);font-size:.95rem}
+  .intro .admin{margin-top:.7rem;padding:.5rem .7rem;background:var(--sunken);
+    border-left:3px solid var(--folk);border-radius:.35rem;font-size:.88rem}
+  .intro code{background:#0d0b16;color:#7ee787;padding:.05em .35em;border-radius:.25rem;
+    font-family:ui-monospace,Consolas,monospace;font-size:.85em}
   .filtros{display:flex;flex-wrap:wrap;gap:.4rem;margin:.9rem 0 1.1rem;align-items:center}
   .filtros input{flex:1;min-width:180px;padding:.4rem .7rem;border-radius:.55rem;
     border:1px solid var(--line-strong);background:var(--surface);color:var(--ink);font-size:.9rem}
@@ -92,6 +96,15 @@
   .rel.invoca{color:var(--danger);border-color:var(--danger)}
   .rel.cria{color:var(--ink-faint)}
   .esc,.loot,.tip{font-size:.85rem;margin:.55rem 0 0}
+  /* comando de admin para invocar el bicho (para testear) */
+  .cmd{margin:.7rem 0 0;display:flex;align-items:center;gap:.5rem;cursor:pointer;
+    background:#0d0b16;border:1px solid var(--line-strong);border-radius:.45rem;
+    padding:.4rem .6rem;font-family:ui-monospace,"Cascadia Code",Consolas,monospace}
+  .cmd .k{color:#7ee787;font-size:.8rem;flex:1;overflow-x:auto;white-space:nowrap}
+  .cmd .copy{font-size:.68rem;color:var(--ink-faint);border:1px solid var(--line-strong);
+    border-radius:.3rem;padding:.1rem .4rem;background:var(--surface-2);white-space:nowrap}
+  .cmd:hover .copy{color:var(--arcane);border-color:var(--arcane)}
+  .cmd.ok .copy{color:var(--folk);border-color:var(--folk)}
   .esc{color:var(--ink-soft)}
   .tip{background:var(--sunken);border-left:3px solid var(--arcane);
     padding:.45rem .6rem;border-radius:.35rem}
@@ -120,6 +133,9 @@
        (más vida y más daño). A partir de 3.000 bloques, si vas sin equipo, no vuelves.</p>
     <p><b>Los comunes no llevan nombre encima.</b> No los vas a ver venir de lejos: te los
        encuentras y ya. Los mini-jefes sí se anuncian, con barra y todo.</p>
+    <p class="admin">🛠️ <b>Para admins (probarlo):</b> cada ficha trae abajo el comando
+       <code>/mm mobs spawn &lt;bicho&gt; 1</code> para invocarlo al momento. Haz clic en el comando para
+       copiarlo. Necesitas ser OP (permiso <code>mythicmobs.command.mobs.spawn</code>).</p>
   </div>
 
   <div class="filtros">
@@ -159,6 +175,9 @@
   <p class="esc"><b>Escala con la zona:</b> +60 vida y +2 daño por nivel. Aquí sale de nivel 2.</p>
   <p class="loot"><b>Suelta:</b> Mucho hilo, ojos de arana y su Glandula de veneno.</p>
   <p class="tip"><b>Consejo:</b> No te entretengas con las crias o te comen el sitio. Ve a por ella y acabala rapido.</p>
+  <div class="cmd" title="Comando de admin para invocarlo (clic para copiar)" onclick="ER6B.copy(this)">
+    <span class="k">/mm mobs spawn AranaMadre 1</span><span class="copy">copiar</span>
+  </div>
 </article>
 <article class="mob comun cria" data-cat="comun" data-nombre="cría de araña">
   <header>
@@ -184,6 +203,9 @@
   
   <p class="loot"><b>Suelta:</b> Nada.</p>
   <p class="tip"><b>Consejo:</b> Ignoralas y ve a por la Madre; dejan de salir cuando cae.</p>
+  <div class="cmd" title="Comando de admin para invocarlo (clic para copiar)" onclick="ER6B.copy(this)">
+    <span class="k">/mm mobs spawn CriaAranaMadre 1</span><span class="copy">copiar</span>
+  </div>
 </article>
 <article class="mob comun" data-cat="comun" data-nombre="bicha del granero">
   <header>
@@ -209,6 +231,9 @@
   <p class="esc"><b>Escala con la zona:</b> +14 vida y +1.3 daño por nivel. Aquí sale de nivel 1, 4, 6, 7.</p>
   <p class="loot"><b>Suelta:</b> Hilo y ojos de arana.</p>
   <p class="tip"><b>Consejo:</b> Si te frena, no corras: te alcanza. Pelea de espaldas a una pared.</p>
+  <div class="cmd" title="Comando de admin para invocarlo (clic para copiar)" onclick="ER6B.copy(this)">
+    <span class="k">/mm mobs spawn BichaGranero 1</span><span class="copy">copiar</span>
+  </div>
 </article></div>
 </section><section class="familia" data-cats="comun">
   <div class="fam-head"><span class="fam-em">🐀</span><h2>Las ratas y su dueño</h2><span class="fam-n">2 criaturas · van juntas</span></div>
@@ -238,6 +263,9 @@
   <p class="esc"><b>Escala con la zona:</b> +12 vida y +1.2 daño por nivel. Aquí sale de nivel 1, 3, 4, 7.</p>
   <p class="loot"><b>Suelta:</b> Carne podrida y, de vez en cuando, una Cola de rata.</p>
   <p class="tip"><b>Consejo:</b> Matalo a el PRIMERO o te veras rodeado sin saber como.</p>
+  <div class="cmd" title="Comando de admin para invocarlo (clic para copiar)" onclick="ER6B.copy(this)">
+    <span class="k">/mm mobs spawn ZombiRatero 1</span><span class="copy">copiar</span>
+  </div>
 </article>
 <article class="mob comun cria" data-cat="comun" data-nombre="rata de alcantarilla">
   <header>
@@ -263,6 +291,9 @@
   <p class="esc"><b>Escala con la zona:</b> +4 vida y +0.4 daño por nivel. Aquí sale de nivel 2.</p>
   <p class="loot"><b>Suelta:</b> Nada. Son carne de canon.</p>
   <p class="tip"><b>Consejo:</b> No pierdas el tiempo con ellas: busca al Ratero que las esta soltando.</p>
+  <div class="cmd" title="Comando de admin para invocarlo (clic para copiar)" onclick="ER6B.copy(this)">
+    <span class="k">/mm mobs spawn RataAlcantarilla 1</span><span class="copy">copiar</span>
+  </div>
 </article></div>
 </section><section class="familia" data-cats="comun jefe">
   <div class="fam-head"><span class="fam-em">🤠</span><h2>Los bandoleros</h2><span class="fam-n">2 criaturas · van juntas</span></div>
@@ -292,6 +323,9 @@
   <p class="esc"><b>Escala con la zona:</b> +45 vida y +1.7 daño por nivel. Aquí sale de nivel 2.</p>
   <p class="loot"><b>Suelta:</b> Su Bolsa del bandolero, casi siempre.</p>
   <p class="tip"><b>Consejo:</b> A media vida TIRA EL RIFLE y saca el machete: deja de dispararte de lejos y se te echa encima mucho mas rapido. Cuidado con confiarte cuando le veas soltar el arma.</p>
+  <div class="cmd" title="Comando de admin para invocarlo (clic para copiar)" onclick="ER6B.copy(this)">
+    <span class="k">/mm mobs spawn CabecillaBandoleros 1</span><span class="copy">copiar</span>
+  </div>
 </article>
 <article class="mob comun cria" data-cat="comun" data-nombre="bandolero">
   <header>
@@ -317,6 +351,9 @@
   <p class="esc"><b>Escala con la zona:</b> +12 vida y +1.2 daño por nivel. Aquí sale de nivel 1, 4.</p>
   <p class="loot"><b>Suelta:</b> A veces su Bolsa del bandolero.</p>
   <p class="tip"><b>Consejo:</b> Su arma es LENTA: primero le oyes amartillar y un segundo despues sale el tiro. Si oyes el clic, muevete o cubrete.</p>
+  <div class="cmd" title="Comando de admin para invocarlo (clic para copiar)" onclick="ER6B.copy(this)">
+    <span class="k">/mm mobs spawn Bandolero 1</span><span class="copy">copiar</span>
+  </div>
 </article></div>
 </section><section class="familia" data-cats="comun jefe">
   <div class="fam-head"><span class="fam-em">👑</span><h2>El King Slime y sus crías</h2><span class="fam-n">2 criaturas · van juntas</span></div>
@@ -346,6 +383,9 @@
   <p class="esc"><b>Escala con la zona:</b> +70 vida y +2 daño por nivel. Aquí sale de nivel 1.</p>
   <p class="loot"><b>Suelta:</b> Bolas de limo a punta pala y un arma de nivel bajo de una de las 5 clases (Funcionario, Loco, Parrillero, Abuelo o Yogur).</p>
   <p class="tip"><b>Consejo:</b> A media vida SE PARTE POR LA MITAD: suelta una camada entera y se vuelve mas rapido. Aguanta ese momento y lo tienes. Al morir suelta un ARMA del MMO de una clase AL AZAR, y se la lleva TODO el que este peleando.</p>
+  <div class="cmd" title="Comando de admin para invocarlo (clic para copiar)" onclick="ER6B.copy(this)">
+    <span class="k">/mm mobs spawn KingSlime 1</span><span class="copy">copiar</span>
+  </div>
 </article>
 <article class="mob comun cria" data-cat="comun" data-nombre="cria de slime">
   <header>
@@ -371,6 +411,9 @@
   
   <p class="loot"><b>Suelta:</b> Alguna bola de limo.</p>
   <p class="tip"><b>Consejo:</b> Molestan, no matan. Ve a por el grande.</p>
+  <div class="cmd" title="Comando de admin para invocarlo (clic para copiar)" onclick="ER6B.copy(this)">
+    <span class="k">/mm mobs spawn CriaKingSlime 1</span><span class="copy">copiar</span>
+  </div>
 </article></div>
 </section><section class="familia" data-cats="comun jefe">
   <div class="fam-head"><span class="fam-em">🐸</span><h2>El pantano</h2><span class="fam-n">2 criaturas · van juntas</span></div>
@@ -400,6 +443,9 @@
   <p class="esc"><b>Escala con la zona:</b> +50 vida y +1.8 daño por nivel. Aquí sale de nivel 2.</p>
   <p class="loot"><b>Suelta:</b> Bolas de limo y su Diente de sanguijuela.</p>
   <p class="tip"><b>Consejo:</b> A media vida se hunde y reaparece DETRAS de ti con mas sanguijuelas. Cuando creas que la tienes, mira atras.</p>
+  <div class="cmd" title="Comando de admin para invocarlo (clic para copiar)" onclick="ER6B.copy(this)">
+    <span class="k">/mm mobs spawn ComadreCieno 1</span><span class="copy">copiar</span>
+  </div>
 </article>
 <article class="mob comun cria" data-cat="comun" data-nombre="sanguijuela">
   <header>
@@ -425,6 +471,9 @@
   <p class="esc"><b>Escala con la zona:</b> +4 vida y +0.4 daño por nivel. Aquí sale de nivel 2.</p>
   <p class="loot"><b>Suelta:</b> Nada.</p>
   <p class="tip"><b>Consejo:</b> Si notas que pegas flojo, es esto. Sal del agua.</p>
+  <div class="cmd" title="Comando de admin para invocarlo (clic para copiar)" onclick="ER6B.copy(this)">
+    <span class="k">/mm mobs spawn Sanguijuela 1</span><span class="copy">copiar</span>
+  </div>
 </article></div>
 </section>
 <article class="mob jefe" data-cat="jefe" data-nombre="🔥 guardián del debris">
@@ -451,6 +500,9 @@
   <p class="esc"><b>Escala con la zona:</b> +70 vida y +2.5 daño por nivel. Aquí sale de nivel 1.</p>
   <p class="loot"><b>Suelta:</b> Su Nucleo fundido.</p>
   <p class="tip"><b>Consejo:</b> Es EL motivo de que no se baje a por netherita el primer dia. Ve con equipo o no vayas.</p>
+  <div class="cmd" title="Comando de admin para invocarlo (clic para copiar)" onclick="ER6B.copy(this)">
+    <span class="k">/mm mobs spawn GuardianDebris 1</span><span class="copy">copiar</span>
+  </div>
 </article>
 <article class="mob jefe" data-cat="jefe" data-nombre="🥶 el yeti">
   <header>
@@ -476,6 +528,9 @@
   <p class="esc"><b>Escala con la zona:</b> +55 vida y +2 daño por nivel. Aquí sale de nivel 3.</p>
   <p class="loot"><b>Suelta:</b> Bolas de nieve y su Pello de yeti.</p>
   <p class="tip"><b>Consejo:</b> Su ventisca pega en area y ralentiza: no te quedes quieto a su lado.</p>
+  <div class="cmd" title="Comando de admin para invocarlo (clic para copiar)" onclick="ER6B.copy(this)">
+    <span class="k">/mm mobs spawn YetiEscarcha 1</span><span class="copy">copiar</span>
+  </div>
 </article>
 <article class="mob elite" data-cat="elite" data-nombre="el anclado">
   <header>
@@ -501,6 +556,9 @@
   <p class="esc"><b>Escala con la zona:</b> +16 vida y +1.3 daño por nivel. Aquí sale de nivel 3.</p>
   <p class="loot"><b>Suelta:</b> Nada, solo experiencia.</p>
   <p class="tip"><b>Consejo:</b> Lo que mata aqui es ahogarse, no su dano. Sube a respirar aunque le estes ganando.</p>
+  <div class="cmd" title="Comando de admin para invocarlo (clic para copiar)" onclick="ER6B.copy(this)">
+    <span class="k">/mm mobs spawn AhogadoAncla 1</span><span class="copy">copiar</span>
+  </div>
 </article>
 <article class="mob elite" data-cat="elite" data-nombre="el grandullón">
   <header>
@@ -526,6 +584,9 @@
   <p class="esc"><b>Escala con la zona:</b> +22 vida y +1.6 daño por nivel. Aquí sale de nivel 3, 7.</p>
   <p class="loot"><b>Suelta:</b> Carne podrida y a veces hierro.</p>
   <p class="tip"><b>Consejo:</b> Cuidado con los barrancos: lo que mata es la caida, no el golpe. Y a el no lo empujas tu.</p>
+  <div class="cmd" title="Comando de admin para invocarlo (clic para copiar)" onclick="ER6B.copy(this)">
+    <span class="k">/mm mobs spawn ZombiGrandullon 1</span><span class="copy">copiar</span>
+  </div>
 </article>
 <article class="mob elite" data-cat="elite" data-nombre="rezumo">
   <header>
@@ -551,6 +612,9 @@
   <p class="esc"><b>Escala con la zona:</b> +16 vida y +1.4 daño por nivel. Aquí sale de nivel 6.</p>
   <p class="loot"><b>Suelta:</b> Muy de vez en cuando, una Esquirla zumbante.</p>
   <p class="tip"><b>Consejo:</b> No lo persigas si vas justo de vida: ciega.</p>
+  <div class="cmd" title="Comando de admin para invocarlo (clic para copiar)" onclick="ER6B.copy(this)">
+    <span class="k">/mm mobs spawn RezumoTorre 1</span><span class="copy">copiar</span>
+  </div>
 </article>
 <article class="mob comun" data-cat="comun" data-nombre="piglin quemado">
   <header>
@@ -576,6 +640,9 @@
   <p class="esc"><b>Escala con la zona:</b> +16 vida y +1.5 daño por nivel. Aquí sale de nivel 2, 8.</p>
   <p class="loot"><b>Suelta:</b> Pepitas de oro y carne podrida.</p>
   <p class="tip"><b>Consejo:</b> Ya no hace falta pegarles para que se enfaden: vienen solos.</p>
+  <div class="cmd" title="Comando de admin para invocarlo (clic para copiar)" onclick="ER6B.copy(this)">
+    <span class="k">/mm mobs spawn PiglinQuemado 1</span><span class="copy">copiar</span>
+  </div>
 </article>
 <article class="mob comun" data-cat="comun" data-nombre="acechador">
   <header>
@@ -601,6 +668,9 @@
   <p class="esc"><b>Escala con la zona:</b> +11 vida y +1.4 daño por nivel. Aquí sale de nivel 3.</p>
   <p class="loot"><b>Suelta:</b> Nada, solo experiencia.</p>
   <p class="tip"><b>Consejo:</b> Entre la vegetacion no lo vas a ver venir. Pelea en claro si puedes.</p>
+  <div class="cmd" title="Comando de admin para invocarlo (clic para copiar)" onclick="ER6B.copy(this)">
+    <span class="k">/mm mobs spawn AcechadorFronda 1</span><span class="copy">copiar</span>
+  </div>
 </article>
 <article class="mob comun" data-cat="comun" data-nombre="cabra rencorosa">
   <header>
@@ -626,6 +696,9 @@
   <p class="esc"><b>Escala con la zona:</b> +9 vida y +1.1 daño por nivel. Aquí sale de nivel 2.</p>
   <p class="loot"><b>Suelta:</b> Nada, solo experiencia.</p>
   <p class="tip"><b>Consejo:</b> En la montaña lo que mata es la caida, no la cabra. Cuidado con donde te pilla.</p>
+  <div class="cmd" title="Comando de admin para invocarlo (clic para copiar)" onclick="ER6B.copy(this)">
+    <span class="k">/mm mobs spawn CabraRencorosa 1</span><span class="copy">copiar</span>
+  </div>
 </article>
 <article class="mob comun" data-cat="comun" data-nombre="reseco">
   <header>
@@ -651,6 +724,9 @@
   <p class="esc"><b>Escala con la zona:</b> +14 vida y +1.3 daño por nivel. Aquí sale de nivel 3.</p>
   <p class="loot"><b>Suelta:</b> Arena.</p>
   <p class="tip"><b>Consejo:</b> En campo abierto y sin ver nada, lo peor es echar a correr. Espera a que se te pase.</p>
+  <div class="cmd" title="Comando de admin para invocarlo (clic para copiar)" onclick="ER6B.copy(this)">
+    <span class="k">/mm mobs spawn Reseco 1</span><span class="copy">copiar</span>
+  </div>
 </article>
 <article class="mob comun" data-cat="comun" data-nombre="el del cono">
   <header>
@@ -676,6 +752,9 @@
   <p class="esc"><b>Escala con la zona:</b> +14 vida y +1.2 daño por nivel. Aquí sale de nivel 1, 4.</p>
   <p class="loot"><b>Suelta:</b> Carne podrida y su Cono de obra cuando se le rompe.</p>
   <p class="tip"><b>Consejo:</b> A media vida el cono SE LE CAE, lo suelta al suelo (te lo puedes poner) y entonces se vuelve mas rapido y pega mas fuerte. No te confies cuando le veas perder el cono.</p>
+  <div class="cmd" title="Comando de admin para invocarlo (clic para copiar)" onclick="ER6B.copy(this)">
+    <span class="k">/mm mobs spawn ZombiDelCono 1</span><span class="copy">copiar</span>
+  </div>
 </article>
   </div>
 </main>
@@ -715,6 +794,13 @@
     var r=document.documentElement;
     var cur=r.getAttribute('data-theme')||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');
     r.setAttribute('data-theme', cur==='dark'?'light':'dark');
+  },copy:function(el){
+    var txt=el.querySelector('.k').textContent;
+    var done=function(){el.classList.add('ok');var c=el.querySelector('.copy');var o=c.textContent;
+      c.textContent='¡copiado!';setTimeout(function(){c.textContent=o;el.classList.remove('ok')},1200);};
+    if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(txt).then(done,done);}
+    else{var t=document.createElement('textarea');t.value=txt;document.body.appendChild(t);t.select();
+      try{document.execCommand('copy')}catch(e){}document.body.removeChild(t);done();}
   }};
 })();
 </script>
