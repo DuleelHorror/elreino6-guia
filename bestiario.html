@@ -1,0 +1,398 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>El Reino 6 — Bestiario</title>
+<style>
+  :root{
+    --ground:#f3f1f8; --surface:#ffffff; --surface-2:#ece8f5; --sunken:#f7f5fb;
+    --ink:#1e1828; --ink-soft:#585070; --ink-faint:#877e9d;
+    --line:#e1dcef; --line-strong:#ccc4e0;
+    --arcane:#6b46d0; --gold:#a9701d; --danger:#c1443b; --folk:#4a8f2f;
+    --chip:#f1edfa; --shadow:0 1px 2px rgba(40,25,70,.05), 0 10px 34px rgba(70,45,120,.12);
+  }
+  @media (prefers-color-scheme:dark){:root{
+    --ground:#131019; --surface:#1c1730; --surface-2:#271f3d; --sunken:#171223;
+    --ink:#ede9f8; --ink-soft:#b6accd; --ink-faint:#8b81a6;
+    --line:#302846; --line-strong:#43385f;
+    --arcane:#9c82ff; --gold:#e6b25a; --danger:#ec7d75; --folk:#87cc62;
+    --chip:#241d3a; --shadow:0 1px 2px rgba(0,0,0,.45), 0 16px 44px rgba(0,0,0,.4);
+  }}
+  :root[data-theme="light"]{
+    --ground:#f3f1f8; --surface:#ffffff; --surface-2:#ece8f5; --sunken:#f7f5fb;
+    --ink:#1e1828; --ink-soft:#585070; --ink-faint:#877e9d; --line:#e1dcef; --line-strong:#ccc4e0;
+    --arcane:#6b46d0; --gold:#a9701d; --danger:#c1443b; --folk:#4a8f2f; --chip:#f1edfa;
+  }
+  :root[data-theme="dark"]{
+    --ground:#131019; --surface:#1c1730; --surface-2:#271f3d; --sunken:#171223;
+    --ink:#ede9f8; --ink-soft:#b6accd; --ink-faint:#8b81a6; --line:#302846; --line-strong:#43385f;
+    --arcane:#9c82ff; --gold:#e6b25a; --danger:#ec7d75; --folk:#87cc62; --chip:#241d3a;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--ground);color:var(--ink);
+    font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.55}
+  .topbar{position:sticky;top:0;z-index:5;display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;
+    justify-content:space-between;padding:.7rem 1rem;background:var(--surface);
+    border-bottom:1px solid var(--line-strong);box-shadow:var(--shadow)}
+  .brand{font-family:ui-serif,Palatino,Georgia,serif;font-size:1.05rem;display:flex;align-items:center;gap:.4em}
+  .btn{border:1px solid var(--line-strong);background:var(--surface-2);color:var(--ink);
+    border-radius:.55rem;padding:.35rem .7rem;font-size:.85rem;cursor:pointer;text-decoration:none;display:inline-block}
+  .btn.arc{background:var(--arcane);border-color:var(--arcane);color:#fff}
+  .btn.on{background:var(--arcane);border-color:var(--arcane);color:#fff}
+  main{max-width:1100px;margin:0 auto;padding:1.2rem 1rem 3rem}
+  .intro{background:var(--surface);border:1px solid var(--line);border-radius:.8rem;
+    padding:1rem 1.1rem;margin-bottom:1.2rem;box-shadow:var(--shadow)}
+  .intro h1{font-family:ui-serif,Palatino,Georgia,serif;margin:.1rem 0 .5rem;font-size:1.5rem}
+  .intro p{margin:.4rem 0;color:var(--ink-soft);font-size:.95rem}
+  .filtros{display:flex;flex-wrap:wrap;gap:.4rem;margin:.9rem 0 1.1rem;align-items:center}
+  .filtros input{flex:1;min-width:180px;padding:.4rem .7rem;border-radius:.55rem;
+    border:1px solid var(--line-strong);background:var(--surface);color:var(--ink);font-size:.9rem}
+  .grid{display:grid;gap:1rem;grid-template-columns:repeat(auto-fill,minmax(330px,1fr))}
+  .mob{background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--line-strong);
+    border-radius:.8rem;padding:1rem 1.1rem;box-shadow:var(--shadow)}
+  .mob.jefe{border-left-color:var(--danger)} .mob.elite{border-left-color:var(--gold)}
+  .mob.comun{border-left-color:var(--folk)}
+  .mob header{display:flex;align-items:flex-start;gap:.7rem;margin-bottom:.5rem}
+  .mob header h3{margin:0;font-size:1.08rem;font-family:ui-serif,Palatino,Georgia,serif}
+  .mob .em{font-size:1.7rem;line-height:1}
+  .mob .zona{margin:.1rem 0 0;font-size:.8rem;color:var(--ink-faint)}
+  .tag{margin-left:auto;font-size:.7rem;padding:.16rem .5rem;border-radius:1rem;white-space:nowrap;
+    background:var(--chip);color:var(--ink-soft);border:1px solid var(--line)}
+  .t-jefe{color:var(--danger);border-color:var(--danger)}
+  .t-elite{color:var(--gold);border-color:var(--gold)}
+  .que{margin:.5rem 0 .7rem;font-size:.93rem}
+  .stats{display:flex;flex-wrap:wrap;gap:.35rem;margin-bottom:.7rem}
+  .stats span{font-size:.76rem;background:var(--sunken);border:1px solid var(--line);
+    border-radius:.4rem;padding:.16rem .45rem;color:var(--ink-soft)}
+  .stats b{color:var(--ink)}
+  .stats .warn{color:var(--gold);border-color:var(--gold)}
+  .stats .boss{color:var(--danger);border-color:var(--danger)}
+  .mob h4{margin:.6rem 0 .3rem;font-size:.78rem;text-transform:uppercase;
+    letter-spacing:.06em;color:var(--ink-faint)}
+  .apar{margin:0;padding-left:0;list-style:none;font-size:.86rem}
+  .apar li{padding:.2rem 0;border-bottom:1px dashed var(--line)}
+  .apar li:last-child{border:0}
+  .apar .pct{display:inline-block;min-width:3.1em;font-weight:700;color:var(--arcane)}
+  .apar .lv{font-size:.75rem;color:var(--ink-faint)}
+  .apar .none{color:var(--ink-faint);font-style:italic}
+  .esc,.loot,.tip{font-size:.85rem;margin:.55rem 0 0}
+  .esc{color:var(--ink-soft)}
+  .tip{background:var(--sunken);border-left:3px solid var(--arcane);
+    padding:.45rem .6rem;border-radius:.35rem}
+  footer{max-width:1100px;margin:0 auto;padding:0 1rem 2rem;color:var(--ink-faint);font-size:.8rem}
+  @media(max-width:560px){.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand"><span>🐺</span> El Reino <b>6</b> · Bestiario</div>
+  <div>
+    <button class="btn" onclick="ER6B.theme()">🌓 Tema</button>
+    <a class="btn" href="mapa.html">🗺️ Mapa de misiones</a>
+    <a class="btn arc" href="https://duleelhorror.github.io/elreino6-guia/">← Guía</a>
+  </div>
+</div>
+
+<main>
+  <div class="intro">
+    <h1>El Bestiario del Reino</h1>
+    <p>Lo que hay ahí fuera, dónde sale y qué suelta. <b>10 criaturas</b>:
+       3 mini-jefes, 2 élites y 5 comunes.</p>
+    <p><b>El peligro va por zonas.</b> El pueblo está limpio. Cuanto más te alejas del Reino,
+       más bajas o más de noche es, peor se pone: <b>los mismos bichos salen de nivel más alto</b>
+       (más vida y más daño). A partir de 3.000 bloques, si vas sin equipo, no vuelves.</p>
+    <p><b>Los comunes no llevan nombre encima.</b> No los vas a ver venir de lejos: te los
+       encuentras y ya. Los mini-jefes sí se anuncian, con barra y todo.</p>
+  </div>
+
+  <div class="filtros">
+    <button class="btn on" data-f="todos">Todos</button>
+    <button class="btn" data-f="jefe">Mini-jefes</button>
+    <button class="btn" data-f="elite">Élites</button>
+    <button class="btn" data-f="comun">Comunes</button>
+    <input id="q" type="search" placeholder="Buscar por nombre, zona o loot…">
+  </div>
+
+  <div class="grid">
+
+<article class="mob jefe" data-cat="jefe" data-nombre="🔥 guardian del debris">
+  <header>
+    <span class="em">🔥</span>
+    <div>
+      <h3>🔥 Guardian del Debris</h3>
+      <p class="zona">Nether, franja de la netherita (y 8-22)</p>
+    </div>
+    <span class="tag t-jefe">Mini-jefe</span>
+  </header>
+  <p class="que">Mini-jefe. Vive justo donde sale la escoria antigua. Golpea, prende fuego y suelta ondas.</p>
+  <div class="stats">
+    <span title="Vida"><b>520</b> vida</span>
+    <span title="Daño por golpe"><b>14</b> daño</span>
+    <span title="Armadura"><b>10</b> armadura</span>
+    <span title="Tamaño">×1.6 su tamano normal</span>
+    
+    <span class="boss">barra de jefe</span>
+  </div>
+  <h4>Dónde y cómo aparece</h4>
+  <ul class="apar"><li><span class="pct">2.0%</span> en el Nether · bajo tierra (por debajo de Y=22) <span class="lv">nivel 1</span></li></ul>
+  <p class="esc"><b>Escala con la zona:</b> +70 vida y +2.5 daño por nivel. Aquí sale de nivel 1.</p>
+  <p class="loot"><b>Suelta:</b> Su Nucleo fundido.</p>
+  <p class="tip"><b>Consejo:</b> Es EL motivo de que no se baje a por netherita el primer dia. Ve con equipo o no vayas.</p>
+</article>
+<article class="mob jefe" data-cat="jefe" data-nombre="🕷 la arana madre">
+  <header>
+    <span class="em">🕷️</span>
+    <div>
+      <h3>🕷 La Arana Madre</h3>
+      <p class="zona">Cuevas profundas, lejos del Reino</p>
+    </div>
+    <span class="tag t-jefe">Mini-jefe</span>
+  </header>
+  <p class="que">Mini-jefe. Enorme. Mientras peleas va SOLTANDO CRIAS sin parar, y cada tanto teje la zona entera.</p>
+  <div class="stats">
+    <span title="Vida"><b>420</b> vida</span>
+    <span title="Daño por golpe"><b>11</b> daño</span>
+    <span title="Armadura"><b>6</b> armadura</span>
+    <span title="Tamaño">×2.8 su tamano normal</span>
+    
+    <span class="boss">barra de jefe</span>
+  </div>
+  <h4>Dónde y cómo aparece</h4>
+  <ul class="apar"><li><span class="pct">0.4%</span> bajo tierra (por debajo de Y=20) · a mas de 800 bloques del Reino <span class="lv">nivel 2</span></li></ul>
+  <p class="esc"><b>Escala con la zona:</b> +60 vida y +2 daño por nivel. Aquí sale de nivel 2.</p>
+  <p class="loot"><b>Suelta:</b> Mucho hilo, ojos de arana y su Glandula de veneno.</p>
+  <p class="tip"><b>Consejo:</b> No te entretengas con las crias o te comen el sitio. Ve a por ella y acabala rapido.</p>
+</article>
+<article class="mob jefe" data-cat="jefe" data-nombre="🥶 el yeti">
+  <header>
+    <span class="em">🥶</span>
+    <div>
+      <h3>🥶 El Yeti</h3>
+      <p class="zona">Solo biomas nevados, lejos</p>
+    </div>
+    <span class="tag t-jefe">Mini-jefe</span>
+  </header>
+  <p class="que">Mini-jefe de las zonas frias. Te congela el sitio y reparte con una mano.</p>
+  <div class="stats">
+    <span title="Vida"><b>380</b> vida</span>
+    <span title="Daño por golpe"><b>12</b> daño</span>
+    <span title="Armadura"><b>7</b> armadura</span>
+    <span title="Tamaño">×2.2 su tamano normal</span>
+    
+    <span class="boss">barra de jefe</span>
+  </div>
+  <h4>Dónde y cómo aparece</h4>
+  <ul class="apar"><li><span class="pct">0.3%</span> biomas nevados · a mas de 1200 bloques del Reino <span class="lv">nivel 3</span></li></ul>
+  <p class="esc"><b>Escala con la zona:</b> +55 vida y +2 daño por nivel. Aquí sale de nivel 3.</p>
+  <p class="loot"><b>Suelta:</b> Bolas de nieve y su Pello de yeti.</p>
+  <p class="tip"><b>Consejo:</b> Su ventisca pega en area y ralentiza: no te quedes quieto a su lado.</p>
+</article>
+<article class="mob elite" data-cat="elite" data-nombre="el grandullon">
+  <header>
+    <span class="em">💪</span>
+    <div>
+      <h3>El Grandullon</h3>
+      <p class="zona">Frontera y Tierras Lejanas, de noche</p>
+    </div>
+    <span class="tag t-elite">Élite</span>
+  </header>
+  <p class="que">Un zombi enorme y lento. No pega mas fuerte que otro: te MANDA POR LOS AIRES.</p>
+  <div class="stats">
+    <span title="Vida"><b>110</b> vida</span>
+    <span title="Daño por golpe"><b>9</b> daño</span>
+    <span title="Armadura"><b>5</b> armadura</span>
+    <span title="Tamaño">×1.7 su tamano normal</span>
+    <span class="warn">sin nombre visible</span>
+    
+  </div>
+  <h4>Dónde y cómo aparece</h4>
+  <ul class="apar"><li><span class="pct">5.0%</span> a mas de 1200 bloques del Reino · solo de noche <span class="lv">nivel 3</span></li><li><span class="pct">10.0%</span> a mas de 3000 bloques del Reino <span class="lv">nivel 7</span></li></ul>
+  <p class="esc"><b>Escala con la zona:</b> +22 vida y +1.6 daño por nivel. Aquí sale de nivel 3, 7.</p>
+  <p class="loot"><b>Suelta:</b> Carne podrida y a veces hierro.</p>
+  <p class="tip"><b>Consejo:</b> Cuidado con los barrancos: lo que mata es la caida, no el golpe. Y a el no lo empujas tu.</p>
+</article>
+<article class="mob elite" data-cat="elite" data-nombre="rezumo">
+  <header>
+    <span class="em">🌀</span>
+    <div>
+      <h3>Rezumo</h3>
+      <p class="zona">Lejos del Reino, solo de noche</p>
+    </div>
+    <span class="tag t-elite">Élite</span>
+  </header>
+  <p class="que">No hace ruido. Zumba. Si lo ves, es que la noche no iba a ser normal.</p>
+  <div class="stats">
+    <span title="Vida"><b>90</b> vida</span>
+    <span title="Daño por golpe"><b>8</b> daño</span>
+    <span title="Armadura"><b>4</b> armadura</span>
+    <span title="Tamaño">×1.1 su tamano normal</span>
+    <span class="warn">sin nombre visible</span>
+    
+  </div>
+  <h4>Dónde y cómo aparece</h4>
+  <ul class="apar"><li><span class="pct">2.0%</span> a mas de 2000 bloques del Reino · solo de noche <span class="lv">nivel 6</span></li></ul>
+  <p class="esc"><b>Escala con la zona:</b> +16 vida y +1.4 daño por nivel. Aquí sale de nivel 6.</p>
+  <p class="loot"><b>Suelta:</b> Muy de vez en cuando, una Esquirla zumbante.</p>
+  <p class="tip"><b>Consejo:</b> No lo persigas si vas justo de vida: ciega.</p>
+</article>
+<article class="mob comun" data-cat="comun" data-nombre="bicha del granero">
+  <header>
+    <span class="em">🕸️</span>
+    <div>
+      <h3>Bicha del granero</h3>
+      <p class="zona">Bosques, cuevas y noche</p>
+    </div>
+    <span class="tag t-comun">Común</span>
+  </header>
+  <p class="que">Una arana del tamano de un perro. Te envenena al morder y te deja pegado con telarana.</p>
+  <div class="stats">
+    <span title="Vida"><b>55</b> vida</span>
+    <span title="Daño por golpe"><b>6</b> daño</span>
+    <span title="Armadura"><b>2</b> armadura</span>
+    <span title="Tamaño">×1.9 su tamano normal</span>
+    <span class="warn">sin nombre visible</span>
+    
+  </div>
+  <h4>Dónde y cómo aparece</h4>
+  <ul class="apar"><li><span class="pct">12.0%</span> a mas de 300 bloques del Reino · a menos de 1200 bloques del Reino <span class="lv">nivel 1</span></li><li><span class="pct">20.0%</span> a mas de 1200 bloques del Reino · a menos de 3000 bloques del Reino <span class="lv">nivel 4</span></li><li><span class="pct">28.0%</span> a mas de 3000 bloques del Reino <span class="lv">nivel 7</span></li><li><span class="pct">30.0%</span> en el abismo (por debajo de Y=0) <span class="lv">nivel 6</span></li></ul>
+  <p class="esc"><b>Escala con la zona:</b> +14 vida y +1.3 daño por nivel. Aquí sale de nivel 1, 4, 6, 7.</p>
+  <p class="loot"><b>Suelta:</b> Hilo y ojos de arana.</p>
+  <p class="tip"><b>Consejo:</b> Si te frena, no corras: te alcanza. Pelea de espaldas a una pared.</p>
+</article>
+<article class="mob comun" data-cat="comun" data-nombre="piglin quemado">
+  <header>
+    <span class="em">🐗</span>
+    <div>
+      <h3>Piglin quemado</h3>
+      <p class="zona">Todo el Nether</p>
+    </div>
+    <span class="tag t-comun">Común</span>
+  </header>
+  <p class="que">Lo que antes era un cerdo-zombi tranquilo. Ahora ni te saluda.</p>
+  <div class="stats">
+    <span title="Vida"><b>60</b> vida</span>
+    <span title="Daño por golpe"><b>8</b> daño</span>
+    <span title="Armadura"><b>4</b> armadura</span>
+    <span title="Tamaño">×1.2 su tamano normal</span>
+    <span class="warn">sin nombre visible</span>
+    
+  </div>
+  <h4>Dónde y cómo aparece</h4>
+  <ul class="apar"><li><span class="pct">45.0%</span> en el Nether <span class="lv">nivel 2</span></li><li><span class="pct">55.0%</span> en el Nether · bajo tierra (por debajo de Y=22) <span class="lv">nivel 8</span></li></ul>
+  <p class="esc"><b>Escala con la zona:</b> +16 vida y +1.5 daño por nivel. Aquí sale de nivel 2, 8.</p>
+  <p class="loot"><b>Suelta:</b> Pepitas de oro y carne podrida.</p>
+  <p class="tip"><b>Consejo:</b> Ya no hace falta pegarles para que se enfaden: vienen solos.</p>
+</article>
+<article class="mob comun" data-cat="comun" data-nombre="rata de alcantarilla">
+  <header>
+    <span class="em">🐀</span>
+    <div>
+      <h3>Rata de alcantarilla</h3>
+      <p class="zona">Cuevas</p>
+    </div>
+    <span class="tag t-comun">Común</span>
+  </header>
+  <p class="que">Sola no es nada. El problema es que nunca viene sola.</p>
+  <div class="stats">
+    <span title="Vida"><b>8</b> vida</span>
+    <span title="Daño por golpe"><b>2</b> daño</span>
+    <span title="Armadura"><b></b> armadura</span>
+    <span title="Tamaño">×0.75 su tamano normal</span>
+    <span class="warn">sin nombre visible</span>
+    
+  </div>
+  <h4>Dónde y cómo aparece</h4>
+  <ul class="apar"><li><span class="pct">35.0%</span> bajo tierra (por debajo de Y=40) <span class="lv">nivel 2</span></li></ul>
+  <p class="esc"><b>Escala con la zona:</b> +4 vida y +0.4 daño por nivel. Aquí sale de nivel 2.</p>
+  <p class="loot"><b>Suelta:</b> Nada. Son carne de canon.</p>
+  <p class="tip"><b>Consejo:</b> No pierdas el tiempo con ellas: busca al Ratero que las esta soltando.</p>
+</article>
+<article class="mob comun" data-cat="comun" data-nombre="el ratero">
+  <header>
+    <span class="em">🧟</span>
+    <div>
+      <h3>El Ratero</h3>
+      <p class="zona">Cuevas y noche</p>
+    </div>
+    <span class="tag t-comun">Común</span>
+  </header>
+  <p class="que">Un muerto que arrastra media alcantarilla detras. Cuando te ve, empieza a soltar ratas.</p>
+  <div class="stats">
+    <span title="Vida"><b>40</b> vida</span>
+    <span title="Daño por golpe"><b>5</b> daño</span>
+    <span title="Armadura"><b>2</b> armadura</span>
+    <span title="Tamaño">×1.1 su tamano normal</span>
+    <span class="warn">sin nombre visible</span>
+    
+  </div>
+  <h4>Dónde y cómo aparece</h4>
+  <ul class="apar"><li><span class="pct">10.0%</span> a mas de 300 bloques del Reino · a menos de 1200 bloques del Reino <span class="lv">nivel 1</span></li><li><span class="pct">18.0%</span> a mas de 1200 bloques del Reino · a menos de 3000 bloques del Reino <span class="lv">nivel 4</span></li><li><span class="pct">25.0%</span> a mas de 3000 bloques del Reino <span class="lv">nivel 7</span></li><li><span class="pct">20.0%</span> bajo tierra (por debajo de Y=40) · a mas de 300 bloques del Reino <span class="lv">nivel 3</span></li></ul>
+  <p class="esc"><b>Escala con la zona:</b> +12 vida y +1.2 daño por nivel. Aquí sale de nivel 1, 3, 4, 7.</p>
+  <p class="loot"><b>Suelta:</b> Carne podrida y, de vez en cuando, una Cola de rata.</p>
+  <p class="tip"><b>Consejo:</b> Matalo a el PRIMERO o te veras rodeado sin saber como.</p>
+</article>
+<article class="mob comun" data-cat="comun" data-nombre="cria de arana">
+  <header>
+    <span class="em">🕷️</span>
+    <div>
+      <h3>Cria de arana</h3>
+      <p class="zona">Junto a la Arana Madre</p>
+    </div>
+    <span class="tag t-comun">Común</span>
+  </header>
+  <p class="que">Las crias que suelta la Madre. Diminutas, rapidas y muchas.</p>
+  <div class="stats">
+    <span title="Vida"><b>6</b> vida</span>
+    <span title="Daño por golpe"><b>2</b> daño</span>
+    <span title="Armadura"><b></b> armadura</span>
+    <span title="Tamaño">×0.45 su tamano normal</span>
+    <span class="warn">sin nombre visible</span>
+    
+  </div>
+  <h4>Dónde y cómo aparece</h4>
+  <ul class="apar"><li class="none">No aparece solo: lo invoca otro bicho.</li></ul>
+  
+  <p class="loot"><b>Suelta:</b> Nada.</p>
+  <p class="tip"><b>Consejo:</b> Ignoralas y ve a por la Madre; dejan de salir cuando cae.</p>
+</article>
+  </div>
+</main>
+
+<footer>
+  Generado desde los ficheros del servidor — los números de vida, daño y probabilidad son los reales.
+  Si un bicho cambia, esta página cambia con él.
+</footer>
+
+<script>
+(function(){
+  var q=document.getElementById('q'), cards=[].slice.call(document.querySelectorAll('.mob'));
+  var cat='todos';
+  function pinta(){
+    var t=(q.value||'').toLowerCase().trim();
+    cards.forEach(function(c){
+      var okCat = (cat==='todos' || c.dataset.cat===cat);
+      var okTxt = (!t || c.dataset.nombre.indexOf(t)>=0 || c.textContent.toLowerCase().indexOf(t)>=0);
+      c.style.display = (okCat&&okTxt) ? '' : 'none';
+    });
+  }
+  q.addEventListener('input',pinta);
+  [].slice.call(document.querySelectorAll('[data-f]')).forEach(function(b){
+    b.addEventListener('click',function(){
+      cat=b.dataset.f;
+      document.querySelectorAll('[data-f]').forEach(function(x){x.classList.remove('on')});
+      b.classList.add('on'); pinta();
+    });
+  });
+  window.ER6B={theme:function(){
+    var r=document.documentElement;
+    var cur=r.getAttribute('data-theme')||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');
+    r.setAttribute('data-theme', cur==='dark'?'light':'dark');
+  }};
+})();
+</script>
+
+
+</body>
+</html>
