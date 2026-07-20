@@ -113,8 +113,8 @@
 <main>
   <div class="intro">
     <h1>El Bestiario del Reino</h1>
-    <p>Lo que hay ahí fuera, dónde sale y qué suelta. <b>10 criaturas</b>:
-       3 mini-jefes, 2 élites y 5 comunes.</p>
+    <p>Lo que hay ahí fuera, dónde sale y qué suelta. <b>17 criaturas</b>:
+       4 mini-jefes, 3 élites y 10 comunes.</p>
     <p><b>El peligro va por zonas.</b> El pueblo está limpio. Cuanto más te alejas del Reino,
        más bajas o más de noche es, peor se pone: <b>los mismos bichos salen de nivel más alto</b>
        (más vida y más daño). A partir de 3.000 bloques, si vas sin equipo, no vuelves.</p>
@@ -264,6 +264,60 @@
   <p class="loot"><b>Suelta:</b> Nada. Son carne de canon.</p>
   <p class="tip"><b>Consejo:</b> No pierdas el tiempo con ellas: busca al Ratero que las esta soltando.</p>
 </article></div>
+</section><section class="familia" data-cats="comun jefe">
+  <div class="fam-head"><span class="fam-em">🐸</span><h2>El pantano</h2><span class="fam-n">2 criaturas · van juntas</span></div>
+  <p class="fam-nota">Las sanguijuelas salen solas por el pantano, pero donde está la Comadre no dejan de venir. Y ella, a media vida, se hunde y reaparece detrás de ti.</p>
+  <div class="fam-grid">
+<article class="mob jefe" data-cat="jefe" data-nombre="🐸 la comadre del cieno">
+  <header>
+    <span class="em">🐸</span>
+    <div>
+      <h3>🐸 La Comadre del Cieno</h3>
+      <p class="zona">Pantano, lejos del Reino</p>
+    </div>
+    <span class="tag t-jefe">Mini-jefe</span>
+  </header>
+  <p class="que">Mini-jefe del pantano. Va soltando sanguijuelas, envenena el agua y TIRA DE TI hacia ella.</p>
+  <p class="rel invoca">↳ <b>Va soltando:</b> Sanguijuela (sin parar)</p>
+  <div class="stats">
+    <span title="Vida"><b>360</b> vida</span>
+    <span title="Daño por golpe"><b>10</b> daño</span>
+    <span title="Armadura"><b>5</b> armadura</span>
+    <span title="Tamaño">×1.9 su tamano normal</span>
+    
+    <span class="boss">barra de jefe</span>
+  </div>
+  <h4>Dónde y cómo aparece</h4>
+  <ul class="apar"><li><span class="pct">0.4%</span> biomas concretos · a mas de 800 bloques del Reino <span class="lv">nivel 2</span></li></ul>
+  <p class="esc"><b>Escala con la zona:</b> +50 vida y +1.8 daño por nivel. Aquí sale de nivel 2.</p>
+  <p class="loot"><b>Suelta:</b> Bolas de limo y su Diente de sanguijuela.</p>
+  <p class="tip"><b>Consejo:</b> A media vida se hunde y reaparece DETRAS de ti con mas sanguijuelas. Cuando creas que la tienes, mira atras.</p>
+</article>
+<article class="mob comun cria" data-cat="comun" data-nombre="sanguijuela">
+  <header>
+    <span class="em">🪱</span>
+    <div>
+      <h3>Sanguijuela</h3>
+      <p class="zona">Pantano</p>
+    </div>
+    <span class="tag t-comun">Común</span>
+  </header>
+  <p class="que">Bicho de pantano que te deja SIN FUERZA al morder. Sale sola por el pantano, pero donde esta la Comadre no paran de venir.</p>
+  <p class="rel cria">↰ <b>Lo suelta:</b> 🐸 La Comadre del Cieno</p>
+  <div class="stats">
+    <span title="Vida"><b>10</b> vida</span>
+    <span title="Daño por golpe"><b>2</b> daño</span>
+    <span title="Armadura"><b></b> armadura</span>
+    <span title="Tamaño">×0.9 su tamano normal</span>
+    <span class="warn">sin nombre visible</span>
+    
+  </div>
+  <h4>Dónde y cómo aparece</h4>
+  <ul class="apar"><li><span class="pct">28.0%</span> biomas concretos · a mas de 300 bloques del Reino <span class="lv">nivel 2</span></li></ul>
+  <p class="esc"><b>Escala con la zona:</b> +4 vida y +0.4 daño por nivel. Aquí sale de nivel 2.</p>
+  <p class="loot"><b>Suelta:</b> Nada.</p>
+  <p class="tip"><b>Consejo:</b> Si notas que pegas flojo, es esto. Sal del agua.</p>
+</article></div>
 </section>
 <article class="mob jefe" data-cat="jefe" data-nombre="🔥 guardián del debris">
   <header>
@@ -314,6 +368,31 @@
   <p class="esc"><b>Escala con la zona:</b> +55 vida y +2 daño por nivel. Aquí sale de nivel 3.</p>
   <p class="loot"><b>Suelta:</b> Bolas de nieve y su Pello de yeti.</p>
   <p class="tip"><b>Consejo:</b> Su ventisca pega en area y ralentiza: no te quedes quieto a su lado.</p>
+</article>
+<article class="mob elite" data-cat="elite" data-nombre="el anclado">
+  <header>
+    <span class="em">🌊</span>
+    <div>
+      <h3>El Anclado</h3>
+      <p class="zona">Todos los oceanos</p>
+    </div>
+    <span class="tag t-elite">Élite</span>
+  </header>
+  <p class="que">No te mata a golpes: te HUNDE. Te frena, tira de ti hacia el fondo y te deja sin aire.</p>
+  
+  <div class="stats">
+    <span title="Vida"><b>80</b> vida</span>
+    <span title="Daño por golpe"><b>6</b> daño</span>
+    <span title="Armadura"><b>4</b> armadura</span>
+    <span title="Tamaño">×1.5 su tamano normal</span>
+    <span class="warn">sin nombre visible</span>
+    
+  </div>
+  <h4>Dónde y cómo aparece</h4>
+  <ul class="apar"><li><span class="pct">25.0%</span> biomas concretos · a mas de 300 bloques del Reino <span class="lv">nivel 3</span></li></ul>
+  <p class="esc"><b>Escala con la zona:</b> +16 vida y +1.3 daño por nivel. Aquí sale de nivel 3.</p>
+  <p class="loot"><b>Suelta:</b> Nada, solo experiencia.</p>
+  <p class="tip"><b>Consejo:</b> Lo que mata aqui es ahogarse, no su dano. Sube a respirar aunque le estes ganando.</p>
 </article>
 <article class="mob elite" data-cat="elite" data-nombre="el grandullón">
   <header>
@@ -389,6 +468,106 @@
   <p class="esc"><b>Escala con la zona:</b> +16 vida y +1.5 daño por nivel. Aquí sale de nivel 2, 8.</p>
   <p class="loot"><b>Suelta:</b> Pepitas de oro y carne podrida.</p>
   <p class="tip"><b>Consejo:</b> Ya no hace falta pegarles para que se enfaden: vienen solos.</p>
+</article>
+<article class="mob comun" data-cat="comun" data-nombre="acechador">
+  <header>
+    <span class="em">🌴</span>
+    <div>
+      <h3>Acechador</h3>
+      <p class="zona">Jungla</p>
+    </div>
+    <span class="tag t-comun">Común</span>
+  </header>
+  <p class="que">No te persigue de frente: se lanza y te CAE ENCIMA. Rapido y con poca vida.</p>
+  
+  <div class="stats">
+    <span title="Vida"><b>45</b> vida</span>
+    <span title="Daño por golpe"><b>7</b> daño</span>
+    <span title="Armadura"><b>2</b> armadura</span>
+    <span title="Tamaño">×0.95 su tamano normal</span>
+    <span class="warn">sin nombre visible</span>
+    
+  </div>
+  <h4>Dónde y cómo aparece</h4>
+  <ul class="apar"><li><span class="pct">25.0%</span> biomas concretos · a mas de 300 bloques del Reino <span class="lv">nivel 3</span></li></ul>
+  <p class="esc"><b>Escala con la zona:</b> +11 vida y +1.4 daño por nivel. Aquí sale de nivel 3.</p>
+  <p class="loot"><b>Suelta:</b> Nada, solo experiencia.</p>
+  <p class="tip"><b>Consejo:</b> Entre la vegetacion no lo vas a ver venir. Pelea en claro si puedes.</p>
+</article>
+<article class="mob comun" data-cat="comun" data-nombre="cabra rencorosa">
+  <header>
+    <span class="em">⛰️</span>
+    <div>
+      <h3>Cabra rencorosa</h3>
+      <p class="zona">Montañas y picos</p>
+    </div>
+    <span class="tag t-comun">Común</span>
+  </header>
+  <p class="que">Es una cabra. Con muy malas pulgas. Te EMBISTE.</p>
+  
+  <div class="stats">
+    <span title="Vida"><b>40</b> vida</span>
+    <span title="Daño por golpe"><b>4</b> daño</span>
+    <span title="Armadura"><b>1</b> armadura</span>
+    <span title="Tamaño">×1.3 su tamano normal</span>
+    <span class="warn">sin nombre visible</span>
+    
+  </div>
+  <h4>Dónde y cómo aparece</h4>
+  <ul class="apar"><li><span class="pct">18.0%</span> biomas concretos · a mas de 300 bloques del Reino <span class="lv">nivel 2</span></li></ul>
+  <p class="esc"><b>Escala con la zona:</b> +9 vida y +1.1 daño por nivel. Aquí sale de nivel 2.</p>
+  <p class="loot"><b>Suelta:</b> Nada, solo experiencia.</p>
+  <p class="tip"><b>Consejo:</b> En la montaña lo que mata es la caida, no la cabra. Cuidado con donde te pilla.</p>
+</article>
+<article class="mob comun" data-cat="comun" data-nombre="reseco">
+  <header>
+    <span class="em">🏜️</span>
+    <div>
+      <h3>Reseco</h3>
+      <p class="zona">Desierto y badlands</p>
+    </div>
+    <span class="tag t-comun">Común</span>
+  </header>
+  <p class="que">El muerto del desierto. Cada tanto levanta una tolvanera que te deja CIEGO.</p>
+  
+  <div class="stats">
+    <span title="Vida"><b>55</b> vida</span>
+    <span title="Daño por golpe"><b>6</b> daño</span>
+    <span title="Armadura"><b>3</b> armadura</span>
+    <span title="Tamaño">×1.2 su tamano normal</span>
+    <span class="warn">sin nombre visible</span>
+    
+  </div>
+  <h4>Dónde y cómo aparece</h4>
+  <ul class="apar"><li><span class="pct">22.0%</span> biomas concretos · a mas de 300 bloques del Reino <span class="lv">nivel 3</span></li></ul>
+  <p class="esc"><b>Escala con la zona:</b> +14 vida y +1.3 daño por nivel. Aquí sale de nivel 3.</p>
+  <p class="loot"><b>Suelta:</b> Arena.</p>
+  <p class="tip"><b>Consejo:</b> En campo abierto y sin ver nada, lo peor es echar a correr. Espera a que se te pase.</p>
+</article>
+<article class="mob comun" data-cat="comun" data-nombre="el del cono">
+  <header>
+    <span class="em">🚧</span>
+    <div>
+      <h3>El del Cono</h3>
+      <p class="zona">Cerca del pueblo</p>
+    </div>
+    <span class="tag t-comun">Común</span>
+  </header>
+  <p class="que">Un zombi con un CONO DE OBRA en la cabeza. Guiño a Plants vs Zombies: el cono es su armadura y aguanta bastante mas que un zombi normal.</p>
+  
+  <div class="stats">
+    <span title="Vida"><b>65</b> vida</span>
+    <span title="Daño por golpe"><b>5</b> daño</span>
+    <span title="Armadura"><b>7</b> armadura</span>
+    <span title="Tamaño">×1.1 su tamano normal</span>
+    <span class="warn">sin nombre visible</span>
+    
+  </div>
+  <h4>Dónde y cómo aparece</h4>
+  <ul class="apar"><li><span class="pct">14.0%</span> a mas de 300 bloques del Reino · a menos de 1500 bloques del Reino <span class="lv">nivel 1</span></li><li><span class="pct">10.0%</span> a mas de 1500 bloques del Reino <span class="lv">nivel 4</span></li></ul>
+  <p class="esc"><b>Escala con la zona:</b> +14 vida y +1.2 daño por nivel. Aquí sale de nivel 1, 4.</p>
+  <p class="loot"><b>Suelta:</b> Carne podrida y su Cono de obra cuando se le rompe.</p>
+  <p class="tip"><b>Consejo:</b> A media vida el cono SE LE CAE, lo suelta al suelo (te lo puedes poner) y entonces se vuelve mas rapido y pega mas fuerte. No te confies cuando le veas perder el cono.</p>
 </article>
   </div>
 </main>
