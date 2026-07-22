@@ -11,7 +11,7 @@
     --line:#e1dcef; --line-strong:#ccc4e0;
     --arcane:#6b46d0; --arcane-2:#8a63ea; --glow:rgba(120,80,240,.16);
     --gold:#a9701d; --sci:#177f86; --folk:#4a8f2f; --danger:#c1443b;
-    --chip:#f1edfa;
+    --chip:#f1edfa; --suggest:#c43d86;
     --shadow:0 1px 2px rgba(40,25,70,.05), 0 10px 34px rgba(70,45,120,.12);
   }
   @media (prefers-color-scheme:dark){:root{
@@ -20,20 +20,20 @@
     --line:#302846; --line-strong:#43385f;
     --arcane:#9c82ff; --arcane-2:#b7a3ff; --glow:rgba(140,105,255,.26);
     --gold:#e6b25a; --sci:#4ac9d0; --folk:#87cc62; --danger:#ec7d75;
-    --chip:#241d3a; --shadow:0 1px 2px rgba(0,0,0,.45), 0 16px 44px rgba(0,0,0,.4);
+    --chip:#241d3a; --suggest:#ff86c9; --shadow:0 1px 2px rgba(0,0,0,.45), 0 16px 44px rgba(0,0,0,.4);
   }}
   :root[data-theme="light"]{
     --ground:#f3f1f8; --surface:#ffffff; --surface-2:#ece8f5; --sunken:#f7f5fb;
     --ink:#1e1828; --ink-soft:#585070; --ink-faint:#877e9d; --line:#e1dcef; --line-strong:#ccc4e0;
     --arcane:#6b46d0; --arcane-2:#8a63ea; --glow:rgba(120,80,240,.16);
-    --gold:#a9701d; --sci:#177f86; --folk:#4a8f2f; --danger:#c1443b; --chip:#f1edfa;
+    --gold:#a9701d; --sci:#177f86; --folk:#4a8f2f; --danger:#c1443b; --chip:#f1edfa; --suggest:#c43d86;
     --shadow:0 1px 2px rgba(40,25,70,.05), 0 10px 34px rgba(70,45,120,.12);
   }
   :root[data-theme="dark"]{
     --ground:#131019; --surface:#1c1730; --surface-2:#271f3d; --sunken:#171223;
     --ink:#ede9f8; --ink-soft:#b6accd; --ink-faint:#8b81a6; --line:#302846; --line-strong:#43385f;
     --arcane:#9c82ff; --arcane-2:#b7a3ff; --glow:rgba(140,105,255,.26);
-    --gold:#e6b25a; --sci:#4ac9d0; --folk:#87cc62; --danger:#ec7d75; --chip:#241d3a;
+    --gold:#e6b25a; --sci:#4ac9d0; --folk:#87cc62; --danger:#ec7d75; --chip:#241d3a; --suggest:#ff86c9;
     --shadow:0 1px 2px rgba(0,0,0,.45), 0 16px 44px rgba(0,0,0,.4);
   }
   *{box-sizing:border-box}
@@ -76,6 +76,7 @@
   .chip.sci{color:var(--sci)} .chip.folk{color:var(--folk)} .chip.gold{color:var(--gold)} .chip.arc{color:var(--arcane)}
   .chip.new{color:#fff;background:var(--gold);border-color:transparent}
   .chip.future{color:var(--ink-faint)}
+  .chip.suggest{color:#fff;background:var(--suggest);border-color:transparent}
   .panel .desc{color:var(--ink-soft);font-size:.94rem;line-height:1.55;margin:0 0 14px}
   .panel .rw{font-weight:700;color:var(--gold);font-size:.92rem;margin:0 0 12px}
   .panel .lbl{font-size:.72rem;text-transform:uppercase;letter-spacing:.1em;color:var(--ink-faint);font-weight:800;margin:16px 0 8px}
@@ -94,8 +95,10 @@
     <span class="lg"><span class="sw" style="border-color:var(--gold)"></span>Sistema/economía</span>
     <span class="lg"><span class="sw" style="border-color:var(--arcane)"></span>Loop diario</span>
     <span class="lg"><span class="sw" style="border-color:var(--ink-faint);border-style:dashed"></span>Futuro</span>
+    <span class="lg"><span class="sw" style="background:var(--suggest);border-color:transparent"></span><b>Propuesta (nueva)</b></span>
   </div>
   <div class="tb-r">
+    <button class="btn" id="propBtn" onclick="ER6.proposal()">✨ Ver propuesta</button>
     <button class="btn" onclick="ER6.fit()">Centrar</button>
     <button class="btn" onclick="ER6.theme()">🌓 Tema</button>
     <a class="btn" href="bestiario.html">🐺 Bestiario</a>
@@ -104,7 +107,7 @@
 </div>
 
 <div id="cy"></div>
-<div class="hint">Arrastra para mover · rueda para zoom · clic en un nodo para ver detalles</div>
+<div class="hint">Arrastra para mover · rueda para zoom · clic en un nodo para el detalle · «Ver propuesta» añade las misiones que faltan (en magenta)</div>
 
 <aside class="panel" id="panel">
   <button class="x" onclick="ER6.close()">✕</button>
@@ -4360,6 +4363,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
 
 <script>
 (function(){
+  let proposalOn=false;
   // ===== DATOS DE LAS MISIONES (nodos) =====
   // faction: sci|folk|gold|arc|future · status: live|new|future
   const N = [
@@ -4468,6 +4472,55 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
     ['banco','bodas','future'],['cofre','cosmeticos','future'],['pecio','pesca','future'],
   ];
 
+  // ===== PROPUESTA: misiones sugeridas (ocultas hasta pulsar «Ver propuesta») =====
+  const SN = [
+    // ARCO DE LA TORRE (la espina que falta, Actos 2-4)
+    {id:'s_jefe', label:'🔬 El Jefe se Acojona', npc:'Científico Jefe (⬜ NPC nuevo)', faction:'sci', type:'Acto 2 · arranca «la Torre despierta»', status:'suggest', desc:'Tras las señales de VOSTOK y la antena, la Torre PULSA por primera vez. El científico jefe entra en pánico y empieza a hablar de abrir la puerta sellada. Es el NPC que HOY falta para arrancar el Acto 2.', steps:['Nuevo NPC: el científico jefe','Dispara la 1ª invasión (tutorial)','Abre la investigación de la Torre']},
+    {id:'s_invasion_t', label:'⚔️ Primer Despertar', npc:'Científico Jefe', faction:'sci', type:'Quest-tutorial del evento de invasión', status:'suggest', desc:'Convierte el evento de invasión (ya autorado) en una QUEST: el jefe te enseña a defender la Plaza en la primera oleada. Engancha con el nodo «El Despertar de la Torre».'},
+    {id:'s_vera', label:'⛏️ La Puerta Imposible', npc:'Vera Pedregal', faction:'sci', type:'Saga · picar la puerta sellada', status:'suggest', desc:'Vera lleva toda la partida obsesionada con la puerta de la base de la Torre: es el gran gancho del clímax. Hoy solo sale de refilón en Operación Carpincho; merece saga propia.'},
+    {id:'s_marcas', label:'🗿 Las Marcas de la Torre', npc:'Dr. Papriko', faction:'sci', type:'Saga · descifrar los símbolos', status:'suggest', desc:'Papriko intenta descifrar los símbolos grabados en la Torre. Continúa su arco (Jarvard → antena → VOSTOK) directo hacia el misterio central.'},
+    {id:'s_elias', label:'⛪ La Fe de la Torre', npc:'Padre Elías (⬜ sin saga)', faction:'folk', type:'Saga · el pacto del cura', status:'suggest', desc:'El cura antiquísimo pactó con una entidad ligada a la Torre y fundó una secta de reglas absurdas. Cose el pueblo con el arco principal. Elías está en el roster sin ninguna misión.'},
+    {id:'s_reunir', label:'🪄 Magia y Ciencia', npc:'Torre del Mago', faction:'arc', type:'Convergencia · unir las dos facciones', status:'suggest', desc:'El punto donde científicos y pueblo (magia) tienen que colaborar para entender la Torre. Aquí confluyen Vera, Papriko, Elías y Rancio antes del final.'},
+    {id:'s_puerta', label:'🚪 Abrir la Puerta — FIN T1', npc:'Clímax de Temporada', faction:'arc', type:'Clímax · abrir la puerta y ENTRAR', status:'suggest', desc:'El final de la Temporada 1: abrir la puerta sellada de la base de la Torre y entrar (cliffhanger de la T2, dentro de la Torre). El pago de toda la siembra.'},
+    // SAGAS DEL PUEBLO (breadth · NPCs sin saga)
+    {id:'s_lolo', label:'🔨 La Fragua del Fundacional', npc:'Lolo el Fundacional (⬜ sin saga)', faction:'folk', type:'Saga · reparar y mejorar gear', status:'suggest', desc:'El herrero con delirios de grandeza. Saga de reparación/mejora = un SUMIDERO de gear que hoy no existe. En el roster sin misión.'},
+    {id:'s_convento', label:'⛪ Secretos del Convento', npc:'Sor Eufrasia y Sor Bete', faction:'folk', type:'Saga · madre e hija, la campana', status:'suggest', desc:'Sor Eufrasia (mandona) y su hija Sor Bete (emparedada junto a las campanas). Un misterio doméstico, oscuro y cómico, que enlaza con la fe de Elías.'},
+    {id:'s_calderon', label:'🍳 Cocina de Combate', npc:'Chef Calderón', faction:'folk', type:'Saga · recupera la cocina', status:'suggest', desc:'El chef furioso cocina esquivando una mesa de billar que le plantó el Ayuntamiento. Ya es soplón en Carpincho; darle saga propia (recetas, recuperar su cocina).'},
+    {id:'s_garrapata', label:'📦 Ruta Clandestina', npc:'Edelmiro Garrapata', faction:'folk', type:'Saga · contrabando (economía gris)', status:'suggest', desc:'El pillager con Tourette monta contrabando a la vista de todos. Puerta al hampa: alimenta el futuro Gremio de los Dedos Largos.'},
+    {id:'s_olegario', label:'🥱 El Obrero Fantasma', npc:'Obrero Olegario (⬜ sin saga)', faction:'sci', type:'Saga cómica · pillar al escaqueado', status:'suggest', desc:'El obrero que desaparece justo cuando hay curro (excusas de andamios y donuts «por seguridad laboral»). Comedia pura. En el roster sin misión.'},
+    {id:'s_aniceto', label:'🧫 Muestras Pedregométricas', npc:'Aniceto Morcillo (⬜ sin saga)', faction:'sci', type:'Saga · jerga inventada', status:'suggest', desc:'El científico de palabros («oscilación pedregométrica de fase inversa») te manda recoger muestras. Extiende la rama de geología con humor.'},
+    {id:'s_rancio', label:'🌀 Los Delirios de Rancio', npc:'Rancio el Profeta', faction:'arc', type:'Saga · verdades del multiverso', status:'suggest', desc:'El «loco» del pueblo (en secreto, un jugador caído del Reino 1) suelta verdades deformadas del multiverso. Sus delirios cobran sentido en el clímax de la Torre. Hoy no tiene quest.'},
+    {id:'s_payaso', label:'🤡 El Payasito Tristo', npc:'Payasito Tristo', faction:'folk', type:'Saga · humor negro (co-diseño)', status:'suggest', desc:'NPC ya colocado junto al establo, todavía sin lore. Encaja un arco de humor negro. ⚠️ Hay que definir su lore contigo antes de montarlo.'},
+    // PUERTO / PESCA · BANCO
+    {id:'s_bacalao', label:'🎣 El Bacalao de la Gabardina', npc:'Bacalao Gabardinez', faction:'folk', type:'Saga · pesca y transporte', status:'suggest', desc:'El pez disfrazado de humano del Puerto. Convierte el nodo «Torneos de Pesca» en una saga con NPC: pesca, transporte en barco y su leyenda.'},
+    {id:'s_avraham', label:'💰 El Préstamo con Trampa', npc:'Avraham Rosenberg', faction:'gold', type:'Saga · préstamo chanchullero', status:'suggest', desc:'El dueño del banco te ofrece un préstamo lleno de comisiones y letra pequeña. SUMIDERO económico + humor. Avraham está en el roster sin quest.'},
+    // DUNGEONS
+    {id:'s_mina', label:'⛏️ Dungeon: La Mina', npc:'Dungeon (grupo)', faction:'arc', type:'Dungeon rejugable · jefe Barbahueso', status:'suggest', desc:'La dungeon de piratas (Capitán Barbahueso + tripulación) YA está montada en el server pero no aparece en el árbol ni tiene saga de acceso. Falta la saga que abre el candado (party, loot, rejugable).', steps:['Saga que concede el acceso (candado por saga)','Jefe: Capitán Barbahueso + 11 piratas','Rejugable en grupo, con botín']},
+    {id:'s_vostok_lab', label:'🏢 Dungeon: Lab VOSTOK', npc:'Dungeon (grupo)', faction:'arc', type:'Dungeon · explorar el laboratorio', status:'suggest', desc:'El Cárabo te manda a un laboratorio de VOSTOK: explorar salas, PMCs, documentos. 2ª dungeon (mundo Multiverse tipo Black Mesa). Cierra la Parte 1 de la saga VOSTOK.'},
+    // VOSTOK (continuación de la saga)
+    {id:'s_vostok2', label:'🕳️ Rastro Frío', npc:'Dr. Papriko', faction:'sci', type:'VOSTOK · el dossier revela la corpo', status:'suggest', desc:'Sigues el GPS de la carga hasta una cueva y encuentras el dossier que destapa GRUPO VOSTOK, sus PMCs y las fuerzas de élite Bogatir. Parte 2 de la saga (ya en roadmap).'},
+    {id:'s_cebo', label:'🎯 Cebo', npc:'Dr. Papriko', faction:'sci', type:'VOSTOK · trampa con PMCs armados', status:'suggest', desc:'Hueles la trampa y vas igual: PMCs de VOSTOK que disparan DE VERDAD (Sentinel + arma real). Sueltan chapas que llevas a Papriko. Primer combate contra la corpo.'},
+    {id:'s_carabo', label:'🦉 Peaje de Información', npc:'El Cárabo (⬜ NPC nuevo)', faction:'sci', type:'VOSTOK · el trader que cobra por hablar', status:'suggest', desc:'Nuevo NPC: un corredor de información estilo trader de Tarkov que no suelta lo gordo sin un buen pellizco. Sumidero + gancho (posible desertor de VOSTOK).'},
+    // EXTRAS
+    {id:'s_reino2', label:'❄️ Ramales Criogénicos', npc:'Evento · Reino 2', faction:'arc', type:'Evento · activar la Torre-Eco', status:'suggest', desc:'El sistema criogénico del Reino 2 (ya autorado) hecho saga/evento: activar los 4 ramales para encender la Torre-Eco. Otra filtración del multiverso que alimenta el arco de la Torre.'},
+    {id:'s_labo', label:'🧪 El Laboratorio del Reino', npc:'Dr. Papriko / La Alquimista', faction:'sci', type:'Química estilo Education (aparcado)', status:'suggest', desc:'El set de química (Mesa de Laboratorio, elementos, compuestos) que hablamos: se recrea con ItemsAdder SIN diseñar texturas. En stand-by hasta decidir quién la da.'},
+    {id:'s_nico', label:'🐾 Mascotas del Reino', npc:'Nico (tendero ya colocado)', faction:'gold', type:'EcoPets (planeado)', status:'suggest', desc:'Mascotas que suben de nivel y dan buffs al jugador. El tendero Nico ya está colocado junto al establo esperando el plugin. Saga de adopción/entrenamiento.'},
+  ];
+  const SE = [
+    ['vostok_p1','s_jefe','suggest'],['s_jefe','s_invasion_t','suggest'],['s_invasion_t','invasion','suggest'],
+    ['s_jefe','s_vera','suggest'],['papriko_antena','s_marcas','suggest'],['s_jefe','s_elias','suggest'],
+    ['s_vera','s_reunir','suggest'],['s_marcas','s_reunir','suggest'],['s_elias','s_reunir','suggest'],['s_reunir','s_puerta','suggest'],
+    ['bolsa','s_lolo','suggest'],['bolsa','s_convento','suggest'],['s_convento','s_elias','suggest'],
+    ['carpincho','s_calderon','suggest'],['bolsa','s_garrapata','suggest'],['s_garrapata','gremio','suggest'],
+    ['carpincho','s_olegario','suggest'],['geologia','s_aniceto','suggest'],
+    ['carpincho','s_rancio','suggest'],['s_rancio','s_reunir','suggest'],['caballos','s_payaso','suggest'],
+    ['pecio','s_bacalao','suggest'],['s_bacalao','pesca','suggest'],['cuenta','s_avraham','suggest'],
+    ['geologia','s_mina','suggest'],['s_carabo','s_vostok_lab','suggest'],
+    ['vostok_p1','s_vostok2','suggest'],['s_vostok2','s_cebo','suggest'],['s_cebo','s_carabo','suggest'],
+    ['anclaje_fractal','s_reino2','suggest'],['s_reino2','s_reunir','suggest'],['s_marcas','s_labo','suggest'],['bolsa','s_nico','suggest'],
+  ];
+
+  const LAY={name:'dagre', rankDir:'TB', nodeSep:26, rankSep:64, edgeSep:14, ranker:'network-simplex'};
   const elements = [];
   N.forEach(n=>elements.push({data:Object.assign({}, n)}));
   E.forEach(e=>elements.push({data:{id:e[0]+'>'+e[1], source:e[0], target:e[1], kind:e[2]||'main'}}));
@@ -4475,7 +4528,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
   function v(name){return getComputedStyle(document.documentElement).getPropertyValue(name).trim();}
   function style(){
     const surface=v('--surface'),ink=v('--ink'),inkSoft=v('--ink-soft'),line=v('--line'),chip=v('--chip'),
-      sci=v('--sci'),folk=v('--folk'),gold=v('--gold'),arc=v('--arcane'),faint=v('--ink-faint');
+      sci=v('--sci'),folk=v('--folk'),gold=v('--gold'),arc=v('--arcane'),faint=v('--ink-faint'),sug=v('--suggest');
     return [
       {selector:'node',style:{'background-color':surface,'border-width':2,'border-color':line,
         'label':'data(label)','color':ink,'font-size':'12px','font-weight':600,'text-wrap':'wrap','text-max-width':'155px',
@@ -4491,6 +4544,8 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
       {selector:'edge',style:{'width':2.5,'line-color':line,'target-arrow-color':line,'target-arrow-shape':'triangle',
         'curve-style':'bezier','arrow-scale':1.1}},
       {selector:'edge[kind="future"]',style:{'line-style':'dashed','line-color':faint,'target-arrow-color':faint,'width':2}},
+      {selector:'node[status="suggest"]',style:{'border-color':sug,'border-width':4,'color':ink,'font-weight':700}},
+      {selector:'edge[kind="suggest"]',style:{'line-style':'dashed','line-color':sug,'target-arrow-color':sug,'width':3}},
       {selector:'.faded',style:{'opacity':.16}},
       {selector:'.hl',style:{'border-color':arc,'line-color':arc,'target-arrow-color':arc,'width':3.5}},
     ];
@@ -4499,14 +4554,14 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
   cytoscape.use(window.cytoscapeDagre);
   const cy = cytoscape({
     container:document.getElementById('cy'), elements, style:style(),
-    layout:{name:'dagre', rankDir:'TB', nodeSep:26, rankSep:64, edgeSep:14, ranker:'network-simplex'},
+    layout:LAY,
     wheelSensitivity:.28, minZoom:.25, maxZoom:2.4
   });
   cy.ready(()=>cy.fit(undefined,50));
 
   const panel=document.getElementById('panel'), body=document.getElementById('panelBody');
   const FAC={sci:'Forasteros',folk:'Pueblo',gold:'Sistema',arc:'Loop diario',future:'Futuro'};
-  const ST={live:'',new:'NUEVO',future:'FUTURO'};
+  const ST={live:'',new:'NUEVO',future:'FUTURO',suggest:'PROPUESTA'};
   function esc(s){return (s||'').replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));}
   function show(d){
     let h='<h2 class="serif">'+esc(d.label)+'</h2>';
@@ -4532,6 +4587,10 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
 
   window.ER6={
     fit:()=>cy.fit(undefined,50),
+    proposal:function(){proposalOn=!proposalOn; const b=document.getElementById('propBtn');
+      if(proposalOn){const add=[]; SN.forEach(n=>add.push({data:Object.assign({},n)})); SE.forEach(e=>add.push({data:{id:e[0]+'>'+e[1],source:e[0],target:e[1],kind:e[2]||'main'}})); cy.add(add); if(b){b.classList.add('arc'); b.textContent='✨ Ocultar propuesta';}}
+      else{cy.remove(cy.nodes('[status="suggest"]')); if(b){b.classList.remove('arc'); b.textContent='✨ Ver propuesta';}}
+      cy.layout(LAY).run(); cy.fit(undefined,50);},
     close:close,
     theme:function(){
       const r=document.documentElement;
