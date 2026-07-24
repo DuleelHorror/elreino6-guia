@@ -4409,6 +4409,8 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
       steps:['Ir al pecio hundido','Coger el cofre (aparece el Pescaíto Lerele)','Traer el plano al Semental'], desc:'Un barco hundido esconde el plano de una espada pirata… y un bicho que lo guarda. Secundaria del Semental.'},
     {id:'caballos', label:'🐴 Horse Luis', npc:'Horse Luis', faction:'folk', type:'Saga · 3 misiones (escuchar cuentos)', coins:9, reward:'Comprar caballos, sillas y cuerdas', status:'new',
       steps:['1) Un Caballo para el Reino (Toni) → acepta la quest y ve al establo (brújula) a hablar con Horse Luis','2) Horse Luis I → escucha su primer cuento (~2 min). ¡No puedes salir del establo hasta que acabe!','3) Horse Luis II → segundo cuento (~4 min)','4) Horse Luis III → el gran final (~7 min); al acabar se abre el cofre-tienda del establo'], desc:'A un caballo le cayó un rayo y se volvió consciente; ahora, acomplejado, cuida el establo y te narra novelas rosas entre caballos cada vez más largas. Aguanta las tres (sin poder salir del establo) y podrás comprar caballos, sillas y cuerdas.'},
+    {id:'nico', label:'🐾 El Refugio de Nico', npc:'Toni → Nico', faction:'gold', type:'Saga · mascotas (en construcción)', coins:6, reward:'(al final) adoptar/comprar mascotas', status:'new',
+      steps:['1) El Refugio de Nico (Toni) → acepta y ve al establo (brújula) a hablar con Nico','2) Una Manita pal Refugio (Nico) → entrégale 1 bala de heno + 3 de lana para las camas','3) …la saga continúa (misiones por diseñar); al completarla desbloquea adoptar mascotas'], desc:'Nico regenta lo que llama "tienda de animales", pero en realidad es un REFUGIO: recoge bichos que nadie quiere y se emociona con nada (un cielo, y muy sensible). Toni te deriva a echarle una mano. La saga sigue en construcción; al terminarla podrás adoptar/comprar mascotas (EcoPets).'},
     {id:'estaciones', label:'🌦️ Gordi Mamón', npc:'Toni → Gordi Mamón', faction:'sci', type:'Saga · 4 misiones (tutorial de estaciones) · OBLIGATORIA', coins:14, reward:'Calendario del Reino', status:'new',
       steps:['1) El Hombre del Tiempo (Toni) → acepta la quest y ve al mercadillo (brújula) a hablar con Gordi Mamón','2) Gordi Mamón I: El Almanaque → ve a leer el Calendario flotante de la plaza y vuelve con Gordi','3) Gordi Mamón II: La Huerta → entrégale 6 zanahorias y 6 patatas (aprendes qué crece en cada estación)','4) Gordi Mamón III: El Termómetro → entrégale 1 pechera de cuero (aprendes del frío y el calor); al acabar recibes el Calendario del Reino de bolsillo'], desc:'El tutorial de las estaciones: el calendario, qué se cultiva en cada estación y la temperatura (en invierno te congelas, en verano te asas). Gordi habla siempre en tercera persona. Es OBLIGATORIO terminarla antes de Operación Carpincho: saber del clima es básico para sobrevivir.'},
     {id:'geologia', label:'🪨 El Pulso de la Piedra', npc:'Doctora Pizarrica', faction:'sci', type:'Saga · 3 misiones (secundaria)', coins:15, reward:'Medalla de Geóloga', status:'new',
@@ -4463,7 +4465,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
     ['nando','permiso'],['permiso','bolsa'],['bolsa','jobs'],['bolsa','carpincho'],
     ['carpincho','barco'],['barco','tablon_luz'],['tablon_luz','tablon'],['tablon','tienda'],['tienda','cofre'],
     // secundarias + saga del banco (2026-07-11) + Red de Anclaje (2026-07-15)
-    ['bolsa','pecio'],['bolsa','caballos'],['bolsa','estaciones'],['estaciones','carpincho'],['carpincho','geologia'],['cuenta','anclaje'],['anclaje','anclaje_rep'],['anclaje_rep','anclaje_salto'],['anclaje_salto','anclaje_fractal'],['anclaje_fractal','jarvard'],['jarvard','papriko_antena'],['papriko_antena','vostok_p1'],
+    ['bolsa','pecio'],['bolsa','caballos'],['permiso','nico'],['bolsa','estaciones'],['estaciones','carpincho'],['carpincho','geologia'],['cuenta','anclaje'],['anclaje','anclaje_rep'],['anclaje_rep','anclaje_salto'],['anclaje_salto','anclaje_fractal'],['anclaje_fractal','jarvard'],['jarvard','papriko_antena'],['papriko_antena','vostok_p1'],
     ['tablon_luz','banco'],['banco','cuenta'],['cuenta','mercado'],
     // futuro (punteadas)
     ['permiso','torre','future'],['torre','invasion','future'],['clase','sabio','future'],
@@ -4504,7 +4506,6 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
     // EXTRAS
     {id:'s_reino2', label:'❄️ Ramales Criogénicos', npc:'Evento · Reino 2', faction:'arc', type:'Evento · activar la Torre-Eco', status:'suggest', desc:'El sistema criogénico del Reino 2 (ya autorado) hecho saga/evento: activar los 4 ramales para encender la Torre-Eco. Otra filtración del multiverso que alimenta el arco de la Torre.'},
     {id:'s_labo', label:'🧪 El Laboratorio del Reino', npc:'Dr. Papriko / La Alquimista', faction:'sci', type:'Química estilo Education (aparcado)', status:'suggest', desc:'El set de química (Mesa de Laboratorio, elementos, compuestos) que hablamos: se recrea con ItemsAdder SIN diseñar texturas. En stand-by hasta decidir quién la da.'},
-    {id:'s_nico', label:'🐾 Mascotas del Reino', npc:'Nico (tendero ya colocado)', faction:'gold', type:'EcoPets (planeado)', status:'suggest', desc:'Mascotas que suben de nivel y dan buffs al jugador. El tendero Nico ya está colocado junto al establo esperando el plugin. Saga de adopción/entrenamiento.'},
   ];
   const SE = [
     ['vostok_p1','s_jefe','suggest'],['s_jefe','s_invasion_t','suggest'],['s_invasion_t','invasion','suggest'],
@@ -4517,7 +4518,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
     ['pecio','s_bacalao','suggest'],['s_bacalao','pesca','suggest'],['cuenta','s_avraham','suggest'],
     ['geologia','s_mina','suggest'],['s_carabo','s_vostok_lab','suggest'],
     ['vostok_p1','s_vostok2','suggest'],['s_vostok2','s_cebo','suggest'],['s_cebo','s_carabo','suggest'],
-    ['anclaje_fractal','s_reino2','suggest'],['s_reino2','s_reunir','suggest'],['s_marcas','s_labo','suggest'],['bolsa','s_nico','suggest'],
+    ['anclaje_fractal','s_reino2','suggest'],['s_reino2','s_reunir','suggest'],['s_marcas','s_labo','suggest'],
   ];
 
   const LAY={name:'dagre', rankDir:'TB', nodeSep:26, rankSep:64, edgeSep:14, ranker:'network-simplex'};
