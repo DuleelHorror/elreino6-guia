@@ -5,7 +5,7 @@
     --ink:#1e1828; --ink-soft:#585070; --ink-faint:#877e9d;
     --line:#e1dcef; --line-strong:#ccc4e0;
     --arcane:#6b46d0; --arcane-2:#8a63ea; --glow:rgba(120,80,240,.16);
-    --gold:#a9701d; --sci:#177f86; --folk:#4a8f2f; --danger:#c1443b;
+    --gold:#a9701d; --sci:#177f86; --folk:#4a8f2f; --danger:#c1443b; --key:#d98a12;
     --chip:#f1edfa; --suggest:#c43d86;
     --shadow:0 1px 2px rgba(40,25,70,.05), 0 10px 34px rgba(70,45,120,.12);
   }
@@ -14,21 +14,21 @@
     --ink:#ede9f8; --ink-soft:#b6accd; --ink-faint:#8b81a6;
     --line:#302846; --line-strong:#43385f;
     --arcane:#9c82ff; --arcane-2:#b7a3ff; --glow:rgba(140,105,255,.26);
-    --gold:#e6b25a; --sci:#4ac9d0; --folk:#87cc62; --danger:#ec7d75;
+    --gold:#e6b25a; --sci:#4ac9d0; --folk:#87cc62; --danger:#ec7d75; --key:#ffce6b;
     --chip:#241d3a; --suggest:#ff86c9; --shadow:0 1px 2px rgba(0,0,0,.45), 0 16px 44px rgba(0,0,0,.4);
   }}
   :root[data-theme="light"]{
     --ground:#f3f1f8; --surface:#ffffff; --surface-2:#ece8f5; --sunken:#f7f5fb;
     --ink:#1e1828; --ink-soft:#585070; --ink-faint:#877e9d; --line:#e1dcef; --line-strong:#ccc4e0;
     --arcane:#6b46d0; --arcane-2:#8a63ea; --glow:rgba(120,80,240,.16);
-    --gold:#a9701d; --sci:#177f86; --folk:#4a8f2f; --danger:#c1443b; --chip:#f1edfa; --suggest:#c43d86;
+    --gold:#a9701d; --sci:#177f86; --folk:#4a8f2f; --danger:#c1443b; --key:#d98a12; --chip:#f1edfa; --suggest:#c43d86;
     --shadow:0 1px 2px rgba(40,25,70,.05), 0 10px 34px rgba(70,45,120,.12);
   }
   :root[data-theme="dark"]{
     --ground:#131019; --surface:#1c1730; --surface-2:#271f3d; --sunken:#171223;
     --ink:#ede9f8; --ink-soft:#b6accd; --ink-faint:#8b81a6; --line:#302846; --line-strong:#43385f;
     --arcane:#9c82ff; --arcane-2:#b7a3ff; --glow:rgba(140,105,255,.26);
-    --gold:#e6b25a; --sci:#4ac9d0; --folk:#87cc62; --danger:#ec7d75; --chip:#241d3a; --suggest:#ff86c9;
+    --gold:#e6b25a; --sci:#4ac9d0; --folk:#87cc62; --danger:#ec7d75; --key:#ffce6b; --chip:#241d3a; --suggest:#ff86c9;
     --shadow:0 1px 2px rgba(0,0,0,.45), 0 16px 44px rgba(0,0,0,.4);
   }
   *{box-sizing:border-box}
@@ -72,8 +72,14 @@
   .chip.new{color:#fff;background:var(--gold);border-color:transparent}
   .chip.future{color:var(--ink-faint)}
   .chip.suggest{color:#fff;background:var(--suggest);border-color:transparent}
+  .chip.key{color:#3a2600;background:var(--key);border-color:transparent}
   .panel .desc{color:var(--ink-soft);font-size:.94rem;line-height:1.55;margin:0 0 14px}
   .panel .rw{font-weight:700;color:var(--gold);font-size:.92rem;margin:0 0 12px}
+  .panel .unlock{display:flex;gap:.5em;align-items:flex-start;margin:0 0 14px;padding:10px 12px;border-radius:11px;
+    font-weight:700;font-size:.9rem;color:var(--ink);
+    background:color-mix(in srgb,var(--key) 18%,var(--surface));border:1px solid var(--key);
+    box-shadow:0 0 0 1px color-mix(in srgb,var(--key) 30%,transparent), 0 6px 18px color-mix(in srgb,var(--key) 22%,transparent)}
+  .sw.key{border-color:var(--key)!important;box-shadow:0 0 6px var(--key)}
   .panel .lbl{font-size:.72rem;text-transform:uppercase;letter-spacing:.1em;color:var(--ink-faint);font-weight:800;margin:16px 0 8px}
   .panel ol{margin:0;padding-left:1.2em} .panel li{margin:.3em 0;color:var(--ink-soft);font-size:.9rem}
   .panel .who{font-size:.85rem;color:var(--ink-faint);margin:-6px 0 12px}
@@ -88,6 +94,7 @@
     <span class="lg"><span class="sw" style="border-color:var(--gold)"></span>Sistema/economía</span>
     <span class="lg"><span class="sw" style="border-color:var(--arcane)"></span>Loop diario</span>
     <span class="lg"><span class="sw" style="border-color:var(--ink-faint);border-style:dashed"></span>Futuro</span>
+    <span class="lg"><span class="sw key"></span>🔓 <b>Desbloquea mecánica</b></span>
     <span class="lg"><span class="sw" style="background:var(--suggest);border-color:transparent"></span><b>Propuesta (nueva)</b></span>
   </div>
   <div class="tb-r">
@@ -4364,31 +4371,31 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
       desc:'Nada más entrar recibes el contrato (una oferta de empleo cutre) y una brújula que te lleva a Toni.'},
     {id:'fichaje', label:'🦫 Operación Recluta', npc:'Toni Tutorial Jr', faction:'sci', type:'Tutorial de survival', coins:30, status:'live',
       steps:['16 troncos','1 mesa de trabajo','32 adoquines','6 filetes'], desc:'Ayudas a montar el campamento. Tutorial de talar, minar, craftear y cocinar.'},
-    {id:'clase', label:'💅 Bautismo de Fuego', npc:'Maestro Anselmo', faction:'sci', type:'Tutorial · desbloquea tu CLASE', coins:7, status:'live',
+    {id:'clase', label:'💅 Bautismo de Fuego', npc:'Maestro Anselmo', faction:'sci', type:'Tutorial · desbloquea tu CLASE', coins:7, status:'live', unlocks:'Tu CLASE del MMO (kit, atributos y hechizos)',
       steps:['Matar 3 zombis','Hablar con Anselmo','Entregar 1 pluma'], desc:'Anselmo te evalúa y te asigna tu clase (te da el kit del MMO).'},
-    {id:'semental', label:'🏹 Fuego a Discreción', npc:'Semental de la Flecha', faction:'folk', type:'Tutorial de combate y poderes', coins:18, status:'live',
+    {id:'semental', label:'🏹 Fuego a Discreción', npc:'Semental de la Flecha', faction:'folk', type:'Tutorial de combate y poderes', coins:18, status:'live', unlocks:'Lanzar poderes: barra de habilidades, maná y enfriamiento',
       steps:['5 zombis','5 esqueletos','5 arañas','3 creepers','Horda final'], desc:'Cinco pruebas que enseñan la barra de poderes, el maná y el enfriamiento. Te regala un arco.'},
     {id:'alquimista', label:'🌸 Contacto en la Botica', npc:'La Alquimista', faction:'folk', type:'Recado', reward:'Reagentes + brújula a Nando', status:'live',
       steps:['Entregar 1 amapola + 1 diente de león'], desc:'Te da los primeros ingredientes de magia y te mete en el negocio de la maría.'},
     {id:'nando', label:'🕳️ El Alijo de la Cueva', npc:'Nando / Fernando', faction:'folk', type:'Recado · el camino se BIFURCA', reward:'Alijo de semillas', status:'live',
       steps:['Entregar 3 panes'], desc:'El camello fino te fía las semillas de marihuana. Aquí el camino se abre en dos ramas.'},
     // Rama A (secundaria)
-    {id:'cultivo', label:'🌿 Cultivo Clandestino', npc:'La Alquimista', faction:'folk', type:'Saga · 3 misiones (rama secundaria)', coins:26, status:'live',
+    {id:'cultivo', label:'🌿 Cultivo Clandestino', npc:'La Alquimista', faction:'folk', type:'Saga · 3 misiones (rama secundaria)', coins:26, status:'live', unlocks:'Cultivar droga (SPdrug): invernadero, laboratorio y la venta de maría',
       steps:['1) La Huerta → planta las semillas, espera a que crezcan y entrégale 1 «materia» a la Alquimista (6🥜 + reagentes)','2) El Secadero → seca la cosecha en el minijuego del compostador y entrega 1 «seca» (8🥜 + invernadero)','3) El Laboratorio → cuece la droga en el ahumador (orden correcto o explota) y entrega 1 cannabis (12🥜 + desbloquea la venta)'], desc:'Te enseña a plantar, secar y cocinar la maría paso a paso, regalándote el invernadero y el laboratorio.'},
     {id:'vender', label:'💸 Vender maría', npc:'Cofre (La Alquimista)', faction:'gold', type:'Repetible ∞', reward:'8🥜/unidad · tope 24/día', status:'live',
       desc:'Ya puedes vender tu maría en el cofre. Fuente de dinero repetible (con tope diario para no romper la economía).'},
     // Rama B (principal)
     {id:'permiso', label:'🏛️ Vía Crucis Administrativa', npc:'Toni → 6 funcionarios', faction:'sci', type:'Saga · comedia burocrática', coins:28, status:'live',
       steps:['Circo del papeleo: recorre las 6 ventanillas del Ayuntamiento en orden (cada una te marea con un sello, una tasa o una espera absurda) hasta conseguir el Permiso de Obra:','1) La Ujier','2) Los Sellos','3) El Registrador','4) El Interventor','5) El Inspector (en la excavación)','6) El Ministro → firma el Permiso'], desc:'El circo del papeleo del Ayuntamiento. Puerta de la HISTORIA PRINCIPAL + gancho de la Torre Negra.'},
-    {id:'bolsa', label:'💼 Alta en el Gremio', npc:'Toni', faction:'sci', type:'Desbloquea los oficios', coins:10, reward:'Carné de Trabajador', status:'live',
+    {id:'bolsa', label:'💼 Alta en el Gremio', npc:'Toni', faction:'sci', type:'Desbloquea los oficios', coins:10, reward:'Carné de Trabajador', status:'live', unlocks:'Los Oficios (Jobs): sueldo diario por currar',
       desc:'Toni te da el carné que desbloquea los 5 oficios (Jobs).'},
     {id:'jobs', label:'🛠️ Los Oficios (Jobs)', npc:'Sistema', faction:'gold', type:'Repetible · sueldo diario', reward:'Tope 100🥜/día', status:'live',
       desc:'Minero, Leñador, Hortelano, Cazador y Pescador. El ingreso del día a día por currar.'},
     {id:'carpincho', label:'🕵️ Operación Carpincho', npc:'Toni → el Ministro', faction:'sci', type:'Saga · 6 misiones · JEFE', coins:84, reward:'Medalla del Capincherío', status:'live',
       steps:['1) La Obra Congelada (Toni) → investiga la nota falsa de «riesgo sísmico» (habla con Vera y la Dra. Pizarrica)','2) El Soplo del Chef (Chef Calderón) → te destapa el plan de los «Apartamentos Pan de Gamba»','3) El Expediente Fantasma (Toni) → infíltrate en el Ayuntamiento con la clave y saca el expediente del cofre','4) Quema Controlada (Toni) → con el Mechero, quema las pilas de papeles y tráele las cenizas','5) Los Precintadores (combate) → derrota la oleada de matones y a su Jefe','6) El Careo — JEFE (el Ministro) → destápalo y véncelo (se escapa «trasladado a un Ministerio más grande»)'], desc:'El Ministro precinta la mina con una excusa falsa para echar al pueblo. Infiltración, sabotaje y combate final contra el jefe.'},
-    {id:'barco', label:'🍺 El Bar Co', npc:'Señor Trapo', faction:'folk', type:'Saga · 7 misiones (las 5 últimas OPCIONALES)', coins:46, reward:'Jarra + Delantal', status:'live',
+    {id:'barco', label:'🍺 El Bar Co', npc:'Señor Trapo', faction:'folk', type:'Saga · 7 misiones (las 5 últimas OPCIONALES)', coins:46, reward:'Jarra + Delantal', status:'live', unlocks:'Fabricar cerveza (BreweryX)',
       steps:['0) Aguas Turbias (Toni) → ve al Bar Co a hablar con el Señor Trapo','1) El Caldero → FERMENTA en el caldero al fuego y entrégale el Mosto','2) El Alambique → DESTILA en el soporte de pociones (con glowstone) ← aquí ya puedes seguir la línea principal con Toni','3) La Barrica (opcional) → AÑEJA la cerveza en un barril de roble','4) El Sellado (opcional) → SÉLLALA en el ahumador','5) La Receta del Naufragio (opcional) → fabrica la Birra del Naufragio (receta completa)','6) La Noche del Bar Co (opcional) → sírvele varias birras (gag de borrachera) — final'], desc:'El tabernero te enseña a fabricar cerveza paso a paso en su barco volcado. Tras la 2ª (El Alambique) la línea principal se reanuda con Toni; las demás quedan opcionales.'},
-    {id:'tablon_luz', label:'⚡ Doce Voltios', npc:'Toni', faction:'sci', type:'Tutorial · DESBLOQUEA el Tablón', coins:10, reward:'Enchufe del Tablón', status:'new',
+    {id:'tablon_luz', label:'⚡ Doce Voltios', npc:'Toni', faction:'sci', type:'Tutorial · DESBLOQUEA el Tablón', coins:10, reward:'Enchufe del Tablón', status:'new', unlocks:'El Tablón de Encargos: loop diario + moneda Fichas',
       steps:['Bajar la palanca del puente Mambutu','Bajar la palanca de la iglesia','Entregar los 2 fusibles a Toni'], desc:'El Tablón no funciona: no tiene corriente. Toni te explica (con lógica absurda) que va a «12 voltios» y hay que activar 2 palancas del circuito.'},
     // Loop diario
     {id:'tablon', label:'🎟️ Tablón de Encargos', npc:'Sistema', faction:'arc', type:'Loop diario · repetible', reward:'Fichas 🎟️', status:'new',
@@ -4400,19 +4407,19 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
     // Secundarias / nuevas (2026-07-11)
     {id:'pecio', label:'⚓ El Guardián del Pecio', npc:'Semental de la Flecha', faction:'folk', type:'Secundaria · pesca un bicho raro', reward:'Plano de la Espada Pirata', status:'new',
       steps:['Ir al pecio hundido','Coger el cofre (aparece el Pescaíto Lerele)','Traer el plano al Semental'], desc:'Un barco hundido esconde el plano de una espada pirata… y un bicho que lo guarda. Secundaria del Semental.'},
-    {id:'caballos', label:'🐴 Horse Luis', npc:'Horse Luis', faction:'folk', type:'Saga · 3 misiones (escuchar cuentos)', coins:9, reward:'Comprar caballos, sillas y cuerdas', status:'new',
+    {id:'caballos', label:'🐴 Horse Luis', npc:'Horse Luis', faction:'folk', type:'Saga · 3 misiones (escuchar cuentos)', coins:9, reward:'Comprar caballos, sillas y cuerdas', status:'new', unlocks:'Comprar caballos, sillas y cuerdas en el establo',
       steps:['1) Un Caballo para el Reino (Toni) → acepta la quest y ve al establo (brújula) a hablar con Horse Luis','2) Horse Luis I → escucha su primer cuento (~2 min). ¡No puedes salir del establo hasta que acabe!','3) Horse Luis II → segundo cuento (~4 min)','4) Horse Luis III → el gran final (~7 min); al acabar se abre el cofre-tienda del establo'], desc:'A un caballo le cayó un rayo y se volvió consciente; ahora, acomplejado, cuida el establo y te narra novelas rosas entre caballos cada vez más largas. Aguanta las tres (sin poder salir del establo) y podrás comprar caballos, sillas y cuerdas.'},
-    {id:'nico', label:'🐾 El Refugio de Nico', npc:'Toni → Nico', faction:'gold', type:'Saga · el refugio (en construcción)', coins:14, reward:'al final, adoptar mascotas de EcoPets (de pago) en el mostrador del refugio', status:'new',
+    {id:'nico', label:'🐾 El Refugio de Nico', npc:'Toni → Nico', faction:'gold', type:'Saga · el refugio (en construcción)', coins:14, reward:'al final, adoptar mascotas de EcoPets (de pago) en el mostrador del refugio', status:'new', unlocks:'Adoptar mascotas (EcoPets) en el mostrador del refugio',
       steps:['1) El Refugio de Nico (Toni) → acepta y ve al establo (brújula) a hablar con Nico','2) Una Manita pal Refugio (Nico) → entrégale 1 bala de heno + 3 de lana','3) Mantas pal Refugio (Nico) → entrégale 4 alfombras blancas + 3 marrones; Nico te presenta a Yaniko','4) (tras la saga de Yaniko) Una Emergencia Delicada (Nico) → se ha cagado de la emoción, tráele 16 papeles → al acabar, Nico te DEJA ADOPTAR mascotas (de pago, "cargos") en el mostrador del refugio'], desc:'Nico regenta lo que llama "tienda de animales", pero es un REFUGIO: recoge bichos que nadie quiere y se emociona con nada (un cielo, muy sensible). Toni te deriva a echarle una mano. Al pedirle mantas te presenta a Yaniko, la gata fumada que se le ha instalado.'},
-    {id:'yaniko', label:'🚬 La Gata del Rincón (Yaniko)', npc:'Yaniko / Nico', faction:'gold', type:'Saga · tabaco (SPdrug) + venta recurrente', coins:25, reward:'venta repetible de tabaco a Yaniko (dinero recurrente)', status:'new',
+    {id:'yaniko', label:'🚬 La Gata del Rincón (Yaniko)', npc:'Yaniko / Nico', faction:'gold', type:'Saga · tabaco (SPdrug) + venta recurrente', coins:25, reward:'venta repetible de tabaco a Yaniko (dinero recurrente)', status:'new', unlocks:'Cultivar y refinar tabaco (SPdrug) + venderlo a Yaniko (ingreso recurrente)',
       steps:['1) El Gato del Rincón (Yaniko) → te manda al Mercado a comprar semillas de tabaco ("ornamentales")','2) El Secadero (Yaniko) → cultiva, seca y entrégale 3 Tabaco seco','3) Química de Salón (Yaniko) → refina (Hidrógeno→Base Metílica→Producto) y entrégale 1 Producto de tabaco','4) La Hermana (Nico) → llévale 3 pescados cocinados a Yaniko (la nota de su hermana Imoko); abre la venta repetible'], desc:'Yaniko Sato, la gata adicta al tabaco del anime Chainsmoker Cat, se ha instalado en el refugio. Deadpan, gorrona y sin vergüenza. Su saga enseña a cultivar y refinar tabaco con SPdrug; al acabar puedes venderle tabaco por Cacahuates de forma recurrente. Beat final agridulce: su hermana pequeña Imoko (que nunca ves) deja una nota.'},
-    {id:'estaciones', label:'🌦️ Gordi Mamón', npc:'Toni → Gordi Mamón', faction:'sci', type:'Saga · 4 misiones (tutorial de estaciones) · OBLIGATORIA', coins:14, reward:'Calendario del Reino', status:'new',
+    {id:'estaciones', label:'🌦️ Gordi Mamón', npc:'Toni → Gordi Mamón', faction:'sci', type:'Saga · 4 misiones (tutorial de estaciones) · OBLIGATORIA', coins:14, reward:'Calendario del Reino', status:'new', unlocks:'El Calendario del Reino: estaciones y temperatura',
       steps:['1) El Hombre del Tiempo (Toni) → acepta la quest y ve al mercadillo (brújula) a hablar con Gordi Mamón','2) Gordi Mamón I: El Almanaque → ve a leer el Calendario flotante de la plaza y vuelve con Gordi','3) Gordi Mamón II: La Huerta → entrégale 6 zanahorias y 6 patatas (aprendes qué crece en cada estación)','4) Gordi Mamón III: El Termómetro → entrégale 1 pechera de cuero (aprendes del frío y el calor); al acabar recibes el Calendario del Reino de bolsillo'], desc:'El tutorial de las estaciones: el calendario, qué se cultiva en cada estación y la temperatura (en invierno te congelas, en verano te asas). Gordi habla siempre en tercera persona. Es OBLIGATORIO terminarla antes de Operación Carpincho: saber del clima es básico para sobrevivir.'},
     {id:'geologia', label:'🪨 El Pulso de la Piedra', npc:'Doctora Pizarrica', faction:'sci', type:'Saga · 3 misiones (secundaria)', coins:15, reward:'Medalla de Geóloga', status:'new',
       steps:['1) Muestras de Superficie → entrégale 1 de cada roca común (piedra, granito, diorita, andesita, deepslate, toba, calcita)','2) El Temblor Profundo → con el Sismógrafo, baja a Y ≤ -54 y tráele la «Lectura Sísmica»','3) El Catálogo Mineral → entrégale 1 de cada mineral (carbón, hierro, cobre, oro, redstone, lapis, diamante, esmeralda, amatista)'], desc:'La doctora que odia cada piedra te manda catalogar rocas y medir el subsuelo. Secundaria tras Operación Carpincho.'},
     {id:'banco', label:'🏦 Alta en el Sistema', npc:'Toni', faction:'sci', type:'Te manda a abrir cuenta', status:'new',
       steps:['Ir a hablar con Yael, en el banco'], desc:'Para cobrar la nómina necesitas cuenta bancaria. Toni te manda a la ventanilla de Yael.'},
-    {id:'cuenta', label:'🏦 Capital Inicial', npc:'Yael Goldstein', faction:'gold', type:'Saga · 17 comisiones cutres', reward:'Cartilla del Banco (acceso a la Bolsa)', status:'new',
+    {id:'cuenta', label:'🏦 Capital Inicial', npc:'Yael Goldstein', faction:'gold', type:'Saga · 17 comisiones cutres', reward:'Cartilla del Banco (acceso a la Bolsa)', status:'new', unlocks:'La Bolsa del Reino (mercado dinámico de The Endex)',
       steps:['17 pagos crecientes (2,3,4…30)','Total: pagas 200 Cacahuates','Excusas cada vez más absurdas'], desc:'La cajera pesada y avariciosa te clava comisión tras comisión (200🥜 en total) con excusas patéticas, hasta abrirte la cuenta. SUMIDERO económico.'},
     {id:'mercado', label:'💹 La Bolsa del Reino', npc:'Sistema (The Endex)', faction:'gold', type:'Mercado de valores · repetible', reward:'Compra/vende · precios dinámicos', status:'new',
       steps:['Clic en la campana de la Bolsa','Precios que suben y bajan solos','Eventos: cracks y fiebres'], desc:'El mercado dinámico: compra barato, vende caro. Precios que fluctúan y eventos locos. Se desbloquea al abrir la cuenta con Yael.'},
@@ -4422,7 +4429,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
       steps:['1) Repetidores de Señal → planta 2 repetidores AGACHADO (barra de progreso) en los puentes Mambutu y Jolimbo','2) Refrigeración de Emergencia → llévale a Gordon un stack de bolas de nieve (su traje HEV se recalienta)','3) Cobertura desde Black Mesa → planta 2 repetidores dentro de Black Mesa (busca la Sala de Servidores y el Puesto de Seguridad 3)'], desc:'Instalas repetidores por el mundo aguantando agachado mientras se llena una barra de progreso, como plantar una cámara en Tarkov.'},
     {id:'anclaje_salto', label:'🧪 Protocolo de Salto', npc:'Gordon Wizman', faction:'sci', type:'Saga · 2 misiones · el nexo falla y te escupe lejos', coins:27, reward:'Cacahuates + Llave de Bronce', status:'new',
       steps:['1) Prueba de Salto → ve al Nexo del Reino: te teletransporta LEJOS (mismo mundo) y vuelves andando a Gordon con una brújula','2) El Repetidor que Faltaba → planta el último repetidor en la torre de la iglesia (campanario)'], desc:'La primera prueba de teletransporte sale mal: el Nexo te lanza al quinto pino y toca volver a pata. Gordon descubre que faltaba un repetidor.'},
-    {id:'anclaje_fractal', label:'🌀 La Fractura del Nexo', npc:'Gordon Wizman', faction:'arc', type:'FINALE · 1 misión · desbloquea el VIAJE RÁPIDO (Torre↔Reino)', coins:25, reward:'Viaje entre Nexos + Llave del Capincherío', status:'new',
+    {id:'anclaje_fractal', label:'🌀 La Fractura del Nexo', npc:'Gordon Wizman', faction:'arc', type:'FINALE · 1 misión · desbloquea el VIAJE RÁPIDO (Torre↔Reino)', coins:25, reward:'Viaje entre Nexos + Llave del Capincherío', status:'new', unlocks:'Viaje rápido entre los Nexos (Torre del Mago ↔ Reino)',
       steps:['1) La Fractura del Nexo → reintenta el salto en el Nexo del Reino: te lanza al mundo Fractal → sal por la grieta siguiendo los faroles azules → vuelve con Gordon → DESBLOQUEAS el viaje entre los Nexos'], desc:'La prueba final: el salto se rompe y te lanza a un mundo roto. Encuentra la salida y, al volver, podrás viajar al instante entre la Torre del Mago y el Reino tocando la piedra de los Nexos.'},
     {id:'jarvard', label:'🎓 Expediente Jarvard', npc:'Toni → Dr. Papriko', faction:'sci', type:'Línea principal · 4 misiones · falsificar un título', coins:47, reward:'Ser la mano derecha del Dr. Papriko', status:'new',
       steps:['1) Un Pringado sin Estudios → habla con el Dr. Papriko (te rechaza por no tener título) y vuelve con Toni, que te da una Hoja en Blanco','2) Membrete y Escarcha → pasa la hoja por la Fotocopiadora de Jarvard, cúrala en el Bastidor del bosque helado (brújula) y entrégasela a Toni','3) El Vía Crucis → hazlo firmar en el Ayuntamiento: 12 ventanillas, esperas, bucles, un soborno (1 diamante + 10 cacahuates) y el Ministro firmándolo (te reconoce de Operación Carpincho)','4) Contratado → Toni lo valida y se lo llevas a Papriko, que lo arruga y lo tira: no cree en los títulos, cree en la gente que trabaja. Te contrata igual'], desc:'Tras los Nexos: el Dr. Papriko necesita mano derecha con la Torre complicándose, pero solo trabaja con titulados de «Jarvard». Como eres un pringado, hay que falsificar el título. Termina en un chiste tierno: el diploma acaba en el suelo y te contrata por currante, no por el papel.'},
@@ -4435,7 +4442,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
       desc:'El gran misterio: la puerta sellada, la Torre del Mago («¿magia o ciencia?») y la mina. Por diseñar.'},
     {id:'invasion', label:'⚔️ El Despertar de la Torre', npc:'Evento (admin)', faction:'future', type:'Boss raid · evento (futuro)', status:'future',
       desc:'Invasión de Ecos del Multiverso: 3 oleadas + jefe. Autorado, pendiente de desplegar.'},
-    {id:'talentos', label:'🗺️ El Escalafón', npc:'Maestro Anselmo', faction:'sci', type:'Tutorial de talentos (obligatorio)', coins:6, reward:'Mapa de Talentos + 1 punto de talento', status:'live',
+    {id:'talentos', label:'🗺️ El Escalafón', npc:'Maestro Anselmo', faction:'sci', type:'Tutorial de talentos (obligatorio)', coins:6, reward:'Mapa de Talentos + 1 punto de talento', status:'live', unlocks:'El árbol de talentos (/skilltrees)',
       steps:['Matar 6 zombis','Volver a hablar con Anselmo'], desc:'Anselmo (RRHH) te explica el árbol de talentos como tu «plan de carrera». Tras una «evaluación de desempeño» te da el Mapa de Talentos (abre /skilltrees) y 1 punto para estrenar. Va en la espina obligatoria: entre el Semental y la Alquimista.'},
     {id:'sabio', label:'📚 El Sabio', npc:'⬜ NPC por crear', faction:'future', type:'Enciclopedia de clases (futuro)', status:'future',
       desc:'Una enciclopedia con patas: le preguntas por una clase y te explica su rol y sus 4 hechizos.'},
@@ -4524,7 +4531,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
   function v(name){return getComputedStyle(document.documentElement).getPropertyValue(name).trim();}
   function style(){
     const surface=v('--surface'),ink=v('--ink'),inkSoft=v('--ink-soft'),line=v('--line'),chip=v('--chip'),
-      sci=v('--sci'),folk=v('--folk'),gold=v('--gold'),arc=v('--arcane'),faint=v('--ink-faint'),sug=v('--suggest');
+      sci=v('--sci'),folk=v('--folk'),gold=v('--gold'),arc=v('--arcane'),faint=v('--ink-faint'),sug=v('--suggest'),key=v('--key');
     return [
       {selector:'node',style:{'background-color':surface,'border-width':2,'border-color':line,
         'label':'data(label)','color':ink,'font-size':'12px','font-weight':600,'text-wrap':'wrap','text-max-width':'155px',
@@ -4536,6 +4543,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
       {selector:'node[faction="arc"]',style:{'border-color':arc}},
       {selector:'node[status="new"]',style:{'border-width':3,'border-color':gold}},
       {selector:'node[status="future"]',style:{'border-color':faint,'border-style':'dashed','background-opacity':.55,'color':inkSoft}},
+      {selector:'node[unlocks]',style:{'border-width':4,'border-style':'double','underlay-color':key,'underlay-opacity':.32,'underlay-padding':11}},
       {selector:'node:selected',style:{'border-width':4,'border-color':arc,'background-color':chip}},
       {selector:'edge',style:{'width':2.5,'line-color':line,'target-arrow-color':line,'target-arrow-shape':'triangle',
         'curve-style':'bezier','arrow-scale':1.1}},
@@ -4566,7 +4574,9 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
     h+='<span class="chip '+d.faction+'">'+FAC[d.faction]+'</span>';
     if(d.type) h+='<span class="chip">'+esc(d.type)+'</span>';
     if(ST[d.status]) h+='<span class="chip '+d.status+'">'+ST[d.status]+'</span>';
+    if(d.unlocks) h+='<span class="chip key">🔓 Desbloquea</span>';
     h+='</div>';
+    if(d.unlocks) h+='<div class="unlock">🔓 <span>Desbloquea: '+esc(d.unlocks)+'</span></div>';
     if(d.desc) h+='<p class="desc">'+esc(d.desc)+'</p>';
     let rw=[]; if(d.coins) rw.push('🥜 '+d.coins+' Cacahuates'); if(d.reward) rw.push(esc(d.reward));
     if(rw.length) h+='<p class="rw">Recompensa: '+rw.join(' · ')+'</p>';
