@@ -4476,7 +4476,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
     ['nando','permiso'],['permiso','bolsa'],['bolsa','jobs'],['bolsa','carpincho'],
     ['carpincho','barco'],['barco','tablon_luz'],['tablon_luz','tablon'],['tablon','tienda'],['tienda','cofre'],
     // secundarias + saga del banco (2026-07-11) + Red de Anclaje (2026-07-15)
-    ['bolsa','pecio'],['bolsa','caballos'],['bolsa','lolo'],['permiso','nico'],['nico','yaniko'],['bolsa','estaciones'],['estaciones','carpincho'],['carpincho','geologia'],['cuenta','anclaje'],['anclaje','anclaje_rep'],['anclaje_rep','anclaje_salto'],['anclaje_salto','anclaje_fractal'],['anclaje_fractal','jarvard'],['jarvard','papriko_antena'],['papriko_antena','vostok_p1'],
+    ['bolsa','pecio'],['bolsa','caballos'],['bolsa','lolo'],['permiso','nico'],['nico','yaniko'],['bolsa','estaciones'],['estaciones','carpincho'],['carpincho','geologia'],['geologia','mina'],['cuenta','anclaje'],['anclaje','anclaje_rep'],['anclaje_rep','anclaje_salto'],['anclaje_salto','anclaje_fractal'],['anclaje_fractal','jarvard'],['jarvard','papriko_antena'],['papriko_antena','vostok_p1'],
     ['tablon_luz','banco'],['banco','cuenta'],['cuenta','mercado'],
     // futuro (punteadas)
     ['permiso','torre','future'],['torre','invasion','future'],['clase','sabio','future'],
@@ -4507,7 +4507,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
     {id:'s_bacalao', label:'🎣 El Bacalao de la Gabardina', npc:'Bacalao Gabardinez', faction:'folk', type:'Saga · pesca y transporte', status:'suggest', desc:'El pez disfrazado de humano del Puerto. Convierte el nodo «Torneos de Pesca» en una saga con NPC: pesca, transporte en barco y su leyenda.'},
     {id:'s_avraham', label:'💰 El Préstamo con Trampa', npc:'Avraham Rosenberg', faction:'gold', type:'Saga · préstamo chanchullero', status:'suggest', desc:'El dueño del banco te ofrece un préstamo lleno de comisiones y letra pequeña. SUMIDERO económico + humor. Avraham está en el roster sin quest.'},
     // DUNGEONS
-    {id:'s_mina', label:'⛏️ Dungeon: La Mina', npc:'Dungeon (grupo)', faction:'arc', type:'Dungeon rejugable · jefe Barbahueso', status:'suggest', desc:'La dungeon de piratas (Capitán Barbahueso + tripulación) YA está montada en el server pero no aparece en el árbol ni tiene saga de acceso. Falta la saga que abre el candado (party, loot, rejugable).', steps:['Saga que concede el acceso (candado por saga)','Jefe: Capitán Barbahueso + 11 piratas','Rejugable en grupo, con botín']},
+    {id:'mina', label:'⛏️ La Mina Maldita', npc:'Doctora Pizarrica', faction:'sci', type:'Saga · 2 misiones · DESBLOQUEA la Dungeon', coins:38, status:'new', unlocks:'La Dungeon de la Mina (raid en grupo, jefe Capitán Barbahueso) — usable para siempre', desc:'Pizarrica (que odia las piedras) te cuenta la leyenda de la mina y el barco pirata maldito de la tripulación que murió por la maldición del "a que no hay huevos". Descubres la boca de la mina y, tras completar una raid, la dungeon queda desbloqueada para siempre.', steps:['1) La Mina Maldita → encuentra la boca de la mina (cerca del ascensor subebaja, SIN brújula) y vuelve con Pizarrica','2) Bajar a la Mina → Pizarrica te autoriza (acceso), completa una raid (mata al Capitán Barbahueso) y tráele el Diente como prueba → dungeon tuya para siempre']},
     {id:'s_vostok_lab', label:'🏢 Dungeon: Lab VOSTOK', npc:'Dungeon (grupo)', faction:'arc', type:'Dungeon · explorar el laboratorio', status:'suggest', desc:'El Cárabo te manda a un laboratorio de VOSTOK: explorar salas, PMCs, documentos. 2ª dungeon (mundo Multiverse tipo Black Mesa). Cierra la Parte 1 de la saga VOSTOK.'},
     // VOSTOK (continuación de la saga)
     {id:'s_vostok2', label:'🕳️ Rastro Frío', npc:'Dr. Papriko', faction:'sci', type:'VOSTOK · el dossier revela la corpo', status:'suggest', desc:'Sigues el GPS de la carga hasta una cueva y encuentras el dossier que destapa GRUPO VOSTOK, sus PMCs y las fuerzas de élite Bogatir. Parte 2 de la saga (ya en roadmap).'},
@@ -4526,7 +4526,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
     ['carpincho','s_olegario','suggest'],['geologia','s_aniceto','suggest'],
     ['carpincho','s_rancio','suggest'],['s_rancio','s_reunir','suggest'],['caballos','s_payaso','suggest'],
     ['pecio','s_bacalao','suggest'],['s_bacalao','pesca','suggest'],['cuenta','s_avraham','suggest'],
-    ['geologia','s_mina','suggest'],['s_carabo','s_vostok_lab','suggest'],
+    ['s_carabo','s_vostok_lab','suggest'],
     ['vostok_p1','s_vostok2','suggest'],['s_vostok2','s_cebo','suggest'],['s_cebo','s_carabo','suggest'],
     ['anclaje_fractal','s_reino2','suggest'],['s_reino2','s_reunir','suggest'],['s_marcas','s_labo','suggest'],
   ];
