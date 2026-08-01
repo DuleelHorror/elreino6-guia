@@ -307,11 +307,12 @@
       <button class="upd-x" aria-label="Cerrar" onclick="er6CloseUpd()">✕</button>
       <div class="eyebrow">✨ Novedades del Reino</div>
       <h2 id="updT">¡Actualización en el juego!</h2>
-      <div class="date">16 de julio de 2026</div>
+      <div class="date">1 de agosto de 2026</div>
     </div>
     <div class="upd-b">
+      <div class="u"><span class="ic">🕵️</span><p><b>Los Dedos Largos</b> <i>(recién estrenado)</i>: <b>Edelmiro Garrapata</b>, el contrabandista de la cueva, empieza a dar misiones. Es el mejor teórico del robo del Reino y el peor ladrón que ha existido —sabe hacerlo, pero hace ruido—, así que te entrena a ti. Ocho lecciones de sigilo y, al final, una <b>carta de recomendación</b> para cierta gente del puerto.</p></div>
       <div class="u"><span class="ic">🌪️</span><p><b>¡Eventos por el mundo!</b> Cada tanto pasa algo con aviso previo: <b>fiebre del oro</b>, <b>noche de horda</b>, <b>doble botín</b>, <b>expedición minera</b>, abundancia de hierro… buffs y retos que duran un rato. Si sales a currar, mira el aviso: igual es tu día de suerte.</p></div>
-      <div class="u"><span class="ic">⚰️</span><p><b>La muerte ya deja TUMBA</b> <i>(recién estrenado)</i>. Al morir, tus cosas se quedan en una tumba <b>en el sitio</b> y al reaparecer te llevas una brújula que te lleva hasta ella. ¿Con prisa? Un <b>Amuleto de Rescate</b> (un uso) o la <b>Ventanilla del Banco</b> te teletransportan a tu tumba.</p></div>
+      <div class="u"><span class="ic">⚰️</span><p><b>Al morir NO pierdes nada</b> <i>(cambiado)</i>. Ya no hay tumbas: te quedas con todo el inventario. Lo que duele es otra cosa: el equipo <b>se desgasta</b> (todas tus piezas pierden durabilidad) y pierdes <b>un tercio de la barra de experiencia</b>. Morir sale caro, pero nunca te deja tirado. Repara tu equipo en la fragua de <b>Lolo</b>.</p></div>
       <div class="u"><span class="ic">🔒</span><p><b>Candados para tus cofres.</b> Pon un cartel en un cofre y queda cerrado: solo tú lo abres. Se acabó lo de fiarse.</p></div>
       <div class="u"><span class="ic">🌳</span><p><b>Los árboles se replantan solos.</b> Talas el tronco entero de un hachazo y brota un arbolito nuevo. Nada de dejar el bosque pelado.</p></div>
       <div class="u"><span class="ic">⚔️</span><p><b>PvP solo en el salvaje.</b> En el pueblo y las zonas habitadas <b>nadie te puede matar</b>; las peleas entre jugadores son solo fuera. Y las construcciones están protegidas (los creepers y el fuego ya no te tiran la casa).</p></div>
@@ -323,7 +324,7 @@
 </div>
 <button class="upd-btn" onclick="er6OpenUpd()" title="Ver novedades">✨ Novedades</button>
 <script>
-  var ER6_UPD = "2026-07-16";
+  var ER6_UPD = "2026-08-01";
   function er6OpenUpd(){ document.getElementById('updOv').classList.add('on'); }
   function er6CloseUpd(){ document.getElementById('updOv').classList.remove('on'); try{ localStorage.setItem('er6_upd_seen', ER6_UPD); }catch(e){} }
   (function(){ var seen; try{ seen = localStorage.getItem('er6_upd_seen'); }catch(e){ seen = null; } if(seen !== ER6_UPD){ er6OpenUpd(); } })();
@@ -488,7 +489,7 @@
         <div class="plug"><b>BattlePass + PlayerPoints</b><span>El Pase y las misiones diarias (Tablón), con la moneda Fichas 🎟️.</span></div>
         <div class="plug"><b>CrazyCrates</b><span>Cofres de recompensa con animación (lootboxes).</span></div>
         <div class="plug"><b>WorldEvents</b><span>Eventos por el mundo: fiebre del oro, noche de horda, doble botín…</span></div>
-        <div class="plug"><b>UltimateGraves</b><span>Al morir dejas una tumba con tus cosas en el sitio.</span></div>
+        <div class="plug"><b>Sistema de muerte propio</b><span>No pierdes objetos: se te desgasta el equipo y pierdes experiencia.</span></div>
         <div class="plug"><b>BlockLocker</b><span>Candados de cofres: proteges lo tuyo con un cartel.</span></div>
       </div>
     </div>
@@ -765,8 +766,8 @@
         <p>Lleva años pidiendo una cocina decente y el Ayuntamiento solo le trajo una <strong>mesa de billar</strong> (sin bolas) en mitad de la cocina. Cocina esquivándola y maldiciendo a los funcionarios.</p>
       </div>
       <div class="card npc reveal">
-        <div class="head"><div class="av">🏴‍☠️</div><div><div class="nm">Edelmiro Garrapata</div><div class="rl">Contrabandista de cueva</div></div></div>
-        <p>Un pillager al que echaron por su Tourette (suelta gruñidos en el peor momento y arruinaba las emboscadas). Ahora vende baratijas "caídas de un carro" en una "ruta clandestina"… que ve todo el pueblo.</p>
+        <div class="head"><div class="av">🏴‍☠️</div><div><div class="nm">Edelmiro Garrapata</div><div class="rl">Contrabandista de cueva · <b>ya da misiones</b></div></div></div>
+        <p>Un pillager al que echaron por su Tourette (suelta gruñidos en el peor momento y arruinaba las emboscadas). Ahora vende baratijas "caídas de un carro" en una "ruta clandestina"… que ve todo el pueblo. Sabe robar mejor que nadie <b>en teoría</b>: lo tiene medido y escrito en un método de veinticinco lecciones que nunca ha podido probar. Para eso te tiene a ti. <b>Da la saga de Los Dedos Largos.</b></p>
       </div>
     </div>
 
@@ -872,6 +873,13 @@
       <div class="meta">Tutorial · darle corriente al Tablón de Encargos</div>
       <p style="color:var(--ink-soft); margin:0">El Tablón existe pero <strong>no funciona: no tiene corriente</strong>. Toni te explica (con una lógica absurda) que va a <strong>«12 voltios»</strong> y hay que bajar <strong>2 palancas</strong> del circuito: una <strong>debajo del puente Mambutu</strong> (que alguien montó ahí subido a un andamio que ya no existe) y otra <strong>por fuera de la iglesia</strong>. Recoges los 2 fusibles, se los llevas a Toni y te da el <strong>Enchufe</strong> que lo desbloquea. <strong>Hasta hacer esto, no puedes usar el Tablón.</strong></p>
       <div class="steps"><span>Palanca del puente Mambutu</span><span>Palanca de la iglesia</span><span>Entregar los 2 fusibles a Toni</span><span class="reward">🥜 10 + Enchufe del Tablón</span></div>
+    </div>
+
+    <div class="quest reveal">
+      <h3 class="serif">🕵️ Los Dedos Largos <span class="pill folk" style="vertical-align:middle">Edelmiro Garrapata</span> <span class="qbadge">9 misiones · nueva</span></h3>
+      <div class="meta">El entrenamiento del hampa · pura habilidad, nada de traer materiales</div>
+      <p style="color:var(--ink-soft); margin:0"><strong>Garrapata</strong> es el mejor teórico del robo del Reino y el peor ladrón que ha existido: sabe hacerlo, lo tiene medido y escrito, y no puede ejecutarlo <strong>porque hace ruido</strong>. Tiene un método de <strong>veinticinco lecciones</strong> que nunca ha probado nadie, así que te entrena a ti para comprobar si funciona. Aguantar agachado sin respirar, tocar la campana del pueblo a plena luz para <strong>medir cuánto tarda alguien en salir</strong>, cruzar la plaza entera en cuclillas, fabricar una ganzúa que parezca un simple alambre… y colarte en una <strong>casa sembrada de trampas</strong> para llegar al cofre del fondo <strong>sin pisar nada</strong>. Y luego volver a entrar para <strong>devolver lo que cogiste</strong>. Al acabar te escribe una <strong>carta de recomendación</strong> para cierta gente del puerto. Se abre después de <em>El Alijo de la Cueva</em>.</p>
+      <div class="steps"><span>Aguanta 11 segundos</span><span>Siete campanadas</span><span>300 bloques agachado</span><span>La casa de las trampas</span><span class="reward">🥜 45 + la carta al Gremio</span></div>
     </div>
 
     <div class="quest reveal" style="border-left-color:var(--arcane)">
@@ -1301,7 +1309,7 @@
     </div>
     <div class="grid g2" style="margin-top:22px">
       <div class="card reveal"><h3 class="serif">🌪️ Eventos por el mundo</h3><p style="color:var(--ink-soft); font-size:.94rem; margin:.3em 0 0">Cada tanto salta un evento con <strong>aviso previo</strong>: <strong>fiebre del oro</strong>, <strong>noche de horda</strong>, <strong>doble botín</strong>, <strong>expedición minera</strong>, abundancia de hierro… Buffs y retos que duran un rato. No rompen el mundo (nada de meteoritos ni destrozos): son para picar más a gusto o buscarte la vida.</p></div>
-      <div class="card reveal"><h3 class="serif">⚰️ La muerte deja tumba <span class="pill gold">recién estrenado</span></h3><p style="color:var(--ink-soft); font-size:.94rem; margin:.3em 0 0">Cuando mueres, tus cosas se quedan en una <strong>tumba en el sitio</strong> donde caíste, y al reaparecer te llevas una <strong>brújula</strong> que te guía hasta ella. El castigo no es perderlo todo, es <strong>el viaje de vuelta</strong>. ¿Con prisa o con miedo? Un <strong>Amuleto de Rescate</strong> (un solo uso) o la <strong>Ventanilla del Banco</strong> te teletransportan a tu tumba.</p></div>
+      <div class="card reveal"><h3 class="serif">⚰️ Al morir no pierdes nada <span class="pill gold">cambiado</span></h3><p style="color:var(--ink-soft); font-size:.94rem; margin:.3em 0 0">Ya no hay tumbas ni carreras para recuperar tus cosas: <strong>te quedas con todo el inventario</strong>. El castigo va por otro lado y se nota a la larga: <strong>todo tu equipo se desgasta</strong> un poco (nunca se rompe del todo) y <strong>pierdes un tercio de la barra de experiencia</strong>. Morir cinco veces seguidas te deja el equipo para el arrastre, así que la reparación en la <strong>fragua de Lolo</strong> pasa a ser tu gasto de cada semana. Y sigues cogiendo la <strong>Resaca</strong> al levantarte.</p></div>
       <div class="card reveal"><h3 class="serif">⚔️ PvP solo en el salvaje</h3><p style="color:var(--ink-soft); font-size:.94rem; margin:.3em 0 0">En el pueblo y las zonas habitadas <strong>ningún jugador te puede matar</strong>. Las peleas entre jugadores solo cuentan <strong>fuera</strong>, en el salvaje. Y las construcciones están protegidas: los <strong>creepers, el TNT y el fuego</strong> ya no te tiran la casa.</p></div>
       <div class="card reveal"><h3 class="serif">🔒 Candados de cofres</h3><p style="color:var(--ink-soft); font-size:.94rem; margin:.3em 0 0">Pones un <strong>cartel</strong> en un cofre y queda cerrado con tu nombre: solo tú (y quien tú digas) lo abre. Tranquilidad para guardar tus cosas.</p></div>
       <div class="card reveal"><h3 class="serif">🌳 Los árboles se replantan</h3><p style="color:var(--ink-soft); font-size:.94rem; margin:.3em 0 0">Talas el <strong>árbol entero de un hachazo</strong> y brota un arbolito nuevo en su sitio. Recoges madera rápido sin dejar el bosque hecho un solar.</p></div>
