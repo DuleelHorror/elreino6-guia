@@ -78,6 +78,7 @@
   .chip.future{color:var(--ink-faint)}
   .chip.suggest{color:#fff;background:var(--suggest);border-color:transparent}
   .chip.key{color:#3a2600;background:var(--key);border-color:transparent}
+  .chip.secret{color:#3a2600;background:var(--key);border-color:transparent}
   .panel .desc{color:var(--ink-soft);font-size:.94rem;line-height:1.55;margin:0 0 14px}
   .panel .rw{font-weight:700;color:var(--gold);font-size:.92rem;margin:0 0 12px}
   .panel .unlock{display:flex;gap:.5em;align-items:flex-start;margin:0 0 14px;padding:10px 12px;border-radius:11px;
@@ -102,6 +103,7 @@
     <span class="lg"><span class="sw" style="border-color:var(--arcane)"></span>Loop diario</span>
     <span class="lg"><span class="sw" style="border-color:var(--ink-faint);border-style:dashed"></span>Futuro</span>
     <span class="lg"><span class="sw key"></span>🔓 <b>Desbloquea mecánica</b></span>
+    <span class="lg"><span class="sw" style="border-color:var(--key);border-style:dashed"></span>🟡 <b>Misión secreta</b></span>
     <span class="lg"><span class="sw" style="background:var(--suggest);border-color:transparent"></span><b>Propuesta (nueva)</b></span>
     <span class="lg"><span class="sw" style="background:var(--danger);border-color:var(--danger);transform:rotate(45deg)"></span>⛏️ <b>Dungeon (raid)</b></span>
   </div>
@@ -4462,8 +4464,11 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
     {id:'sabio', label:'📚 El Sabio', npc:'⬜ NPC por crear', faction:'future', type:'Enciclopedia de clases (futuro)', status:'future',
       desc:'Una enciclopedia con patas: le preguntas por una clase y te explica su rol y sus 4 hechizos.'},
     // En camino (2026-07-16): mecánicas ya elegidas, cada una con su saga por montar
+    {id:'arreglo', label:'🟡 El Arreglo', npc:'Payasito Tristo · La Lola', faction:'secret', type:'Saga SECRETA · 8 misiones + 3 finales', coins:1, status:'new',
+      steps:['1) El Hilo Que Aguanta → tráele 3 cuerdas al payaso del altillo del establo','2) Un Recado Para Arriba → súbele un recado a La Lola, al túnel del camino de ronda. 🔴 SOLO está de NOCHE','3) Lo Que Costaba → baja a la Botica, habla con la Alquimista y llévale el frasco','4) El Otro Zapato → te la da ELLA (de noche): busca su zapato en el Puerto y devuélveselo','5) La Cuenta → al Ayuntamiento, pídele al Registrador el asiento de aquellos años','6) Cuenta Hasta Cien → quédate QUIETO con ella 55 segundos mientras te cuenta lo único que recuerda entero. Si te alejas, se corta. Luego bajas a contárselo a él','7) Lo Que Hay Puesto → sube a arreglarle el farol del túnel, y mira bien qué más hay puesto ahí','8) El Que Vino Una Vez → pregunta al Padre Elías qué se le había perdido a él en ese altillo','FINAL → hay tres maneras de acabar esto y solo puedes elegir una. Una de ellas es no volver'],
+      desc:'No sale en el Directorio, no lleva brújula y no te la ofrece nadie: se encuentra andando. Él vive escondido en un altillo y dice que la está arreglando; ella está en un túnel del camino y solo sale de noche. Cada cosa que él te manda buscar encaja un poco peor con lo que cuenta. 🔴 Aviso: es lo más oscuro del server, sin una sola broma.'},
     {id:'dedos', label:'🕵️ Los Dedos Largos', npc:'Edelmiro Garrapata', faction:'folk', type:'Saga · 9 misiones (rama del hampa)', coins:45, status:'new', unlocks:'La entrada al Gremio de los Dedos Largos (carta de recomendación)',
-      steps:['1) La Demostración → agáchate a su lado y aguanta 11 segundos mientras él abre un candado. Le sale perfecto… hasta que se le escapa un gruñido y despierta a medio pueblo. Entrégale el Acta del Ruido (3🥜)','2) Lección 12 · La Campana → toca la campana de la iglesia 7 veces a plena luz y cuenta cuánta gente sale a mirar. No sale nadie. Vuelve a contárselo (3🥜)','3) Lección 13 · El Desplazamiento → recorre 300 bloques AGACHADO, y por la plaza, que "el que se avergüenza no roba" (3🥜)','4) Lección 17 · La Lana Negra → esquila 3 ovejas negras y entrégale la lana. Te presta tinte: si no las encuentras negras, las haces negras (4🥜)','5) Lección 19 · El Reconocimiento → estudia el Banco por dentro (5 detalles) y tráele el informe. Conclusión: no se puede robar, pero no por seguridad (5🥜)','6) Lección 21 · La Herramienta que No Lo Es → fabrica 4 ganchos de cuerda trampa. Él dobla los cuatro y solo sobrevive uno: tu ganzúa (4🥜)','7) Lección 24 · El Ensayo → entra en la casa que usa para entrenar y llega al cofre del fondo SIN pisar ninguna alarma. Si pisas una, vuelves a la puerta (8🥜)','8) Lección 25 · La Devolución → vuelve a entrar y deja la cubertería donde estaba. Un ensayo no es un robo (8🥜)','9) La Carta → te escribe una recomendación para el Gremio del Puerto. Tarda once segundos (7🥜)'],
+      steps:['1) La Demostración → agáchate a su lado y aguanta 11 segundos mientras él abre un candado. Le sale perfecto… hasta que se le escapa un gruñido y despierta a medio pueblo. Entrégale el Acta del Ruido (3🥜)','2) Lección 12 · La Campana → toca la campana de la iglesia 7 veces a plena luz y cuenta cuánta gente sale a mirar. No sale nadie. Vuelve a contárselo (3🥜)','3) Lección 13 · El Desplazamiento → recorre 300 bloques AGACHADO, y por la plaza, que "el que se avergüenza no roba" (3🥜)','4) Lección 17 · La Lana Negra → esquila 3 ovejas negras y entrégale la lana. Te presta tinte: si no las encuentras negras, las haces negras (4🥜)','5) Lección 19 · El Reconocimiento → estudia el Banco por dentro: el mostrador, los cofres, el banco de espera, la puerta del director y una pasarela sobre el barranco que nadie mira. Tráele el informe (5🥜)','6) Lección 21 · La Herramienta que No Lo Es → fabrica 4 ganchos de cuerda trampa. Él dobla los cuatro y solo sobrevive uno: tu ganzúa (4🥜)','7) Lección 24 · El Ensayo → entra en la casa que usa para entrenar y llega al cofre del fondo SIN pisar ninguna alarma. Si pisas una, vuelves a la puerta (8🥜)','8) Lección 25 · La Devolución → vuelve a entrar y deja la cubertería donde estaba. Un ensayo no es un robo (8🥜)','9) La Carta → te escribe una recomendación para el Gremio del Puerto. Tarda once segundos (7🥜)'],
       desc:'El mejor teórico del robo del Reino es también el peor ladrón que ha existido: sabe hacerlo y no puede, porque hace ruido. Tiene un método escrito en once años que nunca ha probado nadie, y te usa a ti para comprobar si funciona.'},
     {id:'gremio', label:'🖐️ Gremio de los Dedos Largos', npc:'⬜ saga por montar', faction:'future', type:'Robo / carterismo (en camino)', status:'future',
       desc:'Los del puerto: saqueo como trabajo colectivo, con asambleas y reparto a partes iguales. Se entra presentando la carta de Garrapata. Aquí se desbloquea robar por la espalda a otros jugadores.'},
@@ -4485,7 +4490,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
     ['nando','permiso'],['permiso','bolsa'],['bolsa','jobs'],['bolsa','carpincho'],
     ['carpincho','barco'],['barco','tablon_luz'],['tablon_luz','tablon'],['tablon','tienda'],['tienda','cofre'],
     // secundarias + saga del banco (2026-07-11) + Red de Anclaje (2026-07-15)
-    ['bolsa','pecio'],['bolsa','caballos'],['bolsa','lolo'],['lolo','lolo_ap'],['permiso','nico'],['nico','yaniko'],['bolsa','estaciones'],['estaciones','carpincho'],['carpincho','geologia'],['geologia','mina'],['mina','dungeon_mina'],['mina','abismo'],['cuenta','anclaje'],['anclaje','anclaje_rep'],['anclaje_rep','anclaje_salto'],['anclaje_salto','anclaje_fractal'],['anclaje_fractal','jarvard'],['jarvard','papriko_antena'],['papriko_antena','vostok_p1'],
+    ['bolsa','pecio'],['bolsa','caballos'],['bolsa','lolo'],['lolo','lolo_ap'],['permiso','nico'],['nico','yaniko'],['permiso','arreglo'],['bolsa','estaciones'],['estaciones','carpincho'],['carpincho','geologia'],['geologia','mina'],['mina','dungeon_mina'],['mina','abismo'],['cuenta','anclaje'],['anclaje','anclaje_rep'],['anclaje_rep','anclaje_salto'],['anclaje_salto','anclaje_fractal'],['anclaje_fractal','jarvard'],['jarvard','papriko_antena'],['papriko_antena','vostok_p1'],
     ['tablon_luz','banco'],['banco','cuenta'],['cuenta','mercado'],
     // futuro (punteadas)
     ['permiso','torre','future'],['torre','invasion','future'],['clase','sabio','future'],
@@ -4557,6 +4562,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
       {selector:'node[faction="folk"]',style:{'border-color':folk}},
       {selector:'node[faction="gold"]',style:{'border-color':gold}},
       {selector:'node[faction="arc"]',style:{'border-color':arc}},
+      {selector:'node[faction="secret"]',style:{'border-color':key,'border-style':'dashed'}},
       {selector:'node[status="new"]',style:{'border-width':3,'border-color':gold}},
       {selector:'node[status="future"]',style:{'border-color':faint,'border-style':'dashed','background-opacity':.55,'color':inkSoft}},
       {selector:'node[unlocks]',style:{'border-width':4,'border-style':'double','underlay-color':key,'underlay-opacity':.32,'underlay-padding':11}},
@@ -4581,7 +4587,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
   cy.ready(()=>cy.fit(undefined,50));
 
   const panel=document.getElementById('panel'), body=document.getElementById('panelBody');
-  const FAC={sci:'Forasteros',folk:'Pueblo',gold:'Sistema',arc:'Loop diario',future:'Futuro'};
+  const FAC={sci:'Forasteros',folk:'Pueblo',gold:'Sistema',arc:'Loop diario',future:'Futuro',secret:'🟡 Secreta'};
   const ST={live:'',new:'NUEVO',future:'FUTURO',suggest:'PROPUESTA'};
   function esc(s){return (s||'').replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));}
   function show(d){
