@@ -108,7 +108,7 @@
       que no están enganchadas a nada, plugins que tenemos y no están puestos, cosas apagadas a propósito
       e ideas que se hablaron y no se han empezado.</p>
     <p class="warn">Esto <b>no es el mapa de misiones</b>: ahí solo va lo que se juega. Esto es la trastienda,
-      para que nada se quede olvidado en un doc. Última revisión: <b>4 de agosto de 2026</b>.</p>
+      para que nada se quede olvidado en un doc. Última revisión: <b>4 de agosto de 2026</b>, con el estado <b>comprobado contra el servidor</b> (qué bloques están colocados de verdad, qué cofres, qué jars hay).</p>
   </div>
 
   <div class="filters" id="filters"></div>
@@ -145,20 +145,19 @@ const DATA = [
  falta:'Está escrito entero pero <b>sin desplegar ni probar</b>. Y decidir quién lo dispara: hoy sería el admin a mano con la Sirena.', tags:['doc:evento-invasion.md']},
 {g:'hecho', t:'❄️ Ramales Criogénicos del Reino 2', d:'Cuatro consolas bajo el glaciar que hay que activar; la cuarta completa la refrigeración. Preparado para que lo siga Pan.',
  falta:'Las <b>coordenadas de las 4 consolas</b> (nunca se apuntaron) y desplegarlo. Sin eso no se puede ni colocar.', tags:['doc:evento-reino2-criogenia.md']},
-{g:'hecho', t:'🎰 Cofre de la Suerte y Tienda de Fichas', d:'El sitio donde se gastan las Fichas del Tablón de Encargos: compras llaves y abres una lootbox con animación.',
- falta:'<b>Colocar el cofre físico</b> in-game. Hasta entonces las Fichas no tienen dónde gastarse, y el loop diario se queda a medias.', tags:['doc:loop-diarias-battlepass.md']},
 {g:'hecho', t:'🗳️ Cofre de Votación', d:'Cofre con premios para quien vote al server en las listas públicas. Es el enganche clásico de crecimiento.',
  falta:'Instalar <b>NuVotifier</b> y dar de alta el server en las listas de voto. Sin eso el cofre está montado pero dormido.', tags:['doc:catalogo-mecanicas.md']},
 {g:'hecho', t:'🏴‍☠️ El Gremio de los Dedos Largos', d:'Los 6 piratas chino-comunistas del Puerto, ya colocados y con lore: asambleas, reparto equitativo y autocrítica, tomándoselo todo muy en serio.',
  falta:'La saga entera. Garrapata ya te da la carta de recomendación para ellos, así que <b>hay una misión que apunta a un sitio que todavía no existe</b>. Aquí es donde se desbloquearía robar.', tags:['doc:biblia-narrativa.md','⚠ hay un cabo suelto']},
 {g:'hecho', t:'🕳️ El Abismo (mundo de −1024)', d:'Un mundo propio que baja 16 veces más que lo normal, con cuevas hasta el fondo. Ya tiene la saga del sismógrafo y se llega en helicóptero.',
  falta:'Protegerlo con WorldGuard (nació sin protección), y <b>bichos propios</b> escalados por profundidad: ahora mismo bajas mil bloques y no hay nada.', tags:['doc:dungeons.md']},
-{g:'hecho', t:'🚪 Trampillas al Sitio-83', d:'Las dos puertas (ida y vuelta) para entrar al laboratorio Sitio-83 desde la cueva de Bahía Helada.',
- falta:'<b>Colocarlas</b>. Están creadas y sin poner, así que hoy al Sitio-83 no se llega.', tags:['doc:inmersion-comandos.md']},
-{g:'hecho', t:'📡 La antena del Papaphone', d:'La misión de Papriko para reparar la antena que rompieron las gaviotas: crafteas vallas y reparas dos placas.',
- falta:'<b>Construir la antena</b> in-game y colocar las dos placas. La misión existe; el sitio no.', tags:['doc:red-anclaje.md']},
+{g:'hecho', t:'🚪 El Sitio-83 (laboratorio)', d:'Las dos trampillas (ida y vuelta) que llevan al laboratorio Sitio-83 desde la cueva de Bahía Helada. Colocadas y funcionando: se entra y se sale.',
+ falta:'Una <b>misión que lleve hasta allí</b>. El sitio existe y se puede entrar, pero no hay nada que te mande, así que nadie lo va a encontrar.', tags:['doc:inmersion-comandos.md']},
 {g:'hecho', t:'🎭 Los 2 modelos 3D de demostración', d:'Un Caballero Demoníaco y un Mago Azul, montados con BetterModel para probar que los modelos 3D funcionan.',
  falta:'Nada, funcionan: es que <b>no salen por ningún lado</b> (sin spawn natural). O se les da un sitio o se borran.', tags:['doc:bestiario.md']},
+
+{g:'hecho', t:'⛏️ La Cantera — la 2ª dungeon', d:'Dungeon de nivel 10-15 a la que se llega en helicóptero. Los 7 infectados y el jefe («El Último Turno», que está ciego y caza por sonido) ya están montados, con sus skins.',
+ falta:'Crear la dungeon en el plugin, colocar los spawners y <b>bloquear la Terminal de Vuelo dentro de la instancia</b>: como la entrada y la plantilla son el mismo mundo, el helicóptero se copia dentro y hoy podrías largarte a mitad de raid.', tags:['doc:dungeons.md','⚠ agujero conocido']},
 
 /* ───────────── 2. PLUGINS QUE TENEMOS Y NO ESTÁN PUESTOS ───────────── */
 {g:'jar', t:'🥷 Pickpocket — robar de verdad', d:'Carterismo entre jugadores: te agachas detrás de alguien, mantienes, y le rebuscas los bolsillos.',
