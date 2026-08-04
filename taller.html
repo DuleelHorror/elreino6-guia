@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>El Reino 6 — El Taller</title>
+<style>
+  :root{
+    --ground:#f3f1f8; --surface:#ffffff; --surface-2:#ece8f5; --sunken:#f7f5fb;
+    --ink:#1e1828; --ink-soft:#585070; --ink-faint:#877e9d;
+    --line:#e1dcef; --line-strong:#ccc4e0;
+    --arcane:#6b46d0; --arcane-2:#8a63ea; --glow:rgba(120,80,240,.16);
+    --gold:#a9701d; --sci:#177f86; --folk:#4a8f2f; --danger:#c1443b; --key:#d98a12;
+    --chip:#f1edfa; --suggest:#c43d86;
+    --shadow:0 1px 2px rgba(40,25,70,.05), 0 10px 34px rgba(70,45,120,.12);
+  }
+  @media (prefers-color-scheme:dark){:root{
+    --ground:#131019; --surface:#1c1730; --surface-2:#271f3d; --sunken:#171223;
+    --ink:#ede9f8; --ink-soft:#b6accd; --ink-faint:#8b81a6;
+    --line:#302846; --line-strong:#43385f;
+    --arcane:#9c82ff; --arcane-2:#b7a3ff; --glow:rgba(140,105,255,.26);
+    --gold:#e6b25a; --sci:#4ac9d0; --folk:#87cc62; --danger:#ec7d75; --key:#ffce6b;
+    --chip:#241d3a; --suggest:#ff86c9; --shadow:0 1px 2px rgba(0,0,0,.45), 0 16px 44px rgba(0,0,0,.4);
+  }}
+  :root[data-theme="light"]{
+    --ground:#f3f1f8; --surface:#ffffff; --surface-2:#ece8f5; --sunken:#f7f5fb;
+    --ink:#1e1828; --ink-soft:#585070; --ink-faint:#877e9d; --line:#e1dcef; --line-strong:#ccc4e0;
+    --arcane:#6b46d0; --arcane-2:#8a63ea; --glow:rgba(120,80,240,.16);
+    --gold:#a9701d; --sci:#177f86; --folk:#4a8f2f; --danger:#c1443b; --key:#d98a12; --chip:#f1edfa; --suggest:#c43d86;
+    --shadow:0 1px 2px rgba(40,25,70,.05), 0 10px 34px rgba(70,45,120,.12);
+  }
+  :root[data-theme="dark"]{
+    --ground:#131019; --surface:#1c1730; --surface-2:#271f3d; --sunken:#171223;
+    --ink:#ede9f8; --ink-soft:#b6accd; --ink-faint:#8b81a6; --line:#302846; --line-strong:#43385f;
+    --arcane:#9c82ff; --arcane-2:#b7a3ff; --glow:rgba(140,105,255,.26);
+    --gold:#e6b25a; --sci:#4ac9d0; --folk:#87cc62; --danger:#ec7d75; --key:#ffce6b; --chip:#241d3a; --suggest:#ff86c9;
+    --shadow:0 1px 2px rgba(0,0,0,.45), 0 16px 44px rgba(0,0,0,.4);
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--ground);color:var(--ink);
+    font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.5}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 18px 70px}
+
+  .topbar{position:sticky;top:0;z-index:9;display:flex;align-items:center;gap:14px;flex-wrap:wrap;
+    padding:10px 18px;border-bottom:1px solid var(--line);
+    background:color-mix(in srgb,var(--ground) 92%,transparent);backdrop-filter:blur(8px)}
+  .brand{font-family:ui-serif,Palatino,Georgia,serif;font-size:1.05rem;display:flex;align-items:center;gap:.4em;white-space:nowrap}
+  .brand .t{color:var(--arcane)}
+  .tb-r{margin-left:auto;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+  .btn{background:var(--surface);border:1px solid var(--line);color:var(--ink-soft);
+    border-radius:9px;padding:7px 12px;font-weight:700;font-size:.82rem;cursor:pointer;text-decoration:none;white-space:nowrap}
+  .btn:hover{color:var(--ink);border-color:var(--line-strong)}
+  .btn.arc{background:var(--arcane);color:#fff;border-color:transparent}
+  .btn.on{background:var(--arcane);color:#fff;border-color:transparent}
+
+  .hero{padding:30px 0 6px}
+  .hero h1{font-family:ui-serif,Palatino,Georgia,serif;font-size:2.1rem;margin:0 0 .25em;line-height:1.1}
+  .hero p{color:var(--ink-soft);margin:0 0 6px;max-width:74ch}
+  .hero .warn{color:var(--ink-faint);font-size:.86rem;max-width:78ch}
+
+  .filters{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 4px;position:sticky;top:52px;z-index:8;
+    padding:10px 0;background:color-mix(in srgb,var(--ground) 92%,transparent)}
+  .count{margin-left:auto;color:var(--ink-faint);font-size:.8rem;align-self:center}
+
+  h2.sec{font-family:ui-serif,Palatino,serif;font-size:1.4rem;margin:34px 0 2px;display:flex;align-items:center;gap:.45em}
+  .sec-sub{color:var(--ink-soft);font-size:.9rem;margin:0 0 16px;max-width:78ch}
+
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:14px}
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:15px 16px;
+    box-shadow:var(--shadow);display:flex;flex-direction:column;gap:8px}
+  .card h3{margin:0;font-size:1rem;line-height:1.3;display:flex;gap:.4em;align-items:baseline}
+  .card p{margin:0;color:var(--ink-soft);font-size:.88rem}
+  .card .falta{margin:0;font-size:.85rem;color:var(--ink);
+    background:var(--sunken);border:1px solid var(--line);border-radius:9px;padding:8px 10px}
+  .card .falta b{color:var(--gold)}
+  .chips{display:flex;flex-wrap:wrap;gap:5px;margin-top:auto;padding-top:4px}
+  .chip{font-size:.7rem;font-weight:700;padding:2px 8px;border-radius:999px;
+    border:1px solid var(--line-strong);color:var(--ink-faint)}
+  .chip.doc{color:var(--arcane);border-color:var(--arcane)}
+  .chip.gasto{color:var(--gold);border-color:var(--gold)}
+
+  .card.hecho{border-left:4px solid var(--folk)}
+  .card.jar{border-left:4px solid var(--gold)}
+  .card.apagado{border-left:4px solid var(--ink-faint)}
+  .card.idea{border-left:4px solid var(--suggest)}
+  .card.deuda{border-left:4px solid var(--danger)}
+
+  footer{margin-top:46px;padding-top:18px;border-top:1px solid var(--line);color:var(--ink-faint);font-size:.82rem}
+  @media(max-width:560px){.hero h1{font-size:1.6rem}.filters{position:static}}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand"><span class="t">🛠️</span> El Reino <b>6</b> · El Taller</div>
+  <div class="tb-r">
+    <button class="btn" onclick="T.theme()">🌓 Tema</button>
+    <a class="btn" href="mapa.html">🗺️ Mapa de misiones</a>
+    <a class="btn" href="bestiario.html">🐺 Bestiario</a>
+    <a class="btn arc" href="https://duleelhorror.github.io/elreino6-guia/">← Guía</a>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="hero">
+    <h1>El Taller</h1>
+    <p>Todo lo que <b>existe o podría existir y hoy ningún jugador se va a encontrar</b>: mecánicas montadas
+      que no están enganchadas a nada, plugins que tenemos y no están puestos, cosas apagadas a propósito
+      e ideas que se hablaron y no se han empezado.</p>
+    <p class="warn">Esto <b>no es el mapa de misiones</b>: ahí solo va lo que se juega. Esto es la trastienda,
+      para que nada se quede olvidado en un doc. Última revisión: <b>4 de agosto de 2026</b>.</p>
+  </div>
+
+  <div class="filters" id="filters"></div>
+
+  <div id="board"></div>
+
+  <footer>
+    El Reino 6 · El Taller — se actualiza a mano desde <code>web/taller-fuente.html</code>.
+    El estado de los plugins está comprobado contra el servidor de verdad, no contra la documentación.
+  </footer>
+</div>
+
+<script>
+/* ════════════════════════════════════════════════════════════════════════
+   LOS DATOS. Una entrada por cosa. Campos:
+     t     titulo · d  que es (una frase, en cristiano)
+     falta QUE FALTA EXACTAMENTE para que un jugador lo vea. Es el campo que
+           importa: sin esto la lista es un museo y no sirve para decidir.
+     tags  etiquetas (doc:… sale resaltado; €… es gasto)
+   🔴 El estado de los plugins se verifico contra el LIVE por SFTP el 4-ago-2026
+   (que jars hay, cuales estan .jar.disabled y cuales solo estan en el espejo
+   local), NO copiando lo que decian los docs.
+   ════════════════════════════════════════════════════════════════════════ */
+const DATA = [
+
+/* ───────────── 1. HECHO Y SIN ENGANCHAR ───────────── */
+{g:'hecho', t:'📷 El Laboratorio de Revelado', d:'Te dan un carrete, lo pasas por 5 máquinas (cortar, tres baños químicos, tendedero) y salen fotos que se ven de verdad, porque son imágenes reales renderizadas sobre mapas.',
+ falta:'Montar el cuarto oscuro (una sala sellada), colocar las 5 máquinas y <b>decidir de quién es</b>: no tiene NPC, ni sitio, ni misión. Se dejó suelto a propósito.', tags:['doc:laboratorio-fotos.md','se puede probar hoy']},
+{g:'hecho', t:'🚪 Explorar el Nivel 0 de las Backrooms', d:'Entras, andas 1.800 bloques a oscuras mientras te susurran cosas, y al llegar aparece el Agua de Almendras, que te bebes para salir. Si el server se reinicia contigo dentro, te escupe fuera.',
+ falta:'Una misión que reparta la Pared Blanda (el objeto de entrada). Y <b>reactivar el plugin</b>, que está apagado por rendimiento.', tags:['doc:backrooms.md','depende del plugin']},
+{g:'hecho', t:'🐉 Irushia, la Sierpe de la Peste', d:'Jefe grande y difícil (1.200 de vida) que escupe fuego azul y tiene segunda fase. Con su versión cría, más débil.',
+ falta:'<b>Decidir dónde vive.</b> La cría ya sale rarísima en las Tierras Lejanas, pero el adulto no tiene sitio: quiere una saga, una dungeon o un evento. Y su botín de verdad (hoy solo da experiencia).', tags:['doc:bestiario.md']},
+{g:'hecho', t:'⚔️ El Despertar de la Torre (invasión)', d:'Evento de oleadas: la Torre pulsa, salen Ecos del Multiverso por las grietas y hay que defender la Plaza. Tres oleadas y un jefe, con cofre propio.',
+ falta:'Está escrito entero pero <b>sin desplegar ni probar</b>. Y decidir quién lo dispara: hoy sería el admin a mano con la Sirena.', tags:['doc:evento-invasion.md']},
+{g:'hecho', t:'❄️ Ramales Criogénicos del Reino 2', d:'Cuatro consolas bajo el glaciar que hay que activar; la cuarta completa la refrigeración. Preparado para que lo siga Pan.',
+ falta:'Las <b>coordenadas de las 4 consolas</b> (nunca se apuntaron) y desplegarlo. Sin eso no se puede ni colocar.', tags:['doc:evento-reino2-criogenia.md']},
+{g:'hecho', t:'🎰 Cofre de la Suerte y Tienda de Fichas', d:'El sitio donde se gastan las Fichas del Tablón de Encargos: compras llaves y abres una lootbox con animación.',
+ falta:'<b>Colocar el cofre físico</b> in-game. Hasta entonces las Fichas no tienen dónde gastarse, y el loop diario se queda a medias.', tags:['doc:loop-diarias-battlepass.md']},
+{g:'hecho', t:'🗳️ Cofre de Votación', d:'Cofre con premios para quien vote al server en las listas públicas. Es el enganche clásico de crecimiento.',
+ falta:'Instalar <b>NuVotifier</b> y dar de alta el server en las listas de voto. Sin eso el cofre está montado pero dormido.', tags:['doc:catalogo-mecanicas.md']},
+{g:'hecho', t:'🏴‍☠️ El Gremio de los Dedos Largos', d:'Los 6 piratas chino-comunistas del Puerto, ya colocados y con lore: asambleas, reparto equitativo y autocrítica, tomándoselo todo muy en serio.',
+ falta:'La saga entera. Garrapata ya te da la carta de recomendación para ellos, así que <b>hay una misión que apunta a un sitio que todavía no existe</b>. Aquí es donde se desbloquearía robar.', tags:['doc:biblia-narrativa.md','⚠ hay un cabo suelto']},
+{g:'hecho', t:'🕳️ El Abismo (mundo de −1024)', d:'Un mundo propio que baja 16 veces más que lo normal, con cuevas hasta el fondo. Ya tiene la saga del sismógrafo y se llega en helicóptero.',
+ falta:'Protegerlo con WorldGuard (nació sin protección), y <b>bichos propios</b> escalados por profundidad: ahora mismo bajas mil bloques y no hay nada.', tags:['doc:dungeons.md']},
+{g:'hecho', t:'🚪 Trampillas al Sitio-83', d:'Las dos puertas (ida y vuelta) para entrar al laboratorio Sitio-83 desde la cueva de Bahía Helada.',
+ falta:'<b>Colocarlas</b>. Están creadas y sin poner, así que hoy al Sitio-83 no se llega.', tags:['doc:inmersion-comandos.md']},
+{g:'hecho', t:'📡 La antena del Papaphone', d:'La misión de Papriko para reparar la antena que rompieron las gaviotas: crafteas vallas y reparas dos placas.',
+ falta:'<b>Construir la antena</b> in-game y colocar las dos placas. La misión existe; el sitio no.', tags:['doc:red-anclaje.md']},
+{g:'hecho', t:'🎭 Los 2 modelos 3D de demostración', d:'Un Caballero Demoníaco y un Mago Azul, montados con BetterModel para probar que los modelos 3D funcionan.',
+ falta:'Nada, funcionan: es que <b>no salen por ningún lado</b> (sin spawn natural). O se les da un sitio o se borran.', tags:['doc:bestiario.md']},
+
+/* ───────────── 2. PLUGINS QUE TENEMOS Y NO ESTÁN PUESTOS ───────────── */
+{g:'jar', t:'🥷 Pickpocket — robar de verdad', d:'Carterismo entre jugadores: te agachas detrás de alguien, mantienes, y le rebuscas los bolsillos.',
+ falta:'<b>Ni siquiera está subido al server</b> (solo compilado en local). Es justo lo que pedía el seguidor veterano, y encaja con el Gremio de los Dedos Largos.', tags:['ya compilado','encaja con el Gremio']},
+{g:'jar', t:'🎣 EvenMoreFish — pesca con torneos', d:'Peces custom, colección y torneos con premios. La mecánica que le falta al Bacalao Gabardinez, el pez disfrazado de humano del Puerto.',
+ falta:'Subirlo y configurarlo. <b>No está en el server.</b> Ojo al balance: la tienda de peces por dinero debe quedar apagada para no crear una impresora de billetes.', tags:['gratis','tiene NPC esperando']},
+{g:'jar', t:'💍 MarriageMaster — bodas', d:'Casarse, teleportarse a la pareja, bonus de estar juntos. El Padre Elías ya está ahí para oficiarlas.',
+ falta:'Subirlo. <b>No está en el server.</b> La tasa de boda sería un buen sumidero de Cacahuates.', tags:['gratis','social']},
+{g:'jar', t:'🎩 UltraCosmetics — cosméticos', d:'Sombreros, partículas, mascotas y emotes que no dan ninguna ventaja. Puro postureo, que es lo que se enseña en los vídeos.',
+ falta:'Subirlo. <b>No está en el server.</b> Decidir qué se compra con Cacahuates (sumidero) y qué se gana jugando.', tags:['gratis','publi']},
+{g:'jar', t:'🔨 AzAuctions — casa de subastas', d:'Mercado de jugador a jugador con su interfaz. Distinto de la Bolsa: aquí se venden entre ellos.',
+ falta:'Subirlo. <b>No está en el server.</b> Su comisión es otro sumidero.', tags:['gratis','economía']},
+{g:'jar', t:'💀 BountyHunter — cazarrecompensas', d:'Pones precio a la cabeza de alguien pagándolo de tu bolsillo, así que no inventa dinero.',
+ falta:'Subirlo, y antes <b>decidir si hay PvP</b> y dónde. Sin eso no tiene sentido.', tags:['gratis','⚠ necesita PvP']},
+{g:'jar', t:'🎬 Denizen — cutscenes y diálogos ramificados', d:'Scripting de verdad sobre los NPCs: escenas, decisiones, cosas que cambian según la hora. Todo lo que el sistema de misiones actual no puede hacer.',
+ falta:'Subirlo y aprenderlo. <b>No está en el server.</b> Es el más potente de la lista y el que más tiempo pide.', tags:['gratis','potente']},
+{g:'jar', t:'🏃 Parkour — circuitos de habilidad', d:'Retos de saltos con sus tiempos y récords.',
+ falta:'Subirlo y, sobre todo, <b>construir un circuito</b>. El plugin es lo de menos.', tags:['gratis']},
+{g:'jar', t:'🐟 CustomFishing (de pago)', d:'La alternativa cara a EvenMoreFish: minijuego de pesca más elaborado.',
+ falta:'<b>Decidir si se compra</b>, teniendo EvenMoreFish gratis ya descargado. Probablemente no haga falta.', tags:['€ de pago','decidir']},
+
+/* ───────────── 3. APAGADO A PROPÓSITO ───────────── */
+{g:'apagado', t:'🚪 Las Backrooms (11 mundos)', d:'Once niveles de horror liminal, traducidos enteros al español, con sus bichos y eventos. Un juego dentro del juego.',
+ falta:'<b>Apagado por rendimiento</b>, y con razón: creaba 11 de los 22 mundos del server y todos se procesaban a todas horas aunque no entrara nadie. Reactivar = quitarle el .disabled a dos archivos. Todo lo demás sigue intacto.', tags:['doc:backrooms.md','decisión tomada']},
+{g:'apagado', t:'🚗 Vehicles — coches y motos', d:'Vehículos conducibles. Se queda instalado aunque hoy no se use.',
+ falta:'Su idea: <b>un mapa que haya que recorrer en vehículo</b>, con distancias largas a propósito y sin teleportes. No volver a proponer desinstalarlo.', tags:['idea del usuario','no tocar']},
+{g:'apagado', t:'🏪 QuickShop — tiendas de jugadores', d:'Cada jugador monta su tienda con un cofre y el objeto flotando encima. Instalado y en pausa.',
+ falta:'Esperando a que existan las <b>parcelas comerciales</b>. Hasta entonces nadie puede crear tiendas (los permisos están cerrados solos).', tags:['decisión: cuando haya parcelas']},
+{g:'apagado', t:'🌲 NullPlugin — el acechador del bosque', d:'Una presencia que te sigue y desaparece cuando la miras. Estudiado a fondo para el mundo del bosque tenebroso.',
+ falta:'El <b>mundo bosque tenebroso</b> no existe todavía. El plugin está desactivado esperándolo.', tags:['doc:PLUGINS-TODO.md']},
+
+/* ───────────── 4. IDEAS SIN EMPEZAR ───────────── */
+{g:'idea', t:'🏬 Zona comercial con parcelas', d:'Un barrio donde los jugadores alquilan un local y montan su tienda (herrería, comida, decoración). Lo pidió un seguidor veterano.',
+ falta:'Diseñarla y construirla: dónde, cuántas parcelas, si se alquilan (sería un <b>sumidero excelente</b>) y quién las gestiona. Es lo que desbloquea QuickShop.', tags:['doc:ideas-comunidad.md','desbloquea QuickShop']},
+{g:'idea', t:'🏚️ Barrio Rico y Barrio Pobre', d:'Dividir el pueblo en dos zonas con tono social distinto, y una mecánica que obligue a que la gente se mezcle en vez de quedarse siempre los mismos arriba.',
+ falta:'Todo. Es barato de montar (regiones) pero necesita el <b>diseño de la mecánica que fuerza la mezcla</b>, que es lo difícil.', tags:['doc:ideas-comunidad.md']},
+{g:'idea', t:'🗿 Concursos de construcción', d:'Un concurso recurrente donde la obra ganadora se coloca de verdad en el parque del pueblo.',
+ falta:'Decidir formato y periodicidad. Sustituye a las esculturas del mod que echaba de menos el seguidor.', tags:['doc:ideas-comunidad.md','comunidad']},
+{g:'idea', t:'🧪 El Laboratorio del Reino (química)', d:'Recrear el laboratorio de la Education Edition: elementos, compuestos y una mesa donde combinarlos.',
+ falta:'Decidir <b>de quién es</b>: de Papriko (ciencia seria) o de la Alquimista (pócimas). Reutilizando objetos que ya tenemos no hace falta dibujar ni una textura.', tags:['doc:onboarding-registro.md']},
+{g:'idea', t:'🖥️ Un server de pruebas', d:'Una segunda instancia barata, copia de la de verdad, donde probar misiones reiniciando todo lo que haga falta.',
+ falta:'Montarlo. Hoy da igual porque no hay jugadores, pero <b>el día que abras al público lo vas a necesitar</b>: las misiones exigen reiniciar para probarse.', tags:['antes de abrir al público','€ instancia extra']},
+{g:'idea', t:'🧙 Los NPCs que faltan para el final', d:'El Sabio (enciclopedia de clases y hechizos), el Mago científico de la Torre y el científico jefe que se acojona tras la primera invasión.',
+ falta:'Crearlos. Son <b>piezas del arco principal</b>: sin el científico jefe no arranca la parte de "hay que abrir la puerta".', tags:['doc:biblia-narrativa.md','arco principal']},
+{g:'idea', t:'🎨 Un artista de sprites voluntario', d:'Un seguidor se ofreció a dibujar objetos (la moneda, el maletín, el papaphone...). Es de lo más valioso que salió de aquel feedback.',
+ falta:'<b>Escribirle</b> y pasarle la lista de texturas pendientes.', tags:['doc:ideas-comunidad.md','gratis']},
+{g:'idea', t:'🏢 Saga VOSTOK, partes 2 en adelante', d:'La corporación militar rusa que quiere la tecnología del Nexo. La Parte 1 está construida; el resto es guion.',
+ falta:'Diseñar las partes siguientes: El Cárabo (el trader que cobra por hablar), los Bogatir, el laboratorio. Necesita el plugin <b>Sentinel</b> para que los enemigos disparen de verdad.', tags:['doc:saga-vostok.md','falta Sentinel']},
+
+/* ───────────── 5. DEUDA / CABOS SUELTOS ───────────── */
+{g:'deuda', t:'🎒 Los cofres de gama alta', d:'Los cofres de Plata, Oro y Mítico están pensados pero sin montar.',
+ falta:'Esperan a que exista el <b>equipo de nivel alto</b> del MMO: hoy no habría premios que meter dentro.', tags:['doc:catalogo-mecanicas.md','bloqueado']},
+{g:'deuda', t:'🕳️ Backrooms: dos niveles sin salida', d:'El nivel 5 (Disc 11) y el 94 (Skyblock) no tienen ninguna salida programada: quien entre se queda encerrado hasta que un admin lo saque.',
+ falta:'Decidir qué se hace: darles salida, usarlos como trampa deliberada con rescate, o no meter a nadie ahí. <b>Mientras tanto, no llevar a nadie.</b>', tags:['doc:backrooms.md','⚠ atrapa jugadores']},
+{g:'deuda', t:'❓ TUNG TUNG SAHUR', d:'Un NPC colocado en el Ayuntamiento que no tiene lore, ni personalidad, ni misión. Solo un nombre de meme.',
+ falta:'<b>Que decidas quién es.</b> Está esperando desde hace semanas y no se le puede escribir nada hasta entonces.', tags:['doc:biblia-narrativa.md','decisión tuya']},
+{g:'deuda', t:'🗄️ Objetos de misión en el Archivo', d:'La red que te revende un objeto crítico si lo pierdes. Los cinco de la saga secreta no están dados de alta.',
+ falta:'Añadirlos. Importa <b>menos que antes</b>, porque desde el 4-ago los objetos de misión ya no se pueden tirar ni perder, pero no es exactamente lo mismo.', tags:['doc:objetos-perdidos.md','media hora']},
+];
+
+const GRUPOS = [
+  {k:'hecho',   n:'Hecho, y nadie lo va a encontrar', ico:'🟢',
+   sub:'Está en el servidor y funciona, pero no hay ni un NPC, ni una misión, ni un sitio que lleve hasta ello. Es lo más barato de rescatar: el trabajo gordo ya está pagado.'},
+  {k:'jar',     n:'Lo tenemos y no está puesto', ico:'🟡',
+   sub:'Plugins ya descargados o comprados. Comprobado contra el servidor de verdad: salvo que se diga otra cosa, ni siquiera están subidos.'},
+  {k:'apagado', n:'Apagado a propósito', ico:'⏸️',
+   sub:'Funciona, pero está desactivado por una razón concreta. Está aquí para que no se vuelva a proponer sin saber por qué se apagó.'},
+  {k:'idea',    n:'Ideas que no se han empezado', ico:'🔵',
+   sub:'Se hablaron y no existen en ningún sitio salvo en un documento. Aquí es donde más fácil se pierden las cosas.'},
+  {k:'deuda',   n:'Cabos sueltos', ico:'🔴',
+   sub:'Cosas a medias que pueden morder: contenido que apunta a algo que no existe, o decisiones que llevan tiempo esperándote.'},
+];
+
+const T = {
+  filtro:'todo',
+  theme(){const r=document.documentElement;
+    const cur=r.dataset.theme||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');
+    r.dataset.theme=cur==='dark'?'light':'dark';},
+  set(k){T.filtro=k;T.render();},
+  render(){
+    const fs=document.getElementById('filters');
+    const total=DATA.length;
+    fs.innerHTML=`<button class="btn ${T.filtro==='todo'?'on':''}" onclick="T.set('todo')">Todo (${total})</button>`+
+      GRUPOS.map(g=>{const n=DATA.filter(d=>d.g===g.k).length;
+        return `<button class="btn ${T.filtro===g.k?'on':''}" onclick="T.set('${g.k}')">${g.ico} ${g.n} (${n})</button>`;}).join('')+
+      `<span class="count">${total} cosas apuntadas</span>`;
+    const b=document.getElementById('board');
+    b.innerHTML=GRUPOS.filter(g=>T.filtro==='todo'||T.filtro===g.k).map(g=>{
+      const items=DATA.filter(d=>d.g===g.k);
+      if(!items.length) return '';
+      return `<h2 class="sec">${g.ico} ${g.n}</h2><p class="sec-sub">${g.sub}</p><div class="grid">`+
+        items.map(d=>`<div class="card ${d.g}">
+          <h3>${d.t}</h3>
+          <p>${d.d}</p>
+          <p class="falta"><b>Falta:</b> ${d.falta}</p>
+          <div class="chips">${(d.tags||[]).map(t=>{
+            const cls=t.startsWith('doc:')?'chip doc':(t.startsWith('€')?'chip gasto':'chip');
+            return `<span class="${cls}">${t}</span>`;}).join('')}</div>
+        </div>`).join('')+`</div>`;
+    }).join('');
+  }
+};
+T.render();
+</script>
+
+</body>
+</html>

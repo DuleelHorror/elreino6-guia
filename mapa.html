@@ -113,6 +113,7 @@
     <button class="btn" onclick="ER6.fit()">Centrar</button>
     <button class="btn" onclick="ER6.theme()">🌓 Tema</button>
     <a class="btn" href="bestiario.html">🐺 Bestiario</a>
+    <a class="btn" href="taller.html">🛠️ El Taller</a>
     <a class="btn arc" href="https://duleelhorror.github.io/elreino6-guia/">← Guía</a>
   </div>
 </div>
@@ -4411,9 +4412,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
     // Loop diario
     {id:'tablon', loop:true, label:'🎟️ Tablón de Encargos', npc:'Sistema', faction:'arc', type:'Loop diario · repetible', reward:'Fichas 🎟️', status:'new',
       steps:['4 encargos aleatorios al día','Suben el Pase del Reino','Cada nivel del Pase da Fichas'], desc:'Misiones diarias que dan Fichas. El enganche para volver cada día.'},
-    {id:'tienda', label:'🛒 Tienda de Fichas', npc:'Sistema', faction:'arc', type:'Sumidero de Fichas', reward:'Llaves de la Suerte', status:'new',
       desc:'Gastas las Fichas comprando llaves del Cofre de la Suerte.'},
-    {id:'cofre', label:'🎰 Cofre de la Suerte', npc:'Sistema', faction:'arc', type:'Lootbox (animación)', reward:'Premios aleatorios', status:'new',
       desc:'Abres el cofre con la llave: materiales, Cacahuates, esmeraldas y armas.'},
     // Secundarias / nuevas (2026-07-11)
     {id:'pecio', label:'⚓ El Guardián del Pecio', npc:'Semental de la Flecha', faction:'folk', type:'Secundaria · pesca un bicho raro', reward:'Plano de la Espada Pirata', status:'new',
@@ -4489,7 +4488,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
     ['contrato','fichaje'],['fichaje','clase'],['clase','semental'],['semental','talentos'],['talentos','alquimista'],['alquimista','nando'],
     ['nando','cultivo'],['cultivo','vender'],
     ['nando','permiso'],['permiso','bolsa'],['bolsa','jobs'],['bolsa','carpincho'],
-    ['carpincho','barco'],['barco','tablon_luz'],['tablon_luz','tablon'],['tablon','tienda'],['tienda','cofre'],
+    ['carpincho','barco'],['barco','tablon_luz'],['tablon_luz','tablon'],
     // secundarias + saga del banco (2026-07-11) + Red de Anclaje (2026-07-15)
     ['bolsa','pecio'],['bolsa','caballos'],['bolsa','lolo'],['lolo','lolo_ap'],['permiso','nico'],['nico','yaniko'],['permiso','arreglo'],['bolsa','estaciones'],['estaciones','carpincho'],['carpincho','geologia'],['geologia','mina'],['mina','dungeon_mina'],['mina','abismo'],['cuenta','anclaje'],['anclaje','anclaje_rep'],['anclaje_rep','anclaje_salto'],['anclaje_salto','anclaje_fractal'],['anclaje_fractal','jarvard'],['jarvard','papriko_antena'],['papriko_antena','vostok_p1'],
     ['tablon_luz','banco'],['banco','cuenta'],['cuenta','mercado'],
@@ -4497,7 +4496,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
     ['permiso','torre','future'],['torre','invasion','future'],['clase','sabio','future'],
     // en camino (2026-07-16), colgadas del nodo más lógico
     ['nando','dedos'],['dedos','gremio','future'],['gremio','caza','future'],['mercado','lonja','future'],
-    ['banco','bodas','future'],['cofre','cosmeticos','future'],['pecio','pesca','future'],
+    ['banco','bodas','future'],['tablon','cosmeticos','future'],['pecio','pesca','future'],
   ];
 
   // ===== PROPUESTA: misiones sugeridas (ocultas hasta pulsar «Ver propuesta») =====
