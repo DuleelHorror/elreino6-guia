@@ -100,7 +100,8 @@
     <span class="lg"><span class="sw" style="border-color:var(--sci)"></span>Forasteros</span>
     <span class="lg"><span class="sw" style="border-color:var(--folk)"></span>Pueblo</span>
     <span class="lg"><span class="sw" style="border-color:var(--gold)"></span>Sistema/economía</span>
-    <span class="lg"><span class="sw" style="border-color:var(--arcane)"></span>Loop diario</span>
+    <span class="lg"><span class="sw" style="border-color:var(--arcane)"></span>Nexos/arcano</span>
+    <span class="lg"><span class="sw" style="border-radius:50%;border-style:double;border-width:3px"></span>🔁 <b>Repetible (loop)</b></span>
     <span class="lg"><span class="sw" style="border-color:var(--ink-faint);border-style:dashed"></span>Futuro</span>
     <span class="lg"><span class="sw key"></span>🔓 <b>Desbloquea mecánica</b></span>
     <span class="lg"><span class="sw" style="border-color:var(--key);border-style:dashed"></span>🟡 <b>Misión secreta</b></span>
@@ -4392,14 +4393,14 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
     // Rama A (secundaria)
     {id:'cultivo', label:'🌿 Cultivo Clandestino', npc:'La Alquimista', faction:'folk', type:'Saga · 3 misiones (rama secundaria)', coins:26, status:'live', unlocks:'Cultivar droga (SPdrug): invernadero, laboratorio y la venta de maría',
       steps:['1) La Huerta → planta las semillas, espera a que crezcan y entrégale 1 «materia» a la Alquimista (6🥜 + reagentes)','2) El Secadero → seca la cosecha en el minijuego del compostador y entrega 1 «seca» (8🥜 + invernadero)','3) El Laboratorio → cuece la droga en el ahumador (orden correcto o explota) y entrega 1 cannabis (12🥜 + desbloquea la venta)'], desc:'Te enseña a plantar, secar y cocinar la maría paso a paso, regalándote el invernadero y el laboratorio.'},
-    {id:'vender', label:'💸 Vender maría', npc:'Cofre (La Alquimista)', faction:'gold', type:'Repetible ∞', reward:'8🥜/unidad · tope 24/día', status:'live',
+    {id:'vender', loop:true, label:'💸 Vender maría', npc:'Cofre (La Alquimista)', faction:'gold', type:'Repetible ∞', reward:'8🥜/unidad · tope 24/día', status:'live',
       desc:'Ya puedes vender tu maría en el cofre. Fuente de dinero repetible (con tope diario para no romper la economía).'},
     // Rama B (principal)
     {id:'permiso', label:'🏛️ Vía Crucis Administrativa', npc:'Toni → 6 funcionarios', faction:'sci', type:'Saga · comedia burocrática', coins:28, status:'live',
       steps:['Circo del papeleo: recorre las 6 ventanillas del Ayuntamiento en orden (cada una te marea con un sello, una tasa o una espera absurda) hasta conseguir el Permiso de Obra:','1) La Ujier','2) Los Sellos','3) El Registrador','4) El Interventor','5) El Inspector (en la excavación)','6) El Ministro → firma el Permiso'], desc:'El circo del papeleo del Ayuntamiento. Puerta de la HISTORIA PRINCIPAL + gancho de la Torre Negra.'},
     {id:'bolsa', label:'💼 Alta en el Gremio', npc:'Toni', faction:'sci', type:'Desbloquea los oficios', coins:10, reward:'Carné de Trabajador', status:'live', unlocks:'Los Oficios (Jobs): sueldo diario por currar',
       desc:'Toni te da el carné que desbloquea los 5 oficios (Jobs).'},
-    {id:'jobs', label:'🛠️ Los Oficios (Jobs)', npc:'Sistema', faction:'gold', type:'Repetible · sueldo diario', reward:'Tope 100🥜/día', status:'live',
+    {id:'jobs', loop:true, label:'🛠️ Los Oficios (Jobs)', npc:'Sistema', faction:'gold', type:'Repetible · sueldo diario', reward:'Tope 100🥜/día', status:'live',
       desc:'Minero, Leñador, Hortelano, Cazador y Pescador. El ingreso del día a día por currar.'},
     {id:'carpincho', label:'🕵️ Operación Carpincho', npc:'Toni → el Ministro', faction:'sci', type:'Saga · 6 misiones · JEFE', coins:84, reward:'Medalla del Capincherío', status:'live',
       steps:['1) La Obra Congelada (Toni) → investiga la nota falsa de «riesgo sísmico» (habla con Vera y la Dra. Pizarrica)','2) El Soplo del Chef (Chef Calderón) → te destapa el plan de los «Apartamentos Pan de Gamba»','3) El Expediente Fantasma (Toni) → infíltrate en el Ayuntamiento con la clave y saca el expediente del cofre','4) Quema Controlada (Toni) → con el Mechero, quema las pilas de papeles y tráele las cenizas','5) Los Precintadores (combate) → derrota la oleada de matones y a su Jefe','6) El Careo — JEFE (el Ministro) → destápalo y véncelo (se escapa «trasladado a un Ministerio más grande»)'], desc:'El Ministro precinta la mina con una excusa falsa para echar al pueblo. Infiltración, sabotaje y combate final contra el jefe.'},
@@ -4408,7 +4409,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
     {id:'tablon_luz', label:'⚡ Doce Voltios', npc:'Toni', faction:'sci', type:'Tutorial · DESBLOQUEA el Tablón', coins:10, reward:'Enchufe del Tablón', status:'new', unlocks:'El Tablón de Encargos: loop diario + moneda Fichas',
       steps:['Bajar la palanca del puente Mambutu','Bajar la palanca de la iglesia','Entregar los 2 fusibles a Toni'], desc:'El Tablón no funciona: no tiene corriente. Toni te explica (con lógica absurda) que va a «12 voltios» y hay que activar 2 palancas del circuito.'},
     // Loop diario
-    {id:'tablon', label:'🎟️ Tablón de Encargos', npc:'Sistema', faction:'arc', type:'Loop diario · repetible', reward:'Fichas 🎟️', status:'new',
+    {id:'tablon', loop:true, label:'🎟️ Tablón de Encargos', npc:'Sistema', faction:'arc', type:'Loop diario · repetible', reward:'Fichas 🎟️', status:'new',
       steps:['4 encargos aleatorios al día','Suben el Pase del Reino','Cada nivel del Pase da Fichas'], desc:'Misiones diarias que dan Fichas. El enganche para volver cada día.'},
     {id:'tienda', label:'🛒 Tienda de Fichas', npc:'Sistema', faction:'arc', type:'Sumidero de Fichas', reward:'Llaves de la Suerte', status:'new',
       desc:'Gastas las Fichas comprando llaves del Cofre de la Suerte.'},
@@ -4438,7 +4439,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
       steps:['Ir a hablar con Yael, en el banco'], desc:'Para cobrar la nómina necesitas cuenta bancaria. Toni te manda a la ventanilla de Yael.'},
     {id:'cuenta', label:'🏦 Capital Inicial', npc:'Yael Goldstein', faction:'gold', type:'Saga · 17 comisiones cutres', reward:'Cartilla del Banco (acceso a la Bolsa)', status:'new', unlocks:'La Bolsa del Reino (mercado dinámico de The Endex)',
       steps:['17 pagos crecientes (2,3,4…30)','Total: pagas 200 Cacahuates','Excusas cada vez más absurdas'], desc:'La cajera pesada y avariciosa te clava comisión tras comisión (200🥜 en total) con excusas patéticas, hasta abrirte la cuenta. SUMIDERO económico.'},
-    {id:'mercado', label:'💹 La Bolsa del Reino', npc:'Sistema (The Endex)', faction:'gold', type:'Mercado de valores · repetible', reward:'Compra/vende · precios dinámicos', status:'new',
+    {id:'mercado', loop:true, label:'💹 La Bolsa del Reino', npc:'Sistema (The Endex)', faction:'gold', type:'Mercado de valores · repetible', reward:'Compra/vende · precios dinámicos', status:'new',
       steps:['Clic en la campana de la Bolsa','Precios que suben y bajan solos','Eventos: cracks y fiebres'], desc:'El mercado dinámico: compra barato, vende caro. Precios que fluctúan y eventos locos. Se desbloquea al abrir la cuenta con Yael.'},
     {id:'anclaje', label:'🗼 La Red de Anclaje', npc:'Toni → Saturnino → Gordon Wizman', faction:'sci', type:'Saga · 3 misiones · te presenta a Gordon y el colisionador', coins:18, reward:'Sincronización + Llave del Capincherío', status:'new',
       steps:['1) La Red de Anclaje (Toni) → habla con Saturnino','2) La Roca que Zumba (Saturnino) → habla con Gordon Wizman en la Torre del Mago','3) Protocolo de Sincronización (Gordon) → cruza la puerta a Black Mesa, métete en el colisionador y vuelve con Gordon'], desc:'Arranca la rama del Nexo. Un físico de otro mundo con un cono de obra por sombrero te mete en el ajo: cruzas por una puerta a Black Mesa (un laboratorio de otra realidad) y grabas tu firma en un colisionador.'},
@@ -4566,6 +4567,14 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
       {selector:'node[status="new"]',style:{'border-width':3,'border-color':gold}},
       {selector:'node[status="future"]',style:{'border-color':faint,'border-style':'dashed','background-opacity':.55,'color':inkSoft}},
       {selector:'node[unlocks]',style:{'border-width':4,'border-style':'double','underlay-color':key,'underlay-opacity':.32,'underlay-padding':11}},
+      /* 🔁 LOOP = REDONDA. Peticion del usuario (2026-08-04): "las quest que son loops
+         diarios ponlas como una redonda, asi se entienden mas". Antes solo se distinguian
+         por el COLOR, que ademas ya significa otra cosa (la faccion), asi que el Tablon
+         quedaba igual que una mision normal. La FORMA lo dice sin depender del color:
+         redondo = esto no se acaba, se repite. Padding alto porque una elipse necesita
+         mas hueco que un rectangulo para el mismo texto. */
+      {selector:'node[loop]',style:{'shape':'ellipse','padding':'26px','border-width':3,'border-style':'double','text-max-width':'120px'}},
+      /* El hexagono de dungeon va DESPUES: si algo fuera loop Y dungeon, manda dungeon. */
       {selector:'node[dungeon]',style:{'shape':'hexagon','border-color':dng,'border-width':4,'background-color':dng,'background-opacity':.18,'color':ink,'font-weight':700,'padding':'18px','underlay-color':dng,'underlay-opacity':.22,'underlay-padding':7}},
       {selector:'node:selected',style:{'border-width':4,'border-color':arc,'background-color':chip}},
       {selector:'edge',style:{'width':2.5,'line-color':line,'target-arrow-color':line,'target-arrow-shape':'triangle',
