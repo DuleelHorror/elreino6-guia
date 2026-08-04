@@ -114,8 +114,12 @@
       <code>texturas/a_16.py</code> (y si viene con fondo blanco, lo limpia <code>texturas/quitar_fondo.py</code>).</p>
     <p>Del resto me encargo yo: meterlo en ItemsAdder, asignarle su número de modelo, reconstruir el pack y
       subirlo. Lo único que hace falta después es <b>reiniciar</b> el server.</p>
-    <p style="color:var(--ink-faint)">Un sprite por familia ya arregla mucho: los 108 accesorios se quedan
-      decentes con <b>10 dibujos</b>, uno por tipo.</p>
+    <p><b>Un sprite no es un item.</b> Los <code>×12</code> de la tabla son cuántos <b>items</b> hay, no
+      cuántos dibujos hacen falta: cada familia de accesorios son 12 items porque son <b>6 rarezas × 2
+      nombres</b>, y los dos nombres de una misma rareza pueden compartir dibujo.</p>
+    <p style="color:var(--ink-faint)">Así que los 108 accesorios se quedan decentes con <b>10 dibujos</b>
+      (uno por familia), o <b>58</b> si quieres que la rareza se vea. El atajo bueno: <b>un dibujo por familia
+      y recolorearlo</b> por rareza (hierro → cobre → plata → oro → gema → negro).</p>
   </div>
 
   <div id="board"></div>
@@ -131,7 +135,7 @@
 const G = [
  {
   "t": "⬜ Papeles de misión que se confunden entre sí — 🥇 MÁXIMA PRIORIDAD",
-  "sub": "*Trece objetos distintos que son <b>todos un papel</b>: en el inventario son idénticos y el jugador no sabe cuál",
+  "sub": "Trece objetos distintos que son <b>todos un papel</b>: en el inventario son idénticos y el jugador no sabe cuál lleva. Es exactamente el problema que ya se arregló una vez con los 6 primeros (y funcionó).",
   "items": [
    {
     "e": "⬜",
@@ -228,7 +232,7 @@ const G = [
  },
  {
   "t": "⬜ Trofeos de bicho (botín del bestiario)",
-  "sub": "<i>Lo que sueltan los bichos y el jugador guarda. Son la \"prueba\" de haber matado algo, así que se merecen cara.</i>",
+  "sub": "Lo que sueltan los bichos y el jugador guarda. Son la \"prueba\" de haber matado algo, así que se merecen cara.",
   "items": [
    {
     "e": "⬜",
@@ -304,7 +308,7 @@ const G = [
  },
  {
   "t": "⬜ Armas que LLEVAN los mobs en la mano (se ven de lejos)",
-  "sub": "<i>No las usa el jugador, pero se ven en la mano del bicho todo el combate.</i>",
+  "sub": "No las usa el jugador, pero se ven en la mano del bicho todo el combate.",
   "items": [
    {
     "e": "⬜",
@@ -344,78 +348,78 @@ const G = [
   ]
  },
  {
-  "t": "⬜ Accesorios del MMO — 108 items y <b>ni uno</b> con sprite",
-  "sub": "*Los que pediste. Cada familia usa un material distinto, así que <b>se distinguen entre familias</b>… pero",
+  "t": "⬜ Accesorios del MMO — 108 items, y <b>ni uno</b> con sprite",
+  "sub": "🔴 <b>OJO, que el \"×12\" NO son 12 sprites</b> (pregunta de Pan, 2026-08-04): el ×12 es cuántos <b>items</b> hay. Cada familia son <b>12 items = 6 rarezas × 2 nombres</b>, y las rarezas son las mismas en todas: <b>COMMON</b> (nivel 1) · <b>UNCOMMON</b> (10) · <b>RARE</b> (20) · <b>EPIC</b> (40) · <b>LEGENDARY</b> (60) · <b>MYTHICAL</b> (80) — el número romano del nombre (I…VI) es justo esa rareza. Los 2 items de una misma rareza pueden <b>compartir sprite</b> sin problema (son solo dos nombres del mismo escalón). Así que hacen falta: <b>10 sprites</b> para el mínimo digno (uno por familia, y los 108 quedan decentes), o <b>58</b> si queréis que la rareza se vea de un vistazo (6 por familia). 🎨 El atajo bueno: <b>un dibujo por familia y recolorearlo por rareza</b> (hierro → cobre → plata → oro → gema → negro que no refleja la luz) — para un artista es un rato, y da los 58. Cada familia usa un material distinto, así que <b>entre familias sí se distinguen</b>; el problema es que <b>los 12 de una familia son idénticos</b>, y una pepita de oro no lee como \"anillo\".",
   "items": [
    {
     "e": "⬜",
     "o": "<code>anillo</code> ×12",
-    "n": "Anillo de la Suerte / Sortija de Chiripa…",
+    "n": "Anillo de la Suerte I … Aro de la Fortuna 2 VI",
     "m": "gold_nugget",
-    "d": "saga de accesorios de Lolo · anillo de oro con una piedrecita"
+    "d": "saga de accesorios de Lolo · anillo con una piedrecita · <b>6 rarezas</b>"
    },
    {
     "e": "⬜",
     "o": "<code>guantes</code> ×12",
     "n": "Guantes del Minero / Manoplas del Obrero…",
     "m": "rabbit_hide",
-    "d": "ídem · guantes de trabajo remendados"
+    "d": "ídem · guantes de trabajo remendados · <b>6 rarezas</b>"
    },
    {
     "e": "⬜",
     "o": "<code>amuleto</code> ×12",
     "n": "Amuleto Arcano / Colgante del Mago…",
     "m": "amethyst_shard",
-    "d": "ídem · amuleto colgando de un cordel"
+    "d": "ídem · amuleto colgando de un cordel · <b>6 rarezas</b>"
    },
    {
     "e": "⬜",
     "o": "<code>brazalete</code> ×12",
     "n": "Brazalete Ágil / Pulsera del Duelista…",
     "m": "copper_ingot",
-    "d": "ídem · brazalete de cobre con remaches"
+    "d": "ídem · brazalete con remaches · <b>6 rarezas</b>"
    },
    {
     "e": "⬜",
     "o": "<code>capa</code> ×12",
     "n": "Capa del Viajero / Manto del Viento…",
     "m": "phantom_membrane",
-    "d": "ídem · capa doblada con broche"
+    "d": "ídem · capa doblada con broche · <b>6 rarezas</b>"
    },
    {
     "e": "⬜",
     "o": "<code>cinturon</code> ×12",
     "n": "Cinturón del Obrero / Faja Reforzada…",
     "m": "leather",
-    "d": "ídem · cinturón de cuero con hebilla grande"
+    "d": "ídem · cinturón con hebilla grande · <b>6 rarezas</b>"
    },
    {
     "e": "⬜",
     "o": "<code>dije</code> ×12",
     "n": "Dije de la Suerte / Amuleto de Bolsillo…",
     "m": "echo_shard",
-    "d": "ídem · dije pequeño de plata"
+    "d": "ídem · dije pequeño de plata · <b>6 rarezas</b>"
    },
    {
     "e": "⬜",
     "o": "<code>insignia</code> ×12",
     "n": "Insignia del Ayuntamiento / Chapa del Funcionario…",
     "m": "name_tag",
-    "d": "ídem · chapa esmaltada con el escudo del Reino"
+    "d": "ídem · chapa esmaltada con el escudo del Reino · <b>6 rarezas</b>"
    },
    {
     "e": "⬜",
     "o": "<code>pendiente</code> ×12",
     "n": "Pendiente Arcano / Aro de la Oreja…",
     "m": "iron_nugget",
-    "d": "ídem · aro con una gema minúscula"
+    "d": "ídem · aro con una gema minúscula · <b>6 rarezas</b>"
    },
    {
     "e": "⬜",
     "o": "<code>reliquia</code> ×7",
     "n": "Reliquia de la Torre / Fragmento del Eco…",
     "m": "heart_of_the_sea",
-    "d": "premio gordo · esquirla de piedra negra que no refleja la luz"
+    "d": "premio gordo · esquirla de piedra negra que no refleja la luz · 4 rarezas (de EPIC arriba)"
    }
   ]
  },
@@ -455,7 +459,7 @@ const G = [
  },
  {
   "t": "✅ Ya texturizados (referencia — NO rehacer)",
-  "sub": "<i>25 sprites puestos en los namespaces <code>objetos:</code> / <code>documentos:</code> (los CMD están en <code>items-registro.md</code>).</i>",
+  "sub": "25 sprites puestos en los namespaces <code>objetos:</code> / <code>documentos:</code> (los CMD están en <code>items-registro.md</code>).",
   "items": [
    {
     "e": "✅",
