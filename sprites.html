@@ -134,113 +134,9 @@
 <script>
 const G = [
  {
-  "t": "⬜ Papeles de misión que se confunden entre sí — 🥇 MÁXIMA PRIORIDAD",
-  "sub": "Trece objetos distintos que son <b>todos un papel</b>: en el inventario son idénticos y el jugador no sabe cuál lleva. Es exactamente el problema que ya se arregló una vez con los 6 primeros (y funcionó).",
-  "items": [
-   {
-    "e": "⬜",
-    "o": "<code>Expediente_Obra</code>",
-    "n": "Expediente de Obra 27-B",
-    "m": "paper",
-    "d": "Vía Crucis: el papel que viaja por las ventanillas · carpeta de anillas con pestañas y sellos encima"
-   },
-   {
-    "e": "⬜",
-    "o": "<code>Permiso_Sellado</code>",
-    "n": "PERMISO DE OBRA (SELLADO)",
-    "m": "paper",
-    "d": "el premio del Vía Crucis · el mismo papel pero con un tampón rojo enorme y torcido"
-   },
-   {
-    "e": "⬜",
-    "o": "<code>Nota_Paralizacion</code>",
-    "n": "Nota de Paralización",
-    "m": "paper",
-    "d": "la nota falsa del Ministro · papelito clavado con chincheta, letra a máquina"
-   },
-   {
-    "e": "⬜",
-    "o": "<code>Comanda_Chef</code>",
-    "n": "Comanda del Chef",
-    "m": "paper",
-    "d": "soplo del Chef Calderón (Op. Carpincho) · comanda de bar con pinza y manchas de grasa"
-   },
-   {
-    "e": "⬜",
-    "o": "<code>Informe_Geologico</code>",
-    "n": "Informe Geológico REAL",
-    "m": "paper",
-    "d": "Op. Carpincho · informe técnico con un gráfico y un \"CONFIDENCIAL\""
-   },
-   {
-    "e": "⬜",
-    "o": "<code>Dossier_Gamba</code>",
-    "n": "Dossier Pan de Gamba",
-    "m": "paper",
-    "d": "la prueba del pelotazo · dossier comercial con un render cutre de apartamentos"
-   },
-   {
-    "e": "⬜",
-    "o": "<code>Hoja_Blanco</code>",
-    "n": "Hoja en Blanco",
-    "m": "paper",
-    "d": "saga Jarvard, entra en la máquina · folio impecable, en blanco de verdad"
-   },
-   {
-    "e": "⬜",
-    "o": "<code>Papel_Jarvard</code>",
-    "n": "Papel de Jarvard",
-    "m": "paper",
-    "d": "saga Jarvard, recién salido · folio con orla a medio imprimir"
-   },
-   {
-    "e": "⬜",
-    "o": "<code>Papel_Jarvard_Curado</code>",
-    "n": "Papel de Jarvard (curado)",
-    "m": "paper",
-    "d": "saga Jarvard, tras el frío · el mismo con escarcha en los bordes"
-   },
-   {
-    "e": "⬜",
-    "o": "<code>Titulo_Jarvard</code>",
-    "n": "Título de Jarvard (firmado)",
-    "m": "paper",
-    "d": "el título falso · diploma con orla, lazo y una firma pretenciosa"
-   },
-   {
-    "e": "⬜",
-    "o": "<code>Manifiesto_Carga</code>",
-    "n": "Copia del Manifiesto de Carga",
-    "m": "paper",
-    "d": "saga VOSTOK · albarán de puerto con casillas y un sello de aduana"
-   },
-   {
-    "e": "⬜",
-    "o": "<code>Cuberteria_Domingos</code>",
-    "n": "La Cubertería de los Domingos",
-    "m": "paper",
-    "d": "saga de los Dedos Largos: lo que robas y devuelves · <b>cubertería de plata liada en un paño</b> (hoy es un papel, canta muchísimo)"
-   },
-   {
-    "e": "⬜",
-    "o": "<code>Volcado_Buque</code>",
-    "n": "Volcado de Registros del Buque",
-    "m": "paper",
-    "d": "terminal del buque VOSTOK · tira de impresora de matriz con agujeritos"
-   }
-  ]
- },
- {
   "t": "⬜ Trofeos de bicho (botín del bestiario)",
   "sub": "Lo que sueltan los bichos y el jugador guarda. Son la \"prueba\" de haber matado algo, así que se merecen cara.",
   "items": [
-   {
-    "e": "⬜",
-    "o": "<code>Diente de Barbahueso</code>",
-    "n": "Diente de Barbahueso",
-    "m": "bone",
-    "d": "<b>drop del jefe de la Mina</b> (quest de Pizarrica) · colmillo amarillento con una funda de oro"
-   },
    {
     "e": "⬜",
     "o": "<code>ColaDeRata</code>",
@@ -459,8 +355,22 @@ const G = [
  },
  {
   "t": "✅ Ya texturizados (referencia — NO rehacer)",
-  "sub": "25 sprites puestos en los namespaces <code>objetos:</code> / <code>documentos:</code> (los CMD están en <code>items-registro.md</code>).",
+  "sub": "39 sprites puestos en los namespaces <code>objetos:</code> / <code>documentos:</code> (los CMD están en <code>items-registro.md</code>). Están aquí solo para que <b>no se vuelvan a encargar</b>; ya no cuentan como pendientes.",
   "items": [
+   {
+    "e": "✅",
+    "o": "<b>los 13 papeles de misión</b>",
+    "n": "Expediente 27-B · Permiso sellado · Nota de Paralización · Comanda del Chef · Informe Geológico · Dossier Pan de Gamba · Hoja en Blanco · Papel de Jarvard (+curado) · Título de Jarvard · Manifiesto de Carga · Cubertería de los Domingos · Volcado del Buque",
+    "m": "paper + CMD",
+    "d": "<b>dibujados a pixel</b> con <code>texturas/gen_sprite.py</code> e instalados con <code>instalar_sprites.py</code> (CMD <b>10264-10276</b>). Cada uno con silueta propia. PNG en <code>texturas/sprites/</code>"
+   },
+   {
+    "e": "✅",
+    "o": "<b>Diente de Barbahueso</b>",
+    "n": "Diente de Barbahueso",
+    "m": "bone + CMD",
+    "d": "ídem (CMD <b>10001</b>, abre la sección BONE del cache). Drop del jefe de la Mina"
+   },
    {
     "e": "✅",
     "o": "los 6 papeles de la 1ª tanda",
@@ -547,7 +457,7 @@ const G = [
   ]
  }
 ];
-const FALTAN = 42, ITEMS = 147;
+const FALTAN = 28, ITEMS = 133;
 
 function TH(){const r=document.documentElement;
   const cur=r.dataset.theme||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');
