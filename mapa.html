@@ -114,6 +114,7 @@
     <button class="btn" onclick="ER6.theme()">🌓 Tema</button>
     <a class="btn" href="bestiario.html">🐺 Bestiario</a>
     <a class="btn" href="taller.html">🛠️ El Taller</a>
+    <a class="btn" href="sprites.html">🎨 Items sin sprite</a>
     <a class="btn arc" href="https://duleelhorror.github.io/elreino6-guia/">← Guía</a>
   </div>
 </div>
@@ -4465,6 +4466,9 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
     {id:'arreglo', label:'🟡 El Arreglo', npc:'Payasito Tristo · La Lola', faction:'secret', type:'Saga SECRETA · 8 misiones + 3 finales', coins:1, status:'new',
       steps:['1) El Hilo Que Aguanta → tráele 3 cuerdas al payaso del altillo del establo','2) Un Recado Para Arriba → súbele un recado a La Lola, al túnel del camino de ronda. 🔴 SOLO está de NOCHE','3) Lo Que Costaba → baja a la Botica, habla con la Alquimista y llévale el frasco','4) El Otro Zapato → te la da ELLA (de noche): busca su zapato en el Puerto y devuélveselo','5) La Cuenta → al Ayuntamiento, pídele al Registrador el asiento de aquellos años','6) Cuenta Hasta Cien → quédate QUIETO con ella 55 segundos mientras te cuenta lo único que recuerda entero. Si te alejas, se corta. Luego bajas a contárselo a él','7) Lo Que Hay Puesto → sube a arreglarle el farol del túnel, y mira bien qué más hay puesto ahí','8) El Que Vino Una Vez → pregunta al Padre Elías qué se le había perdido a él en ese altillo','FINAL → hay tres maneras de acabar esto y solo puedes elegir una. Una de ellas es no volver'],
       desc:'No sale en el Directorio, no lleva brújula y no te la ofrece nadie: se encuentra andando. Él vive escondido en un altillo y dice que la está arreglando; ella está en un túnel del camino y solo sale de noche. Cada cosa que él te manda buscar encaja un poco peor con lo que cuenta. 🔴 Aviso: es lo más oscuro del server, sin una sola broma.'},
+    {id:'fatima', label:'🟡 Un Pan pa Toítos', npc:'La Fátima', faction:'secret', type:'Misión SECRETA · narrativa (1 misión)', coins:4, status:'new',
+      steps:['1) Un Pan pa Toítos → siéntate a escucharla (es casi toda charla) y tráele 1 PAN. 🔴 SOLO está de NOCHE, en el camino del noreste del Reino'],
+      desc:'No te la ofrece nadie, no sale en el Directorio y no lleva brújula: te la encuentras de noche en el camino. Te para, te sienta en una piedra y te cuenta con un salero considerable la casa que lleva dentro y el papeleo que le debe el Ayuntamiento por ello. No te pide nada más que un pan.'},
     {id:'dedos', label:'🕵️ Los Dedos Largos', npc:'Edelmiro Garrapata', faction:'folk', type:'Saga · 9 misiones (rama del hampa)', coins:45, status:'new', unlocks:'La entrada al Gremio de los Dedos Largos (carta de recomendación)',
       steps:['1) La Demostración → agáchate a su lado y aguanta 11 segundos mientras él abre un candado. Le sale perfecto… hasta que se le escapa un gruñido y despierta a medio pueblo. Entrégale el Acta del Ruido (3🥜)','2) Lección 12 · La Campana → toca la campana de la iglesia 7 veces a plena luz y cuenta cuánta gente sale a mirar. No sale nadie. Vuelve a contárselo (3🥜)','3) Lección 13 · El Desplazamiento → recorre 300 bloques AGACHADO, y por la plaza, que "el que se avergüenza no roba" (3🥜)','4) Lección 17 · La Lana Negra → esquila 3 ovejas negras y entrégale la lana. Te presta tinte: si no las encuentras negras, las haces negras (4🥜)','5) Lección 19 · El Reconocimiento → estudia el Banco por dentro: el mostrador, los cofres, el banco de espera, la puerta del director y una pasarela sobre el barranco que nadie mira. Tráele el informe (5🥜)','6) Lección 21 · La Herramienta que No Lo Es → fabrica 4 ganchos de cuerda trampa. Él dobla los cuatro y solo sobrevive uno: tu ganzúa (4🥜)','7) Lección 24 · El Ensayo → entra en la casa que usa para entrenar y llega al cofre del fondo SIN pisar ninguna alarma. Si pisas una, vuelves a la puerta (8🥜)','8) Lección 25 · La Devolución → vuelve a entrar y deja la cubertería donde estaba. Un ensayo no es un robo (8🥜)','9) La Carta → te escribe una recomendación para el Gremio del Puerto. Tarda once segundos (7🥜)'],
       desc:'El mejor teórico del robo del Reino es también el peor ladrón que ha existido: sabe hacerlo y no puede, porque hace ruido. Tiene un método escrito en once años que nunca ha probado nadie, y te usa a ti para comprobar si funciona.'},
@@ -4493,7 +4497,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
     // futuro (punteadas)
     ['permiso','torre','future'],['torre','invasion','future'],['clase','sabio','future'],
     // en camino (2026-07-16), colgadas del nodo más lógico
-    ['nando','dedos'],['dedos','gremio','future'],['gremio','caza','future'],['mercado','lonja','future'],
+    ['contrato','fatima'],['nando','dedos'],['dedos','gremio','future'],['gremio','caza','future'],['mercado','lonja','future'],
     ['banco','bodas','future'],['tablon','cosmeticos','future'],['pecio','pesca','future'],
   ];
 

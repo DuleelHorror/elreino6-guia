@@ -1,0 +1,570 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>El Reino 6 — Items sin sprite</title>
+<style>
+  :root{
+    --ground:#f3f1f8; --surface:#ffffff; --surface-2:#ece8f5; --sunken:#f7f5fb;
+    --ink:#1e1828; --ink-soft:#585070; --ink-faint:#877e9d;
+    --line:#e1dcef; --line-strong:#ccc4e0;
+    --arcane:#6b46d0; --arcane-2:#8a63ea; --glow:rgba(120,80,240,.16);
+    --gold:#a9701d; --sci:#177f86; --folk:#4a8f2f; --danger:#c1443b; --key:#d98a12;
+    --chip:#f1edfa; --suggest:#c43d86;
+    --shadow:0 1px 2px rgba(40,25,70,.05), 0 10px 34px rgba(70,45,120,.12);
+  }
+  @media (prefers-color-scheme:dark){:root{
+    --ground:#131019; --surface:#1c1730; --surface-2:#271f3d; --sunken:#171223;
+    --ink:#ede9f8; --ink-soft:#b6accd; --ink-faint:#8b81a6;
+    --line:#302846; --line-strong:#43385f;
+    --arcane:#9c82ff; --arcane-2:#b7a3ff; --glow:rgba(140,105,255,.26);
+    --gold:#e6b25a; --sci:#4ac9d0; --folk:#87cc62; --danger:#ec7d75; --key:#ffce6b;
+    --chip:#241d3a; --suggest:#ff86c9; --shadow:0 1px 2px rgba(0,0,0,.45), 0 16px 44px rgba(0,0,0,.4);
+  }}
+  :root[data-theme="light"]{
+    --ground:#f3f1f8; --surface:#ffffff; --surface-2:#ece8f5; --sunken:#f7f5fb;
+    --ink:#1e1828; --ink-soft:#585070; --ink-faint:#877e9d; --line:#e1dcef; --line-strong:#ccc4e0;
+    --arcane:#6b46d0; --arcane-2:#8a63ea; --gold:#a9701d; --danger:#c1443b; --key:#d98a12;
+    --chip:#f1edfa; --suggest:#c43d86; --sunken:#f7f5fb;
+    --shadow:0 1px 2px rgba(40,25,70,.05), 0 10px 34px rgba(70,45,120,.12);
+  }
+  :root[data-theme="dark"]{
+    --ground:#131019; --surface:#1c1730; --surface-2:#271f3d; --sunken:#171223;
+    --ink:#ede9f8; --ink-soft:#b6accd; --ink-faint:#8b81a6; --line:#302846; --line-strong:#43385f;
+    --arcane:#9c82ff; --arcane-2:#b7a3ff; --gold:#e6b25a; --danger:#ec7d75; --key:#ffce6b;
+    --chip:#241d3a; --suggest:#ff86c9;
+    --shadow:0 1px 2px rgba(0,0,0,.45), 0 16px 44px rgba(0,0,0,.4);
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--ground);color:var(--ink);
+    font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.5}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 18px 70px}
+
+  .topbar{position:sticky;top:0;z-index:9;display:flex;align-items:center;gap:14px;flex-wrap:wrap;
+    padding:10px 18px;border-bottom:1px solid var(--line);
+    background:color-mix(in srgb,var(--ground) 92%,transparent);backdrop-filter:blur(8px)}
+  .brand{font-family:ui-serif,Palatino,Georgia,serif;font-size:1.05rem;display:flex;align-items:center;gap:.4em;white-space:nowrap}
+  .brand .t{color:var(--arcane)}
+  .tb-r{margin-left:auto;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+  .btn{background:var(--surface);border:1px solid var(--line);color:var(--ink-soft);
+    border-radius:9px;padding:7px 12px;font-weight:700;font-size:.82rem;cursor:pointer;text-decoration:none;white-space:nowrap}
+  .btn:hover{color:var(--ink);border-color:var(--line-strong)}
+  .btn.arc{background:var(--arcane);color:#fff;border-color:transparent}
+
+  .hero{padding:30px 0 6px}
+  .hero h1{font-family:ui-serif,Palatino,Georgia,serif;font-size:2.1rem;margin:0 0 .25em;line-height:1.1}
+  .hero p{color:var(--ink-soft);margin:0 0 8px;max-width:76ch}
+  .big{display:flex;gap:12px;flex-wrap:wrap;margin:18px 0 6px}
+  .stat{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px 16px;
+    box-shadow:var(--shadow);min-width:150px}
+  .stat .n{font-family:ui-serif,Palatino,serif;font-size:1.9rem;line-height:1;color:var(--arcane)}
+  .stat .l{color:var(--ink-faint);font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;margin-top:4px}
+
+  .box{background:var(--sunken);border:1px solid var(--line);border-left:4px solid var(--gold);
+    border-radius:12px;padding:13px 16px;margin:20px 0 6px}
+  .box h3{margin:0 0 6px;font-size:.95rem}
+  .box p{margin:0 0 5px;color:var(--ink-soft);font-size:.88rem}
+  .box code{background:var(--chip);border-radius:5px;padding:1px 5px;font-size:.85em}
+
+  h2.sec{font-family:ui-serif,Palatino,serif;font-size:1.35rem;margin:36px 0 2px}
+  .sec-sub{color:var(--ink-soft);font-size:.89rem;margin:0 0 14px;max-width:80ch}
+  .tw{overflow-x:auto;background:var(--surface);border:1px solid var(--line);
+    border-radius:14px;box-shadow:var(--shadow)}
+  table{border-collapse:collapse;width:100%;min-width:680px;font-size:.87rem}
+  th{text-align:left;font-size:.72rem;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-faint);
+    padding:10px 12px;border-bottom:1px solid var(--line);white-space:nowrap}
+  td{padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+  tr:last-child td{border-bottom:none}
+  td.e{text-align:center;font-size:1.05rem;width:1%}
+  td.o code{background:var(--chip);border-radius:5px;padding:1px 5px}
+  td.n{font-weight:700}
+  td.m{color:var(--ink-faint);font-family:ui-monospace,Consolas,monospace;font-size:.8rem;white-space:nowrap}
+  td.d{color:var(--ink-soft)}
+  td.d b{color:var(--gold)}
+  footer{margin-top:46px;padding-top:18px;border-top:1px solid var(--line);color:var(--ink-faint);font-size:.82rem}
+  @media(max-width:560px){.hero h1{font-size:1.6rem}}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand"><span class="t">🎨</span> El Reino <b>6</b> · Items sin sprite</div>
+  <div class="tb-r">
+    <button class="btn" onclick="TH()">🌓 Tema</button>
+    <a class="btn" href="mapa.html">🗺️ Mapa de misiones</a>
+    <a class="btn" href="taller.html">🛠️ El Taller</a>
+    <a class="btn arc" href="https://duleelhorror.github.io/elreino6-guia/">← Guía</a>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="hero">
+    <h1>Items que les falta sprite</h1>
+    <p>Objetos <b>propios</b> del Reino —de misión, de botín o del MMO— que hoy se ven como un ítem de
+      Minecraft cualquiera. Esta es la lista de lo que hay que dibujar, en orden de urgencia.</p>
+    <p>La urgencia no es que sean feos: es que <b>varios objetos distintos se ven idénticos</b> y el jugador
+      no sabe cuál lleva en la mano.</p>
+    <div class="big" id="stats"></div>
+  </div>
+
+  <div class="box">
+    <h3>📥 Cómo se manda un sprite</h3>
+    <p>Un <b>PNG con fondo transparente</b>. Si lo mandas grande no importa: se reescala solo a 16×16 con
+      <code>texturas/a_16.py</code> (y si viene con fondo blanco, lo limpia <code>texturas/quitar_fondo.py</code>).</p>
+    <p>Del resto me encargo yo: meterlo en ItemsAdder, asignarle su número de modelo, reconstruir el pack y
+      subirlo. Lo único que hace falta después es <b>reiniciar</b> el server.</p>
+    <p style="color:var(--ink-faint)">Un sprite por familia ya arregla mucho: los 108 accesorios se quedan
+      decentes con <b>10 dibujos</b>, uno por tipo.</p>
+  </div>
+
+  <div id="board"></div>
+
+  <footer>
+    El Reino 6 · Esta página se <b>genera</b> de las tablas de <code>TEXTURAS-TODO.md</code>
+    (<code>python web/build_sprites.py</code>): esa es la única lista, no hay otra que se desincronice.
+    Estado auditado contra el servidor de verdad. Las <b>skins de bichos</b> van por otro sitio.
+  </footer>
+</div>
+
+<script>
+const G = [
+ {
+  "t": "⬜ Papeles de misión que se confunden entre sí — 🥇 MÁXIMA PRIORIDAD",
+  "sub": "*Trece objetos distintos que son <b>todos un papel</b>: en el inventario son idénticos y el jugador no sabe cuál",
+  "items": [
+   {
+    "e": "⬜",
+    "o": "<code>Expediente_Obra</code>",
+    "n": "Expediente de Obra 27-B",
+    "m": "paper",
+    "d": "Vía Crucis: el papel que viaja por las ventanillas · carpeta de anillas con pestañas y sellos encima"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>Permiso_Sellado</code>",
+    "n": "PERMISO DE OBRA (SELLADO)",
+    "m": "paper",
+    "d": "el premio del Vía Crucis · el mismo papel pero con un tampón rojo enorme y torcido"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>Nota_Paralizacion</code>",
+    "n": "Nota de Paralización",
+    "m": "paper",
+    "d": "la nota falsa del Ministro · papelito clavado con chincheta, letra a máquina"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>Comanda_Chef</code>",
+    "n": "Comanda del Chef",
+    "m": "paper",
+    "d": "soplo del Chef Calderón (Op. Carpincho) · comanda de bar con pinza y manchas de grasa"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>Informe_Geologico</code>",
+    "n": "Informe Geológico REAL",
+    "m": "paper",
+    "d": "Op. Carpincho · informe técnico con un gráfico y un \"CONFIDENCIAL\""
+   },
+   {
+    "e": "⬜",
+    "o": "<code>Dossier_Gamba</code>",
+    "n": "Dossier Pan de Gamba",
+    "m": "paper",
+    "d": "la prueba del pelotazo · dossier comercial con un render cutre de apartamentos"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>Hoja_Blanco</code>",
+    "n": "Hoja en Blanco",
+    "m": "paper",
+    "d": "saga Jarvard, entra en la máquina · folio impecable, en blanco de verdad"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>Papel_Jarvard</code>",
+    "n": "Papel de Jarvard",
+    "m": "paper",
+    "d": "saga Jarvard, recién salido · folio con orla a medio imprimir"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>Papel_Jarvard_Curado</code>",
+    "n": "Papel de Jarvard (curado)",
+    "m": "paper",
+    "d": "saga Jarvard, tras el frío · el mismo con escarcha en los bordes"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>Titulo_Jarvard</code>",
+    "n": "Título de Jarvard (firmado)",
+    "m": "paper",
+    "d": "el título falso · diploma con orla, lazo y una firma pretenciosa"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>Manifiesto_Carga</code>",
+    "n": "Copia del Manifiesto de Carga",
+    "m": "paper",
+    "d": "saga VOSTOK · albarán de puerto con casillas y un sello de aduana"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>Cuberteria_Domingos</code>",
+    "n": "La Cubertería de los Domingos",
+    "m": "paper",
+    "d": "saga de los Dedos Largos: lo que robas y devuelves · <b>cubertería de plata liada en un paño</b> (hoy es un papel, canta muchísimo)"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>Volcado_Buque</code>",
+    "n": "Volcado de Registros del Buque",
+    "m": "paper",
+    "d": "terminal del buque VOSTOK · tira de impresora de matriz con agujeritos"
+   }
+  ]
+ },
+ {
+  "t": "⬜ Trofeos de bicho (botín del bestiario)",
+  "sub": "<i>Lo que sueltan los bichos y el jugador guarda. Son la \"prueba\" de haber matado algo, así que se merecen cara.</i>",
+  "items": [
+   {
+    "e": "⬜",
+    "o": "<code>Diente de Barbahueso</code>",
+    "n": "Diente de Barbahueso",
+    "m": "bone",
+    "d": "<b>drop del jefe de la Mina</b> (quest de Pizarrica) · colmillo amarillento con una funda de oro"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>ColaDeRata</code>",
+    "n": "Cola de rata",
+    "m": "string",
+    "d": "el Ratero · cola pelada y rosa"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>GlandulaVeneno</code>",
+    "n": "Glándula de veneno",
+    "m": "fermented_spider_eye",
+    "d": "bichos venenosos · saco translúcido verdoso"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>PelloDeYeti</code>",
+    "n": "Pelo de yeti",
+    "m": "white_wool",
+    "d": "el Yeti · mechón de pelo blanco helado"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>NucleoFundido</code>",
+    "n": "Núcleo fundido",
+    "m": "magma_cream",
+    "d": "Guardián del Debris · esfera al rojo con grietas"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>CaparazonCuca</code>",
+    "n": "Caparazón de cuca",
+    "m": "turtle_scute",
+    "d": "la Cuca · placa quitinosa marrón"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>CuernoUnicornio</code>",
+    "n": "Cuerno de Unicornio",
+    "m": "goat_horn",
+    "d": "el unicornio · cuerno en espiral nacarado"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>EsquirlaZumbante</code>",
+    "n": "Esquirla zumbante",
+    "m": "amethyst_shard",
+    "d": "ligado a la Torre · esquirla negra que vibra"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>MacheteBandolero</code>",
+    "n": "Machete del cabecilla",
+    "m": "iron_sword",
+    "d": "El Cabecilla · machete mellado con cinta en el mango"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>BolsaBandolero</code>",
+    "n": "Bolsa del bandolero",
+    "m": "leather",
+    "d": "los Bandoleros · talego de tela con cordón"
+   }
+  ]
+ },
+ {
+  "t": "⬜ Armas que LLEVAN los mobs en la mano (se ven de lejos)",
+  "sub": "<i>No las usa el jugador, pero se ven en la mano del bicho todo el combate.</i>",
+  "items": [
+   {
+    "e": "⬜",
+    "o": "<code>SablePirata</code>",
+    "n": "Sable Pirata",
+    "m": "iron_sword",
+    "d": "tripulación de la Mina · sable curvo con guarda de cesta"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>HachaPirata</code>",
+    "n": "Hacha de Abordaje",
+    "m": "iron_axe",
+    "d": "ídem · hacha corta de abordaje"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>BallestaPirata</code>",
+    "n": "Ballesta Pirata",
+    "m": "crossbow",
+    "d": "ídem · ballesta de madera atada con cuerda"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>PicoInfectado</code>",
+    "n": "Pico Colonizado",
+    "m": "iron_pickaxe",
+    "d": "infectados de la Cantera · pico comido por el sculk"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>MazoDeCantera</code>",
+    "n": "Maza de Barrenista",
+    "m": "iron_axe",
+    "d": "ídem · maza de obra con la cabeza abollada"
+   }
+  ]
+ },
+ {
+  "t": "⬜ Accesorios del MMO — 108 items y <b>ni uno</b> con sprite",
+  "sub": "*Los que pediste. Cada familia usa un material distinto, así que <b>se distinguen entre familias</b>… pero",
+  "items": [
+   {
+    "e": "⬜",
+    "o": "<code>anillo</code> ×12",
+    "n": "Anillo de la Suerte / Sortija de Chiripa…",
+    "m": "gold_nugget",
+    "d": "saga de accesorios de Lolo · anillo de oro con una piedrecita"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>guantes</code> ×12",
+    "n": "Guantes del Minero / Manoplas del Obrero…",
+    "m": "rabbit_hide",
+    "d": "ídem · guantes de trabajo remendados"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>amuleto</code> ×12",
+    "n": "Amuleto Arcano / Colgante del Mago…",
+    "m": "amethyst_shard",
+    "d": "ídem · amuleto colgando de un cordel"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>brazalete</code> ×12",
+    "n": "Brazalete Ágil / Pulsera del Duelista…",
+    "m": "copper_ingot",
+    "d": "ídem · brazalete de cobre con remaches"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>capa</code> ×12",
+    "n": "Capa del Viajero / Manto del Viento…",
+    "m": "phantom_membrane",
+    "d": "ídem · capa doblada con broche"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>cinturon</code> ×12",
+    "n": "Cinturón del Obrero / Faja Reforzada…",
+    "m": "leather",
+    "d": "ídem · cinturón de cuero con hebilla grande"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>dije</code> ×12",
+    "n": "Dije de la Suerte / Amuleto de Bolsillo…",
+    "m": "echo_shard",
+    "d": "ídem · dije pequeño de plata"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>insignia</code> ×12",
+    "n": "Insignia del Ayuntamiento / Chapa del Funcionario…",
+    "m": "name_tag",
+    "d": "ídem · chapa esmaltada con el escudo del Reino"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>pendiente</code> ×12",
+    "n": "Pendiente Arcano / Aro de la Oreja…",
+    "m": "iron_nugget",
+    "d": "ídem · aro con una gema minúscula"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>reliquia</code> ×7",
+    "n": "Reliquia de la Torre / Fragmento del Eco…",
+    "m": "heart_of_the_sea",
+    "d": "premio gordo · esquirla de piedra negra que no refleja la luz"
+   }
+  ]
+ },
+ {
+  "t": "⬜ Objetos sueltos que cantan",
+  "sub": "",
+  "items": [
+   {
+    "e": "⬜",
+    "o": "<code>Tijeras_Prestadas</code>",
+    "n": "Tijeras Prestadas",
+    "m": "shears",
+    "d": "saga de los Dedos (esquilar) · tijeras de esquilar viejas"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>Abrigo_Reino</code>",
+    "n": "Abrigo del Reino",
+    "m": "leather_chestplate",
+    "d": "kit del primer join, <b>protege del frío</b> · abrigo basto de borrego"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>Backrooms_Entrada</code>",
+    "n": "Pared Blanda",
+    "m": "yellow_terracotta",
+    "d": "entrada a las Backrooms · trozo de pared con el papel pintado amarillo"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>Correa_Refugio</code>",
+    "n": "Correa del Refugio",
+    "m": "lead",
+    "d": "abre el menú de mascotas (Nico) · correa de cuero con chapa"
+   }
+  ]
+ },
+ {
+  "t": "✅ Ya texturizados (referencia — NO rehacer)",
+  "sub": "<i>25 sprites puestos en los namespaces <code>objetos:</code> / <code>documentos:</code> (los CMD están en <code>items-registro.md</code>).</i>",
+  "items": [
+   {
+    "e": "✅",
+    "o": "los 6 papeles de la 1ª tanda",
+    "n": "Contrato del Reino · Vale de la Botica · Pase de Archivo · Orden de Reubicación · Sello Grande · Maletín Confiscado",
+    "m": "paper + CMD",
+    "d": "hechos por Pan (CMD 10086-10091)"
+   },
+   {
+    "e": "✅",
+    "o": "los 4 de menú del MMO",
+    "n": "Ficha de Personaje · Grimorio · Diario de Misiones · Mapa de Talentos",
+    "m": "paper + CMD",
+    "d": "CMD 10092-10095"
+   },
+   {
+    "e": "✅",
+    "o": "kits y trofeos",
+    "n": "Medalla del Capincherío · Mechero · Kit de Invernadero · Kit de Laboratorio · Jarra del Bar Co · Delantal",
+    "m": "paper/cuero + CMD",
+    "d": "CMD 10096-10101"
+   },
+   {
+    "e": "✅",
+    "o": "saga geología",
+    "n": "Sismógrafo · Medalla de Geóloga",
+    "m": "paper + CMD",
+    "d": "CMD 10256-10257"
+   },
+   {
+    "e": "✅",
+    "o": "otros",
+    "n": "Carné de Trabajador · Repetidor de Señal · Enchufe del Tablón · Cartilla del Banco · Pañuelo de Horse Luis · Chapa VOSTOK · Carrete sin revelar",
+    "m": "varios + CMD",
+    "d": "CMD 10085, 10258-10263"
+   }
+  ]
+ },
+ {
+  "t": "🚫 Decidido que NO llevan sprite (no volver a proponerlo)",
+  "sub": "",
+  "items": [
+   {
+    "e": "🚫",
+    "o": "<code>Ganzua_Metodo</code>",
+    "n": "La Ganzúa del Método",
+    "m": "tripwire_hook",
+    "d": "<b>a propósito</b>: <i>\"una ganzúa que parece una ganzúa es una confesión firmada\"</i> (lección 21 de Garrapata)"
+   },
+   {
+    "e": "🚫",
+    "o": "<code>Mendrugo_Quinto</code>",
+    "n": "Mendrugo del Quinto",
+    "m": "bread",
+    "d": "es un pan y el chiste es que sea un pan (misión de La Fátima)"
+   },
+   {
+    "e": "🚫",
+    "o": "las 4 cabezas (EI)",
+    "n": "Gragea · Calavera de Barbahueso · 2 demos",
+    "m": "player_head",
+    "d": "ya llevan <b>textura de cabeza</b> (base64): se ven bien"
+   },
+   {
+    "e": "🚫",
+    "o": "<code>Foto de Yaniko</code>",
+    "n": "Foto de Yaniko",
+    "m": "filled_map",
+    "d": "ya <b>es</b> una imagen (ImageFrame)"
+   },
+   {
+    "e": "🚫",
+    "o": "<code>Semillas de cannabis</code>",
+    "n": "Semillas de cannabis",
+    "m": "wheat_seeds",
+    "d": "las pinta SPdrug; y que parezcan semillas normales es parte del chiste"
+   },
+   {
+    "e": "🚫",
+    "o": "admin / pruebas",
+    "n": "Sirena de la Torre · Varita de Prueba · items <code>Prem_<i></code>/<code>Free_</i></code>",
+    "m": "varios",
+    "d": "no los ve un jugador"
+   }
+  ]
+ }
+];
+const FALTAN = 42, ITEMS = 147;
+
+function TH(){const r=document.documentElement;
+  const cur=r.dataset.theme||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');
+  r.dataset.theme=cur==='dark'?'light':'dark';}
+
+document.getElementById('stats').innerHTML =
+  `<div class="stat"><div class="n">${ITEMS}</div><div class="l">items esperando dibujo</div></div>` +
+  `<div class="stat"><div class="n">${FALTAN}</div><div class="l">fichas pendientes</div></div>` +
+  `<div class="stat"><div class="n">${G.length}</div><div class="l">grupos</div></div>`;
+
+document.getElementById('board').innerHTML = G.map(g=>`
+  <h2 class="sec">${g.t}</h2>
+  ${g.sub?`<p class="sec-sub">${g.sub}</p>`:''}
+  <div class="tw"><table>
+    <thead><tr><th></th><th>Objeto</th><th>Nombre in-game</th><th>Se ve hoy como</th>
+      <th>Dónde sale · qué dibujar</th></tr></thead>
+    <tbody>${g.items.map(i=>`<tr>
+      <td class="e">${i.e}</td><td class="o">${i.o}</td><td class="n">${i.n}</td>
+      <td class="m">${i.m}</td><td class="d">${i.d}</td></tr>`).join('')}</tbody>
+  </table></div>`).join('');
+</script>
+
+</body>
+</html>
