@@ -244,53 +244,53 @@ const G = [
   ]
  },
  {
-  "t": "⬜ Accesorios del MMO — 108 items, y <b>ni uno</b> con sprite",
-  "sub": "🔴 <b>OJO, que el \"×12\" NO son 12 sprites</b> (pregunta de Pan, 2026-08-04): el ×12 es cuántos <b>items</b> hay. Cada familia son <b>12 items = 6 rarezas × 2 nombres</b>, y las rarezas son las mismas en todas: <b>COMMON</b> (nivel 1) · <b>UNCOMMON</b> (10) · <b>RARE</b> (20) · <b>EPIC</b> (40) · <b>LEGENDARY</b> (60) · <b>MYTHICAL</b> (80) — el número romano del nombre (I…VI) es justo esa rareza. Los 2 items de una misma rareza pueden <b>compartir sprite</b> sin problema (son solo dos nombres del mismo escalón). Así que hacen falta: <b>10 sprites</b> para el mínimo digno (uno por familia, y los 108 quedan decentes), o <b>58</b> si queréis que la rareza se vea de un vistazo (6 por familia). 🎨 El atajo bueno: <b>un dibujo por familia y recolorearlo por rareza</b> (hierro → cobre → plata → oro → gema → negro que no refleja la luz) — para un artista es un rato, y da los 58. Cada familia usa un material distinto, así que <b>entre familias sí se distinguen</b>; el problema es que <b>los 12 de una familia son idénticos</b>, y una pepita de oro no lee como \"anillo\".",
+  "t": "⬜ Accesorios del MMO — ✅ 9 familias HECHAS (2026-08-05) · solo falta la insignia",
+  "sub": "🎉 <b>El usuario entregó los 54 sprites</b> (9 familias × 6 rarezas) <b>el 2026-08-05</b>, justo como pedía la nota de abajo. Ya están en el server: namespace <b><code>accesorios</code></b> de ItemsAdder, y los <b>115 items</b> de MMOItems llevan su <code>custom-model-data</code>. <b>⬜ Falta solo <code>insignia</code></b> (12 items, sigue con su NAME_TAG). 🔑 <b>Cómo está montado, por si hay que tocarlo</b>: el CMD es <b>por MATERIAL</b> y cada familia usa el suyo, así que las 9 comparten rango — <b>CMD = 10300 + índice de rareza</b> (10300 común … 10305 mítico). Los dos items de una misma rareza <b>comparten sprite</b> (son dos nombres del mismo escalón). Generadores: <code>gen_sprites_accesorios.py</code> (pack + CMD) y <code>gen_accesorios.py</code> (los items). <b>Nada a mano.</b>* 🎽 Y de paso, el <b>GUI</b>: el botón del menú dejó de ser un ENDER_CHEST pelado y <b>los 12 huecos vacíos</b> enseñan ahora el accesorio que va en cada sitio (<code>gen_menu_accesorios.py</code>). 🔴 Eso parecía imposible — MMOInventory no tiene ni una referencia a custom-model-data— hasta ver que delega el icono en <b><code>IconOptions</code> de MythicLib</b>, que sí lo soporta. **Antes de dar por imposible algo de items en la suite MMO, mirar MythicLib.<i>*</i> 🔴 <b>OJO, que el \"×12\" NO son 12 sprites</b> (pregunta de Pan, 2026-08-04): el ×12 es cuántos <b>items</b> hay. Cada familia son <b>12 items = 6 rarezas × 2 nombres</b>: <b>COMMON</b> (nivel 1) · <b>UNCOMMON</b> (10) · <b>RARE</b> (20) · <b>EPIC</b> (40) · <b>LEGENDARY</b> (60) · <b>MYTHICAL</b> (80) — el número romano del nombre (I…VI) es justo esa rareza.",
   "items": [
    {
-    "e": "⬜",
+    "e": "✅",
     "o": "<code>anillo</code> ×12",
     "n": "Anillo de la Suerte I … Aro de la Fortuna 2 VI",
     "m": "gold_nugget",
     "d": "saga de accesorios de Lolo · anillo con una piedrecita · <b>6 rarezas</b>"
    },
    {
-    "e": "⬜",
+    "e": "✅",
     "o": "<code>guantes</code> ×12",
     "n": "Guantes del Minero / Manoplas del Obrero…",
     "m": "rabbit_hide",
     "d": "ídem · guantes de trabajo remendados · <b>6 rarezas</b>"
    },
    {
-    "e": "⬜",
+    "e": "✅",
     "o": "<code>amuleto</code> ×12",
     "n": "Amuleto Arcano / Colgante del Mago…",
     "m": "amethyst_shard",
     "d": "ídem · amuleto colgando de un cordel · <b>6 rarezas</b>"
    },
    {
-    "e": "⬜",
+    "e": "✅",
     "o": "<code>brazalete</code> ×12",
     "n": "Brazalete Ágil / Pulsera del Duelista…",
     "m": "copper_ingot",
     "d": "ídem · brazalete con remaches · <b>6 rarezas</b>"
    },
    {
-    "e": "⬜",
+    "e": "✅",
     "o": "<code>capa</code> ×12",
     "n": "Capa del Viajero / Manto del Viento…",
     "m": "phantom_membrane",
     "d": "ídem · capa doblada con broche · <b>6 rarezas</b>"
    },
    {
-    "e": "⬜",
+    "e": "✅",
     "o": "<code>cinturon</code> ×12",
     "n": "Cinturón del Obrero / Faja Reforzada…",
     "m": "leather",
     "d": "ídem · cinturón con hebilla grande · <b>6 rarezas</b>"
    },
    {
-    "e": "⬜",
+    "e": "✅",
     "o": "<code>dije</code> ×12",
     "n": "Dije de la Suerte / Amuleto de Bolsillo…",
     "m": "echo_shard",
@@ -304,14 +304,14 @@ const G = [
     "d": "ídem · chapa esmaltada con el escudo del Reino · <b>6 rarezas</b>"
    },
    {
-    "e": "⬜",
+    "e": "✅",
     "o": "<code>pendiente</code> ×12",
     "n": "Pendiente Arcano / Aro de la Oreja…",
     "m": "iron_nugget",
     "d": "ídem · aro con una gema minúscula · <b>6 rarezas</b>"
    },
    {
-    "e": "⬜",
+    "e": "✅",
     "o": "<code>reliquia</code> ×7",
     "n": "Reliquia de la Torre / Fragmento del Eco…",
     "m": "heart_of_the_sea",
@@ -457,7 +457,7 @@ const G = [
   ]
  }
 ];
-const FALTAN = 28, ITEMS = 133;
+const FALTAN = 19, ITEMS = 30;
 
 function TH(){const r=document.documentElement;
   const cur=r.dataset.theme||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');
