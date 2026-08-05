@@ -56,6 +56,11 @@
     border-radius:9px;padding:7px 12px;font-weight:700;font-size:.82rem;cursor:pointer;text-decoration:none;white-space:nowrap}
   .btn:hover{color:var(--ink);border-color:var(--line-strong)}
   .btn.arc{background:var(--arcane);color:#fff;border-color:transparent}
+  /* buscador: con 71 nodos, encontrar uno concreto a ojo no es viable */
+  .btn.find{width:190px;font-weight:600;color:var(--ink)}
+  .btn.find::placeholder{color:var(--ink-faint);font-weight:600}
+  .btn.find:focus{outline:none;border-color:var(--arcane);box-shadow:0 0 0 3px var(--glow)}
+  @media(max-width:720px){.btn.find{width:130px}}
 
   #cy{flex:1;width:100%;min-height:0;background:
     radial-gradient(60% 60% at 50% 0%, var(--glow), transparent 70%), var(--ground)}
@@ -109,6 +114,8 @@
     <span class="lg"><span class="sw" style="background:var(--danger);border-color:var(--danger);transform:rotate(45deg)"></span>⛏️ <b>Dungeon (raid)</b></span>
   </div>
   <div class="tb-r">
+    <input class="btn find" id="find" type="search" placeholder="🔎 Buscar misión o NPC…"
+           autocomplete="off" oninput="ER6.find(this.value)" onkeydown="if(event.key==='Enter')ER6.find(this.value,true)">
     <button class="btn" id="propBtn" onclick="ER6.proposal()">✨ Ver propuesta</button>
     <button class="btn" onclick="ER6.fit()">Centrar</button>
     <button class="btn" onclick="ER6.theme()">🌓 Tema</button>
@@ -4497,7 +4504,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
     // futuro (punteadas)
     ['permiso','torre','future'],['torre','invasion','future'],['clase','sabio','future'],
     // en camino (2026-07-16), colgadas del nodo más lógico
-    ['contrato','fatima'],['nando','dedos'],['dedos','gremio','future'],['gremio','caza','future'],['mercado','lonja','future'],
+    ['nando','dedos'],['dedos','gremio','future'],['gremio','caza','future'],['mercado','lonja','future'],
     ['banco','bodas','future'],['tablon','cosmeticos','future'],['pecio','pesca','future'],
   ];
 
@@ -4626,6 +4633,20 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
 
   window.ER6={
     fit:()=>cy.fit(undefined,50),
+    /* Buscar por nombre de misión o de NPC. Nace de un fallo real (2026-08-05): el
+       usuario dio por hecho que la misión de La Fátima "no estaba en el mapa" — sí
+       estaba, pero entre 71 nodos no hay forma humana de dar con una concreta.
+       Resalta las que casan, apaga el resto, y con Enter centra la primera. */
+    find:function(q, centrar){
+      q=(q||'').trim().toLowerCase();
+      cy.elements().removeClass('faded hl');
+      if(q.length<2) return;
+      const hit=cy.nodes().filter(n=>
+        ((n.data('label')||'')+' '+(n.data('npc')||'')+' '+(n.data('type')||'')).toLowerCase().includes(q));
+      if(!hit.length) return;
+      cy.elements().addClass('faded'); hit.removeClass('faded').addClass('hl');
+      if(centrar){ cy.animate({center:{eles:hit[0]}, zoom:1.1}, {duration:320}); }
+    },
     proposal:function(){proposalOn=!proposalOn; const b=document.getElementById('propBtn');
       if(proposalOn){const add=[]; SN.forEach(n=>add.push({data:Object.assign({},n)})); SE.forEach(e=>add.push({data:{id:e[0]+'>'+e[1],source:e[0],target:e[1],kind:e[2]||'main'}})); cy.add(add); if(b){b.classList.add('arc'); b.textContent='✨ Ocultar propuesta';}}
       else{cy.remove(cy.nodes('[status="suggest"]')); if(b){b.classList.remove('arc'); b.textContent='✨ Ver propuesta';}}
