@@ -1,0 +1,1196 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Los Logros de El Reino 6</title>
+<style>
+  /* Paleta y tipografía = las MISMAS de la guía del Reino (web/guia-fuente.html):
+     esta página es una hoja más del mismo sitio, no un diseño aparte. */
+  :root{
+    --ground:#f3f1f8; --surface:#ffffff; --surface-2:#ece8f5; --sunken:#f7f5fb;
+    --ink:#1e1828; --ink-soft:#585070; --ink-faint:#877e9d;
+    --line:#e1dcef; --line-strong:#ccc4e0;
+    --arcane:#6b46d0; --arcane-2:#8a63ea; --glow:rgba(120,80,240,.16);
+    --gold:#a9701d; --gold-2:#c68a2c;
+    --sci:#177f86; --folk:#4a8f2f; --danger:#c1443b;
+    --shadow:0 1px 2px rgba(40,25,70,.05), 0 10px 34px rgba(70,45,120,.09);
+    --chip:#f1edfa;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{
+      --ground:#131019; --surface:#1c1730; --surface-2:#271f3d; --sunken:#171223;
+      --ink:#ede9f8; --ink-soft:#b6accd; --ink-faint:#8b81a6;
+      --line:#302846; --line-strong:#43385f;
+      --arcane:#9c82ff; --arcane-2:#b7a3ff; --glow:rgba(140,105,255,.26);
+      --gold:#e6b25a; --gold-2:#f0c479;
+      --sci:#4ac9d0; --folk:#87cc62; --danger:#ec7d75;
+      --shadow:0 1px 2px rgba(0,0,0,.45), 0 16px 44px rgba(0,0,0,.4);
+      --chip:#241d3a;
+    }
+  }
+  :root[data-theme="light"]{
+    --ground:#f3f1f8; --surface:#ffffff; --surface-2:#ece8f5; --sunken:#f7f5fb;
+    --ink:#1e1828; --ink-soft:#585070; --ink-faint:#877e9d;
+    --line:#e1dcef; --line-strong:#ccc4e0;
+    --arcane:#6b46d0; --arcane-2:#8a63ea; --glow:rgba(120,80,240,.16);
+    --gold:#a9701d; --gold-2:#c68a2c;
+    --sci:#177f86; --folk:#4a8f2f; --danger:#c1443b;
+    --shadow:0 1px 2px rgba(40,25,70,.05), 0 10px 34px rgba(70,45,120,.09);
+    --chip:#f1edfa;
+  }
+  :root[data-theme="dark"]{
+    --ground:#131019; --surface:#1c1730; --surface-2:#271f3d; --sunken:#171223;
+    --ink:#ede9f8; --ink-soft:#b6accd; --ink-faint:#8b81a6;
+    --line:#302846; --line-strong:#43385f;
+    --arcane:#9c82ff; --arcane-2:#b7a3ff; --glow:rgba(140,105,255,.26);
+    --gold:#e6b25a; --gold-2:#f0c479;
+    --sci:#4ac9d0; --folk:#87cc62; --danger:#ec7d75;
+    --shadow:0 1px 2px rgba(0,0,0,.45), 0 16px 44px rgba(0,0,0,.4);
+    --chip:#241d3a;
+  }
+
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--ground);color:var(--ink);
+    font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+    font-size:15.5px;line-height:1.55}
+  .wrap{max-width:1160px;margin:0 auto;padding:30px 18px 72px}
+  h1,h2,h3{font-family:ui-serif,Palatino,Georgia,serif;font-weight:600;text-wrap:balance}
+  a{color:var(--arcane)}
+  code{font-family:ui-monospace,"Cascadia Code",Consolas,monospace;font-size:.86em;
+    background:var(--chip);color:var(--arcane-2);padding:1px 5px;border-radius:5px}
+
+  header.hero{border:1px solid var(--line);border-radius:16px;padding:28px 26px;
+    background:linear-gradient(160deg,var(--surface-2),var(--surface));box-shadow:var(--shadow);}
+  .eyebrow{font-size:12px;letter-spacing:.16em;text-transform:uppercase;font-weight:700;color:var(--arcane)}
+  h1{margin:10px 0 8px;font-size:clamp(27px,4vw,41px);line-height:1.08}
+  .sub{color:var(--ink-soft);max-width:66ch;margin:0}
+  .nums{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
+  .num{background:var(--sunken);border:1px solid var(--line);border-radius:11px;padding:9px 15px;min-width:98px}
+  .num b{display:block;font-size:22px;line-height:1.2;font-variant-numeric:tabular-nums}
+  .num span{color:var(--ink-faint);font-size:11px;text-transform:uppercase;letter-spacing:.08em}
+
+  /* misma barra de botones que el mapa / el taller / el bestiario */
+  .nav{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+  .btn{background:var(--surface);border:1px solid var(--line);color:var(--ink-soft);
+    border-radius:9px;padding:7px 12px;font-weight:700;font-size:.82rem;cursor:pointer;
+    text-decoration:none;white-space:nowrap;font-family:inherit}
+  .btn:hover{color:var(--ink);border-color:var(--line-strong)}
+  .btn.arc{background:var(--arcane);color:#fff;border-color:transparent}
+
+  .nota{border:1px solid var(--line);border-left:3px solid var(--arcane);background:var(--sunken);
+    border-radius:0 11px 11px 0;padding:13px 16px;margin:22px 0 4px;color:var(--ink-soft);font-size:14.5px}
+
+  .tools{display:flex;flex-wrap:wrap;gap:9px;align-items:center;margin:16px 0 4px;
+    position:sticky;top:0;z-index:5;background:var(--ground);padding:12px 0}
+  input[type=search]{flex:1 1 250px;min-width:190px;background:var(--surface);color:var(--ink);
+    border:1px solid var(--line-strong);border-radius:10px;padding:10px 13px;font:inherit}
+  input[type=search]::placeholder{color:var(--ink-faint)}
+  .chip{background:var(--surface);border:1px solid var(--line-strong);color:var(--ink-soft);
+    border-radius:999px;padding:7px 15px;cursor:pointer;font:inherit;font-size:13.5px}
+  .chip:hover{color:var(--ink)}
+  .chip[aria-pressed="true"]{border-color:var(--arcane);color:var(--arcane);background:var(--chip)}
+  :focus-visible{outline:2px solid var(--arcane);outline-offset:2px}
+
+  h2.bloque{font-size:15px;letter-spacing:.02em;color:var(--ink-faint);
+    margin:32px 0 13px;padding-bottom:8px;border-bottom:1px solid var(--line)}
+  h2.bloque .n{font-family:ui-monospace,monospace;font-size:12px;color:var(--gold)}
+  .grid{display:grid;gap:13px;grid-template-columns:repeat(auto-fill,minmax(292px,1fr))}
+
+  .lg{background:var(--surface);border:1px solid var(--line);border-radius:13px;padding:16px 17px;
+    display:flex;flex-direction:column;gap:9px;box-shadow:var(--shadow)}
+  .lg .top{display:flex;align-items:flex-start;gap:10px;justify-content:space-between}
+  .lg h3{margin:0;font-size:17px;line-height:1.24}
+  .lg .desc{color:var(--ink-soft);margin:0;font-size:14.5px}
+  .badge{font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;font-weight:700;
+    border-radius:999px;padding:3px 9px;white-space:nowrap;border:1px solid}
+  .b-task{color:var(--ink-faint);border-color:var(--line-strong)}
+  .b-goal{color:var(--sci);border-color:var(--sci)}
+  .b-challenge{color:var(--gold);border-color:var(--gold)}
+  .b-secret{color:var(--arcane);border-color:var(--arcane)}
+  .como{border-top:1px dashed var(--line-strong);padding-top:10px;margin-top:auto;font-size:14px}
+  .como .k{color:var(--ink-faint);font-size:11px;text-transform:uppercase;letter-spacing:.08em;
+    display:block;margin-bottom:2px}
+  .como .npc{color:var(--folk)}
+  .antes{color:var(--ink-faint);font-size:12.5px;margin-top:5px}
+  .lg.reto{border-color:color-mix(in srgb,var(--gold) 45%,var(--line))}
+  .lg.secreto{border-style:dashed;border-color:color-mix(in srgb,var(--arcane) 45%,var(--line));
+    background:var(--sunken)}
+  .lg.secreto h3{color:var(--arcane);letter-spacing:.14em}
+
+  footer{margin-top:48px;padding-top:18px;border-top:1px solid var(--line);
+    color:var(--ink-faint);font-size:13.5px}
+  .vacio{color:var(--ink-faint);padding:28px 4px}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="hero">
+    <div class="eyebrow">El Reino 6</div>
+    <h1>Los Logros del Reino</h1>
+    <p class="sub">Todo lo que el Reino te reconoce por escrito. Se ven dentro del juego con la
+      tecla <b>L</b>, en la pestaña «El Reino 6», y se van abriendo solos conforme juegas: la
+      pantalla nunca te enseña lo que todavía no te toca.</p>
+    <div class="nums">
+      <div class="num"><b id="n-total">–</b><span>logros</span></div>
+      <div class="num"><b id="n-reto">–</b><span>retos</span></div>
+      <div class="num"><b id="n-sec">–</b><span>secretos</span></div>
+      <div class="num"><b id="n-libre">–</b><span>sin misión</span></div>
+    </div>
+  </header>
+
+  <nav class="nav">
+    <button class="btn" onclick="TH()">🌓 Tema</button>
+    <a class="btn" href="mapa.html">🗺️ Mapa de misiones</a>
+    <a class="btn" href="bestiario.html">🐺 Bestiario</a>
+    <a class="btn" href="taller.html">🛠️ El Taller</a>
+    <a class="btn" href="sprites.html">🎨 Items sin sprite</a>
+    <a class="btn arc" href="https://duleelhorror.github.io/elreino6-guia/">← Guía</a>
+  </nav>
+
+  <p class="nota">Aquí no se destripa nada: los <b>secretos</b> salen tapados a propósito. Existen,
+    cuentan para el total y se encuentran jugando.</p>
+
+  <div class="tools">
+    <input type="search" id="q" placeholder="Buscar logro, misión o personaje…" autocomplete="off">
+    <button class="chip" data-f="all" aria-pressed="true">Todos</button>
+    <button class="chip" data-f="challenge" aria-pressed="false">Retos</button>
+    <button class="chip" data-f="goal" aria-pressed="false">Hitos</button>
+    <button class="chip" data-f="libre" aria-pressed="false">Sin misión</button>
+    <button class="chip" data-f="secreto" aria-pressed="false">Secretos</button>
+  </div>
+
+  <div id="out"></div>
+
+  <footer>
+    Se genera desde <code>mmo-generadores/gen_logros.py</code>: la tabla del generador es la única
+    fuente de verdad y esta página no se edita a mano.
+    · <a href="mapa.html">Mapa de misiones</a>
+    · <a href="index.html">Guía del Reino</a>
+  </footer>
+</div>
+
+<script>
+const L = [
+ {
+  "id": "recluta",
+  "titulo": "El Nuevo Fichaje",
+  "desc": "Un contrato, un casco y ninguna pregunta incómoda.",
+  "marco": "task",
+  "oculto": false,
+  "bloque": "La espina",
+  "quest": "Operación Recluta",
+  "npc": "Toni Tutorial Jr",
+  "comose": "",
+  "antes": null
+ },
+ {
+  "id": "clase",
+  "titulo": "Recursos Humanos",
+  "desc": "Anselmo te miró de arriba abajo y decidió lo que eres.",
+  "marco": "task",
+  "oculto": false,
+  "bloque": "La espina",
+  "quest": "Bautismo de Fuego",
+  "npc": "Anselmo",
+  "comose": "",
+  "antes": "El Nuevo Fichaje"
+ },
+ {
+  "id": "casteo",
+  "titulo": "Apunta y Reza",
+  "desc": "El Semental te enseñó a disparar. Y a otras cosas.",
+  "marco": "task",
+  "oculto": false,
+  "bloque": "La espina",
+  "quest": "Fuego a Discreción",
+  "npc": "Semental de la Flecha",
+  "comose": "",
+  "antes": "Recursos Humanos"
+ },
+ {
+  "id": "escalafon",
+  "titulo": "Plan de Carrera",
+  "desc": "Tu evaluación de desempeño ha salido «adecuada».",
+  "marco": "task",
+  "oculto": false,
+  "bloque": "La espina",
+  "quest": "El Escalafón",
+  "npc": "Anselmo",
+  "comose": "",
+  "antes": "Apunta y Reza"
+ },
+ {
+  "id": "botica",
+  "titulo": "Contacto en la Botica",
+  "desc": "La Alquimista te dio reactivos. Y se comió uno delante de ti.",
+  "marco": "task",
+  "oculto": false,
+  "bloque": "El pueblo",
+  "quest": "Contacto en la Botica",
+  "npc": "La Alquimista",
+  "comose": "",
+  "antes": "Plan de Carrera"
+ },
+ {
+  "id": "alijo",
+  "titulo": "Esto No Ha Pasao",
+  "desc": "Fernando te entregó el alijo con una elegancia impropia de la cueva.",
+  "marco": "task",
+  "oculto": false,
+  "bloque": "El pueblo",
+  "quest": "El Alijo de la Cueva",
+  "npc": "Nando el travieso",
+  "comose": "",
+  "antes": "Contacto en la Botica"
+ },
+ {
+  "id": "huerta",
+  "titulo": "Pulgar Verde",
+  "desc": "Plantaste algo que no era trigo y creció igual.",
+  "marco": "task",
+  "oculto": false,
+  "bloque": "El pueblo",
+  "quest": "Cultivo I: La Siembra",
+  "npc": "La Alquimista",
+  "comose": "",
+  "antes": "Esto No Ha Pasao"
+ },
+ {
+  "id": "secadero",
+  "titulo": "Sombra y Paciencia",
+  "desc": "Secar es esperar mirando. Se te da bien.",
+  "marco": "task",
+  "oculto": false,
+  "bloque": "El pueblo",
+  "quest": "Cultivo II: El Secadero",
+  "npc": "La Alquimista",
+  "comose": "",
+  "antes": "Pulgar Verde"
+ },
+ {
+  "id": "cultivo",
+  "titulo": "Denominación de Origen",
+  "desc": "Plantar, secar, cocer. Nadie pregunta de dónde sale.",
+  "marco": "goal",
+  "oculto": false,
+  "bloque": "El pueblo",
+  "quest": "Cultivo III: El Laboratorio",
+  "npc": "La Alquimista",
+  "comose": "",
+  "antes": "Sombra y Paciencia"
+ },
+ {
+  "id": "permiso",
+  "titulo": "Sellado, Firmado y Traspapelado",
+  "desc": "Seis ventanillas para un permiso que ya estaba concedido.",
+  "marco": "goal",
+  "oculto": false,
+  "bloque": "El pueblo",
+  "quest": "Vía Crucis Administrativa",
+  "npc": "Toni Tutorial Jr",
+  "comose": "",
+  "antes": "Esto No Ha Pasao"
+ },
+ {
+  "id": "gremio",
+  "titulo": "Alta en el Gremio",
+  "desc": "Ya eres mano de obra oficial del Reino. Enhorabuena, supongo.",
+  "marco": "task",
+  "oculto": false,
+  "bloque": "El pueblo",
+  "quest": "Alta en el Gremio",
+  "npc": "Toni Tutorial Jr",
+  "comose": "",
+  "antes": "Sellado, Firmado y Traspapelado"
+ },
+ {
+  "id": "cosecha",
+  "titulo": "Cada Cosa a su Mes",
+  "desc": "Zanahorias y patatas. El Gordi Mamón lo tenía apuntado.",
+  "marco": "task",
+  "oculto": false,
+  "bloque": "El pueblo",
+  "quest": "Cosecha de Temporada",
+  "npc": "Gordi Mamon",
+  "comose": "",
+  "antes": "Alta en el Gremio"
+ },
+ {
+  "id": "estaciones",
+  "titulo": "El Almanaque",
+  "desc": "El Gordi Mamón siempre dice que el tiempo pasa. Y el Gordi Mamón acierta.",
+  "marco": "goal",
+  "oculto": false,
+  "bloque": "El pueblo",
+  "quest": "El Termómetro",
+  "npc": "Gordi Mamon",
+  "comose": "",
+  "antes": "Cada Cosa a su Mes"
+ },
+ {
+  "id": "obra_sitiada",
+  "titulo": "Obra Parada",
+  "desc": "El Ayuntamiento congeló las obras por «riesgo sísmico».",
+  "marco": "task",
+  "oculto": false,
+  "bloque": "Operación carpincho y lo que abre",
+  "quest": "La Obra Sitiada",
+  "npc": "Toni Tutorial Jr",
+  "comose": "",
+  "antes": "El Almanaque"
+ },
+ {
+  "id": "soplo",
+  "titulo": "Fuente Confidencial",
+  "desc": "El Chef Calderón habla mucho mientras cocina esquivando un billar.",
+  "marco": "task",
+  "oculto": false,
+  "bloque": "Operación carpincho y lo que abre",
+  "quest": "Fuente Confidencial",
+  "npc": "Chef Calderón",
+  "comose": "",
+  "antes": "Obra Parada"
+ },
+ {
+  "id": "quema",
+  "titulo": "Quema Controlada",
+  "desc": "Cinco pilas de expedientes. El control fue relativo.",
+  "marco": "task",
+  "oculto": false,
+  "bloque": "Operación carpincho y lo que abre",
+  "quest": "Quema Controlada",
+  "npc": "Toni Tutorial Jr",
+  "comose": "",
+  "antes": "Fuente Confidencial"
+ },
+ {
+  "id": "precintadores",
+  "titulo": "Los Precintadores Precintan",
+  "desc": "Y tú desprecintaste. A mano y sin permiso.",
+  "marco": "goal",
+  "oculto": false,
+  "bloque": "Operación carpincho y lo que abre",
+  "quest": "Asalto a la Mina",
+  "npc": "Toni Tutorial Jr",
+  "comose": "",
+  "antes": "Quema Controlada"
+ },
+ {
+  "id": "carpincho",
+  "titulo": "Poco Pan pero Mucha Gamba",
+  "desc": "El Ministro ha sido trasladado a un Ministerio más grande.",
+  "marco": "challenge",
+  "oculto": false,
+  "bloque": "Operación carpincho y lo que abre",
+  "quest": "Cara a Cara con el Ministro",
+  "npc": "Toni Tutorial Jr",
+  "comose": "",
+  "antes": "Los Precintadores Precintan"
+ },
+ {
+  "id": "caldero",
+  "titulo": "El Caldero",
+  "desc": "Agua, fuego y una fe considerable.",
+  "marco": "task",
+  "oculto": false,
+  "bloque": "Operación carpincho y lo que abre",
+  "quest": "Destilería I: El Caldero",
+  "npc": "Señor Trapo",
+  "comose": "",
+  "antes": "Poco Pan pero Mucha Gamba"
+ },
+ {
+  "id": "alambique",
+  "titulo": "Destilar es de Listos",
+  "desc": "En la bodega de un barco volcado, que es donde se aprende.",
+  "marco": "task",
+  "oculto": false,
+  "bloque": "Operación carpincho y lo que abre",
+  "quest": "Destilería II: El Alambique",
+  "npc": "Señor Trapo",
+  "comose": "",
+  "antes": "El Caldero"
+ },
+ {
+  "id": "barrica",
+  "titulo": "La Madera Manda",
+  "desc": "La barrica decide el sabor. El Señor Trapo decide la barrica.",
+  "marco": "task",
+  "oculto": false,
+  "bloque": "Operación carpincho y lo que abre",
+  "quest": "Destilería III: La Barrica",
+  "npc": "Señor Trapo",
+  "comose": "",
+  "antes": "Destilar es de Listos"
+ },
+ {
+  "id": "naufragio",
+  "titulo": "La Receta del Naufragio",
+  "desc": "Se hundió con el barco. Volvió con el barco.",
+  "marco": "goal",
+  "oculto": false,
+  "bloque": "Operación carpincho y lo que abre",
+  "quest": "Destilería V: La Receta del Naufragio",
+  "npc": "Señor Trapo",
+  "comose": "",
+  "antes": "La Madera Manda"
+ },
+ {
+  "id": "barco",
+  "titulo": "Una Vida y Media",
+  "desc": "El Señor Trapo volcó ese barco él solo. Te lo volverá a contar.",
+  "marco": "challenge",
+  "oculto": false,
+  "bloque": "Operación carpincho y lo que abre",
+  "quest": "La Última Ronda",
+  "npc": "Señor Trapo",
+  "comose": "",
+  "antes": "La Receta del Naufragio"
+ },
+ {
+  "id": "tablon",
+  "titulo": "Doce Voltios",
+  "desc": "El Tablón ya tiene corriente. El resto del Reino, no tanto.",
+  "marco": "task",
+  "oculto": false,
+  "bloque": "Operación carpincho y lo que abre",
+  "quest": "Doce Voltios",
+  "npc": "Toni Tutorial Jr",
+  "comose": "",
+  "antes": "Destilar es de Listos"
+ },
+ {
+  "id": "nomina",
+  "titulo": "Alta en el Sistema",
+  "desc": "A partir de hoy existes para el Banco. Enhorabuena, supongo.",
+  "marco": "task",
+  "oculto": false,
+  "bloque": "Operación carpincho y lo que abre",
+  "quest": "Alta en el Sistema",
+  "npc": "Toni Tutorial Jr",
+  "comose": "",
+  "antes": "Doce Voltios"
+ },
+ {
+  "id": "banco",
+  "titulo": "Diecisiete Comisiones",
+  "desc": "Abriste una cuenta. Ahora tienes menos Cacahuates que antes de abrirla.",
+  "marco": "goal",
+  "oculto": false,
+  "bloque": "Operación carpincho y lo que abre",
+  "quest": "Capital Inicial",
+  "npc": "Yael Goldstein",
+  "comose": "",
+  "antes": "Alta en el Sistema"
+ },
+ {
+  "id": "muestras",
+  "titulo": "Piedras en Bolsitas",
+  "desc": "Así empieza toda la ciencia y así acaba media.",
+  "marco": "task",
+  "oculto": false,
+  "bloque": "La ciencia y la piedra",
+  "quest": "El Pulso de la Piedra I: Superficie",
+  "npc": "Dra. Pizarrica",
+  "comose": "",
+  "antes": "Poco Pan pero Mucha Gamba"
+ },
+ {
+  "id": "temblor",
+  "titulo": "Cuanto Más Hondo, Más Fuerte",
+  "desc": "El sismógrafo no miente. Pizarrica preferiría que mintiese.",
+  "marco": "task",
+  "oculto": false,
+  "bloque": "La ciencia y la piedra",
+  "quest": "El Pulso de la Piedra II: El Temblor",
+  "npc": "Dra. Pizarrica",
+  "comose": "",
+  "antes": "Piedras en Bolsitas"
+ },
+ {
+  "id": "geologia",
+  "titulo": "El Pulso de la Piedra",
+  "desc": "La Doctora Pizarrica odia personalmente cada roca de tu catálogo.",
+  "marco": "goal",
+  "oculto": false,
+  "bloque": "La ciencia y la piedra",
+  "quest": "El Pulso de la Piedra III: El Catálogo",
+  "npc": "Dra. Pizarrica",
+  "comose": "",
+  "antes": "Cuanto Más Hondo, Más Fuerte"
+ },
+ {
+  "id": "leyenda",
+  "titulo": "La Mina Maldita",
+  "desc": "Un barco pirata metido en una cueva sin salida al mar.",
+  "marco": "task",
+  "oculto": false,
+  "bloque": "La ciencia y la piedra",
+  "quest": "La Mina Maldita",
+  "npc": "Dra. Pizarrica",
+  "comose": "",
+  "antes": "El Pulso de la Piedra"
+ },
+ {
+  "id": "mina",
+  "titulo": "A Que No Hay Huevos",
+  "desc": "Los piratas dijeron exactamente eso. Siguen ahí abajo.",
+  "marco": "challenge",
+  "oculto": false,
+  "bloque": "La ciencia y la piedra",
+  "quest": "Bajar a la Mina",
+  "npc": "Dra. Pizarrica",
+  "comose": "",
+  "antes": "La Mina Maldita"
+ },
+ {
+  "id": "pasaje",
+  "titulo": "Pasaje al Abismo",
+  "desc": "Hypertes rima hasta cuando te está cobrando.",
+  "marco": "task",
+  "oculto": false,
+  "bloque": "La ciencia y la piedra",
+  "quest": "Pasaje al Abismo",
+  "npc": "Dra. Pizarrica",
+  "comose": "",
+  "antes": "A Que No Hay Huevos"
+ },
+ {
+  "id": "soborno",
+  "titulo": "Gastos de Combustible",
+  "desc": "Treinta y cinco Cacahuates que ese helicóptero no ha gastado.",
+  "marco": "task",
+  "oculto": false,
+  "bloque": "La ciencia y la piedra",
+  "quest": "Gastos de Combustible",
+  "npc": null,
+  "comose": "",
+  "antes": "Pasaje al Abismo"
+ },
+ {
+  "id": "descenso",
+  "titulo": "Cuatro Marcas",
+  "desc": "La última no recuerdas haberla puesto.",
+  "marco": "goal",
+  "oculto": false,
+  "bloque": "La ciencia y la piedra",
+  "quest": "El Descenso",
+  "npc": "Dra. Pizarrica",
+  "comose": "",
+  "antes": "Gastos de Combustible"
+ },
+ {
+  "id": "abismo",
+  "titulo": "Mil Bloques Hacia Abajo",
+  "desc": "Alguien te subió. Solo quedan una huella enorme y olor a colonia barata.",
+  "marco": "challenge",
+  "oculto": false,
+  "bloque": "La ciencia y la piedra",
+  "quest": "Quién Me Subió",
+  "npc": "Dra. Pizarrica",
+  "comose": "",
+  "antes": "Cuatro Marcas"
+ },
+ {
+  "id": "cantera",
+  "titulo": "La Cantera Cerrada",
+  "desc": "Aquel turno no fichó la salida.",
+  "marco": "goal",
+  "oculto": false,
+  "bloque": "La ciencia y la piedra",
+  "quest": "La Cantera Cerrada",
+  "npc": "Dra. Pizarrica",
+  "comose": "",
+  "antes": "Mil Bloques Hacia Abajo"
+ },
+ {
+  "id": "saturnino",
+  "titulo": "La Roca que Zumba",
+  "desc": "Radiación equivalente a cuarenta plátanos, según Saturnino.",
+  "marco": "task",
+  "oculto": false,
+  "bloque": "Los nexos",
+  "quest": "La Roca que Zumba",
+  "npc": "Saturnino",
+  "comose": "",
+  "antes": "Diecisiete Comisiones"
+ },
+ {
+  "id": "blackmesa",
+  "titulo": "Sujeto Registrado",
+  "desc": "Te metiste en un colisionador porque un mudo te lo pidió por escrito.",
+  "marco": "goal",
+  "oculto": false,
+  "bloque": "Los nexos",
+  "quest": "Protocolo de Sincronización",
+  "npc": "Gordon Wizman",
+  "comose": "",
+  "antes": "La Roca que Zumba"
+ },
+ {
+  "id": "repetidores",
+  "titulo": "Agachado y Quieto",
+  "desc": "Instalar un repetidor es aguantar sin moverse. Nada más. Nada menos.",
+  "marco": "task",
+  "oculto": false,
+  "bloque": "Los nexos",
+  "quest": "Repetidores de Señal",
+  "npc": "Gordon Wizman",
+  "comose": "",
+  "antes": "Sujeto Registrado"
+ },
+ {
+  "id": "refrigeracion",
+  "titulo": "Refrigeración de Emergencia",
+  "desc": "Nieve para un traje que no se diseñó pensando en el Reino.",
+  "marco": "task",
+  "oculto": false,
+  "bloque": "Los nexos",
+  "quest": "Refrigeración de Emergencia",
+  "npc": "Gordon Wizman",
+  "comose": "",
+  "antes": "Agachado y Quieto"
+ },
+ {
+  "id": "salto",
+  "titulo": "Protocolo de Salto",
+  "desc": "El Nexo falló. Estaba previsto que fallara.",
+  "marco": "task",
+  "oculto": false,
+  "bloque": "Los nexos",
+  "quest": "Protocolo de Salto",
+  "npc": "Gordon Wizman",
+  "comose": "",
+  "antes": "Refrigeración de Emergencia"
+ },
+ {
+  "id": "punto_ciego",
+  "titulo": "Punto Ciego",
+  "desc": "Faltaba un repetidor. Estaba en el campanario, claro.",
+  "marco": "task",
+  "oculto": false,
+  "bloque": "Los nexos",
+  "quest": "Punto Ciego",
+  "npc": "Gordon Wizman",
+  "comose": "",
+  "antes": "Protocolo de Salto"
+ },
+ {
+  "id": "anclaje",
+  "titulo": "La Red de Anclaje",
+  "desc": "Nueve encargos y Gordon no ha dicho ni una palabra.",
+  "marco": "challenge",
+  "oculto": false,
+  "bloque": "Los nexos",
+  "quest": "La Fractura del Nexo",
+  "npc": "Gordon Wizman",
+  "comose": "",
+  "antes": "Punto Ciego"
+ },
+ {
+  "id": "secado",
+  "titulo": "Membrete y Escarcha",
+  "desc": "Un título se cura en el frío. Como el jamón, pero con menos honra.",
+  "marco": "task",
+  "oculto": false,
+  "bloque": "Los nexos",
+  "quest": "Expediente Jarvard II: Membrete y Escarcha",
+  "npc": "Toni Tutorial Jr",
+  "comose": "",
+  "antes": "La Red de Anclaje"
+ },
+ {
+  "id": "jarvard",
+  "titulo": "Titulado por Jarvard",
+  "desc": "Papriko arrugó tu título con ternura y te contrató igual.",
+  "marco": "goal",
+  "oculto": false,
+  "bloque": "Los nexos",
+  "quest": "Expediente Jarvard IV: Reclutado",
+  "npc": "Toni Tutorial Jr",
+  "comose": "",
+  "antes": "Membrete y Escarcha"
+ },
+ {
+  "id": "antena",
+  "titulo": "Silencio en la Frecuencia",
+  "desc": "Las gaviotas han ganado una batalla. No la guerra.",
+  "marco": "task",
+  "oculto": false,
+  "bloque": "Los nexos",
+  "quest": "Silencio en la Frecuencia",
+  "npc": "Dr. Papriko",
+  "comose": "",
+  "antes": "Titulado por Jarvard"
+ },
+ {
+  "id": "buque",
+  "titulo": "Señal Perdida",
+  "desc": "Un buque a oscuras y la carga en ninguna parte.",
+  "marco": "task",
+  "oculto": false,
+  "bloque": "Los nexos",
+  "quest": "Señal Perdida",
+  "npc": "Dr. Papriko",
+  "comose": "",
+  "antes": "Silencio en la Frecuencia"
+ },
+ {
+  "id": "vostok",
+  "titulo": "Nadie Baja de un Barco Vacío",
+  "desc": "La terminal seguía dando corriente. Eso ya es una respuesta.",
+  "marco": "goal",
+  "oculto": false,
+  "bloque": "Los nexos",
+  "quest": "La Terminal del Barco",
+  "npc": "Dr. Papriko",
+  "comose": "",
+  "antes": "Señal Perdida"
+ },
+ {
+  "id": "apie",
+  "titulo": "A Pie por el Reino",
+  "desc": "Horse Luis te vio llegar andando y le dio pena.",
+  "marco": "task",
+  "oculto": false,
+  "bloque": "El establo, el refugio y la herrería",
+  "quest": "A Pie por el Reino",
+  "npc": "Toni Tutorial Jr",
+  "comose": "",
+  "antes": "Alta en el Gremio"
+ },
+ {
+  "id": "caballos",
+  "titulo": "Horse Luis Tenía Razón",
+  "desc": "Te quedaste quieto y le escuchaste las tres historias enteras.",
+  "marco": "goal",
+  "oculto": false,
+  "bloque": "El establo, el refugio y la herrería",
+  "quest": "El Galope bajo la Tormenta",
+  "npc": "Horse Luis",
+  "comose": "",
+  "antes": "A Pie por el Reino"
+ },
+ {
+  "id": "donacion",
+  "titulo": "Una Manita pal Refugio",
+  "desc": "Heno y lana. Nico se emocionó igual.",
+  "marco": "task",
+  "oculto": false,
+  "bloque": "El establo, el refugio y la herrería",
+  "quest": "Una Manita pal Refugio",
+  "npc": "Nico",
+  "comose": "",
+  "antes": "Sellado, Firmado y Traspapelado"
+ },
+ {
+  "id": "refugio",
+  "titulo": "No Es Una Tienda",
+  "desc": "Es un refugio. Que no se entere el Ayuntamiento.",
+  "marco": "task",
+  "oculto": false,
+  "bloque": "El establo, el refugio y la herrería",
+  "quest": "Mantas pal Refugio",
+  "npc": "Nico",
+  "comose": "",
+  "antes": "Una Manita pal Refugio"
+ },
+ {
+  "id": "elpuma",
+  "titulo": "El Puma Se Lo Fuma",
+  "desc": "Lo dice él. Cada dos por tres y sin que venga a cuento.",
+  "marco": "task",
+  "oculto": false,
+  "bloque": "El establo, el refugio y la herrería",
+  "quest": "El Gato del Rincón",
+  "npc": "Yaniko",
+  "comose": "",
+  "antes": "No Es Una Tienda"
+ },
+ {
+  "id": "tabaco",
+  "titulo": "Química de Salón",
+  "desc": "Aprendiste el oficio de Yaniko. Y aprendiste a no preguntar.",
+  "marco": "goal",
+  "oculto": false,
+  "bloque": "El establo, el refugio y la herrería",
+  "quest": "La Hermana",
+  "npc": "Nico",
+  "comose": "",
+  "antes": "El Puma Se Lo Fuma"
+ },
+ {
+  "id": "adopcion",
+  "titulo": "Una Emergencia Delicada",
+  "desc": "Nico lloró. Nico llora bastante. Esta vez tocaba.",
+  "marco": "goal",
+  "oculto": false,
+  "bloque": "El establo, el refugio y la herrería",
+  "quest": "Una Emergencia Delicada",
+  "npc": "Nico",
+  "comose": "",
+  "antes": "Química de Salón"
+ },
+ {
+  "id": "forja",
+  "titulo": "El Fundacional",
+  "desc": "Lolo leyó esa palabra en una revista y ya no la ha soltado.",
+  "marco": "task",
+  "oculto": false,
+  "bloque": "El establo, el refugio y la herrería",
+  "quest": "La Fragua del Fundacional",
+  "npc": "Toni Tutorial Jr",
+  "comose": "",
+  "antes": "Alta en el Gremio"
+ },
+ {
+  "id": "anillo",
+  "titulo": "La Primera Pieza",
+  "desc": "Un anillo. Se le nota que no ha hecho muchos.",
+  "marco": "task",
+  "oculto": false,
+  "bloque": "El establo, el refugio y la herrería",
+  "quest": "El Anillo",
+  "npc": "Lolo el Fundacional",
+  "comose": "",
+  "antes": "El Fundacional"
+ },
+ {
+  "id": "capa",
+  "titulo": "Media Docena",
+  "desc": "Seis piezas después, Lolo ya te llama «socio».",
+  "marco": "task",
+  "oculto": false,
+  "bloque": "El establo, el refugio y la herrería",
+  "quest": "La Capa",
+  "npc": "Lolo el Fundacional",
+  "comose": "",
+  "antes": "La Primera Pieza"
+ },
+ {
+  "id": "accesorios",
+  "titulo": "La Obra Maestra",
+  "desc": "Once joyas después, Lolo sigue convencido de que sirve para los clavos.",
+  "marco": "challenge",
+  "oculto": false,
+  "bloque": "El establo, el refugio y la herrería",
+  "quest": "La Obra Maestra",
+  "npc": "Lolo el Fundacional",
+  "comose": "",
+  "antes": "Media Docena"
+ },
+ {
+  "id": "calor",
+  "titulo": "La Prueba del Calor",
+  "desc": "Cuarenta hornos abiertos, porque un maestro COMPRUEBA.",
+  "marco": "task",
+  "oculto": false,
+  "bloque": "El establo, el refugio y la herrería",
+  "quest": "El Aprendiz al Revés · La Prueba del Calor",
+  "npc": "Lolo el Fundacional",
+  "comose": "",
+  "antes": "El Fundacional"
+ },
+ {
+  "id": "aprendiz",
+  "titulo": "El Aprendiz al Revés",
+  "desc": "Lo hiciste todo mal. Exactamente igual que él en su día.",
+  "marco": "goal",
+  "oculto": false,
+  "bloque": "El establo, el refugio y la herrería",
+  "quest": "El Aprendiz al Revés · La Prueba del Sacrificio",
+  "npc": "Lolo el Fundacional",
+  "comose": "",
+  "antes": "La Prueba del Calor"
+ },
+ {
+  "id": "campana",
+  "titulo": "Lección 12",
+  "desc": "Siete campanadas y no salió nadie. Eso también es un dato.",
+  "marco": "task",
+  "oculto": false,
+  "bloque": "Los dedos largos",
+  "quest": "Lección 12 · La Campana",
+  "npc": "Edelmiro Garrapata",
+  "comose": "",
+  "antes": "Esto No Ha Pasao"
+ },
+ {
+  "id": "lana",
+  "titulo": "Lección 17",
+  "desc": "Nadie echa en falta lo que ya era negro.",
+  "marco": "task",
+  "oculto": false,
+  "bloque": "Los dedos largos",
+  "quest": "Lección 17 · La Lana Negra",
+  "npc": "Edelmiro Garrapata",
+  "comose": "",
+  "antes": "Lección 12"
+ },
+ {
+  "id": "verguenza",
+  "titulo": "Lección 19",
+  "desc": "El Banco no se puede robar. Por vergüenza.",
+  "marco": "task",
+  "oculto": false,
+  "bloque": "Los dedos largos",
+  "quest": "Lección 19 · El Reconocimiento",
+  "npc": "Edelmiro Garrapata",
+  "comose": "",
+  "antes": "Lección 17"
+ },
+ {
+  "id": "ganzua",
+  "titulo": "La Herramienta que No Lo Es",
+  "desc": "Una ganzúa que parece una ganzúa es una confesión firmada.",
+  "marco": "task",
+  "oculto": false,
+  "bloque": "Los dedos largos",
+  "quest": "Lección 21 · La Herramienta que No Lo Es",
+  "npc": "Edelmiro Garrapata",
+  "comose": "",
+  "antes": "Lección 19"
+ },
+ {
+  "id": "devolucion",
+  "titulo": "Lección 25",
+  "desc": "Entraste dos veces: una a llevártelo y otra a devolverlo.",
+  "marco": "goal",
+  "oculto": false,
+  "bloque": "Los dedos largos",
+  "quest": "Lección 25 · La Devolución",
+  "npc": "Edelmiro Garrapata",
+  "comose": "",
+  "antes": "La Herramienta que No Lo Es"
+ },
+ {
+  "id": "dedos",
+  "titulo": "Once Segundos",
+  "desc": "Garrapata respondió por ti. No podía responder por él.",
+  "marco": "challenge",
+  "oculto": false,
+  "bloque": "Los dedos largos",
+  "quest": "Los Dedos Largos · La Carta",
+  "npc": "Edelmiro Garrapata",
+  "comose": "",
+  "antes": "Lección 25"
+ },
+ {
+  "id": "secreto",
+  "titulo": "",
+  "desc": "",
+  "marco": "goal",
+  "oculto": true,
+  "bloque": "Secretas",
+  "quest": null,
+  "npc": null,
+  "comose": "",
+  "antes": null
+ },
+ {
+  "id": "secreto",
+  "titulo": "",
+  "desc": "",
+  "marco": "task",
+  "oculto": true,
+  "bloque": "Secretas",
+  "quest": null,
+  "npc": null,
+  "comose": "",
+  "antes": null
+ },
+ {
+  "id": "secreto",
+  "titulo": "",
+  "desc": "",
+  "marco": "goal",
+  "oculto": true,
+  "bloque": "Secretas",
+  "quest": null,
+  "npc": null,
+  "comose": "",
+  "antes": null
+ },
+ {
+  "id": "secreto",
+  "titulo": "",
+  "desc": "",
+  "marco": "goal",
+  "oculto": true,
+  "bloque": "Secretas",
+  "quest": null,
+  "npc": null,
+  "comose": "",
+  "antes": null
+ },
+ {
+  "id": "secreto",
+  "titulo": "",
+  "desc": "",
+  "marco": "challenge",
+  "oculto": true,
+  "bloque": "Secretas",
+  "quest": null,
+  "npc": null,
+  "comose": "",
+  "antes": null
+ },
+ {
+  "id": "secreto",
+  "titulo": "",
+  "desc": "",
+  "marco": "challenge",
+  "oculto": true,
+  "bloque": "Secretas",
+  "quest": null,
+  "npc": null,
+  "comose": "",
+  "antes": null
+ },
+ {
+  "id": "pecio",
+  "titulo": "El Guardián del Pecio",
+  "desc": "Bajaste a un barco hundido a por un plano. Y volviste.",
+  "marco": "goal",
+  "oculto": false,
+  "bloque": "Sueltas",
+  "quest": "El Guardián del Pecio",
+  "npc": "Semental de la Flecha",
+  "comose": "",
+  "antes": "Alta en el Gremio"
+ },
+ {
+  "id": "pescador",
+  "titulo": "El Bacalao Te Está Mirando",
+  "desc": "Pescaste algo en un reino donde el barquero es un pez.",
+  "marco": "task",
+  "oculto": false,
+  "bloque": "De cosecha propia",
+  "quest": null,
+  "npc": null,
+  "comose": "Pesca cualquier cosa con la caña.",
+  "antes": "El Nuevo Fichaje"
+ },
+ {
+  "id": "dormir",
+  "titulo": "Dormir con Eso Ahí Fuera",
+  "desc": "La Torre zumba de noche. Tú roncas más fuerte.",
+  "marco": "task",
+  "oculto": false,
+  "bloque": "De cosecha propia",
+  "quest": null,
+  "npc": null,
+  "comose": "Duerme una noche entera en una cama.",
+  "antes": "El Nuevo Fichaje"
+ },
+ {
+  "id": "criar",
+  "titulo": "Repoblación",
+  "desc": "Nico se emocionaría. No se lo cuentes, que llora.",
+  "marco": "task",
+  "oculto": false,
+  "bloque": "De cosecha propia",
+  "quest": null,
+  "npc": null,
+  "comose": "Cría un par de animales.",
+  "antes": "El Nuevo Fichaje"
+ },
+ {
+  "id": "encantar",
+  "titulo": "Chapuza Fundacional",
+  "desc": "Encantaste algo sin consultarle a Lolo. Él lo habría hecho peor.",
+  "marco": "task",
+  "oculto": false,
+  "bloque": "De cosecha propia",
+  "quest": null,
+  "npc": null,
+  "comose": "Encanta un objeto en la mesa de encantamientos.",
+  "antes": "El Nuevo Fichaje"
+ },
+ {
+  "id": "podrido",
+  "titulo": "Cena de Becario",
+  "desc": "En el campamento de la Torre se come lo que hay.",
+  "marco": "task",
+  "oculto": false,
+  "bloque": "De cosecha propia",
+  "quest": null,
+  "npc": null,
+  "comose": "Cómete un trozo de carne podrida.",
+  "antes": "El Nuevo Fichaje"
+ }
+];
+const BLOQUES = ["La espina", "El pueblo", "Operación carpincho y lo que abre", "La ciencia y la piedra", "Los nexos", "El establo, el refugio y la herrería", "Los dedos largos", "Secretas", "Sueltas", "De cosecha propia"];
+
+function TH(){const r=document.documentElement;
+  const cur=r.dataset.theme||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');
+  r.dataset.theme=cur==='dark'?'light':'dark';}
+
+const ETIQ = {task:"Paso", goal:"Hito", challenge:"Reto"};
+const out = document.getElementById("out");
+let filtro = "all", txt = "";
+
+function esc(s){ return (s||"").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
+
+function tarjeta(l){
+  const sec = l.oculto;
+  const cls = "lg" + (sec ? " secreto" : (l.marco === "challenge" ? " reto" : ""));
+  const badge = sec ? '<span class="badge b-secret">Secreto</span>'
+                    : `<span class="badge b-${l.marco}">${ETIQ[l.marco]}</span>`;
+  let como;
+  if (sec) {
+    como = '<span class="k">Cómo se consigue</span>Se encuentra jugando. Y ya está.';
+  } else if (l.quest) {
+    como = '<span class="k">Cómo se consigue</span>Completa <b>' + esc(l.quest) + '</b>'
+         + (l.npc ? ' · te la da <span class="npc">' + esc(l.npc) + '</span>' : '');
+  } else {
+    como = '<span class="k">Cómo se consigue</span>' + esc(l.comose);
+  }
+  const antes = l.antes ? `<div class="antes">Antes hace falta: ${esc(l.antes)}</div>` : "";
+  return `<article class="${cls}">
+    <div class="top"><h3>${sec ? "???" : esc(l.titulo)}</h3>${badge}</div>
+    <p class="desc">${sec ? "Secreto." : esc(l.desc)}</p>
+    <div class="como">${como}${antes}</div>
+  </article>`;
+}
+
+function pasa(l){
+  if (filtro === "secreto" && !l.oculto) return false;
+  if (filtro === "libre" && (l.quest || l.oculto)) return false;
+  if ((filtro === "challenge" || filtro === "goal") && (l.marco !== filtro || l.oculto)) return false;
+  if (!txt) return true;
+  if (l.oculto) return false;                       // un secreto no se encuentra buscándolo
+  return (l.titulo + " " + l.desc + " " + (l.quest||"") + " " + (l.npc||"") + " " + (l.comose||""))
+         .toLowerCase().includes(txt);
+}
+
+function pinta(){
+  let html = "";
+  for (const b of BLOQUES){
+    const ls = L.filter(l => l.bloque === b && pasa(l));
+    if (!ls.length) continue;
+    html += `<h2 class="bloque">${esc(b)} <span class="n">${ls.length}</span></h2>
+             <div class="grid">${ls.map(tarjeta).join("")}</div>`;
+  }
+  out.innerHTML = html || '<p class="vacio">Nada por aquí. Prueba con otra búsqueda.</p>';
+}
+
+document.getElementById("q").addEventListener("input", e => {
+  txt = e.target.value.trim().toLowerCase(); pinta();
+});
+document.querySelectorAll(".chip").forEach(c => c.addEventListener("click", () => {
+  document.querySelectorAll(".chip").forEach(o => o.setAttribute("aria-pressed", o === c));
+  filtro = c.dataset.f; pinta();
+}));
+
+document.getElementById("n-total").textContent = L.length;
+document.getElementById("n-reto").textContent  = L.filter(l => l.marco === "challenge" && !l.oculto).length;
+document.getElementById("n-sec").textContent   = L.filter(l => l.oculto).length;
+document.getElementById("n-libre").textContent = L.filter(l => !l.quest && !l.oculto).length;
+pinta();
+</script>
+
+</body>
+</html>
