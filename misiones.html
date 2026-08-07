@@ -1,0 +1,381 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Misiones de El Reino 6 — equilibrio y estadísticas</title>
+<style>
+  /* Paleta y tipografía = las MISMAS de la guía y los logros (web/guia-fuente.html):
+     esta página es una hoja más del mismo sitio, no un diseño aparte.
+     🔴 Es una herramienta de TRABAJO, no una guía de jugador: enseña recompensas,
+     economía y las sagas secretas. No enlazar desde el mapa. */
+  :root{
+    --ground:#f3f1f8; --surface:#ffffff; --surface-2:#ece8f5; --sunken:#f7f5fb;
+    --ink:#1e1828; --ink-soft:#585070; --ink-faint:#877e9d;
+    --line:#e1dcef; --line-strong:#ccc4e0;
+    --arcane:#6b46d0; --arcane-2:#8a63ea; --glow:rgba(120,80,240,.16);
+    --gold:#a9701d; --gold-2:#c68a2c;
+    --sci:#177f86; --folk:#4a8f2f; --danger:#c1443b;
+    --shadow:0 1px 2px rgba(40,25,70,.05), 0 10px 34px rgba(70,45,120,.09);
+    --chip:#f1edfa;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{
+      --ground:#131019; --surface:#1c1730; --surface-2:#271f3d; --sunken:#171223;
+      --ink:#ede9f8; --ink-soft:#b6accd; --ink-faint:#8b81a6;
+      --line:#302846; --line-strong:#43385f;
+      --arcane:#9c82ff; --arcane-2:#b7a3ff; --glow:rgba(140,105,255,.26);
+      --gold:#e6b25a; --gold-2:#f0c479;
+      --sci:#4ac9d0; --folk:#87cc62; --danger:#ec7d75;
+      --shadow:0 1px 2px rgba(0,0,0,.45), 0 16px 44px rgba(0,0,0,.4);
+      --chip:#241d3a;
+    }
+  }
+  :root[data-theme="light"]{
+    --ground:#f3f1f8; --surface:#ffffff; --surface-2:#ece8f5; --sunken:#f7f5fb;
+    --ink:#1e1828; --ink-soft:#585070; --ink-faint:#877e9d;
+    --line:#e1dcef; --line-strong:#ccc4e0;
+    --arcane:#6b46d0; --arcane-2:#8a63ea; --glow:rgba(120,80,240,.16);
+    --gold:#a9701d; --gold-2:#c68a2c;
+    --sci:#177f86; --folk:#4a8f2f; --danger:#c1443b;
+    --shadow:0 1px 2px rgba(40,25,70,.05), 0 10px 34px rgba(70,45,120,.09);
+    --chip:#f1edfa;
+  }
+  :root[data-theme="dark"]{
+    --ground:#131019; --surface:#1c1730; --surface-2:#271f3d; --sunken:#171223;
+    --ink:#ede9f8; --ink-soft:#b6accd; --ink-faint:#8b81a6;
+    --line:#302846; --line-strong:#43385f;
+    --arcane:#9c82ff; --arcane-2:#b7a3ff; --glow:rgba(140,105,255,.26);
+    --gold:#e6b25a; --gold-2:#f0c479;
+    --sci:#4ac9d0; --folk:#87cc62; --danger:#ec7d75;
+    --shadow:0 1px 2px rgba(0,0,0,.45), 0 16px 44px rgba(0,0,0,.4);
+    --chip:#241d3a;
+  }
+
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--ground);color:var(--ink);
+    font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+    font-size:15.5px;line-height:1.55}
+  .wrap{max-width:1180px;margin:0 auto;padding:26px 16px 72px}
+  h1,h2,h3{font-family:ui-serif,Palatino,Georgia,serif;font-weight:600;text-wrap:balance;margin:0}
+  code{font-family:ui-monospace,"Cascadia Code",Consolas,monospace;font-size:.86em;
+    background:var(--chip);color:var(--arcane-2);padding:1px 5px;border-radius:5px}
+  .num{font-variant-numeric:tabular-nums}
+
+  .eyebrow{font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;font-weight:700;
+    color:var(--arcane);margin:0 0 6px}
+  header.hero{border:1px solid var(--line);border-radius:16px;padding:26px 24px;
+    background:linear-gradient(160deg,var(--surface-2),var(--surface));box-shadow:var(--shadow)}
+  header.hero h1{font-size:clamp(24px,4.4vw,33px);line-height:1.12}
+  .aviso{margin-top:16px;border-left:3px solid var(--gold);background:var(--sunken);
+    padding:10px 14px;border-radius:0 10px 10px 0;font-size:13.5px;color:var(--ink-soft)}
+
+  /* el titular: una cifra que justifica la página entera */
+  .titular{display:flex;flex-wrap:wrap;gap:20px;align-items:baseline;margin-top:20px}
+  .cifra{font-size:clamp(46px,10vw,76px);line-height:.9;font-weight:800;color:var(--arcane);
+    font-variant-numeric:tabular-nums;letter-spacing:-.03em}
+  .titular p{margin:0;max-width:46ch;color:var(--ink-soft);font-size:14.5px}
+
+  .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(132px,1fr));gap:10px;margin-top:20px}
+  .kpi{background:var(--sunken);border:1px solid var(--line);border-radius:11px;padding:11px 13px}
+  .kpi b{display:block;font-size:21px;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+  .kpi span{font-size:11.5px;color:var(--ink-faint);text-transform:uppercase;letter-spacing:.07em}
+
+  section{margin-top:38px}
+  section>h2{font-size:22px;margin-bottom:4px}
+  section>.sub{color:var(--ink-soft);font-size:14px;margin:0 0 16px;max-width:72ch}
+
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:14px;
+    padding:18px 18px 14px;box-shadow:var(--shadow)}
+
+  /* ── barras de magnitud: UNA serie, UN tono. Lo no usado va en neutro Y con etiqueta,
+        para que no dependa del color (accesibilidad). ── */
+  .barras{display:flex;flex-direction:column;gap:7px}
+  .fila{display:grid;grid-template-columns:118px 1fr 62px;gap:10px;align-items:center;
+    padding:3px 4px;border-radius:8px}
+  .fila:hover{background:var(--sunken)}
+  .fila .et{font-size:13.5px;color:var(--ink-soft);text-align:right;overflow:hidden;
+    text-overflow:ellipsis;white-space:nowrap}
+  .pista{background:var(--sunken);border-radius:4px;height:17px;position:relative;overflow:hidden}
+  .barra{height:100%;background:var(--arcane);border-radius:0 4px 4px 0;min-width:2px;
+    transition:width .5s cubic-bezier(.2,.8,.3,1)}
+  .fila.cero .barra{background:repeating-linear-gradient(135deg,var(--line-strong) 0 5px,transparent 5px 10px);
+    width:100%!important;opacity:.65;border-radius:4px}
+  .fila.cero .et{color:var(--ink-faint)}
+  .fila .val{font-size:13px;color:var(--ink-soft);font-variant-numeric:tabular-nums}
+  .fila.cero .val{color:var(--danger);font-weight:700;font-size:11.5px;letter-spacing:.04em}
+
+  /* ── controles ── */
+  .controles{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px;align-items:center}
+  select,input[type=search],button.orden{font:inherit;font-size:13.5px;padding:7px 11px;
+    border-radius:9px;border:1px solid var(--line-strong);background:var(--surface);color:var(--ink)}
+  input[type=search]{min-width:190px}
+  button.orden{cursor:pointer}
+  button.orden[aria-pressed=true]{background:var(--arcane);border-color:var(--arcane);color:#fff}
+  :focus-visible{outline:2px solid var(--arcane-2);outline-offset:2px}
+
+  /* ── tabla ── */
+  .tablabox{overflow-x:auto;border:1px solid var(--line);border-radius:14px;background:var(--surface);
+    box-shadow:var(--shadow)}
+  table{border-collapse:collapse;width:100%;font-size:13.7px;min-width:820px}
+  th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+  thead th{position:sticky;top:0;background:var(--surface-2);font-size:11.5px;
+    text-transform:uppercase;letter-spacing:.07em;color:var(--ink-soft);z-index:2;white-space:nowrap}
+  tbody tr:hover{background:var(--sunken)}
+  td.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+  .qid{font-family:ui-monospace,Consolas,monospace;font-size:11.5px;color:var(--ink-faint);
+    display:block;margin-top:2px}
+  .tag{display:inline-block;font-size:11px;padding:1.5px 7px;border-radius:20px;
+    background:var(--chip);color:var(--arcane-2);margin:1px 3px 1px 0;white-space:nowrap}
+  .tag.rep{background:transparent;border:1px solid var(--folk);color:var(--folk)}
+  .tag.sec{background:transparent;border:1px dashed var(--gold);color:var(--gold)}
+  /* la mision pide algo que ella misma NO te da: el numero de al lado se queda corto */
+  .mas{display:block;font-size:10.5px;color:var(--gold);letter-spacing:.03em;
+    font-variant-numeric:normal;cursor:help;margin-top:1px}
+
+  .sagas{display:grid;grid-template-columns:repeat(auto-fill,minmax(268px,1fr));gap:12px}
+  .saga{background:var(--surface);border:1px solid var(--line);border-radius:13px;padding:14px 15px;
+    box-shadow:var(--shadow)}
+  .saga h3{font-size:16px;margin-bottom:2px}
+  .saga .meta{font-size:12.5px;color:var(--ink-faint);margin-bottom:9px}
+  .mix{display:flex;height:9px;border-radius:5px;overflow:hidden;gap:2px;background:var(--sunken)}
+  .mix i{display:block;background:var(--arcane);opacity:.9}
+  .mix i:nth-child(2n){opacity:.62} .mix i:nth-child(3n){opacity:.4}
+  .saga ul{margin:9px 0 0;padding-left:17px;font-size:12.5px;color:var(--ink-soft)}
+
+  .chips{display:flex;flex-wrap:wrap;gap:6px}
+  .chip{background:var(--sunken);border:1px solid var(--line);border-radius:20px;
+    padding:4px 11px;font-size:13px}
+
+  details{border:1px solid var(--line);border-radius:12px;background:var(--surface);
+    padding:12px 15px;margin-top:10px}
+  summary{cursor:pointer;font-weight:600}
+  .formula{font-family:ui-monospace,Consolas,monospace;font-size:12.5px;color:var(--ink-soft);
+    white-space:pre-wrap;margin-top:10px;line-height:1.7}
+  footer{margin-top:44px;padding-top:18px;border-top:1px solid var(--line);
+    font-size:12.5px;color:var(--ink-faint)}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+  @media (max-width:560px){ .fila{grid-template-columns:96px 1fr 54px} }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+<header class="hero">
+  <p class="eyebrow">El Reino 6 · Página de trabajo</p>
+  <h1>Qué misiones tenemos, cuánto duran y qué nos falta por hacer</h1>
+
+  <div class="titular">
+    <div class="cifra" id="pctRecado">—</div>
+    <p>de las misiones son <b>«tráeme algo»</b>. No es culpa de ninguna saga: <code>items-to-deliver</code>
+       es lo primero que uno alcanza y siempre funciona. Esta página existe para que la siguiente
+       misión se elija <b>mirando el reparto</b>, no por inercia.</p>
+  </div>
+
+  <div class="kpis" id="kpis"></div>
+
+  <p class="aviso"><b>Esto no es una guía de jugador.</b> Enseña recompensas, economía y las sagas
+     secretas. No enlazar desde el mapa ni desde la guía. Se genera sola de
+     <code>quests.yml</code>: para actualizarla, <code>python web/build_misiones.py</code>.</p>
+</header>
+
+<section>
+  <h2>Balance de objetivos</h2>
+  <p class="sub">En cuántas misiones aparece cada tipo de objetivo. Lo rayado es lo que
+     <b>PikaMug soporta y no hemos usado nunca</b> — ahí está la variedad que falta.</p>
+  <div class="card"><div class="barras" id="barras"></div></div>
+</section>
+
+<section>
+  <h2>Las misiones</h2>
+  <p class="sub">Una fila por misión. La duración es <b>estimada</b> a partir de su estructura
+     (la fórmula, al final de la página). Pulsa una columna para ordenar.</p>
+  <div class="controles">
+    <select id="fSaga"><option value="">Todas las sagas</option></select>
+    <input type="search" id="fTexto" placeholder="Buscar misión, NPC…" aria-label="Buscar">
+    <button class="orden" id="oDur" aria-pressed="false">Ordenar por duración</button>
+    <span id="cuenta" style="font-size:13px;color:var(--ink-faint)"></span>
+  </div>
+  <div class="tablabox">
+    <table>
+      <thead><tr>
+        <th>Misión</th><th>Saga</th><th>La da</th><th>Objetivos</th>
+        <th class="n">Fases</th><th class="n">Duración</th><th class="n">🥜</th><th class="n">XP</th>
+      </tr></thead>
+      <tbody id="tb"></tbody>
+    </table>
+  </div>
+</section>
+
+<section>
+  <h2>Por saga</h2>
+  <p class="sub">Cuánto pesa cada saga y <b>de qué está hecha</b>. Si la mezcla de una saga es una
+     sola barra, es que repite el mismo objetivo de principio a fin.</p>
+  <div class="sagas" id="sagas"></div>
+</section>
+
+<section>
+  <h2>La cantera: NPCs con lore y sin ninguna misión</h2>
+  <p class="sub">Ya están puestos en el mundo y ya tienen personalidad escrita. Darles una saga
+     cuesta la mitad que inventarse un personaje nuevo.</p>
+  <div class="chips" id="libres"></div>
+</section>
+
+<section>
+  <h2>Lo que podemos construir sin instalar nada</h2>
+  <p class="sub">Sale de <code>.claude/rules/tipos-de-quest.md</code>, que es la fuente. Si añades
+     algo allí, aparece aquí al re-generar.</p>
+  <div class="tablabox">
+    <table><thead><tr id="catCab"></tr></thead><tbody id="cat"></tbody></table>
+  </div>
+</section>
+
+<section>
+  <h2>Cómo se calcula la duración</h2>
+  <p class="sub">Para poder discutirla. Es una <b>estimación</b> de la estructura, no un
+     cronómetro: sirve para comparar misiones entre sí, no para prometer minutos.</p>
+  <details open>
+    <summary>La fórmula</summary>
+    <div class="formula" id="formula"></div>
+  </details>
+  <details id="detFaltan">
+    <summary>Objetos sin afinar en la tabla de esfuerzo</summary>
+    <p class="sub" style="margin:10px 0 0">Entran con el valor por defecto, así que la duración de
+       las misiones que los piden es floja. Se afinan en <code>web/build_misiones.py</code>.</p>
+    <div class="chips" id="faltan" style="margin-top:10px"></div>
+  </details>
+</section>
+
+<footer>
+  Generada de <code>server/plugins/Quests/storage/quests.yml</code> ·
+  <code>python web/build_misiones.py</code> · No se edita a mano.
+</footer>
+</div>
+
+<script>
+const D = {"quests": [{"id": "abismo_01_pasaje", "saga": "abismo", "nombre": "🚁 Pasaje al Abismo", "npc": "Dra. Pizarrica", "fases": 1, "objetivos": ["Hablar"], "seg": 64, "cac": 6, "xp": 10, "llave": false, "logro": true, "repetible": false, "externos": [], "gate": ["mina_02_raid"], "pide": []}, {"id": "abismo_02_soborno", "saga": "abismo", "nombre": "🚁 Gastos de Combustible", "npc": "Hypertes", "fases": 3, "objetivos": ["Entregar"], "seg": 175, "cac": 0, "xp": 30, "llave": false, "logro": true, "repetible": false, "externos": ["Cacahuate"], "gate": ["abismo_01_pasaje"], "pide": ["Cacahuate x12", "Cacahuate x13", "Cacahuate x10"]}, {"id": "abismo_03_descenso", "saga": "abismo", "nombre": "🕳 El Descenso", "npc": "Dra. Pizarrica", "fases": 2, "objetivos": ["Entregar", "Llegar"], "seg": 424, "cac": 50, "xp": 20, "llave": true, "logro": true, "repetible": false, "externos": ["Informe del Descenso"], "gate": ["abismo_02_soborno"], "pide": ["Informe del Descenso x1"]}, {"id": "abismo_04_quien", "saga": "abismo", "nombre": "🕳 Quién Me Subió", "npc": "Dra. Pizarrica", "fases": 1, "objetivos": ["Hablar"], "seg": 64, "cac": 8, "xp": 10, "llave": false, "logro": true, "repetible": false, "externos": [], "gate": ["abismo_03_descenso"], "pide": []}, {"id": "alq_cultivo_1", "saga": "alq_cultivo", "nombre": "Cultivo I: La Siembra", "npc": "La Alquimista", "fases": 1, "objetivos": ["Entregar"], "seg": 5, "cac": 6, "xp": 10, "llave": false, "logro": true, "repetible": false, "externos": ["Materia de cannabis"], "gate": ["nando_alijo"], "pide": ["Materia de cannabis x1"]}, {"id": "alq_cultivo_2", "saga": "alq_cultivo", "nombre": "Cultivo II: El Secadero", "npc": "La Alquimista", "fases": 1, "objetivos": ["Entregar"], "seg": 5, "cac": 8, "xp": 10, "llave": false, "logro": true, "repetible": false, "externos": ["Cannabis seco"], "gate": ["alq_cultivo_1"], "pide": ["Cannabis seco x1"]}, {"id": "alq_cultivo_3", "saga": "alq_cultivo", "nombre": "Cultivo III: El Laboratorio", "npc": "La Alquimista", "fases": 1, "objetivos": ["Entregar"], "seg": 5, "cac": 12, "xp": 10, "llave": true, "logro": true, "repetible": false, "externos": ["Cannabis"], "gate": ["alq_cultivo_2"], "pide": ["Cannabis x1"]}, {"id": "alquimista_intro", "saga": "alquimista_intro", "nombre": "Contacto en la Botica", "npc": "La Alquimista", "fases": 1, "objetivos": ["Entregar"], "seg": 16, "cac": 0, "xp": 10, "llave": false, "logro": true, "repetible": false, "externos": [], "gate": ["talentos_anselmo"], "pide": ["poppy x1", "dandelion x1"]}, {"id": "anclaje_gordon", "saga": "anclaje_gordon", "nombre": "Protocolo de Sincronización", "npc": "Gordon Wizman", "fases": 2, "objetivos": ["Hablar", "Llegar"], "seg": 449, "cac": 12, "xp": 20, "llave": true, "logro": true, "repetible": false, "externos": [], "gate": ["anclaje_saturnino"], "pide": []}, {"id": "anclaje_gordon_02", "saga": "anclaje_gordon", "nombre": "Repetidores de Señal", "npc": "Gordon Wizman", "fases": 1, "objetivos": ["Entregar"], "seg": 5, "cac": 15, "xp": 10, "llave": false, "logro": true, "repetible": false, "externos": ["Informe de Instalación"], "gate": ["anclaje_gordon"], "pide": ["Informe de Instalación x1"]}, {"id": "anclaje_gordon_03", "saga": "anclaje_gordon", "nombre": "Refrigeración de Emergencia", "npc": "Gordon Wizman", "fases": 1, "objetivos": ["Entregar"], "seg": 96, "cac": 10, "xp": 10, "llave": false, "logro": true, "repetible": false, "externos": [], "gate": ["anclaje_gordon_02"], "pide": ["snowball x16"]}, {"id": "anclaje_gordon_04", "saga": "anclaje_gordon", "nombre": "Cobertura desde Black Mesa", "npc": "Gordon Wizman", "fases": 1, "objetivos": ["Entregar"], "seg": 5, "cac": 18, "xp": 10, "llave": false, "logro": false, "repetible": false, "externos": [], "gate": ["anclaje_gordon_03"], "pide": ["Informe de Cobertura x1"]}, {"id": "anclaje_gordon_05", "saga": "anclaje_gordon", "nombre": "Protocolo de Salto", "npc": "Gordon Wizman", "fases": 2, "objetivos": ["Hablar", "Llegar"], "seg": 142, "cac": 12, "xp": 20, "llave": false, "logro": true, "repetible": false, "externos": [], "gate": ["anclaje_gordon_04"], "pide": []}, {"id": "anclaje_gordon_06", "saga": "anclaje_gordon", "nombre": "Punto Ciego", "npc": "Gordon Wizman", "fases": 1, "objetivos": ["Entregar"], "seg": 5, "cac": 15, "xp": 10, "llave": true, "logro": true, "repetible": false, "externos": [], "gate": ["anclaje_gordon_05"], "pide": ["Informe de Enlace x1"]}, {"id": "anclaje_gordon_07", "saga": "anclaje_gordon", "nombre": "La Fractura del Nexo", "npc": "Gordon Wizman", "fases": 3, "objetivos": ["Hablar", "Llegar"], "seg": 505, "cac": 25, "xp": 30, "llave": true, "logro": true, "repetible": false, "externos": [], "gate": ["anclaje_gordon_06"], "pide": []}, {"id": "anclaje_saturnino", "saga": "anclaje_saturnino", "nombre": "La Roca que Zumba", "npc": "Saturnino", "fases": 1, "objetivos": ["Hablar"], "seg": 86, "cac": 6, "xp": 10, "llave": false, "logro": true, "repetible": false, "externos": [], "gate": ["anclaje_toni"], "pide": []}, {"id": "anclaje_toni", "saga": "anclaje_toni", "nombre": "Protocolo de Anclaje", "npc": "Toni Tutorial Jr", "fases": 1, "objetivos": ["Hablar"], "seg": 38, "cac": 0, "xp": 10, "llave": false, "logro": false, "repetible": false, "externos": [], "gate": ["banco_01_cuenta"], "pide": []}, {"id": "arreglo_01_hilo", "saga": "arreglo", "nombre": "El Arreglo · El Hilo Que Aguanta", "npc": "Payasito Tristo", "fases": 1, "objetivos": ["Entregar"], "seg": 60, "cac": 0, "xp": 10, "llave": false, "logro": false, "repetible": false, "externos": [], "gate": ["permiso_obra"], "pide": ["string x3"]}, {"id": "arreglo_02_recado", "saga": "arreglo", "nombre": "El Arreglo · Un Recado Para Arriba", "npc": "Payasito Tristo", "fases": 2, "objetivos": ["Hablar"], "seg": 95, "cac": 0, "xp": 20, "llave": false, "logro": true, "repetible": false, "externos": [], "gate": ["arreglo_01_hilo"], "pide": []}, {"id": "arreglo_03_botica", "saga": "arreglo", "nombre": "El Arreglo · Lo Que Costaba", "npc": "Payasito Tristo", "fases": 2, "objetivos": ["Entregar", "Hablar"], "seg": 154, "cac": 0, "xp": 20, "llave": false, "logro": false, "repetible": false, "externos": [], "gate": ["arreglo_02_recado"], "pide": ["Frasco de la Botica x1"]}, {"id": "arreglo_04_zapato", "saga": "arreglo", "nombre": "El Arreglo · El Otro Zapato", "npc": "La Lola", "fases": 2, "objetivos": ["Entregar", "Llegar"], "seg": 101, "cac": 0, "xp": 20, "llave": false, "logro": false, "repetible": false, "externos": [], "gate": ["arreglo_03_botica"], "pide": ["El Otro Zapato x1"]}, {"id": "arreglo_05_cuenta", "saga": "arreglo", "nombre": "El Arreglo · La Cuenta", "npc": "Payasito Tristo", "fases": 2, "objetivos": ["Entregar", "Hablar"], "seg": 146, "cac": 0, "xp": 20, "llave": false, "logro": false, "repetible": false, "externos": [], "gate": ["arreglo_04_zapato"], "pide": ["Asiento de Ingresos x1"]}, {"id": "arreglo_06_cien", "saga": "arreglo", "nombre": "El Arreglo · Cuenta Hasta Cien", "npc": "La Lola", "fases": 1, "objetivos": ["Entregar"], "seg": 23, "cac": 0, "xp": 10, "llave": false, "logro": true, "repetible": false, "externos": ["Lo Que Contó la Lola"], "gate": ["arreglo_05_cuenta"], "pide": ["Lo Que Contó la Lola x1"]}, {"id": "arreglo_07_farol", "saga": "arreglo", "nombre": "El Arreglo · Lo Que Hay Puesto", "npc": "Payasito Tristo", "fases": 2, "objetivos": ["Entregar", "Llegar"], "seg": 40, "cac": 0, "xp": 20, "llave": false, "logro": false, "repetible": false, "externos": [], "gate": ["arreglo_06_cien"], "pide": ["Farol del Túnel x1"]}, {"id": "arreglo_08_visita", "saga": "arreglo", "nombre": "El Arreglo · El Que Vino Una Vez", "npc": "Payasito Tristo", "fases": 2, "objetivos": ["Hablar"], "seg": 204, "cac": 0, "xp": 20, "llave": false, "logro": true, "repetible": false, "externos": [], "gate": ["arreglo_07_farol"], "pide": []}, {"id": "arreglo_09a_hilo", "saga": "arreglo", "nombre": "El Arreglo · Terminar el Arreglo", "npc": "Payasito Tristo", "fases": 1, "objetivos": ["Entregar"], "seg": 100, "cac": 1, "xp": 10, "llave": false, "logro": true, "repetible": false, "externos": [], "gate": ["arreglo_08_visita"], "pide": ["string x5"]}, {"id": "arreglo_09b_puerta", "saga": "arreglo", "nombre": "El Arreglo · La Puerta Abierta", "npc": "La Lola", "fases": 2, "objetivos": ["Hablar"], "seg": 194, "cac": 0, "xp": 20, "llave": false, "logro": true, "repetible": false, "externos": [], "gate": ["arreglo_08_visita"], "pide": []}, {"id": "banco_00_nomina", "saga": "banco", "nombre": "🏦 Alta en el Sistema", "npc": "Toni Tutorial Jr", "fases": 1, "objetivos": ["Hablar"], "seg": 40, "cac": 0, "xp": 10, "llave": false, "logro": true, "repetible": false, "externos": [], "gate": ["tablon_luz"], "pide": []}, {"id": "banco_01_cuenta", "saga": "banco", "nombre": "🏦 Capital Inicial", "npc": "Yael Goldstein", "fases": 17, "objetivos": ["Entregar"], "seg": 1000, "cac": 0, "xp": 170, "llave": true, "logro": true, "repetible": false, "externos": ["Cacahuate"], "gate": ["banco_00_nomina"], "pide": ["Cacahuate x2", "Cacahuate x3", "Cacahuate x4", "Cacahuate x5", "Cacahuate x6", "Cacahuate x7"]}, {"id": "barco_00_aguas", "saga": "barco", "nombre": "Aguas Turbias", "npc": "Toni Tutorial Jr", "fases": 1, "objetivos": ["Hablar"], "seg": 43, "cac": 2, "xp": 10, "llave": false, "logro": false, "repetible": false, "externos": [], "gate": ["resort_06_careo"], "pide": []}, {"id": "barco_01_caldero", "saga": "barco", "nombre": "Destilería I: El Caldero", "npc": "Señor Trapo", "fases": 1, "objetivos": ["Entregar"], "seg": 5, "cac": 4, "xp": 10, "llave": false, "logro": true, "repetible": false, "externos": ["Mosto del Bar Co"], "gate": ["barco_00_aguas"], "pide": ["Mosto del Bar Co x1"]}, {"id": "barco_02_alambique", "saga": "barco", "nombre": "Destilería II: El Alambique", "npc": "Señor Trapo", "fases": 1, "objetivos": ["Entregar"], "seg": 5, "cac": 5, "xp": 10, "llave": false, "logro": true, "repetible": false, "externos": ["Destilado del Bar Co"], "gate": ["barco_01_caldero"], "pide": ["Destilado del Bar Co x1"]}, {"id": "barco_03_barrica", "saga": "barco", "nombre": "Destilería III: La Barrica", "npc": "Señor Trapo", "fases": 1, "objetivos": ["Entregar"], "seg": 5, "cac": 6, "xp": 10, "llave": false, "logro": true, "repetible": false, "externos": ["Cerveza Añejada del Bar Co"], "gate": ["barco_02_alambique"], "pide": ["Cerveza Añejada del Bar Co x1"]}, {"id": "barco_04_sellado", "saga": "barco", "nombre": "Destilería IV: El Sellado", "npc": "Señor Trapo", "fases": 1, "objetivos": ["Entregar"], "seg": 5, "cac": 6, "xp": 10, "llave": false, "logro": false, "repetible": false, "externos": ["Birra del Bar Co (sellada)"], "gate": ["barco_03_barrica"], "pide": ["Birra del Bar Co (sellada) x1"]}, {"id": "barco_05_naufragio", "saga": "barco", "nombre": "Destilería V: La Receta del Naufragio", "npc": "Señor Trapo", "fases": 1, "objetivos": ["Entregar"], "seg": 5, "cac": 8, "xp": 10, "llave": false, "logro": true, "repetible": false, "externos": [], "gate": ["barco_04_sellado"], "pide": ["Birra del Naufragio x1"]}, {"id": "barco_06_noche", "saga": "barco", "nombre": "La Última Ronda", "npc": "Señor Trapo", "fases": 1, "objetivos": ["Entregar"], "seg": 15, "cac": 15, "xp": 10, "llave": true, "logro": true, "repetible": false, "externos": ["Birra del Naufragio"], "gate": ["barco_05_naufragio"], "pide": ["Birra del Naufragio x3"]}, {"id": "bolsa_trabajo", "saga": "bolsa_trabajo", "nombre": "Alta en el Gremio", "npc": "Toni Tutorial Jr", "fases": 2, "objetivos": ["Entregar", "Hablar"], "seg": 218, "cac": 10, "xp": 20, "llave": false, "logro": true, "repetible": false, "externos": [], "gate": ["permiso_obra"], "pide": ["oak log x16"]}, {"id": "caballo_00", "saga": "caballo", "nombre": "A Pie por el Reino", "npc": "Toni Tutorial Jr", "fases": 1, "objetivos": ["Hablar"], "seg": 92, "cac": 2, "xp": 10, "llave": false, "logro": true, "repetible": false, "externos": [], "gate": ["bolsa_trabajo"], "pide": []}, {"id": "caballo_01", "saga": "caballo", "nombre": "Crines en la Alambrada", "npc": "Horse Luis", "fases": 1, "objetivos": ["Entregar"], "seg": 5, "cac": 3, "xp": 10, "llave": false, "logro": false, "repetible": true, "externos": ["Pañuelo Empapado"], "gate": ["caballo_00"], "pide": ["Pañuelo Empapado x1"]}, {"id": "caballo_02", "saga": "caballo", "nombre": "La Cerca que nos Separaba", "npc": "Horse Luis", "fases": 1, "objetivos": ["Entregar"], "seg": 5, "cac": 3, "xp": 10, "llave": false, "logro": false, "repetible": true, "externos": ["Pañuelo Empapado"], "gate": ["caballo_01"], "pide": ["Pañuelo Empapado x1"]}, {"id": "caballo_03", "saga": "caballo", "nombre": "El Galope bajo la Tormenta", "npc": "Horse Luis", "fases": 1, "objetivos": ["Entregar"], "seg": 5, "cac": 3, "xp": 10, "llave": false, "logro": true, "repetible": true, "externos": ["Pañuelo Empapado"], "gate": ["caballo_02"], "pide": ["Pañuelo Empapado x1"]}, {"id": "cantera_01_muestra", "saga": "cantera", "nombre": "☣ La Cantera Cerrada", "npc": "Dra. Pizarrica", "fases": 2, "objetivos": ["Entregar", "Llegar"], "seg": 424, "cac": 35, "xp": 20, "llave": false, "logro": true, "repetible": false, "externos": ["Muestra de Sculk Vivo"], "gate": ["abismo_04_quien"], "pide": ["Muestra de Sculk Vivo x1"]}, {"id": "dedos_01_demostracion", "saga": "dedos", "nombre": "Los Dedos Largos · La Demostración", "npc": "Edelmiro Garrapata", "fases": 1, "objetivos": ["Entregar"], "seg": 5, "cac": 3, "xp": 10, "llave": false, "logro": false, "repetible": false, "externos": ["Acta del Ruido"], "gate": ["nando_alijo"], "pide": ["Acta del Ruido x1"]}, {"id": "dedos_02_campana", "saga": "dedos", "nombre": "Lección 12 · La Campana", "npc": "Edelmiro Garrapata", "fases": 2, "objetivos": ["Hablar", "Usar bloque"], "seg": 58, "cac": 3, "xp": 20, "llave": false, "logro": true, "repetible": false, "externos": [], "gate": ["dedos_01_demostracion"], "pide": []}, {"id": "dedos_03_desplazamiento", "saga": "dedos", "nombre": "Lección 13 · El Desplazamiento", "npc": "Edelmiro Garrapata", "fases": 1, "objetivos": ["Entregar"], "seg": 5, "cac": 3, "xp": 10, "llave": false, "logro": false, "repetible": false, "externos": ["Hoja 13 - El Desplazamiento"], "gate": ["dedos_02_campana"], "pide": ["Hoja 13 - El Desplazamiento x1"]}, {"id": "dedos_04_lana", "saga": "dedos", "nombre": "Lección 17 · La Lana Negra", "npc": "Edelmiro Garrapata", "fases": 2, "objetivos": ["Entregar", "Esquilar"], "seg": 135, "cac": 4, "xp": 20, "llave": false, "logro": true, "repetible": false, "externos": [], "gate": ["dedos_03_desplazamiento"], "pide": ["black wool x3"]}, {"id": "dedos_05_reconocimiento", "saga": "dedos", "nombre": "Lección 19 · El Reconocimiento", "npc": "Edelmiro Garrapata", "fases": 1, "objetivos": ["Entregar"], "seg": 5, "cac": 5, "xp": 10, "llave": false, "logro": true, "repetible": false, "externos": ["Informe de Reconocimiento"], "gate": ["dedos_04_lana"], "pide": ["Informe de Reconocimiento x1"]}, {"id": "dedos_06_ganzua", "saga": "dedos", "nombre": "Lección 21 · La Herramienta que No Lo Es", "npc": "Edelmiro Garrapata", "fases": 2, "objetivos": ["Entregar", "Fabricar"], "seg": 96, "cac": 4, "xp": 20, "llave": false, "logro": true, "repetible": false, "externos": [], "gate": ["dedos_05_reconocimiento"], "pide": ["tripwire hook x4", "tripwire hook x4"]}, {"id": "dedos_07_ensayo", "saga": "dedos", "nombre": "Lección 24 · El Ensayo", "npc": "Edelmiro Garrapata", "fases": 1, "objetivos": ["Entregar"], "seg": 5, "cac": 8, "xp": 10, "llave": false, "logro": false, "repetible": false, "externos": ["La Cubertería de los Domingos"], "gate": ["dedos_06_ganzua"], "pide": ["La Cubertería de los Domingos x1"]}, {"id": "dedos_08_devolucion", "saga": "dedos", "nombre": "Lección 25 · La Devolución", "npc": "Edelmiro Garrapata", "fases": 1, "objetivos": ["Entregar"], "seg": 5, "cac": 8, "xp": 10, "llave": false, "logro": true, "repetible": false, "externos": ["Recibo del Ensayo"], "gate": ["dedos_07_ensayo"], "pide": ["Recibo del Ensayo x1"]}, {"id": "dedos_09_recomendacion", "saga": "dedos", "nombre": "Los Dedos Largos · La Carta", "npc": "Edelmiro Garrapata", "fases": 1, "objetivos": ["Esperar", "Hablar"], "seg": 41, "cac": 7, "xp": 10, "llave": false, "logro": true, "repetible": false, "externos": [], "gate": ["dedos_08_devolucion"], "pide": []}, {"id": "el_semental", "saga": "el_semental", "nombre": "Fuego a Discreción", "npc": "Semental de la Flecha", "fases": 10, "objetivos": ["Hablar", "Matar"], "seg": 630, "cac": 0, "xp": 100, "llave": false, "logro": true, "repetible": false, "externos": [], "gate": ["tutorial_clase"], "pide": []}, {"id": "estaciones_00_recado", "saga": "estaciones", "nombre": "Parte Meteorológico", "npc": "Toni Tutorial Jr", "fases": 1, "objetivos": ["Hablar"], "seg": 64, "cac": 2, "xp": 10, "llave": false, "logro": false, "repetible": false, "externos": [], "gate": ["bolsa_trabajo"], "pide": []}, {"id": "estaciones_01_almanaque", "saga": "estaciones", "nombre": "El Almanaque", "npc": "Gordi Mamon", "fases": 2, "objetivos": ["Hablar", "Llegar"], "seg": 95, "cac": 3, "xp": 20, "llave": false, "logro": false, "repetible": false, "externos": [], "gate": ["estaciones_00_recado"], "pide": []}, {"id": "estaciones_02_cosecha", "saga": "estaciones", "nombre": "Cosecha de Temporada", "npc": "Gordi Mamon", "fases": 1, "objetivos": ["Entregar"], "seg": 120, "cac": 4, "xp": 10, "llave": false, "logro": true, "repetible": false, "externos": [], "gate": ["estaciones_01_almanaque"], "pide": ["carrot x6", "potato x6"]}, {"id": "estaciones_03_termometro", "saga": "estaciones", "nombre": "El Termómetro", "npc": "Gordi Mamon", "fases": 1, "objetivos": ["Entregar"], "seg": 90, "cac": 5, "xp": 10, "llave": false, "logro": true, "repetible": false, "externos": [], "gate": ["estaciones_02_cosecha"], "pide": ["leather chestplate x1"]}, {"id": "fatima_01_pan", "saga": "fatima", "nombre": "Un Pan pa Toítos", "npc": "La Fatima", "fases": 1, "objetivos": ["Entregar"], "seg": 20, "cac": 4, "xp": 10, "llave": false, "logro": true, "repetible": false, "externos": [], "gate": [], "pide": ["bread x1"]}, {"id": "geologia_01_muestras", "saga": "geologia", "nombre": "El Pulso de la Piedra I: Superficie", "npc": "Dra. Pizarrica", "fases": 1, "objetivos": ["Entregar"], "seg": 47, "cac": 5, "xp": 10, "llave": false, "logro": true, "repetible": false, "externos": [], "gate": ["resort_06_careo"], "pide": ["stone x1", "granite x1", "diorite x1", "andesite x1", "deepslate x1", "tuff x1"]}, {"id": "geologia_02_temblor", "saga": "geologia", "nombre": "El Pulso de la Piedra II: El Temblor", "npc": "Dra. Pizarrica", "fases": 1, "objetivos": ["Entregar"], "seg": 5, "cac": 9, "xp": 10, "llave": false, "logro": true, "repetible": false, "externos": ["Lectura Sísmica"], "gate": ["geologia_01_muestras"], "pide": ["Lectura Sísmica x1"]}, {"id": "geologia_03_catalogo", "saga": "geologia", "nombre": "El Pulso de la Piedra III: El Catálogo", "npc": "Dra. Pizarrica", "fases": 1, "objetivos": ["Entregar"], "seg": 385, "cac": 15, "xp": 10, "llave": true, "logro": true, "repetible": false, "externos": [], "gate": ["geologia_02_temblor"], "pide": ["coal x1", "raw iron x1", "raw copper x1", "raw gold x1", "redstone x1", "lapis lazuli x1"]}, {"id": "jarvard_01_pringado", "saga": "jarvard", "nombre": "Expediente Jarvard I: Sin Credenciales", "npc": "Toni Tutorial Jr", "fases": 2, "objetivos": ["Hablar"], "seg": 65, "cac": 4, "xp": 20, "llave": false, "logro": false, "repetible": false, "externos": [], "gate": ["anclaje_gordon_07"], "pide": []}, {"id": "jarvard_02_secado", "saga": "jarvard", "nombre": "Expediente Jarvard II: Membrete y Escarcha", "npc": "Toni Tutorial Jr", "fases": 2, "objetivos": ["Entregar"], "seg": 10, "cac": 5, "xp": 20, "llave": false, "logro": true, "repetible": false, "externos": ["Papel de Jarvard (curado)"], "gate": ["jarvard_01_pringado"], "pide": ["Papel de Jarvard x1", "Papel de Jarvard (curado) x1"]}, {"id": "jarvard_03_papeleo", "saga": "jarvard", "nombre": "Expediente Jarvard III: El Vía Crucis", "npc": "Toni Tutorial Jr", "fases": 12, "objetivos": ["Contraseña", "Entregar", "Esperar", "Hablar"], "seg": 1017, "cac": 8, "xp": 120, "llave": false, "logro": false, "repetible": false, "externos": ["Cacahuate"], "gate": ["jarvard_02_secado"], "pide": ["diamond x1", "Cacahuate x10"]}, {"id": "jarvard_04_contratado", "saga": "jarvard", "nombre": "Expediente Jarvard IV: Reclutado", "npc": "Toni Tutorial Jr", "fases": 1, "objetivos": ["Entregar"], "seg": 7, "cac": 30, "xp": 10, "llave": false, "logro": true, "repetible": false, "externos": [], "gate": ["jarvard_03_papeleo"], "pide": ["Título de Jarvard (firmado) x1"]}, {"id": "lolo_00_fragua", "saga": "lolo", "nombre": "La Fragua del Fundacional", "npc": "Toni Tutorial Jr", "fases": 1, "objetivos": ["Hablar"], "seg": 35, "cac": 2, "xp": 10, "llave": false, "logro": true, "repetible": false, "externos": [], "gate": ["bolsa_trabajo"], "pide": []}, {"id": "lolo_01_anillo", "saga": "lolo", "nombre": "El Anillo", "npc": "Lolo el Fundacional", "fases": 1, "objetivos": ["Entregar"], "seg": 125, "cac": 2, "xp": 10, "llave": false, "logro": true, "repetible": false, "externos": [], "gate": ["lolo_00_fragua"], "pide": ["gold ingot x2", "amethyst shard x1"]}, {"id": "lolo_02_guantes", "saga": "lolo", "nombre": "Los Guantes", "npc": "Lolo el Fundacional", "fases": 1, "objetivos": ["Entregar"], "seg": 220, "cac": 2, "xp": 10, "llave": false, "logro": false, "repetible": false, "externos": [], "gate": ["lolo_01_anillo"], "pide": ["leather x4", "iron ingot x2"]}, {"id": "lolo_03_cinturon", "saga": "lolo", "nombre": "El Cinturón", "npc": "Lolo el Fundacional", "fases": 1, "objetivos": ["Entregar"], "seg": 230, "cac": 2, "xp": 10, "llave": false, "logro": false, "repetible": false, "externos": [], "gate": ["lolo_02_guantes"], "pide": ["leather x5", "iron ingot x1"]}, {"id": "lolo_04_amuleto", "saga": "lolo", "nombre": "El Amuleto", "npc": "Lolo el Fundacional", "fases": 1, "objetivos": ["Entregar"], "seg": 125, "cac": 2, "xp": 10, "llave": false, "logro": false, "repetible": false, "externos": [], "gate": ["lolo_03_cinturon"], "pide": ["gold ingot x2", "amethyst shard x1"]}, {"id": "lolo_05_capa", "saga": "lolo", "nombre": "La Capa", "npc": "Lolo el Fundacional", "fases": 1, "objetivos": ["Entregar"], "seg": 195, "cac": 2, "xp": 10, "llave": false, "logro": true, "repetible": false, "externos": [], "gate": ["lolo_04_amuleto"], "pide": ["white wool x6", "feather x3"]}, {"id": "lolo_06_brazalete", "saga": "lolo", "nombre": "El Brazalete", "npc": "Lolo el Fundacional", "fases": 1, "objetivos": ["Entregar"], "seg": 110, "cac": 2, "xp": 10, "llave": false, "logro": false, "repetible": false, "externos": [], "gate": ["lolo_05_capa"], "pide": ["iron ingot x3", "copper ingot x1"]}, {"id": "lolo_07_pendiente", "saga": "lolo", "nombre": "El Pendiente", "npc": "Lolo el Fundacional", "fases": 1, "objetivos": ["Entregar"], "seg": 125, "cac": 2, "xp": 10, "llave": false, "logro": false, "repetible": false, "externos": [], "gate": ["lolo_06_brazalete"], "pide": ["gold ingot x2", "amethyst shard x1"]}, {"id": "lolo_08_dije", "saga": "lolo", "nombre": "El Dije", "npc": "Lolo el Fundacional", "fases": 1, "objetivos": ["Entregar"], "seg": 80, "cac": 2, "xp": 10, "llave": false, "logro": false, "repetible": false, "externos": [], "gate": ["lolo_07_pendiente"], "pide": ["gold ingot x1", "amethyst shard x1"]}, {"id": "lolo_09_insignia", "saga": "lolo", "nombre": "La Insignia", "npc": "Lolo el Fundacional", "fases": 1, "objetivos": ["Entregar"], "seg": 135, "cac": 2, "xp": 10, "llave": false, "logro": false, "repetible": false, "externos": [], "gate": ["lolo_08_dije"], "pide": ["iron ingot x3", "gold ingot x1"]}, {"id": "lolo_10_reliquia", "saga": "lolo", "nombre": "La Obra Maestra", "npc": "Lolo el Fundacional", "fases": 1, "objetivos": ["Entregar"], "seg": 475, "cac": 2, "xp": 10, "llave": false, "logro": true, "repetible": false, "externos": [], "gate": ["lolo_09_insignia"], "pide": ["gold block x1", "amethyst shard x2"]}, {"id": "lolo_ap_01_calor", "saga": "lolo_ap", "nombre": "El Aprendiz al Revés · La Prueba del Calor", "npc": "Lolo el Fundacional", "fases": 1, "objetivos": ["Entregar"], "seg": 5, "cac": 4, "xp": 10, "llave": false, "logro": true, "repetible": false, "externos": ["Hoja de Aguante"], "gate": ["lolo_00_fragua"], "pide": ["Hoja de Aguante x1"]}, {"id": "lolo_ap_02_salto", "saga": "lolo_ap", "nombre": "El Aprendiz al Revés · La Prueba de la Elevación", "npc": "Lolo el Fundacional", "fases": 1, "objetivos": ["Entregar"], "seg": 5, "cac": 5, "xp": 10, "llave": false, "logro": false, "repetible": false, "externos": ["Acta de Elevación"], "gate": ["lolo_ap_01_calor"], "pide": ["Acta de Elevación x1"]}, {"id": "lolo_ap_03_sacrificio", "saga": "lolo_ap", "nombre": "El Aprendiz al Revés · La Prueba del Sacrificio", "npc": "Lolo el Fundacional", "fases": 1, "objetivos": ["Entregar"], "seg": 5, "cac": 8, "xp": 10, "llave": false, "logro": true, "repetible": false, "externos": ["Astillas Fundacionales"], "gate": ["lolo_ap_02_salto"], "pide": ["Astillas Fundacionales x1"]}, {"id": "mina_01_leyenda", "saga": "mina", "nombre": "⛏ La Mina Maldita", "npc": "Dra. Pizarrica", "fases": 2, "objetivos": ["Hablar", "Llegar"], "seg": 120, "cac": 8, "xp": 20, "llave": false, "logro": true, "repetible": false, "externos": [], "gate": ["geologia_03_catalogo"], "pide": []}, {"id": "mina_02_raid", "saga": "mina", "nombre": "⛏ Bajar a la Mina", "npc": "Dra. Pizarrica", "fases": 1, "objetivos": ["Entregar"], "seg": 5, "cac": 30, "xp": 10, "llave": false, "logro": true, "repetible": false, "externos": ["Diente de Barbahueso"], "gate": ["mina_01_leyenda"], "pide": ["Diente de Barbahueso x1"]}, {"id": "nando_alijo", "saga": "nando_alijo", "nombre": "El Alijo de la Cueva", "npc": "Nando el travieso", "fases": 1, "objetivos": ["Entregar"], "seg": 60, "cac": 0, "xp": 10, "llave": false, "logro": true, "repetible": false, "externos": [], "gate": ["alquimista_intro"], "pide": ["bread x3"]}, {"id": "nico_00_refugio", "saga": "nico", "nombre": "El Refugio de Nico", "npc": "Toni Tutorial Jr", "fases": 1, "objetivos": ["Hablar"], "seg": 102, "cac": 2, "xp": 10, "llave": false, "logro": false, "repetible": false, "externos": [], "gate": ["permiso_obra"], "pide": []}, {"id": "nico_01_donacion", "saga": "nico", "nombre": "Una Manita pal Refugio", "npc": "Nico", "fases": 1, "objetivos": ["Entregar"], "seg": 120, "cac": 4, "xp": 10, "llave": false, "logro": true, "repetible": false, "externos": [], "gate": ["nico_00_refugio"], "pide": ["hay block x1", "white wool x3"]}, {"id": "nico_02_mantas", "saga": "nico", "nombre": "Mantas pal Refugio", "npc": "Nico", "fases": 1, "objetivos": ["Entregar"], "seg": 84, "cac": 5, "xp": 10, "llave": false, "logro": true, "repetible": false, "externos": [], "gate": ["nico_01_donacion"], "pide": ["white carpet x4", "brown carpet x3"]}, {"id": "nico_03_papel", "saga": "nico", "nombre": "Una Emergencia Delicada", "npc": "Nico", "fases": 1, "objetivos": ["Entregar"], "seg": 160, "cac": 4, "xp": 10, "llave": false, "logro": true, "repetible": false, "externos": [], "gate": ["yaniko_03_hermana"], "pide": ["paper x16"]}, {"id": "nuevo_fichaje", "saga": "nuevo_fichaje", "nombre": "Operación Recluta", "npc": "Toni Tutorial Jr", "fases": 4, "objetivos": ["Entregar"], "seg": 384, "cac": 12, "xp": 40, "llave": false, "logro": true, "repetible": false, "externos": [], "gate": [], "pide": ["oak log x16", "crafting table x1", "cobblestone x32", "cooked beef x6"]}, {"id": "papriko_01_antena", "saga": "papriko", "nombre": "Silencio en la Frecuencia", "npc": "Dr. Papriko", "fases": 1, "objetivos": ["Entregar"], "seg": 10, "cac": 15, "xp": 10, "llave": false, "logro": true, "repetible": false, "externos": ["Placa Anteníl Primaria", "Placa Anteníl Secundaria"], "gate": ["jarvard_04_contratado"], "pide": ["Placa Anteníl Primaria x1", "Placa Anteníl Secundaria x1"]}, {"id": "permiso_obra", "saga": "permiso_obra", "nombre": "Vía Crucis Administrativa", "npc": "Toni Tutorial Jr", "fases": 15, "objetivos": ["Contraseña", "Entregar", "Esperar", "Hablar", "Matar"], "seg": 1043, "cac": 28, "xp": 150, "llave": false, "logro": true, "repetible": false, "externos": ["Cacahuate"], "gate": ["nando_alijo"], "pide": ["ink sac x2", "Cacahuate x5", "diorite x1"]}, {"id": "resort_01_congelada", "saga": "resort", "nombre": "La Obra Sitiada", "npc": "Toni Tutorial Jr", "fases": 3, "objetivos": ["Hablar"], "seg": 99, "cac": 4, "xp": 30, "llave": true, "logro": true, "repetible": false, "externos": [], "gate": ["bolsa_trabajo", "estaciones_03_termometro"], "pide": []}, {"id": "resort_02_soplo", "saga": "resort", "nombre": "Fuente Confidencial", "npc": "Chef Calderón", "fases": 2, "objetivos": ["Entregar", "Hablar"], "seg": 195, "cac": 5, "xp": 20, "llave": true, "logro": true, "repetible": false, "externos": [], "gate": ["resort_01_congelada"], "pide": ["cod x3", "wheat x3"]}, {"id": "resort_03_expediente", "saga": "resort", "nombre": "Expediente Clasificado", "npc": "Toni Tutorial Jr", "fases": 5, "objetivos": ["Contraseña", "Entregar", "Hablar"], "seg": 268, "cac": 6, "xp": 50, "llave": true, "logro": false, "repetible": false, "externos": ["Cacahuate"], "gate": ["resort_02_soplo"], "pide": ["Cacahuate x6"]}, {"id": "resort_04_quema", "saga": "resort", "nombre": "Quema Controlada", "npc": "Toni Tutorial Jr", "fases": 1, "objetivos": ["Entregar"], "seg": 25, "cac": 8, "xp": 10, "llave": true, "logro": true, "repetible": false, "externos": ["Ceniza de Reubicación"], "gate": ["resort_03_expediente"], "pide": ["Ceniza de Reubicación x5"]}, {"id": "resort_05_precintadores", "saga": "resort", "nombre": "Asalto a la Mina", "npc": "Toni Tutorial Jr", "fases": 1, "objetivos": ["Entregar"], "seg": 6, "cac": 16, "xp": 10, "llave": true, "logro": true, "repetible": false, "externos": ["Sello Grande Confiscado"], "gate": ["resort_04_quema"], "pide": ["Sello Grande Confiscado x1"]}, {"id": "resort_06_careo", "saga": "resort", "nombre": "Cara a Cara con el Ministro", "npc": "Toni Tutorial Jr", "fases": 2, "objetivos": ["Entregar", "Hablar"], "seg": 153, "cac": 45, "xp": 20, "llave": true, "logro": true, "repetible": false, "externos": ["Maletín Confiscado"], "gate": ["resort_05_precintadores"], "pide": ["Maletín Confiscado x1"]}, {"id": "semental_barco", "saga": "semental_barco", "nombre": "⚓ El Guardián del Pecio", "npc": "Semental de la Flecha", "fases": 1, "objetivos": ["Entregar"], "seg": 5, "cac": 20, "xp": 10, "llave": false, "logro": true, "repetible": false, "externos": ["Plano de la Espada Pirata"], "gate": ["bolsa_trabajo"], "pide": ["Plano de la Espada Pirata x1"]}, {"id": "tablon_luz", "saga": "tablon_luz", "nombre": "⚡ Doce Voltios", "npc": "Toni Tutorial Jr", "fases": 1, "objetivos": ["Entregar"], "seg": 10, "cac": 10, "xp": 10, "llave": false, "logro": true, "repetible": false, "externos": ["Fusible del Norte", "Fusible del Sur"], "gate": ["barco_02_alambique"], "pide": ["Fusible del Norte x1", "Fusible del Sur x1"]}, {"id": "talentos_anselmo", "saga": "talentos_anselmo", "nombre": "🗺️ El Escalafón", "npc": "Anselmo", "fases": 2, "objetivos": ["Hablar", "Matar"], "seg": 150, "cac": 6, "xp": 20, "llave": false, "logro": true, "repetible": false, "externos": [], "gate": ["el_semental"], "pide": []}, {"id": "tutorial_clase", "saga": "tutorial_clase", "nombre": "Bautismo de Fuego", "npc": "Anselmo", "fases": 3, "objetivos": ["Entregar", "Hablar", "Matar"], "seg": 105, "cac": 0, "xp": 30, "llave": false, "logro": true, "repetible": false, "externos": [], "gate": ["nuevo_fichaje"], "pide": ["feather x1"]}, {"id": "vostok_01_barco", "saga": "vostok", "nombre": "Señal Perdida", "npc": "Dr. Papriko", "fases": 2, "objetivos": ["Hablar", "Llegar"], "seg": 121, "cac": 6, "xp": 20, "llave": false, "logro": true, "repetible": false, "externos": [], "gate": ["papriko_01_antena"], "pide": []}, {"id": "vostok_02_manifiesto", "saga": "vostok", "nombre": "El Manifiesto de Carga", "npc": "Dr. Papriko", "fases": 6, "objetivos": ["Entregar", "Esperar", "Hablar"], "seg": 371, "cac": 12, "xp": 60, "llave": false, "logro": false, "repetible": false, "externos": ["Cacahuate"], "gate": ["vostok_01_barco"], "pide": ["Cacahuate x5"]}, {"id": "vostok_03_terminal", "saga": "vostok", "nombre": "La Terminal del Barco", "npc": "Dr. Papriko", "fases": 1, "objetivos": ["Entregar"], "seg": 5, "cac": 18, "xp": 10, "llave": false, "logro": true, "repetible": false, "externos": ["Volcado de Registros del Buque"], "gate": ["vostok_02_manifiesto"], "pide": ["Volcado de Registros del Buque x1"]}, {"id": "yaniko_00_semillas", "saga": "yaniko", "nombre": "El Gato del Rincón", "npc": "Yaniko", "fases": 1, "objetivos": ["Hablar"], "seg": 103, "cac": 3, "xp": 10, "llave": false, "logro": true, "repetible": false, "externos": [], "gate": ["nico_02_mantas"], "pide": []}, {"id": "yaniko_01_secadero", "saga": "yaniko", "nombre": "El Secadero", "npc": "Yaniko", "fases": 1, "objetivos": ["Entregar"], "seg": 15, "cac": 6, "xp": 10, "llave": false, "logro": false, "repetible": false, "externos": [], "gate": ["yaniko_00_semillas"], "pide": ["Tabaco seco x3"]}, {"id": "yaniko_02_quimica", "saga": "yaniko", "nombre": "Química de Salón", "npc": "Yaniko", "fases": 1, "objetivos": ["Entregar"], "seg": 5, "cac": 8, "xp": 10, "llave": false, "logro": false, "repetible": false, "externos": [], "gate": ["yaniko_01_secadero"], "pide": ["Producto de tabaco x1"]}, {"id": "yaniko_03_hermana", "saga": "yaniko", "nombre": "La Hermana", "npc": "Nico", "fases": 1, "objetivos": ["Entregar"], "seg": 140, "cac": 8, "xp": 10, "llave": false, "logro": true, "repetible": false, "externos": [], "gate": ["yaniko_02_quimica"], "pide": ["cooked cod x3"]}], "reparto": [{"etiqueta": "Entregar", "quests": 79}, {"etiqueta": "Hablar", "quests": 36}, {"etiqueta": "Llegar", "quests": 10}, {"etiqueta": "Matar", "quests": 4}, {"etiqueta": "Esperar", "quests": 4}, {"etiqueta": "Contraseña", "quests": 3}, {"etiqueta": "Fabricar", "quests": 1}, {"etiqueta": "Usar bloque", "quests": 1}, {"etiqueta": "Esquilar", "quests": 1}, {"etiqueta": "Fundir", "quests": 0}, {"etiqueta": "Consumir", "quests": 0}, {"etiqueta": "Encantar", "quests": 0}, {"etiqueta": "Picar", "quests": 0}, {"etiqueta": "Colocar", "quests": 0}, {"etiqueta": "Cortar", "quests": 0}, {"etiqueta": "Golpear", "quests": 0}, {"etiqueta": "Ordeñar", "quests": 0}, {"etiqueta": "Domar", "quests": 0}, {"etiqueta": "Pescar", "quests": 0}, {"etiqueta": "PvP", "quests": 0}, {"etiqueta": "Matar NPC", "quests": 0}, {"etiqueta": "Matar en sitio", "quests": 0}], "libres": ["Alyx Vance", "Aniceto Morcillo", "Armadura", "Avraham Rosenberg", "Bacalao Gabardinez", "Bao Loto Negro", "Caballo1", "Caballo2", "Capitán Liu Qingdao", "El Puma", "Eli Vance", "G-man", "Guardia de Seguridad", "Hypertes_cantera", "Inspector", "Interventor", "La Barbacoño", "La Jessi", "Ling Mutombo", "Ming Marea Baja", "Ministro", "Olegario", "Padre Elías", "Pimpón", "Pink Sunny", "Rancio el Profeta", "Registrador", "Ricky el Recipiente", "Sellos", "Sor Bete", "Sor Eufrasia", "Sun Qiao Remo", "TUNG TUNG SAHUR", "Ujier", "Vera Pedregal"], "catalogo": [["🎣 **Pescar**", "`fish-to-catch`", "pescar N piezas", "**Bacalao Gabardinez** (id 22): tiene lore, tiene puerto y **no tiene ni una quest**"], ["🔥 **Fundir**", "`items-to-smelt` + `item-smelt-amounts`", "meter cosas al horno", "**Lolo** (herrero) · la Cantera"], ["🍺 **Consumir**", "`items-to-consume` + `item-consume-amounts`", "comer o beber algo", "**Señor Trapo** (cervezas) · **la Alquimista** · **Chef Calderón**"], ["✨ **Encantar**", "`items-to-enchant` + `item-enchant-amounts` + `enchantment-item-names`", "encantar una pieza", "**Lolo** · el mago científico"], ["⛏️ **Picar**", "`break-block-names` + `break-block-amounts` + `break-block-durability`", "romper N bloques de un tipo", "**Vera Pedregal** (la puerta sellada) · la Cantera"], ["🪓 **Talar**", "`cut-block-names` + `cut-block-amounts` + `cut-block-durability`", "cortar (distinto de romper)", "leñador · el bosque helado"], ["🔨 **Golpear sin romper**", "`damage-block-names` + `damage-block-amounts` + `damage-block-durability`", "dar a un bloque sin llegar a romperlo", "picar una veta sin llevártela"], ["🧱 **Construir**", "`place-block-names` + `place-block-amounts` + `place-block-durability`", "colocar N bloques", "apuntalar una galería · levantar algo"], ["🐄 **Ordeñar**", "`cows-to-milk` + `cows-milked`", "ordeñar vacas", "granja · **Nico**"], ["🐺 **Domar**", "`mobs-to-tame` + `mob-tame-amounts`", "domar bichos", "**Nico y el refugio** (su saga está a medias)"], ["💀 **Matar EN UN SITIO**", "`locations-to-kill` + `kill-location-names` + `kill-delay`", "matar bichos **en un punto concreto**", "limpiar una zona · defender la Plaza"], ["🎯 **Matar un NPC**", "`npc-uuids-to-kill` + `npc-kill-amounts`", "matar a un NPC de Citizens", "un traidor · el Ministro (hoy se hace con MythicMobs)"], ["⚔️ **PvP**", "`players-to-kill`", "matar jugadores", "⚠️ decisión pendiente del usuario sobre PvP"], ["💿 **CustomDiscs**", "`/cd add` · `/cd get`", "discos con audio propio → misiones de **escuchar**", "✅ usable hoy"], ["⚒️ **Forging999**", "`/forge`", "forja con niveles, combustible y **horas reales**", "✅ usable, pero es un sistema entero"], ["🤝 **TradeManager**", "`/trademanager`", "trueque jugador↔jugador → misiones **cooperativas**", "✅ usable hoy"], ["📞 **PhoneConnect**", "`givesim` · `customsim`", "teléfono con SIMs; **NO puede llamarte un NPC**", "⚠️ necesita plugin puente"], ["🖥️ **ScreenEffects**", "`screeneffect`", "efectos de pantalla", "⚠️ sin estudiar"]], "formula": {"andar": 4.3, "hablar": 30, "matar": 20, "bloque": 4, "token": 5, "defecto": 20}, "faltan": [], "total": {"quests": 105, "fases": 198, "seg": 13722, "cac": 773, "xp": 1980}};
+
+const $ = s => document.querySelector(s);
+const dur = s => s >= 3600 ? (Math.floor(s/3600) + " h " + Math.round(s%3600/60) + " min")
+              : s >= 60 ? Math.round(s/60) + " min" : Math.max(1, Math.round(s)) + " s";
+const esc = t => String(t ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+/* ── el titular y los totales ─────────────────────────────────────────── */
+const conEntrega = D.quests.filter(q => q.objetivos.includes("Entregar")).length;
+$("#pctRecado").textContent = Math.round(conEntrega / D.total.quests * 100) + "%";
+$("#kpis").innerHTML = [
+  [D.total.quests, "misiones"],
+  [D.total.fases, "fases"],
+  [dur(D.total.seg), "duración total"],
+  [D.total.cac.toLocaleString("es"), "cacahuates"],
+  [D.total.xp.toLocaleString("es"), "experiencia"],
+  [D.reparto.filter(r => !r.quests).length, "objetivos sin usar"],
+].map(([b, s]) => `<div class="kpi"><b>${esc(b)}</b><span>${esc(s)}</span></div>`).join("");
+
+/* ── barras: una serie, un tono; el cero va rayado Y etiquetado ───────── */
+const tope = Math.max(...D.reparto.map(r => r.quests), 1);
+$("#barras").innerHTML = D.reparto.map(r => `
+  <div class="fila${r.quests ? "" : " cero"}" title="${esc(r.etiqueta)}: ${r.quests} misiones">
+    <span class="et">${esc(r.etiqueta)}</span>
+    <span class="pista"><span class="barra" style="width:${r.quests / tope * 100}%"></span></span>
+    <span class="val">${r.quests ? r.quests : "sin usar"}</span>
+  </div>`).join("");
+
+/* ── tabla ────────────────────────────────────────────────────────────── */
+const sagas = [...new Set(D.quests.map(q => q.saga))].sort();
+$("#fSaga").insertAdjacentHTML("beforeend",
+  sagas.map(s => `<option value="${esc(s)}">${esc(s)}</option>`).join(""));
+
+let porDuracion = false;
+function pinta(){
+  const s = $("#fSaga").value, t = $("#fTexto").value.trim().toLowerCase();
+  let f = D.quests.filter(q => (!s || q.saga === s) &&
+    (!t || (q.nombre + " " + q.id + " " + (q.npc || "")).toLowerCase().includes(t)));
+  if (porDuracion) f = [...f].sort((a, b) => b.seg - a.seg);
+  $("#cuenta").textContent = f.length + " de " + D.quests.length;
+  $("#tb").innerHTML = f.map(q => `<tr>
+      <td><b>${esc(q.nombre)}</b>
+        ${q.repetible ? '<span class="tag rep">repetible</span>' : ""}
+        ${q.llave ? '<span class="tag">llave</span>' : ""}
+        <span class="qid">${esc(q.id)}</span></td>
+      <td>${esc(q.saga)}</td>
+      <td>${q.npc ? esc(q.npc) : '<span style="color:var(--danger)">sin NPC</span>'}</td>
+      <td>${q.objetivos.map(o => `<span class="tag">${esc(o)}</span>`).join("")}</td>
+      <td class="n">${q.fases}</td>
+      <td class="n">${dur(q.seg)}${q.externos.length ? `<span class="mas"
+        title="Ademas hay que conseguir: ${esc(q.externos.join(", "))}">+ conseguirlo</span>` : ""}</td>
+      <td class="n">${q.cac || "—"}</td>
+      <td class="n">${q.xp || "—"}</td>
+    </tr>`).join("") || '<tr><td colspan="8">Nada que coincida.</td></tr>';
+}
+$("#fSaga").oninput = $("#fTexto").oninput = pinta;
+$("#oDur").onclick = e => {
+  porDuracion = !porDuracion;
+  e.currentTarget.setAttribute("aria-pressed", porDuracion);
+  e.currentTarget.textContent = porDuracion ? "Orden por saga" : "Ordenar por duración";
+  pinta();
+};
+pinta();
+
+/* ── por saga ─────────────────────────────────────────────────────────── */
+$("#sagas").innerHTML = sagas.map(s => {
+  const q = D.quests.filter(x => x.saga === s);
+  const seg = q.reduce((a, x) => a + x.seg, 0), cac = q.reduce((a, x) => a + x.cac, 0);
+  const xp = q.reduce((a, x) => a + x.xp, 0);
+  const cuenta = {};
+  q.forEach(x => x.objetivos.forEach(o => cuenta[o] = (cuenta[o] || 0) + 1));
+  const mix = Object.entries(cuenta).sort((a, b) => b[1] - a[1]);
+  const tot = mix.reduce((a, x) => a + x[1], 0) || 1;
+  return `<div class="saga">
+    <h3>${esc(s)}</h3>
+    <p class="meta">${q.length} ${q.length === 1 ? "misión" : "misiones"} ·
+       ${dur(seg)} · ${cac} 🥜 · ${xp} XP</p>
+    <div class="mix" role="img" aria-label="Mezcla de objetivos: ${esc(mix.map(m => m[0] + " " + m[1]).join(", "))}">
+      ${mix.map(m => `<i style="flex:${m[1]}" title="${esc(m[0])}: ${m[1]}"></i>`).join("")}
+    </div>
+    <ul>${mix.slice(0, 4).map(m => `<li>${esc(m[0])} · ${m[1]}</li>`).join("")}</ul>
+  </div>`;
+}).join("");
+
+/* ── cantera y catálogo ───────────────────────────────────────────────── */
+$("#libres").innerHTML = D.libres.length
+  ? D.libres.map(n => `<span class="chip">${esc(n)}</span>`).join("")
+  : '<span class="chip">Ninguno: todos los NPCs dan alguna misión.</span>';
+
+if (D.catalogo.length){
+  $("#catCab").innerHTML = ["Qué", "Claves", "Qué permite", "A quién le pega"]
+    .map(h => `<th>${h}</th>`).join("");
+  $("#cat").innerHTML = D.catalogo.map(f =>
+    `<tr>${[0,1,2,3].map(i => `<td>${esc(f[i] || "")}</td>`).join("")}</tr>`).join("");
+} else {
+  $("#catCab").innerHTML = "<th>Catálogo</th>";
+  $("#cat").innerHTML = '<tr><td>No se han encontrado los marcadores en tipos-de-quest.md.</td></tr>';
+}
+
+/* ── la fórmula, a la vista ───────────────────────────────────────────── */
+const F = D.formula;
+$("#formula").textContent =
+  "DURACION = suma de todas las fases\n\n" +
+  "  esperar (delay) ......  sus segundos EXACTOS  (dato real, no estimado)\n" +
+  "  viajar ...............  distancia real / " + F.andar + " bloques por segundo\n" +
+  "  hablar con un NPC ....  " + F.hablar + " s + el viaje hasta el\n" +
+  "  matar un bicho .......  " + F.matar + " s cada uno\n" +
+  "  picar/colocar/usar ...  " + F.bloque + " s por bloque\n" +
+  "  entregar un objeto\n" +
+  "     de quest ..........  " + F.token + " s   (ya lo llevas encima: solo darlo)\n" +
+  "     de conseguir ......  lo que diga la TABLA DE ESFUERZO, por unidad\n" +
+  "     sin afinar ........  " + F.defecto + " s   (y sale en la lista de abajo)\n\n" +
+  "El viaje sale de coordenadas REALES: la del NPC que la da y la del destino.\n\n" +
+  "🔴 Donde pone «+ conseguirlo», el numero se queda CORTO a proposito: esa mision pide algo\n" +
+  "que ella misma no te da (el Diente de Barbahueso lo suelta el jefe de una dungeon). Se marca\n" +
+  "en vez de inventarse un numero para contenido que depende de otra cosa.";
+
+$("#faltan").innerHTML = D.faltan.length
+  ? D.faltan.map(([m, n]) => `<span class="chip">${esc(m.toLowerCase().replace(/_/g," "))} · ${n}</span>`).join("")
+  : '<span class="chip">Ninguno: todos los objetos están afinados.</span>';
+if (!D.faltan.length) $("#detFaltan").style.display = "none";
+</script>
+
+</body>
+</html>
