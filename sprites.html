@@ -355,6 +355,61 @@ const G = [
   ]
  },
  {
+  "t": "⬜🍳 BLOQUES de la cocina de Calderón (no son items: son BLOQUES de ItemsAdder)",
+  "sub": "Hoy las 4 estaciones son bloques vanilla sin función propia (mesa de fletching, muela, rejilla de cobre, cobre cincelado): <b>funcionan</b>, pero no parecen una cocina. Con un bloque propio de IA cada estación sería inconfundible y, además, <b>se podrían encender las 3 apagadas</b> (vaporera, exprimidor y barril de fermentación) sin pisar a BreweryX. Detalle en <code>.claude/rules/cocina-calderon.md</code>. 🔴 Van en <b>16×16 por cara</b> (bloque, no item). Al tenerlas: definir el bloque IA, <code>/iazip</code>, publicar el pack, subir <code>?v</code>, reiniciar, y cambiar <code>block_item_sources</code> a <code>itemsadder-&lt;ns&gt;:&lt;id&gt;</code>.",
+  "items": [
+   {
+    "e": "⬜",
+    "o": "<code>cocina_tabla</code>",
+    "n": "Tabla de corte",
+    "m": "fletching_table",
+    "d": "cocina de Calderón · tabla de madera con marcas de cuchillo"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>cocina_molinillo</code>",
+    "n": "Molinillo",
+    "m": "grindstone",
+    "d": "cocina de Calderón · molinillo de piedra con manivela"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>cocina_wok</code>",
+    "n": "Wok",
+    "m": "copper_grate",
+    "d": "cocina de Calderón · sartén honda de hierro, va sobre el fuego"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>cocina_horno</code>",
+    "n": "Horno",
+    "m": "chiseled_copper",
+    "d": "cocina de Calderón · horno de leña con la boca ennegrecida"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>cocina_vaporera</code>",
+    "n": "Vaporera",
+    "m": "<i>(apagada)</i>",
+    "d": "cocina de Calderón · cesta de bambú apilada, con vapor"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>cocina_exprimidor</code>",
+    "n": "Exprimidor",
+    "m": "<i>(apagado)</i>",
+    "d": "cocina de Calderón · prensa de husillo con un cuenco debajo"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>cocina_barril</code>",
+    "n": "Barril de fermentación",
+    "m": "<i>(apagado)</i>",
+    "d": "cocina de Calderón · barrilito de barro sellado con trapo"
+   }
+  ]
+ },
+ {
   "t": "✅ Ya texturizados (referencia — NO rehacer)",
   "sub": "39 sprites puestos en los namespaces <code>objetos:</code> / <code>documentos:</code> (los CMD están en <code>items-registro.md</code>). Están aquí solo para que <b>no se vuelvan a encargar</b>; ya no cuentan como pendientes.",
   "items": [
@@ -458,7 +513,7 @@ const G = [
   ]
  }
 ];
-const FALTAN = 19, ITEMS = 30;
+const FALTAN = 26, ITEMS = 37;
 
 function TH(){const r=document.documentElement;
   const cur=r.dataset.theme||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');
