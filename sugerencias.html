@@ -4,110 +4,291 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>El Reino 6 — Sugerencias de Misiones</title>
-<style>
-  :root{
-    --ground:#f3f1f8; --surface:#ffffff; --surface-2:#ece8f5; --sunken:#f7f5fb;
-    --ink:#1e1828; --ink-soft:#585070; --ink-faint:#877e9d;
-    --line:#e1dcef; --line-strong:#ccc4e0;
-    --arcane:#6b46d0; --arcane-2:#8a63ea; --glow:rgba(120,80,240,.16);
-    --gold:#a9701d; --sci:#177f86; --folk:#4a8f2f; --danger:#c1443b;
-    --chip:#f1edfa; --suggest:#c43d86;
-    --shadow:0 1px 2px rgba(40,25,70,.05), 0 10px 34px rgba(70,45,120,.12);
-  }
-  @media (prefers-color-scheme:dark){:root{
-    --ground:#131019; --surface:#1c1730; --surface-2:#271f3d; --sunken:#171223;
-    --ink:#ede9f8; --ink-soft:#b6accd; --ink-faint:#8b81a6;
-    --line:#302846; --line-strong:#43385f;
-    --arcane:#9c82ff; --arcane-2:#b7a3ff; --glow:rgba(140,105,255,.26);
-    --gold:#e6b25a; --sci:#4ac9d0; --folk:#87cc62; --danger:#ec7d75;
-    --chip:#241d3a; --suggest:#ff86c9; --shadow:0 1px 2px rgba(0,0,0,.45), 0 16px 44px rgba(0,0,0,.4);
-  }}
-  :root[data-theme="light"]{
-    --ground:#f3f1f8; --surface:#ffffff; --surface-2:#ece8f5; --sunken:#f7f5fb;
-    --ink:#1e1828; --ink-soft:#585070; --ink-faint:#877e9d; --line:#e1dcef; --line-strong:#ccc4e0;
-    --arcane:#6b46d0; --arcane-2:#8a63ea; --glow:rgba(120,80,240,.16);
-    --gold:#a9701d; --sci:#177f86; --folk:#4a8f2f; --danger:#c1443b; --chip:#f1edfa; --suggest:#c43d86;
-    --shadow:0 1px 2px rgba(40,25,70,.05), 0 10px 34px rgba(70,45,120,.12);
-  }
-  :root[data-theme="dark"]{
-    --ground:#131019; --surface:#1c1730; --surface-2:#271f3d; --sunken:#171223;
-    --ink:#ede9f8; --ink-soft:#b6accd; --ink-faint:#8b81a6; --line:#302846; --line-strong:#43385f;
-    --arcane:#9c82ff; --arcane-2:#b7a3ff; --glow:rgba(140,105,255,.26);
-    --gold:#e6b25a; --sci:#4ac9d0; --folk:#87cc62; --danger:#ec7d75; --chip:#241d3a; --suggest:#ff86c9;
-    --shadow:0 1px 2px rgba(0,0,0,.45), 0 16px 44px rgba(0,0,0,.4);
-  }
+<style>/* ═══════════════════════════════════════════════════════════════════════════
+   TEMA — El Reino 6 · herramientas del servidor
+   🔴 ESTE ES EL ÚNICO SITIO donde vive la paleta. Antes estaba copiada 4 veces en
+   cada una de las 7 páginas (28 copias, ~63 KB), y cambiar un color eran 28 ediciones.
+   `web/comun/envolver.py` lo inyecta en cada página al construirla, porque cada página
+   tiene que seguir siendo AUTÓNOMA (el Artifact no puede cargar un .css externo).
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ── El color ──────────────────────────────────────────────────────────────
+   Claro y aireado, pero anclado al morado arcano del server: un Apple genérico
+   sería gris neutro, y esto tiene que parecerse a El Reino 6. Los neutros llevan
+   una gota de ese morado — elegidos, no heredados de un gris de fábrica. */
+:root{
+  --lienzo:#f6f5f9;  --tarjeta:#ffffff;  --hundido:#f1eff7;
+  --tinta:#16121d;   --tinta-2:#5a5273;  --tinta-3:#8b849e;
+  --linea:#e7e3f0;   --linea-2:#d6d0e6;
+  --acento:#5b34c7;  --acento-2:#7a55e8; --acento-suave:#f0ebff;
+
+  /* semánticos: separados del acento a propósito, para que "verde" siempre
+     signifique lo mismo y no compita con la identidad */
+  --ok:#2e7d52; --aviso:#b5791c; --alerta:#c0392e; --info:#1d6f8b;
+
+  /* dos colores con SIGNIFICADO PROPIO, que no se pueden fundir con los de arriba:
+     --llave = "esta misión desbloquea una mecánica" (el glow dorado del mapa)
+     --sugerencia = "esto es una propuesta, no existe" (los nodos de la pantalla de sugerencias) */
+  --llave:#d98a12; --sugerencia:#c43d86;
+  --brillo:rgba(120,80,240,.16);
+
+  /* rampa de UN hue para las gráficas de la pantalla de misiones: r1 = más, r8 = menos.
+     Vive aquí y no allí para que la paleta siga estando en un solo sitio. */
+  --r1:#3f2088; --r2:#522c9f; --r3:#6539bc; --r4:#7a4bd6;
+  --r5:#9169e2; --r6:#a888ec; --r7:#c1a8f3; --r8:#d9c8f8;
+
+  --sombra:0 1px 2px rgba(30,20,60,.04), 0 8px 28px rgba(60,40,110,.07);
+  --sombra-alta:0 2px 6px rgba(30,20,60,.06), 0 20px 56px rgba(60,40,110,.13);
+  --radio:16px; --radio-s:10px;
+  --nav-alto:56px;
+}
+
+/* 🌓 El claro es la IDENTIDAD, no un tema entre dos: por eso NO se sigue
+   `prefers-color-scheme` y la página abre clara siempre. Pero el visor de
+   Artifacts tiene un botón de tema que estampa `data-theme` en la raíz, así que
+   el oscuro tiene su piel correcta — si no, se vería rota para quien lo pulse.
+   No es una inversión automática: son pasos elegidos sobre el fondo oscuro. */
+:root[data-theme="dark"]{
+  --lienzo:#0f0d15;  --tarjeta:#1a1626;  --hundido:#141020;
+  --tinta:#f2f0f9;   --tinta-2:#b3abc8;  --tinta-3:#857d9c;
+  --linea:#2a2440;   --linea-2:#3b3357;
+  --acento:#a486ff;  --acento-2:#c0aaff; --acento-suave:#241d3c;
+  --ok:#5cc98a; --aviso:#e0ab55; --alerta:#f08a80; --info:#5cc2dd;
+  --llave:#ffce6b; --sugerencia:#ff86c9;
+  --brillo:rgba(140,105,255,.26);
+  /* la rampa se INVIERTE en oscuro: r1 sigue siendo "más" y por tanto el más luminoso.
+     No es un flip automático: son pasos elegidos contra el fondo oscuro. */
+  --r1:#d5c5ff; --r2:#c2aefc; --r3:#af97f8; --r4:#9c80f2;
+  --r5:#8a6be8; --r6:#7757d8; --r7:#6546c1; --r8:#5438a5;
+  --sombra:0 1px 2px rgba(0,0,0,.5), 0 8px 28px rgba(0,0,0,.4);
+  --sombra-alta:0 2px 6px rgba(0,0,0,.55), 0 20px 56px rgba(0,0,0,.5);
+}
+
+*{box-sizing:border-box}
+
+/* ── La tipografía ────────────────────────────────────────────────────────
+   SIN webfont, y no es pereza: la CSP del Artifact bloquea cualquier CDN de
+   fuentes, y empotrar una como data: URI son ~80 KB por peso EN CADA PÁGINA.
+   El stack da SF Pro en Mac y Segoe UI Variable en Windows, que son justo las
+   dos caras de sistema que se parecen a lo que se ha pedido.
+   Lo que de verdad hace que "lea Apple" no es la fuente: es el TAMAÑO grande,
+   el peso alto y el tracking NEGATIVO en los titulares. */
+body{
+  margin:0; background:var(--lienzo); color:var(--tinta);
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI Variable Text",
+    "Segoe UI",system-ui,sans-serif;
+  font-size:17px; line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,h4{
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI Variable Display",
+    "Segoe UI",system-ui,sans-serif;
+  margin:0; text-wrap:balance; font-weight:640;
+}
+h1{font-size:clamp(2.1rem,5.2vw,3.4rem); letter-spacing:-.026em; line-height:1.06}
+h2{font-size:clamp(1.35rem,2.6vw,1.85rem); letter-spacing:-.021em; line-height:1.16}
+h3{font-size:1.08rem; letter-spacing:-.014em; line-height:1.3}
+p{margin:0 0 .8em}
+a{color:var(--acento); text-decoration:none}
+a:hover{text-decoration:underline; text-underline-offset:3px}
+code{font-family:ui-monospace,"SF Mono","Cascadia Code",Consolas,monospace; font-size:.84em;
+  background:var(--hundido); color:var(--acento); padding:2px 6px; border-radius:6px;
+  border:1px solid var(--linea)}
+.num,.tab{font-variant-numeric:tabular-nums}
+:focus-visible{outline:2.5px solid var(--acento-2); outline-offset:3px; border-radius:6px}
+
+/* ── La barra ─────────────────────────────────────────────────────────────
+   Fija, translúcida y con blur: es el gesto que más dice "Apple" y cuesta 3 líneas. */
+.nav{
+  position:sticky; top:0; z-index:50; height:var(--nav-alto);
+  display:flex; align-items:center; gap:6px; padding:0 20px;
+  background:color-mix(in srgb,var(--lienzo) 78%,transparent);
+  backdrop-filter:saturate(180%) blur(20px);
+  -webkit-backdrop-filter:saturate(180%) blur(20px);
+  border-bottom:1px solid color-mix(in srgb,var(--linea) 70%,transparent);
+}
+.nav .marca{display:flex; align-items:center; gap:.5em; font-weight:660; letter-spacing:-.018em;
+  white-space:nowrap; margin-right:12px; color:var(--tinta)}
+.nav .marca:hover{text-decoration:none}
+.nav .marca .ico{font-size:1.1em}
+.nav-links{display:flex; gap:2px; align-items:center; overflow-x:auto; scrollbar-width:none;
+  flex:1; min-width:0}
+.nav-links::-webkit-scrollbar{display:none}
+.nav a.pag{
+  display:flex; align-items:center; gap:.42em; padding:6px 11px; border-radius:9px;
+  color:var(--tinta-2); font-size:.875rem; font-weight:530; white-space:nowrap;
+  transition:background .16s, color .16s;
+}
+.nav a.pag:hover{background:var(--hundido); color:var(--tinta); text-decoration:none}
+.nav a.pag[aria-current=page]{background:var(--acento-suave); color:var(--acento); font-weight:640}
+.nav .sep{width:1px; height:20px; background:var(--linea-2); margin:0 7px; flex:0 0 auto}
+.nav .grupo-tit{font-size:.66rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--tinta-3); padding:0 7px 0 3px; white-space:nowrap; flex:0 0 auto}
+.nav .der{margin-left:auto; display:flex; gap:6px; align-items:center; flex:0 0 auto}
+.nav button.tema{background:none; border:1px solid var(--linea); color:var(--tinta-2);
+  border-radius:9px; padding:6px 10px; cursor:pointer; font:inherit; font-size:.85rem}
+.nav button.tema:hover{border-color:var(--linea-2); color:var(--tinta)}
+.nav a.fuera{font-size:.83rem; color:var(--tinta-3); padding:6px 10px; border-radius:9px}
+.nav a.fuera:hover{color:var(--tinta); background:var(--hundido); text-decoration:none}
+@media(max-width:720px){ .nav .grupo-tit{display:none} }
+
+/* ── El lienzo ──────────────────────────────────────────────────────────── */
+.hoja{max-width:1160px; margin:0 auto; padding:0 24px 96px}
+.hoja.ancha{max-width:1320px}
+
+/* la cabecera de cada página: titular grande + una línea. Nada más. */
+.cabecera{padding:64px 0 34px; max-width:760px}
+.cabecera .sobre{font-size:.78rem; font-weight:680; letter-spacing:.09em; text-transform:uppercase;
+  color:var(--acento); margin:0 0 12px}
+.cabecera p{color:var(--tinta-2); font-size:1.16rem; margin:16px 0 0; line-height:1.5}
+@media(max-width:640px){ .cabecera{padding:38px 0 24px} }
+
+/* ── Tarjetas ─────────────────────────────────────────────────────────────
+   El aire es el diseño: 22px de padding y 18px de hueco, casi el doble que antes. */
+.rejilla{display:grid; grid-template-columns:repeat(auto-fill,minmax(290px,1fr)); gap:18px}
+.tarjeta{background:var(--tarjeta); border:1px solid var(--linea); border-radius:var(--radio);
+  padding:22px; box-shadow:var(--sombra); display:flex; flex-direction:column; gap:10px}
+a.tarjeta{color:inherit}
+a.tarjeta:hover{text-decoration:none; box-shadow:var(--sombra-alta); border-color:var(--linea-2);
+  transform:translateY(-2px)}
+a.tarjeta{transition:box-shadow .22s cubic-bezier(.2,.8,.3,1), transform .22s cubic-bezier(.2,.8,.3,1),
+  border-color .22s}
+.tarjeta h3{display:flex; align-items:center; gap:.45em}
+.tarjeta p{color:var(--tinta-2); font-size:.94rem; margin:0}
+.tarjeta .ico{font-size:1.5rem; line-height:1}
+
+/* la cifra viva de la portada */
+.cifra{font-size:2.1rem; font-weight:700; letter-spacing:-.03em; line-height:1;
+  font-variant-numeric:tabular-nums; color:var(--tinta)}
+.cifra small{font-size:.86rem; font-weight:520; color:var(--tinta-3); letter-spacing:0;
+  margin-left:.45em}
+
+/* ── Piezas sueltas ───────────────────────────────────────────────────────── */
+.pastilla{display:inline-flex; align-items:center; gap:.35em; font-size:.75rem; font-weight:620;
+  padding:3px 9px; border-radius:999px; border:1px solid var(--linea-2); color:var(--tinta-3)}
+.pastilla.acc{color:var(--acento); border-color:var(--acento); background:var(--acento-suave)}
+.pastilla.ok{color:var(--ok); border-color:var(--ok)}
+.pastilla.avi{color:var(--aviso); border-color:var(--aviso)}
+.pastilla.ale{color:var(--alerta); border-color:var(--alerta)}
+
+.boton{display:inline-flex; align-items:center; gap:.5em; background:var(--acento); color:#fff;
+  border:1px solid transparent; border-radius:980px; padding:11px 22px; font:inherit;
+  font-size:.95rem; font-weight:600; cursor:pointer}
+.boton:hover{background:var(--acento-2); text-decoration:none; color:#fff}
+.boton.claro{background:var(--tarjeta); color:var(--tinta); border-color:var(--linea-2)}
+.boton.claro:hover{background:var(--hundido); color:var(--tinta)}
+
+.aviso{border-left:3px solid var(--aviso); background:var(--hundido); padding:12px 16px;
+  border-radius:0 var(--radio-s) var(--radio-s) 0; color:var(--tinta-2); font-size:.92rem}
+
+/* 🔴 Todo lo ancho (tablas, diagramas) scrollea DENTRO de su caja: el cuerpo de la
+   página no puede moverse en horizontal nunca, y estas se miran desde el móvil. */
+.scrollx{overflow-x:auto; -webkit-overflow-scrolling:touch}
+table{border-collapse:collapse; width:100%; font-size:.92rem}
+th,td{text-align:left; padding:11px 14px; border-bottom:1px solid var(--linea); vertical-align:top}
+thead th{font-size:.74rem; text-transform:uppercase; letter-spacing:.07em; color:var(--tinta-3);
+  font-weight:680; background:var(--hundido)}
+
+.pie{margin-top:70px; padding:26px 0; border-top:1px solid var(--linea);
+  color:var(--tinta-3); font-size:.84rem; display:flex; gap:14px; flex-wrap:wrap;
+  align-items:center; justify-content:space-between}
+
+/* ── Movimiento ───────────────────────────────────────────────────────────
+   Transición nativa entre páginas (View Transitions API): sin librería, y los
+   navegadores que no la soportan simplemente navegan como siempre. */
+@view-transition{ navigation:auto }
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important; transition-duration:.01ms!important}
+  @view-transition{ navigation:none }
+}
+
+  
+  
+  
+  
   *{box-sizing:border-box}
   html,body{height:100%;margin:0}
-  body{background:var(--ground);color:var(--ink);
+  body{background:var(--lienzo);color:var(--tinta);
     font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
     display:flex;flex-direction:column;overflow:hidden}
   .serif{font-family:ui-serif,Palatino,Georgia,serif}
 
   .topbar{display:flex;align-items:center;gap:14px;flex-wrap:wrap;
-    padding:10px 16px;border-bottom:1px solid var(--line);
-    background:color-mix(in srgb,var(--ground) 90%,transparent);z-index:5}
+    padding:10px 16px;border-bottom:1px solid var(--linea);
+    background:color-mix(in srgb,var(--lienzo) 90%,transparent);z-index:5}
   .brand{font-family:ui-serif,Palatino,Georgia,serif;font-size:1.05rem;display:flex;align-items:center;gap:.4em;white-space:nowrap}
-  .brand .t{color:var(--arcane)}
-  .legend{display:flex;flex-wrap:wrap;gap:6px 12px;font-size:.76rem;color:var(--ink-soft);align-items:center;margin-left:6px}
+  .brand .t{color:var(--acento)}
+  .legend{display:flex;flex-wrap:wrap;gap:6px 12px;font-size:.76rem;color:var(--tinta-2);align-items:center;margin-left:6px}
   .lg{display:inline-flex;align-items:center;gap:.4em}
-  .sw{width:11px;height:11px;border-radius:4px;border:2px solid var(--line)}
+  .sw{width:11px;height:11px;border-radius:4px;border:2px solid var(--linea)}
   .tb-r{margin-left:auto;display:flex;gap:8px;align-items:center}
-  .btn{background:var(--surface);border:1px solid var(--line);color:var(--ink-soft);
+  .btn{background:var(--tarjeta);border:1px solid var(--linea);color:var(--tinta-2);
     border-radius:9px;padding:7px 12px;font-weight:700;font-size:.82rem;cursor:pointer;text-decoration:none;white-space:nowrap}
-  .btn:hover{color:var(--ink);border-color:var(--line-strong)}
-  .btn.arc{background:var(--arcane);color:#fff;border-color:transparent}
+  .btn:hover{color:var(--tinta);border-color:var(--linea-2)}
+  .btn.arc{background:var(--acento);color:#fff;border-color:transparent}
+  /* buscador: con 71 nodos, encontrar uno concreto a ojo no es viable */
+  .btn.find{width:190px;font-weight:600;color:var(--tinta)}
+  .btn.find::placeholder{color:var(--tinta-3);font-weight:600}
+  .btn.find:focus{outline:none;border-color:var(--acento);box-shadow:0 0 0 3px var(--brillo)}
+  @media(max-width:720px){.btn.find{width:130px}}
 
   #cy{flex:1;width:100%;min-height:0;background:
-    radial-gradient(60% 60% at 50% 0%, var(--glow), transparent 70%), var(--ground)}
+    radial-gradient(60% 60% at 50% 0%, var(--brillo), transparent 70%), var(--lienzo)}
 
   .hint{position:fixed;left:50%;bottom:12px;transform:translateX(-50%);z-index:4;
-    background:var(--surface);border:1px solid var(--line);border-radius:999px;
-    padding:6px 14px;font-size:.76rem;color:var(--ink-faint);box-shadow:var(--shadow);pointer-events:none}
+    background:var(--tarjeta);border:1px solid var(--linea);border-radius:999px;
+    padding:6px 14px;font-size:.76rem;color:var(--tinta-3);box-shadow:var(--sombra);pointer-events:none}
 
   .panel{position:fixed;top:0;right:0;height:100%;width:340px;max-width:88vw;z-index:8;
-    background:var(--surface);border-left:1px solid var(--line-strong);box-shadow:var(--shadow);
+    background:var(--tarjeta);border-left:1px solid var(--linea-2);box-shadow:var(--sombra);
     transform:translateX(102%);transition:transform .28s ease;overflow-y:auto;padding:22px 22px 40px}
   .panel.on{transform:none}
-  .panel .x{position:absolute;top:14px;right:14px;border:none;background:var(--chip);color:var(--ink-soft);
+  .panel .x{position:absolute;top:14px;right:14px;border:none;background:var(--acento-suave);color:var(--tinta-2);
     width:30px;height:30px;border-radius:8px;cursor:pointer;font-size:1rem}
   .panel h2{font-family:ui-serif,Palatino,serif;font-size:1.4rem;margin:.1em 44px .5em 0;line-height:1.15}
   .chips{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 14px}
-  .chip{font-size:.72rem;font-weight:700;padding:3px 9px;border-radius:999px;border:1px solid var(--line-strong);color:var(--ink-soft)}
-  .chip.sci{color:var(--sci)} .chip.folk{color:var(--folk)} .chip.gold{color:var(--gold)} .chip.arc{color:var(--arcane)}
-  .chip.new{color:#fff;background:var(--gold);border-color:transparent}
-  .chip.future{color:var(--ink-faint)}
-  .chip.suggest{color:#fff;background:var(--suggest);border-color:transparent}
-  .panel .desc{color:var(--ink-soft);font-size:.94rem;line-height:1.55;margin:0 0 14px}
-  .panel .rw{font-weight:700;color:var(--gold);font-size:.92rem;margin:0 0 12px}
-  .panel .lbl{font-size:.72rem;text-transform:uppercase;letter-spacing:.1em;color:var(--ink-faint);font-weight:800;margin:16px 0 8px}
-  .panel ol{margin:0;padding-left:1.2em} .panel li{margin:.3em 0;color:var(--ink-soft);font-size:.9rem}
-  .panel .who{font-size:.85rem;color:var(--ink-faint);margin:-6px 0 12px}
-  @media(max-width:560px){.panel{width:100%;max-width:100%;height:62%;top:auto;bottom:0;border-left:0;border-top:1px solid var(--line-strong);transform:translateY(102%)}.panel.on{transform:none}}
+  .chip{font-size:.72rem;font-weight:700;padding:3px 9px;border-radius:999px;border:1px solid var(--linea-2);color:var(--tinta-2)}
+  .chip.sci{color:var(--info)} .chip.folk{color:var(--ok)} .chip.gold{color:var(--aviso)} .chip.arc{color:var(--acento)}
+  .chip.new{color:#fff;background:var(--aviso);border-color:transparent}
+  .chip.future{color:var(--tinta-3)}
+  .chip.suggest{color:#fff;background:var(--sugerencia);border-color:transparent}
+  .chip.key{color:#3a2600;background:var(--llave);border-color:transparent}
+  .chip.secret{color:#3a2600;background:var(--llave);border-color:transparent}
+  .panel .desc{color:var(--tinta-2);font-size:.94rem;line-height:1.55;margin:0 0 14px}
+  .panel .rw{font-weight:700;color:var(--aviso);font-size:.92rem;margin:0 0 12px}
+  .panel .unlock{display:flex;gap:.5em;align-items:flex-start;margin:0 0 14px;padding:10px 12px;border-radius:11px;
+    font-weight:700;font-size:.9rem;color:var(--tinta);
+    background:color-mix(in srgb,var(--llave) 18%,var(--tarjeta));border:1px solid var(--llave);
+    box-shadow:0 0 0 1px color-mix(in srgb,var(--llave) 30%,transparent), 0 6px 18px color-mix(in srgb,var(--llave) 22%,transparent)}
+  .sw.key{border-color:var(--llave)!important;box-shadow:0 0 6px var(--llave)}
+  .panel .lbl{font-size:.72rem;text-transform:uppercase;letter-spacing:.1em;color:var(--tinta-3);font-weight:800;margin:16px 0 8px}
+  .panel ol{margin:0;padding-left:1.2em} .panel li{margin:.3em 0;color:var(--tinta-2);font-size:.9rem}
+  .panel .who{font-size:.85rem;color:var(--tinta-3);margin:-6px 0 12px}
+  @media(max-width:560px){.panel{width:100%;max-width:100%;height:62%;top:auto;bottom:0;border-left:0;border-top:1px solid var(--linea-2);transform:translateY(102%)}.panel.on{transform:none}}
 </style>
 </head>
 <body>
 
-<div class="topbar">
-  <div class="brand"><span class="t">✨</span> El Reino <b>6</b> · Sugerencias de Misiones</div>
-  <div class="legend">
-    <span class="lg"><span class="sw" style="border-color:var(--sci)"></span>Forasteros</span>
-    <span class="lg"><span class="sw" style="border-color:var(--folk)"></span>Pueblo</span>
-    <span class="lg"><span class="sw" style="border-color:var(--gold)"></span>Sistema/economía</span>
-    <span class="lg"><span class="sw" style="border-color:var(--arcane)"></span>Loop diario</span>
-    <span class="lg"><span class="sw" style="border-color:var(--ink-faint);border-style:dashed"></span>Futuro</span>
-    <span class="lg"><span class="sw" style="background:var(--suggest);border-color:transparent"></span><b>Sugerencia (nueva)</b></span>
-  </div>
-  <div class="tb-r">
-    <button class="btn arc" onclick="ER6.only()">✨ Solo sugerencias</button>
-    <button class="btn" onclick="ER6.fit()">Centrar</button>
-    <button class="btn" onclick="ER6.theme()">🌓 Tema</button>
-    <a class="btn" href="mapa.html">🗺️ Mapa actual</a>
-    <a class="btn" href="https://duleelhorror.github.io/elreino6-guia/">← Guía</a>
-  </div>
+<nav class="nav">
+<a class="marca" href="https://duleelhorror.github.io/elreino6-guia/inicio.html"><span class="ico">⌂</span> El Reino <b>6</b></a>
+<div class="nav-links">
+<span class="grupo-tit">Decidir</span>
+<a class="pag" href="https://duleelhorror.github.io/elreino6-guia/misiones.html"><span>📊</span> Misiones</a>
+<a class="pag" href="https://duleelhorror.github.io/elreino6-guia/taller.html"><span>🛠️</span> El Taller</a>
+<a class="pag" href="https://duleelhorror.github.io/elreino6-guia/sugerencias.html" aria-current="page"><span>💡</span> Sugerencias</a>
+<span class="sep"></span>
+<span class="grupo-tit">Producir</span>
+<a class="pag" href="https://duleelhorror.github.io/elreino6-guia/sprites.html"><span>🎨</span> Sprites que faltan</a>
+<a class="pag" href="https://duleelhorror.github.io/elreino6-guia/plantillas.html"><span>🧊</span> Plantillas</a>
 </div>
+<div class="der">
+<a class="fuera" href="https://duleelhorror.github.io/elreino6-guia/index.html">🗼 La guía</a>
+<button class="tema" onclick="TEMA()" title="Cambiar tema">◐</button>
+</div></nav>
+<script>function TEMA(){var r=document.documentElement;r.dataset.theme=r.dataset.theme==='dark'?'light':'dark';try{localStorage.setItem('er6tema',r.dataset.theme)}catch(e){}}try{var t=localStorage.getItem('er6tema');if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
 
 <div id="cy"></div>
-<div class="hint">Lo <b>magenta</b> son misiones SUGERIDAS (aún no existen) · clic en un nodo para el detalle · «Solo sugerencias» aísla lo nuevo</div>
+<div class="hint">Arrastra para mover · rueda para zoom · clic en un nodo para el detalle · «Ver propuesta» añade las misiones que faltan (en magenta)</div>
 
 <aside class="panel" id="panel">
   <button class="x" onclick="ER6.close()">✕</button>
@@ -4364,6 +4545,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
 <script>
 (function(){
   let onlyMode=false;
+  let proposalOn=false;
   // ===== DATOS DE LAS MISIONES (nodos) =====
   // faction: sci|folk|gold|arc|future · status: live|new|future
   const N = [
@@ -4371,53 +4553,62 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
       desc:'Nada más entrar recibes el contrato (una oferta de empleo cutre) y una brújula que te lleva a Toni.'},
     {id:'fichaje', label:'🦫 Operación Recluta', npc:'Toni Tutorial Jr', faction:'sci', type:'Tutorial de survival', coins:30, status:'live',
       steps:['16 troncos','1 mesa de trabajo','32 adoquines','6 filetes'], desc:'Ayudas a montar el campamento. Tutorial de talar, minar, craftear y cocinar.'},
-    {id:'clase', label:'💅 Bautismo de Fuego', npc:'Maestro Anselmo', faction:'sci', type:'Tutorial · desbloquea tu CLASE', coins:7, status:'live',
+    {id:'clase', label:'💅 Bautismo de Fuego', npc:'Maestro Anselmo', faction:'sci', type:'Tutorial · desbloquea tu CLASE', coins:7, status:'live', unlocks:'Tu CLASE del MMO (kit, atributos y hechizos)',
       steps:['Matar 3 zombis','Hablar con Anselmo','Entregar 1 pluma'], desc:'Anselmo te evalúa y te asigna tu clase (te da el kit del MMO).'},
-    {id:'semental', label:'🏹 Fuego a Discreción', npc:'Semental de la Flecha', faction:'folk', type:'Tutorial de combate y poderes', coins:18, status:'live',
+    {id:'semental', label:'🏹 Fuego a Discreción', npc:'Semental de la Flecha', faction:'folk', type:'Tutorial de combate y poderes', coins:18, status:'live', unlocks:'Lanzar poderes: barra de habilidades, maná y enfriamiento',
       steps:['5 zombis','5 esqueletos','5 arañas','3 creepers','Horda final'], desc:'Cinco pruebas que enseñan la barra de poderes, el maná y el enfriamiento. Te regala un arco.'},
     {id:'alquimista', label:'🌸 Contacto en la Botica', npc:'La Alquimista', faction:'folk', type:'Recado', reward:'Reagentes + brújula a Nando', status:'live',
       steps:['Entregar 1 amapola + 1 diente de león'], desc:'Te da los primeros ingredientes de magia y te mete en el negocio de la maría.'},
     {id:'nando', label:'🕳️ El Alijo de la Cueva', npc:'Nando / Fernando', faction:'folk', type:'Recado · el camino se BIFURCA', reward:'Alijo de semillas', status:'live',
       steps:['Entregar 3 panes'], desc:'El camello fino te fía las semillas de marihuana. Aquí el camino se abre en dos ramas.'},
     // Rama A (secundaria)
-    {id:'cultivo', label:'🌿 Cultivo Clandestino', npc:'La Alquimista', faction:'folk', type:'Saga · 3 misiones (rama secundaria)', coins:26, status:'live',
+    {id:'cultivo', label:'🌿 Cultivo Clandestino', npc:'La Alquimista', faction:'folk', type:'Saga · 3 misiones (rama secundaria)', coins:26, status:'live', unlocks:'Cultivar droga (SPdrug): invernadero, laboratorio y la venta de maría',
       steps:['1) La Huerta → planta las semillas, espera a que crezcan y entrégale 1 «materia» a la Alquimista (6🥜 + reagentes)','2) El Secadero → seca la cosecha en el minijuego del compostador y entrega 1 «seca» (8🥜 + invernadero)','3) El Laboratorio → cuece la droga en el ahumador (orden correcto o explota) y entrega 1 cannabis (12🥜 + desbloquea la venta)'], desc:'Te enseña a plantar, secar y cocinar la maría paso a paso, regalándote el invernadero y el laboratorio.'},
-    {id:'vender', label:'💸 Vender maría', npc:'Cofre (La Alquimista)', faction:'gold', type:'Repetible ∞', reward:'8🥜/unidad · tope 24/día', status:'live',
+    {id:'vender', loop:true, label:'💸 Vender maría', npc:'Cofre (La Alquimista)', faction:'gold', type:'Repetible ∞', reward:'8🥜/unidad · tope 24/día', status:'live',
       desc:'Ya puedes vender tu maría en el cofre. Fuente de dinero repetible (con tope diario para no romper la economía).'},
     // Rama B (principal)
     {id:'permiso', label:'🏛️ Vía Crucis Administrativa', npc:'Toni → 6 funcionarios', faction:'sci', type:'Saga · comedia burocrática', coins:28, status:'live',
       steps:['Circo del papeleo: recorre las 6 ventanillas del Ayuntamiento en orden (cada una te marea con un sello, una tasa o una espera absurda) hasta conseguir el Permiso de Obra:','1) La Ujier','2) Los Sellos','3) El Registrador','4) El Interventor','5) El Inspector (en la excavación)','6) El Ministro → firma el Permiso'], desc:'El circo del papeleo del Ayuntamiento. Puerta de la HISTORIA PRINCIPAL + gancho de la Torre Negra.'},
-    {id:'bolsa', label:'💼 Alta en el Gremio', npc:'Toni', faction:'sci', type:'Desbloquea los oficios', coins:10, reward:'Carné de Trabajador', status:'live',
+    {id:'bolsa', label:'💼 Alta en el Gremio', npc:'Toni', faction:'sci', type:'Desbloquea los oficios', coins:10, reward:'Carné de Trabajador', status:'live', unlocks:'Los Oficios (Jobs): sueldo diario por currar',
       desc:'Toni te da el carné que desbloquea los 5 oficios (Jobs).'},
-    {id:'jobs', label:'🛠️ Los Oficios (Jobs)', npc:'Sistema', faction:'gold', type:'Repetible · sueldo diario', reward:'Tope 100🥜/día', status:'live',
+    {id:'jobs', loop:true, label:'🛠️ Los Oficios (Jobs)', npc:'Sistema', faction:'gold', type:'Repetible · sueldo diario', reward:'Tope 100🥜/día', status:'live',
       desc:'Minero, Leñador, Hortelano, Cazador y Pescador. El ingreso del día a día por currar.'},
     {id:'carpincho', label:'🕵️ Operación Carpincho', npc:'Toni → el Ministro', faction:'sci', type:'Saga · 6 misiones · JEFE', coins:84, reward:'Medalla del Capincherío', status:'live',
       steps:['1) La Obra Congelada (Toni) → investiga la nota falsa de «riesgo sísmico» (habla con Vera y la Dra. Pizarrica)','2) El Soplo del Chef (Chef Calderón) → te destapa el plan de los «Apartamentos Pan de Gamba»','3) El Expediente Fantasma (Toni) → infíltrate en el Ayuntamiento con la clave y saca el expediente del cofre','4) Quema Controlada (Toni) → con el Mechero, quema las pilas de papeles y tráele las cenizas','5) Los Precintadores (combate) → derrota la oleada de matones y a su Jefe','6) El Careo — JEFE (el Ministro) → destápalo y véncelo (se escapa «trasladado a un Ministerio más grande»)'], desc:'El Ministro precinta la mina con una excusa falsa para echar al pueblo. Infiltración, sabotaje y combate final contra el jefe.'},
-    {id:'barco', label:'🍺 El Bar Co', npc:'Señor Trapo', faction:'folk', type:'Saga · 7 misiones (las 5 últimas OPCIONALES)', coins:46, reward:'Jarra + Delantal', status:'live',
+    {id:'barco', label:'🍺 El Bar Co', npc:'Señor Trapo', faction:'folk', type:'Saga · 7 misiones (las 5 últimas OPCIONALES)', coins:46, reward:'Jarra + Delantal', status:'live', unlocks:'Fabricar cerveza (BreweryX)',
       steps:['0) Aguas Turbias (Toni) → ve al Bar Co a hablar con el Señor Trapo','1) El Caldero → FERMENTA en el caldero al fuego y entrégale el Mosto','2) El Alambique → DESTILA en el soporte de pociones (con glowstone) ← aquí ya puedes seguir la línea principal con Toni','3) La Barrica (opcional) → AÑEJA la cerveza en un barril de roble','4) El Sellado (opcional) → SÉLLALA en el ahumador','5) La Receta del Naufragio (opcional) → fabrica la Birra del Naufragio (receta completa)','6) La Noche del Bar Co (opcional) → sírvele varias birras (gag de borrachera) — final'], desc:'El tabernero te enseña a fabricar cerveza paso a paso en su barco volcado. Tras la 2ª (El Alambique) la línea principal se reanuda con Toni; las demás quedan opcionales.'},
-    {id:'tablon_luz', label:'⚡ Doce Voltios', npc:'Toni', faction:'sci', type:'Tutorial · DESBLOQUEA el Tablón', coins:10, reward:'Enchufe del Tablón', status:'new',
+    {id:'tablon_luz', label:'⚡ Doce Voltios', npc:'Toni', faction:'sci', type:'Tutorial · DESBLOQUEA el Tablón', coins:10, reward:'Enchufe del Tablón', status:'new', unlocks:'El Tablón de Encargos: loop diario + moneda Fichas',
       steps:['Bajar la palanca del puente Mambutu','Bajar la palanca de la iglesia','Entregar los 2 fusibles a Toni'], desc:'El Tablón no funciona: no tiene corriente. Toni te explica (con lógica absurda) que va a «12 voltios» y hay que activar 2 palancas del circuito.'},
     // Loop diario
-    {id:'tablon', label:'🎟️ Tablón de Encargos', npc:'Sistema', faction:'arc', type:'Loop diario · repetible', reward:'Fichas 🎟️', status:'new',
+    {id:'tablon', loop:true, label:'🎟️ Tablón de Encargos', npc:'Sistema', faction:'arc', type:'Loop diario · repetible', reward:'Fichas 🎟️', status:'new',
       steps:['4 encargos aleatorios al día','Suben el Pase del Reino','Cada nivel del Pase da Fichas'], desc:'Misiones diarias que dan Fichas. El enganche para volver cada día.'},
-    {id:'tienda', label:'🛒 Tienda de Fichas', npc:'Sistema', faction:'arc', type:'Sumidero de Fichas', reward:'Llaves de la Suerte', status:'new',
-      desc:'Gastas las Fichas comprando llaves del Cofre de la Suerte.'},
-    {id:'cofre', label:'🎰 Cofre de la Suerte', npc:'Sistema', faction:'arc', type:'Lootbox (animación)', reward:'Premios aleatorios', status:'new',
-      desc:'Abres el cofre con la llave: materiales, Cacahuates, esmeraldas y armas.'},
     // Secundarias / nuevas (2026-07-11)
     {id:'pecio', label:'⚓ El Guardián del Pecio', npc:'Semental de la Flecha', faction:'folk', type:'Secundaria · pesca un bicho raro', reward:'Plano de la Espada Pirata', status:'new',
       steps:['Ir al pecio hundido','Coger el cofre (aparece el Pescaíto Lerele)','Traer el plano al Semental'], desc:'Un barco hundido esconde el plano de una espada pirata… y un bicho que lo guarda. Secundaria del Semental.'},
-    {id:'caballos', label:'🐴 Horse Luis', npc:'Horse Luis', faction:'folk', type:'Saga · 3 misiones (escuchar cuentos)', coins:9, reward:'Comprar caballos, sillas y cuerdas', status:'new',
+    {id:'caballos', label:'🐴 Horse Luis', npc:'Horse Luis', faction:'folk', type:'Saga · 3 misiones (escuchar cuentos)', coins:9, reward:'Comprar caballos, sillas y cuerdas', status:'new', unlocks:'Comprar caballos, sillas y cuerdas en el establo',
       steps:['1) Un Caballo para el Reino (Toni) → acepta la quest y ve al establo (brújula) a hablar con Horse Luis','2) Horse Luis I → escucha su primer cuento (~2 min). ¡No puedes salir del establo hasta que acabe!','3) Horse Luis II → segundo cuento (~4 min)','4) Horse Luis III → el gran final (~7 min); al acabar se abre el cofre-tienda del establo'], desc:'A un caballo le cayó un rayo y se volvió consciente; ahora, acomplejado, cuida el establo y te narra novelas rosas entre caballos cada vez más largas. Aguanta las tres (sin poder salir del establo) y podrás comprar caballos, sillas y cuerdas.'},
-    {id:'estaciones', label:'🌦️ Gordi Mamón', npc:'Toni → Gordi Mamón', faction:'sci', type:'Saga · 4 misiones (tutorial de estaciones) · OBLIGATORIA', coins:14, reward:'Calendario del Reino', status:'new',
+    {id:'lolo', label:'🔨 La Fragua del Fundacional', npc:'Toni → Lolo el Fundacional', faction:'folk', type:'Saga · 11 misiones · tutorial de accesorios', coins:22, reward:'un set de accesorios del MMO (Equipo del Reino)', status:'new', unlocks:'Equipar accesorios en el Equipo del Reino',
+      steps:['1) La Fragua del Fundacional (Toni) → ve a la herrería a hablar con Lolo','2-10) Fórjate cada joya: llévale materiales a Lolo y te forja anillo, guantes, cinturón, amuleto, capa, brazalete, pendiente, dije e insignia (COMMON, nivel 1) — te enseña el GUI "Equipo del Reino", equipar, niveles, tiers y stats','11) La Obra Maestra → la Reliquia del Aprendiz (COMMON, equipable ya) de broche final'], desc:'Lolo, herrero SIMPLE con delirios de grandeza (se cree GRAN MAESTRO FUNDACIONAL por leer la palabra en una revista), te enseña el sistema de accesorios: forja una joya por misión a cambio de materiales y te explica cómo equiparlas en el Equipo del Reino.'},
+    {id:'lolo_ap', label:'⚒️ El Aprendiz al Revés', npc:'Lolo el Fundacional', faction:'folk', type:'Saga · 3 pruebas · DESBLOQUEA la fragua', coins:17, reward:'reparar tu equipo con Lolo por Cacahuates', status:'new', unlocks:'La fragua de Lolo: reparar tu equipo (20 Cacahuates por pieza)',
+      steps:['1) La Prueba del Calor → Lolo sostiene que un maestro COMPRUEBA: abre un horno 40 veces (vale cualquiera del mundo; él te presta uno). Entrégale la Hoja de Aguante','2) La Prueba de la Elevación → salta delante de él las veces que haga falta (él dice que el martillo sube y baja, y tú también). Entrégale el Acta de Elevación','3) La Prueba del Sacrificio → te da un pico de madera malo (lo hizo él): rómpelo del todo y llévale las Astillas Fundacionales → al acabar te abre el yunque para siempre'], desc:'Lolo se convence de que vienes a que ÉL te enseñe, y te hace pasar las tres pruebas fundacionales que se acaba de inventar, apuntándolo todo en una libreta y sacando conclusiones equivocadas. El veredicto: lo has hecho TODO MAL... exactamente igual que él en su día, así que bienvenido al oficio. Desde entonces te repara el equipo por Cacahuates, que buena falta hace: cada muerte te desgasta las piezas un 20%.'},
+    {id:'nico', label:'🐾 El Refugio de Nico', npc:'Toni → Nico', faction:'gold', type:'Saga · el refugio (en construcción)', coins:14, reward:'al final, adoptar mascotas de EcoPets (de pago) en el mostrador del refugio', status:'new', unlocks:'Adoptar mascotas (EcoPets) en el mostrador del refugio',
+      steps:['1) El Refugio de Nico (Toni) → acepta y ve al establo (brújula) a hablar con Nico','2) Una Manita pal Refugio (Nico) → entrégale 1 bala de heno + 3 de lana','3) Mantas pal Refugio (Nico) → entrégale 4 alfombras blancas + 3 marrones; Nico te presenta a Yaniko','4) (tras la saga de Yaniko) Una Emergencia Delicada (Nico) → se ha cagado de la emoción, tráele 16 papeles → al acabar, Nico te DEJA ADOPTAR mascotas (de pago, "cargos") en el mostrador del refugio'], desc:'Nico regenta lo que llama "tienda de animales", pero es un REFUGIO: recoge bichos que nadie quiere y se emociona con nada (un cielo, muy sensible). Toni te deriva a echarle una mano. Al pedirle mantas te presenta a Yaniko, la gata fumada que se le ha instalado.'},
+    {id:'yaniko', label:'🚬 La Gata del Rincón (Yaniko)', npc:'Yaniko / Nico', faction:'gold', type:'Saga · tabaco (SPdrug) + venta recurrente', coins:25, reward:'venta repetible de tabaco a Yaniko (dinero recurrente)', status:'new', unlocks:'Cultivar y refinar tabaco (SPdrug) + venderlo a Yaniko (ingreso recurrente)',
+      steps:['1) El Gato del Rincón (Yaniko) → te manda al Mercado a comprar semillas de tabaco ("ornamentales")','2) El Secadero (Yaniko) → cultiva, seca y entrégale 3 Tabaco seco','3) Química de Salón (Yaniko) → refina (Hidrógeno→Base Metílica→Producto) y entrégale 1 Producto de tabaco','4) La Hermana (Nico) → llévale 3 pescados cocinados a Yaniko (la nota de su hermana Imoko); abre la venta repetible'], desc:'Yaniko Sato, la gata adicta al tabaco del anime Chainsmoker Cat, se ha instalado en el refugio. Deadpan, gorrona y sin vergüenza. Su saga enseña a cultivar y refinar tabaco con SPdrug; al acabar puedes venderle tabaco por Cacahuates de forma recurrente. Beat final agridulce: su hermana pequeña Imoko (que nunca ves) deja una nota.'},
+    {id:'estaciones', label:'🌦️ Gordi Mamón', npc:'Toni → Gordi Mamón', faction:'sci', type:'Saga · 4 misiones (tutorial de estaciones) · OBLIGATORIA', coins:14, reward:'Calendario del Reino', status:'new', unlocks:'El Calendario del Reino: estaciones y temperatura',
       steps:['1) El Hombre del Tiempo (Toni) → acepta la quest y ve al mercadillo (brújula) a hablar con Gordi Mamón','2) Gordi Mamón I: El Almanaque → ve a leer el Calendario flotante de la plaza y vuelve con Gordi','3) Gordi Mamón II: La Huerta → entrégale 6 zanahorias y 6 patatas (aprendes qué crece en cada estación)','4) Gordi Mamón III: El Termómetro → entrégale 1 pechera de cuero (aprendes del frío y el calor); al acabar recibes el Calendario del Reino de bolsillo'], desc:'El tutorial de las estaciones: el calendario, qué se cultiva en cada estación y la temperatura (en invierno te congelas, en verano te asas). Gordi habla siempre en tercera persona. Es OBLIGATORIO terminarla antes de Operación Carpincho: saber del clima es básico para sobrevivir.'},
     {id:'geologia', label:'🪨 El Pulso de la Piedra', npc:'Doctora Pizarrica', faction:'sci', type:'Saga · 3 misiones (secundaria)', coins:15, reward:'Medalla de Geóloga', status:'new',
       steps:['1) Muestras de Superficie → entrégale 1 de cada roca común (piedra, granito, diorita, andesita, deepslate, toba, calcita)','2) El Temblor Profundo → con el Sismógrafo, baja a Y ≤ -54 y tráele la «Lectura Sísmica»','3) El Catálogo Mineral → entrégale 1 de cada mineral (carbón, hierro, cobre, oro, redstone, lapis, diamante, esmeralda, amatista)'], desc:'La doctora que odia cada piedra te manda catalogar rocas y medir el subsuelo. Secundaria tras Operación Carpincho.'},
+    {id:'mina', label:'⛏️ La Mina Maldita', npc:'Doctora Pizarrica', faction:'sci', type:'Saga · 2 misiones · DESBLOQUEA la Dungeon', coins:38, status:'new', unlocks:'La Dungeon de la Mina (raid en grupo, jefe Capitán Barbahueso) — usable para siempre', desc:'Pizarrica (que odia las piedras) te cuenta la leyenda de la mina y el barco pirata maldito de la tripulación que murió por la maldición del "a que no hay huevos". Descubres la boca de la mina y, tras completar una raid, la dungeon queda desbloqueada para siempre.', steps:['1) La Mina Maldita → encuentra la boca de la mina (cerca del ascensor subebaja, SIN brújula) y vuelve con Pizarrica','2) Bajar a la Mina → Pizarrica te autoriza (acceso), completa una raid (mata al Capitán Barbahueso) y tráele el Diente como prueba → dungeon tuya para siempre']},
+    {id:'dungeon_mina', label:'⛏️ Dungeon: La Mina\n🎚️ Nivel 0-1', npc:'Raid en grupo', dungeon:true, status:'live', type:'DUNGEON · Nivel 0-1 · rejugable · jefe Capitán Barbahueso + 11 piratas', desc:'La dungeon instanciada de la mina: raid en grupo, rejugable siempre. Jefe Capitán Barbahueso (el barco pirata maldito) + su tripulación de muertos podridos. Botín compartido: las 5 Armas del Pecio + el Cofre del Pirata Muerto. Se entra por el Tablón de la boca de la mina, y TODO el grupo tiene que haber completado la saga de Pizarrica (sin el permiso, el Tablón no te deja bajar).', steps:['Fórmate un grupo en la boca de la mina y pulsad el Tablón','🔒 Cada miembro debe haber completado la saga de Pizarrica (permiso reino.mina)','Sobrevivid las fases hasta el Capitán Barbahueso','Botín compartido + cofre; rejugable para siempre']},
+    {id:'abismo', label:'🕳️ El Abismo', npc:'Doctora Pizarrica + Hypertes', faction:'sci', type:'Saga · 4 misiones', coins:64, status:'new', unlocks:'Volar en helicóptero a EL ABISMO, el mundo más profundo del server (hasta 1.000 bloques bajo tierra)', desc:'La mina se le queda corta a Pizarrica: necesita medir el temblor de la Torre en una columna de mil bloques. El único sitio así es El Abismo, y solo se llega en helicóptero — pero el piloto, Hypertes, habla rimando, está obsesionado con un tal Chavitox y no mueve el aparato sin un buen soborno. Abajo hay que ir marcando el Sismógrafo a cuatro profundidades... y de la última no se vuelve por tu propio pie.', steps:['1) Pasaje al Abismo → Pizarrica te manda al helipuerto a buscar al piloto (brújula)','2) Gastos de Combustible → Hypertes te clava 35 Cacahuates en 3 plazos (combustible + tasa de aterrizaje + seguro de vida) → EL ABISMO deja de salir en gris en la terminal de vuelo','3) El Descenso → Pizarrica te da el Sismógrafo: vuela al Abismo, baja y dale clic derecho en las cotas -200, -400, -800 y -1000 (mientras bajas, la pantalla te va cantando tu altura y la siguiente marca). En la última pasa ALGO. Vuelve con el Informe','4) Quién Me Subió → pregúntale a Hypertes quién te sacó de ahí abajo. No hay respuesta (todavía)']},
+    {id:'cantera', label:'☣ La Cantera Cerrada', npc:'Doctora Pizarrica', faction:'sci', type:'Misión · DESBLOQUEA la Dungeon', coins:35, status:'new', unlocks:'La raid de LA CANTERA (repetible para siempre) + volar allí en helicóptero', desc:'Pizarrica te cuenta por fin lo que lleva un mes callándose: esa porquería negra que le crece en la excavación —el sculk— cree que la genera la Torre. Insiste en que es una teoría, y en que le fastidia que sea la única que le cuadra. Buscando si había pasado antes dio con una cantera del norte que clausuraron hace años; y tirando del expediente con Papriko averiguó cómo la clausuraron: sellando los accesos con el turno de mañana todavía dentro. Ahora quiere una muestra de allí para compararla con la suya.', steps:['1) La Cantera Cerrada → escucha a Pizarrica (al aceptar se te abre el canal LA CANTERA en la terminal de vuelo Y el Tablón de allí)','2) Vuela a la Cantera con el helicóptero de Hypertes','3) Firma el Parte de Turno, baja con la expedición y mata a El Último Turno: suelta una Muestra de Sculk Vivo a CADA uno de los que peleen','4) Tráele la muestra a Pizarrica. A partir de ahí la Cantera queda abierta para repetir la raid las veces que quieras']},
+    {id:'dungeon_cantera', label:'☣ Dungeon: La Cantera\n🎚️ Nivel 1-5', npc:'Raid en grupo', dungeon:true, status:'new', type:'DUNGEON · Nivel 1-5 · rejugable · jefe El Último Turno + 76 infectados', desc:'La segunda dungeon, y sube el listón: los de la Mina eran piratas muertos, aquí son los mineros que sellaron dentro, colonizados por el sculk. El jefe, El Último Turno, está CIEGO y te caza por el OÍDO — a media vida se sella tras tres nodos de sculk y hay que apagarlos agachado, porque su pulso solo mata a quien no lo está. Botín: las 5 Armas del Último Turno (una por clase, nivel 10). Se llega EN HELICÓPTERO y se firma el Parte de Turno; todo el grupo necesita haber hecho la misión de Pizarrica.', steps:['Vuela a la Cantera con la terminal del helipuerto','Firma el Parte de Turno (el atril) para abrir o unirte a la expedición','Toca la Sirena de Relevo para bajar','Cinco zonas de infectados hasta la sala del jefe','El Último Turno: pégale hasta media vida, y cuando se selle APAGA LOS NODOS AGACHADO']},
     {id:'banco', label:'🏦 Alta en el Sistema', npc:'Toni', faction:'sci', type:'Te manda a abrir cuenta', status:'new',
       steps:['Ir a hablar con Yael, en el banco'], desc:'Para cobrar la nómina necesitas cuenta bancaria. Toni te manda a la ventanilla de Yael.'},
-    {id:'cuenta', label:'🏦 Capital Inicial', npc:'Yael Goldstein', faction:'gold', type:'Saga · 17 comisiones cutres', reward:'Cartilla del Banco (acceso a la Bolsa)', status:'new',
+    {id:'cuenta', label:'🏦 Capital Inicial', npc:'Yael Goldstein', faction:'gold', type:'Saga · 17 comisiones cutres', reward:'Cartilla del Banco (acceso a la Bolsa)', status:'new', unlocks:'La Bolsa del Reino (mercado dinámico de The Endex)',
       steps:['17 pagos crecientes (2,3,4…30)','Total: pagas 200 Cacahuates','Excusas cada vez más absurdas'], desc:'La cajera pesada y avariciosa te clava comisión tras comisión (200🥜 en total) con excusas patéticas, hasta abrirte la cuenta. SUMIDERO económico.'},
-    {id:'mercado', label:'💹 La Bolsa del Reino', npc:'Sistema (The Endex)', faction:'gold', type:'Mercado de valores · repetible', reward:'Compra/vende · precios dinámicos', status:'new',
+    {id:'mercado', loop:true, label:'💹 La Bolsa del Reino', npc:'Sistema (The Endex)', faction:'gold', type:'Mercado de valores · repetible', reward:'Compra/vende · precios dinámicos', status:'new',
       steps:['Clic en la campana de la Bolsa','Precios que suben y bajan solos','Eventos: cracks y fiebres'], desc:'El mercado dinámico: compra barato, vende caro. Precios que fluctúan y eventos locos. Se desbloquea al abrir la cuenta con Yael.'},
     {id:'anclaje', label:'🗼 La Red de Anclaje', npc:'Toni → Saturnino → Gordon Wizman', faction:'sci', type:'Saga · 3 misiones · te presenta a Gordon y el colisionador', coins:18, reward:'Sincronización + Llave del Capincherío', status:'new',
       steps:['1) La Red de Anclaje (Toni) → habla con Saturnino','2) La Roca que Zumba (Saturnino) → habla con Gordon Wizman en la Torre del Mago','3) Protocolo de Sincronización (Gordon) → cruza la puerta a Black Mesa, métete en el colisionador y vuelve con Gordon'], desc:'Arranca la rama del Nexo. Un físico de otro mundo con un cono de obra por sombrero te mete en el ajo: cruzas por una puerta a Black Mesa (un laboratorio de otra realidad) y grabas tu firma en un colisionador.'},
@@ -4425,7 +4616,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
       steps:['1) Repetidores de Señal → planta 2 repetidores AGACHADO (barra de progreso) en los puentes Mambutu y Jolimbo','2) Refrigeración de Emergencia → llévale a Gordon un stack de bolas de nieve (su traje HEV se recalienta)','3) Cobertura desde Black Mesa → planta 2 repetidores dentro de Black Mesa (busca la Sala de Servidores y el Puesto de Seguridad 3)'], desc:'Instalas repetidores por el mundo aguantando agachado mientras se llena una barra de progreso, como plantar una cámara en Tarkov.'},
     {id:'anclaje_salto', label:'🧪 Protocolo de Salto', npc:'Gordon Wizman', faction:'sci', type:'Saga · 2 misiones · el nexo falla y te escupe lejos', coins:27, reward:'Cacahuates + Llave de Bronce', status:'new',
       steps:['1) Prueba de Salto → ve al Nexo del Reino: te teletransporta LEJOS (mismo mundo) y vuelves andando a Gordon con una brújula','2) El Repetidor que Faltaba → planta el último repetidor en la torre de la iglesia (campanario)'], desc:'La primera prueba de teletransporte sale mal: el Nexo te lanza al quinto pino y toca volver a pata. Gordon descubre que faltaba un repetidor.'},
-    {id:'anclaje_fractal', label:'🌀 La Fractura del Nexo', npc:'Gordon Wizman', faction:'arc', type:'FINALE · 1 misión · desbloquea el VIAJE RÁPIDO (Torre↔Reino)', coins:25, reward:'Viaje entre Nexos + Llave del Capincherío', status:'new',
+    {id:'anclaje_fractal', label:'🌀 La Fractura del Nexo', npc:'Gordon Wizman', faction:'arc', type:'FINALE · 1 misión · desbloquea el VIAJE RÁPIDO (Torre↔Reino)', coins:25, reward:'Viaje entre Nexos + Llave del Capincherío', status:'new', unlocks:'Viaje rápido entre los Nexos (Torre del Mago ↔ Reino)',
       steps:['1) La Fractura del Nexo → reintenta el salto en el Nexo del Reino: te lanza al mundo Fractal → sal por la grieta siguiendo los faroles azules → vuelve con Gordon → DESBLOQUEAS el viaje entre los Nexos'], desc:'La prueba final: el salto se rompe y te lanza a un mundo roto. Encuentra la salida y, al volver, podrás viajar al instante entre la Torre del Mago y el Reino tocando la piedra de los Nexos.'},
     {id:'jarvard', label:'🎓 Expediente Jarvard', npc:'Toni → Dr. Papriko', faction:'sci', type:'Línea principal · 4 misiones · falsificar un título', coins:47, reward:'Ser la mano derecha del Dr. Papriko', status:'new',
       steps:['1) Un Pringado sin Estudios → habla con el Dr. Papriko (te rechaza por no tener título) y vuelve con Toni, que te da una Hoja en Blanco','2) Membrete y Escarcha → pasa la hoja por la Fotocopiadora de Jarvard, cúrala en el Bastidor del bosque helado (brújula) y entrégasela a Toni','3) El Vía Crucis → hazlo firmar en el Ayuntamiento: 12 ventanillas, esperas, bucles, un soborno (1 diamante + 10 cacahuates) y el Ministro firmándolo (te reconoce de Operación Carpincho)','4) Contratado → Toni lo valida y se lo llevas a Papriko, que lo arruga y lo tira: no cree en los títulos, cree en la gente que trabaja. Te contrata igual'], desc:'Tras los Nexos: el Dr. Papriko necesita mano derecha con la Torre complicándose, pero solo trabaja con titulados de «Jarvard». Como eres un pringado, hay que falsificar el título. Termina en un chiste tierno: el diploma acaba en el suelo y te contrata por currante, no por el papel.'},
@@ -4438,13 +4629,22 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
       desc:'El gran misterio: la puerta sellada, la Torre del Mago («¿magia o ciencia?») y la mina. Por diseñar.'},
     {id:'invasion', label:'⚔️ El Despertar de la Torre', npc:'Evento (admin)', faction:'future', type:'Boss raid · evento (futuro)', status:'future',
       desc:'Invasión de Ecos del Multiverso: 3 oleadas + jefe. Autorado, pendiente de desplegar.'},
-    {id:'talentos', label:'🗺️ El Escalafón', npc:'Maestro Anselmo', faction:'sci', type:'Tutorial de talentos (obligatorio)', coins:6, reward:'Mapa de Talentos + 1 punto de talento', status:'live',
+    {id:'talentos', label:'🗺️ El Escalafón', npc:'Maestro Anselmo', faction:'sci', type:'Tutorial de talentos (obligatorio)', coins:6, reward:'Mapa de Talentos + 1 punto de talento', status:'live', unlocks:'El árbol de talentos (/skilltrees)',
       steps:['Matar 6 zombis','Volver a hablar con Anselmo'], desc:'Anselmo (RRHH) te explica el árbol de talentos como tu «plan de carrera». Tras una «evaluación de desempeño» te da el Mapa de Talentos (abre /skilltrees) y 1 punto para estrenar. Va en la espina obligatoria: entre el Semental y la Alquimista.'},
     {id:'sabio', label:'📚 El Sabio', npc:'⬜ NPC por crear', faction:'future', type:'Enciclopedia de clases (futuro)', status:'future',
       desc:'Una enciclopedia con patas: le preguntas por una clase y te explica su rol y sus 4 hechizos.'},
     // En camino (2026-07-16): mecánicas ya elegidas, cada una con su saga por montar
+    {id:'arreglo', label:'🟡 El Arreglo', npc:'Payasito Tristo · La Lola', faction:'secret', type:'Saga SECRETA · 8 misiones + 3 finales', coins:1, status:'new',
+      steps:['1) El Hilo Que Aguanta → tráele 3 cuerdas al payaso del altillo del establo','2) Un Recado Para Arriba → súbele un recado a La Lola, al túnel del camino de ronda. 🔴 SOLO está de NOCHE','3) Lo Que Costaba → baja a la Botica, habla con la Alquimista y llévale el frasco','4) El Otro Zapato → te la da ELLA (de noche): busca su zapato en el Puerto y devuélveselo','5) La Cuenta → al Ayuntamiento, pídele al Registrador el asiento de aquellos años','6) Cuenta Hasta Cien → quédate QUIETO con ella 55 segundos mientras te cuenta lo único que recuerda entero. Si te alejas, se corta. Luego bajas a contárselo a él','7) Lo Que Hay Puesto → sube a arreglarle el farol del túnel, y mira bien qué más hay puesto ahí','8) El Que Vino Una Vez → pregunta al Padre Elías qué se le había perdido a él en ese altillo','FINAL → hay tres maneras de acabar esto y solo puedes elegir una. Una de ellas es no volver'],
+      desc:'No sale en el Directorio, no lleva brújula y no te la ofrece nadie: se encuentra andando. Él vive escondido en un altillo y dice que la está arreglando; ella está en un túnel del camino y solo sale de noche. Cada cosa que él te manda buscar encaja un poco peor con lo que cuenta. 🔴 Aviso: es lo más oscuro del server, sin una sola broma.'},
+    {id:'fatima', label:'🟡 Un Pan pa Toítos', npc:'La Fátima', faction:'secret', type:'Misión SECRETA · narrativa (1 misión)', coins:4, status:'new',
+      steps:['1) Un Pan pa Toítos → siéntate a escucharla (es casi toda charla) y tráele 1 PAN. 🔴 SOLO está de NOCHE, en el camino del noreste del Reino'],
+      desc:'No te la ofrece nadie, no sale en el Directorio y no lleva brújula: te la encuentras de noche en el camino. Te para, te sienta en una piedra y te cuenta con un salero considerable la casa que lleva dentro y el papeleo que le debe el Ayuntamiento por ello. No te pide nada más que un pan.'},
+    {id:'dedos', label:'🕵️ Los Dedos Largos', npc:'Edelmiro Garrapata', faction:'folk', type:'Saga · 9 misiones (rama del hampa)', coins:45, status:'new', unlocks:'La entrada al Gremio de los Dedos Largos (carta de recomendación)',
+      steps:['1) La Demostración → agáchate a su lado y aguanta 11 segundos mientras él abre un candado. Le sale perfecto… hasta que se le escapa un gruñido y despierta a medio pueblo. Entrégale el Acta del Ruido (3🥜)','2) Lección 12 · La Campana → toca la campana de la iglesia 7 veces a plena luz y cuenta cuánta gente sale a mirar. No sale nadie. Vuelve a contárselo (3🥜)','3) Lección 13 · El Desplazamiento → recorre 300 bloques AGACHADO, y por la plaza, que "el que se avergüenza no roba" (3🥜)','4) Lección 17 · La Lana Negra → esquila 3 ovejas negras y entrégale la lana. Te presta tinte: si no las encuentras negras, las haces negras (4🥜)','5) Lección 19 · El Reconocimiento → estudia el Banco por dentro: el mostrador, los cofres, el banco de espera, la puerta del director y una pasarela sobre el barranco que nadie mira. Tráele el informe (5🥜)','6) Lección 21 · La Herramienta que No Lo Es → fabrica 4 ganchos de cuerda trampa. Él dobla los cuatro y solo sobrevive uno: tu ganzúa (4🥜)','7) Lección 24 · El Ensayo → entra en la casa que usa para entrenar y llega al cofre del fondo SIN pisar ninguna alarma. Si pisas una, vuelves a la puerta (8🥜)','8) Lección 25 · La Devolución → vuelve a entrar y deja la cubertería donde estaba. Un ensayo no es un robo (8🥜)','9) La Carta → te escribe una recomendación para el Gremio del Puerto. Tarda once segundos (7🥜)'],
+      desc:'El mejor teórico del robo del Reino es también el peor ladrón que ha existido: sabe hacerlo y no puede, porque hace ruido. Tiene un método escrito en once años que nunca ha probado nadie, y te usa a ti para comprobar si funciona.'},
     {id:'gremio', label:'🖐️ Gremio de los Dedos Largos', npc:'⬜ saga por montar', faction:'future', type:'Robo / carterismo (en camino)', status:'future',
-      desc:'Robar por la espalda a otros jugadores (agacharse, acercarse y rebuscar). El toque golfo del barrio pobre, gateado por una saga.'},
+      desc:'Los del puerto: saqueo como trabajo colectivo, con asambleas y reparto a partes iguales. Se entra presentando la carta de Garrapata. Aquí se desbloquea robar por la espalda a otros jugadores.'},
     {id:'caza', label:'💀 Cazarrecompensas', npc:'⬜ saga por montar', faction:'future', type:'PvP · suma cero (en camino)', status:'future',
       desc:'Pones precio a la cabeza de alguien pagando de tu bolsillo; quien lo cace, cobra. Solo con PvP, en el salvaje.'},
     {id:'lonja', label:'🏷️ La Lonja del Reino', npc:'⬜ saga por montar', faction:'future', type:'Casa de subastas (en camino)', status:'future',
@@ -4495,36 +4695,63 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
     ['contrato','fichaje'],['fichaje','clase'],['clase','semental'],['semental','talentos'],['talentos','alquimista'],['alquimista','nando'],
     ['nando','cultivo'],['cultivo','vender'],
     ['nando','permiso'],['permiso','bolsa'],['bolsa','jobs'],['bolsa','carpincho'],
-    ['carpincho','barco'],['barco','tablon_luz'],['tablon_luz','tablon'],['tablon','tienda'],['tienda','cofre'],
+    ['carpincho','barco'],['barco','tablon_luz'],['tablon_luz','tablon'],
     // secundarias + saga del banco (2026-07-11) + Red de Anclaje (2026-07-15)
-    ['bolsa','pecio'],['bolsa','caballos'],['bolsa','estaciones'],['estaciones','carpincho'],['carpincho','geologia'],['cuenta','anclaje'],['anclaje','anclaje_rep'],['anclaje_rep','anclaje_salto'],['anclaje_salto','anclaje_fractal'],['anclaje_fractal','jarvard'],['jarvard','papriko_antena'],['papriko_antena','vostok_p1'],
+    ['bolsa','pecio'],['bolsa','caballos'],['bolsa','lolo'],['lolo','lolo_ap'],['permiso','nico'],['nico','yaniko'],['permiso','arreglo'],['bolsa','estaciones'],['estaciones','carpincho'],['carpincho','geologia'],['geologia','mina'],['mina','dungeon_mina'],['mina','abismo'],['abismo','cantera'],['cantera','dungeon_cantera'],['cuenta','anclaje'],['anclaje','anclaje_rep'],['anclaje_rep','anclaje_salto'],['anclaje_salto','anclaje_fractal'],['anclaje_fractal','jarvard'],['jarvard','papriko_antena'],['papriko_antena','vostok_p1'],
     ['tablon_luz','banco'],['banco','cuenta'],['cuenta','mercado'],
     // futuro (punteadas)
     ['permiso','torre','future'],['torre','invasion','future'],['clase','sabio','future'],
     // en camino (2026-07-16), colgadas del nodo más lógico
-    ['nando','gremio','future'],['gremio','caza','future'],['mercado','lonja','future'],
-    ['banco','bodas','future'],['cofre','cosmeticos','future'],['pecio','pesca','future'],
+    ['nando','dedos'],['dedos','gremio','future'],['gremio','caza','future'],['mercado','lonja','future'],
+    ['banco','bodas','future'],['tablon','cosmeticos','future'],['pecio','pesca','future'],
+  ];
 
-    // ===== enlaces de las SUGERENCIAS =====
-    // arco de la Torre
+  // ===== PROPUESTA: misiones sugeridas (ocultas hasta pulsar «Ver propuesta») =====
+  const SN = [
+    // ARCO DE LA TORRE (la espina que falta, Actos 2-4)
+    {id:'s_jefe', label:'🔬 El Jefe se Acojona', npc:'Científico Jefe (⬜ NPC nuevo)', faction:'sci', type:'Acto 2 · arranca «la Torre despierta»', status:'suggest', desc:'Tras las señales de VOSTOK y la antena, la Torre PULSA por primera vez. El científico jefe entra en pánico y empieza a hablar de abrir la puerta sellada. Es el NPC que HOY falta para arrancar el Acto 2.', steps:['Nuevo NPC: el científico jefe','Dispara la 1ª invasión (tutorial)','Abre la investigación de la Torre']},
+    {id:'s_invasion_t', label:'⚔️ Primer Despertar', npc:'Científico Jefe', faction:'sci', type:'Quest-tutorial del evento de invasión', status:'suggest', desc:'Convierte el evento de invasión (ya autorado) en una QUEST: el jefe te enseña a defender la Plaza en la primera oleada. Engancha con el nodo «El Despertar de la Torre».'},
+    {id:'s_vera', label:'⛏️ La Puerta Imposible', npc:'Vera Pedregal', faction:'sci', type:'Saga · picar la puerta sellada', status:'suggest', desc:'Vera lleva toda la partida obsesionada con la puerta de la base de la Torre: es el gran gancho del clímax. Hoy solo sale de refilón en Operación Carpincho; merece saga propia.'},
+    {id:'s_marcas', label:'🗿 Las Marcas de la Torre', npc:'Dr. Papriko', faction:'sci', type:'Saga · descifrar los símbolos', status:'suggest', desc:'Papriko intenta descifrar los símbolos grabados en la Torre. Continúa su arco (Jarvard → antena → VOSTOK) directo hacia el misterio central.'},
+    {id:'s_elias', label:'⛪ La Fe de la Torre', npc:'Padre Elías (⬜ sin saga)', faction:'folk', type:'Saga · el pacto del cura', status:'suggest', desc:'El cura antiquísimo pactó con una entidad ligada a la Torre y fundó una secta de reglas absurdas. Cose el pueblo con el arco principal. Elías está en el roster sin ninguna misión.'},
+    {id:'s_reunir', label:'🪄 Magia y Ciencia', npc:'Torre del Mago', faction:'arc', type:'Convergencia · unir las dos facciones', status:'suggest', desc:'El punto donde científicos y pueblo (magia) tienen que colaborar para entender la Torre. Aquí confluyen Vera, Papriko, Elías y Rancio antes del final.'},
+    {id:'s_puerta', label:'🚪 Abrir la Puerta — FIN T1', npc:'Clímax de Temporada', faction:'arc', type:'Clímax · abrir la puerta y ENTRAR', status:'suggest', desc:'El final de la Temporada 1: abrir la puerta sellada de la base de la Torre y entrar (cliffhanger de la T2, dentro de la Torre). El pago de toda la siembra.'},
+    // SAGAS DEL PUEBLO (breadth · NPCs sin saga)
+    {id:'s_convento', label:'⛪ Secretos del Convento', npc:'Sor Eufrasia y Sor Bete', faction:'folk', type:'Saga · madre e hija, la campana', status:'suggest', desc:'Sor Eufrasia (mandona) y su hija Sor Bete (emparedada junto a las campanas). Un misterio doméstico, oscuro y cómico, que enlaza con la fe de Elías.'},
+    {id:'s_calderon', label:'🍳 Cocina de Combate', npc:'Chef Calderón', faction:'folk', type:'Saga · recupera la cocina', status:'suggest', desc:'El chef furioso cocina esquivando una mesa de billar que le plantó el Ayuntamiento. Ya es soplón en Carpincho; darle saga propia (recetas, recuperar su cocina).'},
+    {id:'s_garrapata', label:'📦 Ruta Clandestina', npc:'Edelmiro Garrapata', faction:'folk', type:'Saga · contrabando (economía gris)', status:'suggest', desc:'El pillager con Tourette monta contrabando a la vista de todos. Puerta al hampa: alimenta el futuro Gremio de los Dedos Largos.'},
+    {id:'s_olegario', label:'🥱 El Obrero Fantasma', npc:'Obrero Olegario (⬜ sin saga)', faction:'sci', type:'Saga cómica · pillar al escaqueado', status:'suggest', desc:'El obrero que desaparece justo cuando hay curro (excusas de andamios y donuts «por seguridad laboral»). Comedia pura. En el roster sin misión.'},
+    {id:'s_aniceto', label:'🧫 Muestras Pedregométricas', npc:'Aniceto Morcillo (⬜ sin saga)', faction:'sci', type:'Saga · jerga inventada', status:'suggest', desc:'El científico de palabros («oscilación pedregométrica de fase inversa») te manda recoger muestras. Extiende la rama de geología con humor.'},
+    {id:'s_rancio', label:'🌀 Los Delirios de Rancio', npc:'Rancio el Profeta', faction:'arc', type:'Saga · verdades del multiverso', status:'suggest', desc:'El «loco» del pueblo (en secreto, un jugador caído del Reino 1) suelta verdades deformadas del multiverso. Sus delirios cobran sentido en el clímax de la Torre. Hoy no tiene quest.'},
+    {id:'s_payaso', label:'🤡 El Payasito Tristo', npc:'Payasito Tristo', faction:'folk', type:'Saga · humor negro (co-diseño)', status:'suggest', desc:'NPC ya colocado junto al establo, todavía sin lore. Encaja un arco de humor negro. ⚠️ Hay que definir su lore contigo antes de montarlo.'},
+    // PUERTO / PESCA · BANCO
+    {id:'s_bacalao', label:'🎣 El Bacalao de la Gabardina', npc:'Bacalao Gabardinez', faction:'folk', type:'Saga · pesca y transporte', status:'suggest', desc:'El pez disfrazado de humano del Puerto. Convierte el nodo «Torneos de Pesca» en una saga con NPC: pesca, transporte en barco y su leyenda.'},
+    {id:'s_avraham', label:'💰 El Préstamo con Trampa', npc:'Avraham Rosenberg', faction:'gold', type:'Saga · préstamo chanchullero', status:'suggest', desc:'El dueño del banco te ofrece un préstamo lleno de comisiones y letra pequeña. SUMIDERO económico + humor. Avraham está en el roster sin quest.'},
+    // DUNGEONS
+    {id:'s_vostok_lab', label:'🏢 Dungeon: Lab VOSTOK', npc:'Dungeon (grupo)', faction:'arc', type:'Dungeon · explorar el laboratorio', status:'suggest', desc:'El Cárabo te manda a un laboratorio de VOSTOK: explorar salas, PMCs, documentos. 2ª dungeon (mundo Multiverse tipo Black Mesa). Cierra la Parte 1 de la saga VOSTOK.'},
+    // VOSTOK (continuación de la saga)
+    {id:'s_vostok2', label:'🕳️ Rastro Frío', npc:'Dr. Papriko', faction:'sci', type:'VOSTOK · el dossier revela la corpo', status:'suggest', desc:'Sigues el GPS de la carga hasta una cueva y encuentras el dossier que destapa GRUPO VOSTOK, sus PMCs y las fuerzas de élite Bogatir. Parte 2 de la saga (ya en roadmap).'},
+    {id:'s_cebo', label:'🎯 Cebo', npc:'Dr. Papriko', faction:'sci', type:'VOSTOK · trampa con PMCs armados', status:'suggest', desc:'Hueles la trampa y vas igual: PMCs de VOSTOK que disparan DE VERDAD (Sentinel + arma real). Sueltan chapas que llevas a Papriko. Primer combate contra la corpo.'},
+    {id:'s_carabo', label:'🦉 Peaje de Información', npc:'El Cárabo (⬜ NPC nuevo)', faction:'sci', type:'VOSTOK · el trader que cobra por hablar', status:'suggest', desc:'Nuevo NPC: un corredor de información estilo trader de Tarkov que no suelta lo gordo sin un buen pellizco. Sumidero + gancho (posible desertor de VOSTOK).'},
+    // EXTRAS
+    {id:'s_reino2', label:'❄️ Ramales Criogénicos', npc:'Evento · Reino 2', faction:'arc', type:'Evento · activar la Torre-Eco', status:'suggest', desc:'El sistema criogénico del Reino 2 (ya autorado) hecho saga/evento: activar los 4 ramales para encender la Torre-Eco. Otra filtración del multiverso que alimenta el arco de la Torre.'},
+    {id:'s_labo', label:'🧪 El Laboratorio del Reino', npc:'Dr. Papriko / La Alquimista', faction:'sci', type:'Química estilo Education (aparcado)', status:'suggest', desc:'El set de química (Mesa de Laboratorio, elementos, compuestos) que hablamos: se recrea con ItemsAdder SIN diseñar texturas. En stand-by hasta decidir quién la da.'},
+  ];
+  const SE = [
     ['vostok_p1','s_jefe','suggest'],['s_jefe','s_invasion_t','suggest'],['s_invasion_t','invasion','suggest'],
     ['s_jefe','s_vera','suggest'],['papriko_antena','s_marcas','suggest'],['s_jefe','s_elias','suggest'],
     ['s_vera','s_reunir','suggest'],['s_marcas','s_reunir','suggest'],['s_elias','s_reunir','suggest'],['s_reunir','s_puerta','suggest'],
-    // sagas del pueblo (colgadas del hub del Acto 1)
-    ['bolsa','s_lolo','suggest'],['bolsa','s_convento','suggest'],['s_convento','s_elias','suggest'],
+    ['bolsa','s_convento','suggest'],['s_convento','s_elias','suggest'],
     ['carpincho','s_calderon','suggest'],['bolsa','s_garrapata','suggest'],['s_garrapata','gremio','suggest'],
     ['carpincho','s_olegario','suggest'],['geologia','s_aniceto','suggest'],
     ['carpincho','s_rancio','suggest'],['s_rancio','s_reunir','suggest'],['caballos','s_payaso','suggest'],
-    // puerto, banco
     ['pecio','s_bacalao','suggest'],['s_bacalao','pesca','suggest'],['cuenta','s_avraham','suggest'],
-    // dungeons
-    ['geologia','s_mina','suggest'],['s_carabo','s_vostok_lab','suggest'],
-    // VOSTOK
+    ['s_carabo','s_vostok_lab','suggest'],
     ['vostok_p1','s_vostok2','suggest'],['s_vostok2','s_cebo','suggest'],['s_cebo','s_carabo','suggest'],
-    // extras
-    ['anclaje_fractal','s_reino2','suggest'],['s_reino2','s_reunir','suggest'],['s_marcas','s_labo','suggest'],['bolsa','s_nico','suggest'],
+    ['anclaje_fractal','s_reino2','suggest'],['s_reino2','s_reunir','suggest'],['s_marcas','s_labo','suggest'],
   ];
 
+  const LAY={name:'dagre', rankDir:'TB', nodeSep:26, rankSep:64, edgeSep:14, ranker:'network-simplex'};
   const elements = [];
   N.forEach(n=>elements.push({data:Object.assign({}, n)}));
   E.forEach(e=>elements.push({data:{id:e[0]+'>'+e[1], source:e[0], target:e[1], kind:e[2]||'main'}}));
@@ -4532,7 +4759,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
   function v(name){return getComputedStyle(document.documentElement).getPropertyValue(name).trim();}
   function style(){
     const surface=v('--surface'),ink=v('--ink'),inkSoft=v('--ink-soft'),line=v('--line'),chip=v('--chip'),
-      sci=v('--sci'),folk=v('--folk'),gold=v('--gold'),arc=v('--arcane'),faint=v('--ink-faint'),sug=v('--suggest');
+      sci=v('--sci'),folk=v('--folk'),gold=v('--gold'),arc=v('--arcane'),faint=v('--ink-faint'),sug=v('--suggest'),key=v('--key'),dng=v('--danger');
     return [
       {selector:'node',style:{'background-color':surface,'border-width':2,'border-color':line,
         'label':'data(label)','color':ink,'font-size':'12px','font-weight':600,'text-wrap':'wrap','text-max-width':'155px',
@@ -4542,12 +4769,25 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
       {selector:'node[faction="folk"]',style:{'border-color':folk}},
       {selector:'node[faction="gold"]',style:{'border-color':gold}},
       {selector:'node[faction="arc"]',style:{'border-color':arc}},
+      {selector:'node[faction="secret"]',style:{'border-color':key,'border-style':'dashed'}},
       {selector:'node[status="new"]',style:{'border-width':3,'border-color':gold}},
       {selector:'node[status="future"]',style:{'border-color':faint,'border-style':'dashed','background-opacity':.55,'color':inkSoft}},
+      {selector:'node[unlocks]',style:{'border-width':4,'border-style':'double','underlay-color':key,'underlay-opacity':.32,'underlay-padding':11}},
+      /* 🔁 LOOP = REDONDA. Peticion del usuario (2026-08-04): "las quest que son loops
+         diarios ponlas como una redonda, asi se entienden mas". Antes solo se distinguian
+         por el COLOR, que ademas ya significa otra cosa (la faccion), asi que el Tablon
+         quedaba igual que una mision normal. La FORMA lo dice sin depender del color:
+         redondo = esto no se acaba, se repite. Padding alto porque una elipse necesita
+         mas hueco que un rectangulo para el mismo texto. */
+      {selector:'node[loop]',style:{'shape':'ellipse','padding':'26px','border-width':3,'border-style':'double','text-max-width':'120px'}},
+      /* El hexagono de dungeon va DESPUES: si algo fuera loop Y dungeon, manda dungeon. */
+      {selector:'node[dungeon]',style:{'shape':'hexagon','border-color':dng,'border-width':4,'background-color':dng,'background-opacity':.18,'color':ink,'font-weight':700,'padding':'18px','underlay-color':dng,'underlay-opacity':.22,'underlay-padding':7}},
       {selector:'node:selected',style:{'border-width':4,'border-color':arc,'background-color':chip}},
       {selector:'edge',style:{'width':2.5,'line-color':line,'target-arrow-color':line,'target-arrow-shape':'triangle',
         'curve-style':'bezier','arrow-scale':1.1}},
       {selector:'edge[kind="future"]',style:{'line-style':'dashed','line-color':faint,'target-arrow-color':faint,'width':2}},
+      {selector:'node[status="suggest"]',style:{'border-color':sug,'border-width':4,'color':ink,'font-weight':700}},
+      {selector:'edge[kind="suggest"]',style:{'line-style':'dashed','line-color':sug,'target-arrow-color':sug,'width':3}},
       {selector:'node[status="suggest"]',style:{'border-color':sug,'border-width':4,'color':ink,'font-weight':700}},
       {selector:'edge[kind="suggest"]',style:{'line-style':'dashed','line-color':sug,'target-arrow-color':sug,'width':3}},
       {selector:'.faded',style:{'opacity':.12}},
@@ -4558,14 +4798,14 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
   cytoscape.use(window.cytoscapeDagre);
   const cy = cytoscape({
     container:document.getElementById('cy'), elements, style:style(),
-    layout:{name:'dagre', rankDir:'TB', nodeSep:26, rankSep:64, edgeSep:14, ranker:'network-simplex'},
+    layout:LAY,
     wheelSensitivity:.28, minZoom:.25, maxZoom:2.4
   });
   cy.ready(()=>cy.fit(undefined,50));
 
   const panel=document.getElementById('panel'), body=document.getElementById('panelBody');
-  const FAC={sci:'Forasteros',folk:'Pueblo',gold:'Sistema',arc:'Loop diario',future:'Futuro'};
-  const ST={live:'',new:'NUEVO',future:'FUTURO',suggest:'SUGERENCIA'};
+  const FAC={sci:'Forasteros',folk:'Pueblo',gold:'Sistema',arc:'Loop diario',future:'Futuro',secret:'🟡 Secreta'};
+  const ST={live:'',new:'NUEVO',future:'FUTURO',suggest:'PROPUESTA'};
   function esc(s){return (s||'').replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));}
   function show(d){
     let h='<h2 class="serif">'+esc(d.label)+'</h2>';
@@ -4574,7 +4814,9 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
     h+='<span class="chip '+d.faction+'">'+FAC[d.faction]+'</span>';
     if(d.type) h+='<span class="chip">'+esc(d.type)+'</span>';
     if(ST[d.status]) h+='<span class="chip '+d.status+'">'+ST[d.status]+'</span>';
+    if(d.unlocks) h+='<span class="chip key">🔓 Desbloquea</span>';
     h+='</div>';
+    if(d.unlocks) h+='<div class="unlock">🔓 <span>Desbloquea: '+esc(d.unlocks)+'</span></div>';
     if(d.desc) h+='<p class="desc">'+esc(d.desc)+'</p>';
     let rw=[]; if(d.coins) rw.push('🥜 '+d.coins+' Cacahuates'); if(d.reward) rw.push(esc(d.reward));
     if(rw.length) h+='<p class="rw">Recompensa: '+rw.join(' · ')+'</p>';
@@ -4592,6 +4834,24 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
   window.ER6={
     fit:()=>cy.fit(undefined,50),
     only:function(){onlyMode=!onlyMode; if(onlyMode){cy.elements().addClass('faded'); cy.nodes('[status="suggest"]').removeClass('faded'); cy.edges('[kind="suggest"]').removeClass('faded');} else {cy.elements().removeClass('faded');}},
+    /* Buscar por nombre de misión o de NPC. Nace de un fallo real (2026-08-05): el
+       usuario dio por hecho que la misión de La Fátima "no estaba en el mapa" — sí
+       estaba, pero entre 71 nodos no hay forma humana de dar con una concreta.
+       Resalta las que casan, apaga el resto, y con Enter centra la primera. */
+    find:function(q, centrar){
+      q=(q||'').trim().toLowerCase();
+      cy.elements().removeClass('faded hl');
+      if(q.length<2) return;
+      const hit=cy.nodes().filter(n=>
+        ((n.data('label')||'')+' '+(n.data('npc')||'')+' '+(n.data('type')||'')).toLowerCase().includes(q));
+      if(!hit.length) return;
+      cy.elements().addClass('faded'); hit.removeClass('faded').addClass('hl');
+      if(centrar){ cy.animate({center:{eles:hit[0]}, zoom:1.1}, {duration:320}); }
+    },
+    proposal:function(){proposalOn=!proposalOn; const b=document.getElementById('propBtn');
+      if(proposalOn){const add=[]; SN.forEach(n=>add.push({data:Object.assign({},n)})); SE.forEach(e=>add.push({data:{id:e[0]+'>'+e[1],source:e[0],target:e[1],kind:e[2]||'main'}})); cy.add(add); if(b){b.classList.add('arc'); b.textContent='✨ Ocultar propuesta';}}
+      else{cy.remove(cy.nodes('[status="suggest"]')); if(b){b.classList.remove('arc'); b.textContent='✨ Ver propuesta';}}
+      cy.layout(LAY).run(); cy.fit(undefined,50);},
     close:close,
     theme:function(){
       const r=document.documentElement;

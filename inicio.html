@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>El Reino 6 — Herramientas del servidor</title>
+<style>
+/* ═══════════════════════════════════════════════════════════════════════════
+   TEMA — El Reino 6 · herramientas del servidor
+   🔴 ESTE ES EL ÚNICO SITIO donde vive la paleta. Antes estaba copiada 4 veces en
+   cada una de las 7 páginas (28 copias, ~63 KB), y cambiar un color eran 28 ediciones.
+   `web/comun/envolver.py` lo inyecta en cada página al construirla, porque cada página
+   tiene que seguir siendo AUTÓNOMA (el Artifact no puede cargar un .css externo).
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ── El color ──────────────────────────────────────────────────────────────
+   Claro y aireado, pero anclado al morado arcano del server: un Apple genérico
+   sería gris neutro, y esto tiene que parecerse a El Reino 6. Los neutros llevan
+   una gota de ese morado — elegidos, no heredados de un gris de fábrica. */
+:root{
+  --lienzo:#f6f5f9;  --tarjeta:#ffffff;  --hundido:#f1eff7;
+  --tinta:#16121d;   --tinta-2:#5a5273;  --tinta-3:#8b849e;
+  --linea:#e7e3f0;   --linea-2:#d6d0e6;
+  --acento:#5b34c7;  --acento-2:#7a55e8; --acento-suave:#f0ebff;
+
+  /* semánticos: separados del acento a propósito, para que "verde" siempre
+     signifique lo mismo y no compita con la identidad */
+  --ok:#2e7d52; --aviso:#b5791c; --alerta:#c0392e; --info:#1d6f8b;
+
+  /* dos colores con SIGNIFICADO PROPIO, que no se pueden fundir con los de arriba:
+     --llave = "esta misión desbloquea una mecánica" (el glow dorado del mapa)
+     --sugerencia = "esto es una propuesta, no existe" (los nodos de la pantalla de sugerencias) */
+  --llave:#d98a12; --sugerencia:#c43d86;
+  --brillo:rgba(120,80,240,.16);
+
+  /* rampa de UN hue para las gráficas de la pantalla de misiones: r1 = más, r8 = menos.
+     Vive aquí y no allí para que la paleta siga estando en un solo sitio. */
+  --r1:#3f2088; --r2:#522c9f; --r3:#6539bc; --r4:#7a4bd6;
+  --r5:#9169e2; --r6:#a888ec; --r7:#c1a8f3; --r8:#d9c8f8;
+
+  --sombra:0 1px 2px rgba(30,20,60,.04), 0 8px 28px rgba(60,40,110,.07);
+  --sombra-alta:0 2px 6px rgba(30,20,60,.06), 0 20px 56px rgba(60,40,110,.13);
+  --radio:16px; --radio-s:10px;
+  --nav-alto:56px;
+}
+
+/* 🌓 El claro es la IDENTIDAD, no un tema entre dos: por eso NO se sigue
+   `prefers-color-scheme` y la página abre clara siempre. Pero el visor de
+   Artifacts tiene un botón de tema que estampa `data-theme` en la raíz, así que
+   el oscuro tiene su piel correcta — si no, se vería rota para quien lo pulse.
+   No es una inversión automática: son pasos elegidos sobre el fondo oscuro. */
+:root[data-theme="dark"]{
+  --lienzo:#0f0d15;  --tarjeta:#1a1626;  --hundido:#141020;
+  --tinta:#f2f0f9;   --tinta-2:#b3abc8;  --tinta-3:#857d9c;
+  --linea:#2a2440;   --linea-2:#3b3357;
+  --acento:#a486ff;  --acento-2:#c0aaff; --acento-suave:#241d3c;
+  --ok:#5cc98a; --aviso:#e0ab55; --alerta:#f08a80; --info:#5cc2dd;
+  --llave:#ffce6b; --sugerencia:#ff86c9;
+  --brillo:rgba(140,105,255,.26);
+  /* la rampa se INVIERTE en oscuro: r1 sigue siendo "más" y por tanto el más luminoso.
+     No es un flip automático: son pasos elegidos contra el fondo oscuro. */
+  --r1:#d5c5ff; --r2:#c2aefc; --r3:#af97f8; --r4:#9c80f2;
+  --r5:#8a6be8; --r6:#7757d8; --r7:#6546c1; --r8:#5438a5;
+  --sombra:0 1px 2px rgba(0,0,0,.5), 0 8px 28px rgba(0,0,0,.4);
+  --sombra-alta:0 2px 6px rgba(0,0,0,.55), 0 20px 56px rgba(0,0,0,.5);
+}
+
+*{box-sizing:border-box}
+
+/* ── La tipografía ────────────────────────────────────────────────────────
+   SIN webfont, y no es pereza: la CSP del Artifact bloquea cualquier CDN de
+   fuentes, y empotrar una como data: URI son ~80 KB por peso EN CADA PÁGINA.
+   El stack da SF Pro en Mac y Segoe UI Variable en Windows, que son justo las
+   dos caras de sistema que se parecen a lo que se ha pedido.
+   Lo que de verdad hace que "lea Apple" no es la fuente: es el TAMAÑO grande,
+   el peso alto y el tracking NEGATIVO en los titulares. */
+body{
+  margin:0; background:var(--lienzo); color:var(--tinta);
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI Variable Text",
+    "Segoe UI",system-ui,sans-serif;
+  font-size:17px; line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,h4{
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI Variable Display",
+    "Segoe UI",system-ui,sans-serif;
+  margin:0; text-wrap:balance; font-weight:640;
+}
+h1{font-size:clamp(2.1rem,5.2vw,3.4rem); letter-spacing:-.026em; line-height:1.06}
+h2{font-size:clamp(1.35rem,2.6vw,1.85rem); letter-spacing:-.021em; line-height:1.16}
+h3{font-size:1.08rem; letter-spacing:-.014em; line-height:1.3}
+p{margin:0 0 .8em}
+a{color:var(--acento); text-decoration:none}
+a:hover{text-decoration:underline; text-underline-offset:3px}
+code{font-family:ui-monospace,"SF Mono","Cascadia Code",Consolas,monospace; font-size:.84em;
+  background:var(--hundido); color:var(--acento); padding:2px 6px; border-radius:6px;
+  border:1px solid var(--linea)}
+.num,.tab{font-variant-numeric:tabular-nums}
+:focus-visible{outline:2.5px solid var(--acento-2); outline-offset:3px; border-radius:6px}
+
+/* ── La barra ─────────────────────────────────────────────────────────────
+   Fija, translúcida y con blur: es el gesto que más dice "Apple" y cuesta 3 líneas. */
+.nav{
+  position:sticky; top:0; z-index:50; height:var(--nav-alto);
+  display:flex; align-items:center; gap:6px; padding:0 20px;
+  background:color-mix(in srgb,var(--lienzo) 78%,transparent);
+  backdrop-filter:saturate(180%) blur(20px);
+  -webkit-backdrop-filter:saturate(180%) blur(20px);
+  border-bottom:1px solid color-mix(in srgb,var(--linea) 70%,transparent);
+}
+.nav .marca{display:flex; align-items:center; gap:.5em; font-weight:660; letter-spacing:-.018em;
+  white-space:nowrap; margin-right:12px; color:var(--tinta)}
+.nav .marca:hover{text-decoration:none}
+.nav .marca .ico{font-size:1.1em}
+.nav-links{display:flex; gap:2px; align-items:center; overflow-x:auto; scrollbar-width:none;
+  flex:1; min-width:0}
+.nav-links::-webkit-scrollbar{display:none}
+.nav a.pag{
+  display:flex; align-items:center; gap:.42em; padding:6px 11px; border-radius:9px;
+  color:var(--tinta-2); font-size:.875rem; font-weight:530; white-space:nowrap;
+  transition:background .16s, color .16s;
+}
+.nav a.pag:hover{background:var(--hundido); color:var(--tinta); text-decoration:none}
+.nav a.pag[aria-current=page]{background:var(--acento-suave); color:var(--acento); font-weight:640}
+.nav .sep{width:1px; height:20px; background:var(--linea-2); margin:0 7px; flex:0 0 auto}
+.nav .grupo-tit{font-size:.66rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--tinta-3); padding:0 7px 0 3px; white-space:nowrap; flex:0 0 auto}
+.nav .der{margin-left:auto; display:flex; gap:6px; align-items:center; flex:0 0 auto}
+.nav button.tema{background:none; border:1px solid var(--linea); color:var(--tinta-2);
+  border-radius:9px; padding:6px 10px; cursor:pointer; font:inherit; font-size:.85rem}
+.nav button.tema:hover{border-color:var(--linea-2); color:var(--tinta)}
+.nav a.fuera{font-size:.83rem; color:var(--tinta-3); padding:6px 10px; border-radius:9px}
+.nav a.fuera:hover{color:var(--tinta); background:var(--hundido); text-decoration:none}
+@media(max-width:720px){ .nav .grupo-tit{display:none} }
+
+/* ── El lienzo ──────────────────────────────────────────────────────────── */
+.hoja{max-width:1160px; margin:0 auto; padding:0 24px 96px}
+.hoja.ancha{max-width:1320px}
+
+/* la cabecera de cada página: titular grande + una línea. Nada más. */
+.cabecera{padding:64px 0 34px; max-width:760px}
+.cabecera .sobre{font-size:.78rem; font-weight:680; letter-spacing:.09em; text-transform:uppercase;
+  color:var(--acento); margin:0 0 12px}
+.cabecera p{color:var(--tinta-2); font-size:1.16rem; margin:16px 0 0; line-height:1.5}
+@media(max-width:640px){ .cabecera{padding:38px 0 24px} }
+
+/* ── Tarjetas ─────────────────────────────────────────────────────────────
+   El aire es el diseño: 22px de padding y 18px de hueco, casi el doble que antes. */
+.rejilla{display:grid; grid-template-columns:repeat(auto-fill,minmax(290px,1fr)); gap:18px}
+.tarjeta{background:var(--tarjeta); border:1px solid var(--linea); border-radius:var(--radio);
+  padding:22px; box-shadow:var(--sombra); display:flex; flex-direction:column; gap:10px}
+a.tarjeta{color:inherit}
+a.tarjeta:hover{text-decoration:none; box-shadow:var(--sombra-alta); border-color:var(--linea-2);
+  transform:translateY(-2px)}
+a.tarjeta{transition:box-shadow .22s cubic-bezier(.2,.8,.3,1), transform .22s cubic-bezier(.2,.8,.3,1),
+  border-color .22s}
+.tarjeta h3{display:flex; align-items:center; gap:.45em}
+.tarjeta p{color:var(--tinta-2); font-size:.94rem; margin:0}
+.tarjeta .ico{font-size:1.5rem; line-height:1}
+
+/* la cifra viva de la portada */
+.cifra{font-size:2.1rem; font-weight:700; letter-spacing:-.03em; line-height:1;
+  font-variant-numeric:tabular-nums; color:var(--tinta)}
+.cifra small{font-size:.86rem; font-weight:520; color:var(--tinta-3); letter-spacing:0;
+  margin-left:.45em}
+
+/* ── Piezas sueltas ───────────────────────────────────────────────────────── */
+.pastilla{display:inline-flex; align-items:center; gap:.35em; font-size:.75rem; font-weight:620;
+  padding:3px 9px; border-radius:999px; border:1px solid var(--linea-2); color:var(--tinta-3)}
+.pastilla.acc{color:var(--acento); border-color:var(--acento); background:var(--acento-suave)}
+.pastilla.ok{color:var(--ok); border-color:var(--ok)}
+.pastilla.avi{color:var(--aviso); border-color:var(--aviso)}
+.pastilla.ale{color:var(--alerta); border-color:var(--alerta)}
+
+.boton{display:inline-flex; align-items:center; gap:.5em; background:var(--acento); color:#fff;
+  border:1px solid transparent; border-radius:980px; padding:11px 22px; font:inherit;
+  font-size:.95rem; font-weight:600; cursor:pointer}
+.boton:hover{background:var(--acento-2); text-decoration:none; color:#fff}
+.boton.claro{background:var(--tarjeta); color:var(--tinta); border-color:var(--linea-2)}
+.boton.claro:hover{background:var(--hundido); color:var(--tinta)}
+
+.aviso{border-left:3px solid var(--aviso); background:var(--hundido); padding:12px 16px;
+  border-radius:0 var(--radio-s) var(--radio-s) 0; color:var(--tinta-2); font-size:.92rem}
+
+/* 🔴 Todo lo ancho (tablas, diagramas) scrollea DENTRO de su caja: el cuerpo de la
+   página no puede moverse en horizontal nunca, y estas se miran desde el móvil. */
+.scrollx{overflow-x:auto; -webkit-overflow-scrolling:touch}
+table{border-collapse:collapse; width:100%; font-size:.92rem}
+th,td{text-align:left; padding:11px 14px; border-bottom:1px solid var(--linea); vertical-align:top}
+thead th{font-size:.74rem; text-transform:uppercase; letter-spacing:.07em; color:var(--tinta-3);
+  font-weight:680; background:var(--hundido)}
+
+.pie{margin-top:70px; padding:26px 0; border-top:1px solid var(--linea);
+  color:var(--tinta-3); font-size:.84rem; display:flex; gap:14px; flex-wrap:wrap;
+  align-items:center; justify-content:space-between}
+
+/* ── Movimiento ───────────────────────────────────────────────────────────
+   Transición nativa entre páginas (View Transitions API): sin librería, y los
+   navegadores que no la soportan simplemente navegan como siempre. */
+@view-transition{ navigation:auto }
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important; transition-duration:.01ms!important}
+  @view-transition{ navigation:none }
+}
+
+
+/* ── lo propio de la portada ── */
+.portada{padding:86px 0 52px; max-width:840px}
+.portada h1{font-size:clamp(2.6rem,7vw,4.5rem); letter-spacing:-.032em}
+.portada h1 .fino{display:block; color:var(--tinta-3); font-weight:520}
+.portada .bajada{font-size:1.28rem; color:var(--tinta-2); margin:22px 0 0; line-height:1.5;
+  max-width:60ch}
+@media(max-width:640px){ .portada{padding:44px 0 30px} }
+
+.grupo{margin-top:52px}
+.grupo-cab{display:flex; align-items:baseline; gap:14px; margin-bottom:18px; flex-wrap:wrap}
+.grupo-cab h2{margin:0}
+.grupo-cab span{color:var(--tinta-3); font-size:.98rem}
+
+/* la tarjeta de la portada: la cifra manda, el texto acompaña */
+a.tarjeta .arriba{display:flex; align-items:flex-start; justify-content:space-between; gap:14px}
+a.tarjeta .flecha{color:var(--tinta-3); font-size:1.15rem; transition:transform .22s, color .22s}
+a.tarjeta:hover .flecha{transform:translateX(3px); color:var(--acento)}
+a.tarjeta h3{margin:2px 0 0}
+
+.franja{margin-top:60px; background:var(--tarjeta); border:1px solid var(--linea);
+  border-radius:var(--radio); padding:26px 28px; box-shadow:var(--sombra);
+  display:flex; gap:28px; align-items:center; flex-wrap:wrap}
+.franja .txt{flex:1 1 320px; min-width:0}
+.franja h3{margin:0 0 6px}
+.franja p{margin:0; color:var(--tinta-2); font-size:.95rem}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+<a class="marca" href="https://duleelhorror.github.io/elreino6-guia/inicio.html" aria-current="page"><span class="ico">⌂</span> El Reino <b>6</b></a>
+<div class="nav-links">
+<span class="grupo-tit">Decidir</span>
+<a class="pag" href="https://duleelhorror.github.io/elreino6-guia/misiones.html"><span>📊</span> Misiones</a>
+<a class="pag" href="https://duleelhorror.github.io/elreino6-guia/taller.html"><span>🛠️</span> El Taller</a>
+<a class="pag" href="https://duleelhorror.github.io/elreino6-guia/sugerencias.html"><span>💡</span> Sugerencias</a>
+<span class="sep"></span>
+<span class="grupo-tit">Producir</span>
+<a class="pag" href="https://duleelhorror.github.io/elreino6-guia/sprites.html"><span>🎨</span> Sprites que faltan</a>
+<a class="pag" href="https://duleelhorror.github.io/elreino6-guia/plantillas.html"><span>🧊</span> Plantillas</a>
+</div>
+<div class="der">
+<a class="fuera" href="https://duleelhorror.github.io/elreino6-guia/index.html">🗼 La guía</a>
+<button class="tema" onclick="TEMA()" title="Cambiar tema">◐</button>
+</div></nav>
+<script>function TEMA(){var r=document.documentElement;r.dataset.theme=r.dataset.theme==='dark'?'light':'dark';try{localStorage.setItem('er6tema',r.dataset.theme)}catch(e){}}try{var t=localStorage.getItem('er6tema');if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+
+<div class="hoja">
+
+  <header class="portada">
+    <p class="sobre">El Reino 6</p>
+    <h1>Herramientas<span class="fino">del servidor</span></h1>
+    <p class="bajada">Todo lo que hace falta para decidir qué se construye a continuación:
+      qué hay montado, qué está desequilibrado y qué falta por dibujar.</p>
+  </header>
+
+  <section class="grupo">
+<div class="grupo-cab"><h2>Decidir</h2><span>qué toca hacer ahora</span></div>
+<div class="rejilla">
+<a class="tarjeta" href="https://duleelhorror.github.io/elreino6-guia/misiones.html"><div class="arriba"><span class="ico">📊</span><span class="flecha">&rsaquo;</span></div><h3>Misiones</h3><p>El equilibrio: qué objetivo se repite, cuánto dura cada misión y qué falta por estrenar.</p><div class="cifra">18,2 h<small>de juego</small></div></a>
+<a class="tarjeta" href="https://duleelhorror.github.io/elreino6-guia/taller.html"><div class="arriba"><span class="ico">🛠️</span><span class="flecha">&rsaquo;</span></div><h3>El Taller</h3><p>Lo que existe o podría existir y hoy ningún jugador se va a encontrar.</p></a>
+<a class="tarjeta" href="https://duleelhorror.github.io/elreino6-guia/sugerencias.html"><div class="arriba"><span class="ico">💡</span><span class="flecha">&rsaquo;</span></div><h3>Sugerencias</h3><p>Misiones propuestas, sobre el mismo mapa, para ver dónde encajarían.</p></a>
+</div></section>
+<section class="grupo">
+<div class="grupo-cab"><h2>Producir</h2><span>lo que hay que dibujar o montar</span></div>
+<div class="rejilla">
+<a class="tarjeta" href="https://duleelhorror.github.io/elreino6-guia/sprites.html"><div class="arriba"><span class="ico">🎨</span><span class="flecha">&rsaquo;</span></div><h3>Sprites que faltan</h3><p>Los objetos del Reino que todavía se ven como un ítem de Minecraft.</p><div class="cifra">37<small>por dibujar</small></div></a>
+<a class="tarjeta" href="https://duleelhorror.github.io/elreino6-guia/plantillas.html"><div class="arriba"><span class="ico">🧊</span><span class="flecha">&rsaquo;</span></div><h3>Plantillas</h3><p>Las plantillas en blanco para dibujar cosas nuevas y que yo las convierta.</p><div class="cifra">1<small>plantilla</small></div></a>
+</div></section>
+<section class="grupo">
+<div class="grupo-cab"><h2>Consultar</h2><span>qué hay montado ya</span></div>
+<div class="rejilla">
+<a class="tarjeta" href="https://duleelhorror.github.io/elreino6-guia/mapa.html"><div class="arriba"><span class="ico">🗺️</span><span class="flecha">&rsaquo;</span></div><h3>Mapa de misiones</h3><p>El árbol de sagas y en qué orden se juegan.</p><div class="cifra">105<small>misiones</small></div></a>
+<a class="tarjeta" href="https://duleelhorror.github.io/elreino6-guia/bestiario.html"><div class="arriba"><span class="ico">🐺</span><span class="flecha">&rsaquo;</span></div><h3>Bestiario</h3><p>Los bichos del mundo: dónde salen, qué sueltan y cómo pelean.</p><div class="cifra">21<small>criaturas</small></div></a>
+<a class="tarjeta" href="https://duleelhorror.github.io/elreino6-guia/logros.html"><div class="arriba"><span class="ico">🏆</span><span class="flecha">&rsaquo;</span></div><h3>Logros</h3><p>Los logros del server y qué hace falta para cada uno.</p><div class="cifra">79<small>logros</small></div></a>
+</div></section>
+
+  <section class="franja">
+    <div class="txt">
+      <h3>🗼 ¿Buscas la guía del servidor?</h3>
+      <p>La guía, el mapa de misiones, el bestiario y los logros son <b>la cara pública</b>: lo
+         que se le enseña a alguien de fuera. Esto de aquí es la trastienda.</p>
+    </div>
+    <a class="boton" href="https://duleelhorror.github.io/elreino6-guia/">Ir a la guía</a>
+  </section>
+
+  <footer class="pie"><span>El Reino 6 · Inicio</span><span>Se genera de <code>web/inicio-fuente.html</code></span></footer>
+</div>
+
+</body>
+</html>

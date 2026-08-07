@@ -4,165 +4,312 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Misiones de El Reino 6 — equilibrio y estadísticas</title>
-<style>
+<style>/* ═══════════════════════════════════════════════════════════════════════════
+   TEMA — El Reino 6 · herramientas del servidor
+   🔴 ESTE ES EL ÚNICO SITIO donde vive la paleta. Antes estaba copiada 4 veces en
+   cada una de las 7 páginas (28 copias, ~63 KB), y cambiar un color eran 28 ediciones.
+   `web/comun/envolver.py` lo inyecta en cada página al construirla, porque cada página
+   tiene que seguir siendo AUTÓNOMA (el Artifact no puede cargar un .css externo).
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ── El color ──────────────────────────────────────────────────────────────
+   Claro y aireado, pero anclado al morado arcano del server: un Apple genérico
+   sería gris neutro, y esto tiene que parecerse a El Reino 6. Los neutros llevan
+   una gota de ese morado — elegidos, no heredados de un gris de fábrica. */
+:root{
+  --lienzo:#f6f5f9;  --tarjeta:#ffffff;  --hundido:#f1eff7;
+  --tinta:#16121d;   --tinta-2:#5a5273;  --tinta-3:#8b849e;
+  --linea:#e7e3f0;   --linea-2:#d6d0e6;
+  --acento:#5b34c7;  --acento-2:#7a55e8; --acento-suave:#f0ebff;
+
+  /* semánticos: separados del acento a propósito, para que "verde" siempre
+     signifique lo mismo y no compita con la identidad */
+  --ok:#2e7d52; --aviso:#b5791c; --alerta:#c0392e; --info:#1d6f8b;
+
+  /* dos colores con SIGNIFICADO PROPIO, que no se pueden fundir con los de arriba:
+     --llave = "esta misión desbloquea una mecánica" (el glow dorado del mapa)
+     --sugerencia = "esto es una propuesta, no existe" (los nodos de la pantalla de sugerencias) */
+  --llave:#d98a12; --sugerencia:#c43d86;
+  --brillo:rgba(120,80,240,.16);
+
+  /* rampa de UN hue para las gráficas de la pantalla de misiones: r1 = más, r8 = menos.
+     Vive aquí y no allí para que la paleta siga estando en un solo sitio. */
+  --r1:#3f2088; --r2:#522c9f; --r3:#6539bc; --r4:#7a4bd6;
+  --r5:#9169e2; --r6:#a888ec; --r7:#c1a8f3; --r8:#d9c8f8;
+
+  --sombra:0 1px 2px rgba(30,20,60,.04), 0 8px 28px rgba(60,40,110,.07);
+  --sombra-alta:0 2px 6px rgba(30,20,60,.06), 0 20px 56px rgba(60,40,110,.13);
+  --radio:16px; --radio-s:10px;
+  --nav-alto:56px;
+}
+
+/* 🌓 El claro es la IDENTIDAD, no un tema entre dos: por eso NO se sigue
+   `prefers-color-scheme` y la página abre clara siempre. Pero el visor de
+   Artifacts tiene un botón de tema que estampa `data-theme` en la raíz, así que
+   el oscuro tiene su piel correcta — si no, se vería rota para quien lo pulse.
+   No es una inversión automática: son pasos elegidos sobre el fondo oscuro. */
+:root[data-theme="dark"]{
+  --lienzo:#0f0d15;  --tarjeta:#1a1626;  --hundido:#141020;
+  --tinta:#f2f0f9;   --tinta-2:#b3abc8;  --tinta-3:#857d9c;
+  --linea:#2a2440;   --linea-2:#3b3357;
+  --acento:#a486ff;  --acento-2:#c0aaff; --acento-suave:#241d3c;
+  --ok:#5cc98a; --aviso:#e0ab55; --alerta:#f08a80; --info:#5cc2dd;
+  --llave:#ffce6b; --sugerencia:#ff86c9;
+  --brillo:rgba(140,105,255,.26);
+  /* la rampa se INVIERTE en oscuro: r1 sigue siendo "más" y por tanto el más luminoso.
+     No es un flip automático: son pasos elegidos contra el fondo oscuro. */
+  --r1:#d5c5ff; --r2:#c2aefc; --r3:#af97f8; --r4:#9c80f2;
+  --r5:#8a6be8; --r6:#7757d8; --r7:#6546c1; --r8:#5438a5;
+  --sombra:0 1px 2px rgba(0,0,0,.5), 0 8px 28px rgba(0,0,0,.4);
+  --sombra-alta:0 2px 6px rgba(0,0,0,.55), 0 20px 56px rgba(0,0,0,.5);
+}
+
+*{box-sizing:border-box}
+
+/* ── La tipografía ────────────────────────────────────────────────────────
+   SIN webfont, y no es pereza: la CSP del Artifact bloquea cualquier CDN de
+   fuentes, y empotrar una como data: URI son ~80 KB por peso EN CADA PÁGINA.
+   El stack da SF Pro en Mac y Segoe UI Variable en Windows, que son justo las
+   dos caras de sistema que se parecen a lo que se ha pedido.
+   Lo que de verdad hace que "lea Apple" no es la fuente: es el TAMAÑO grande,
+   el peso alto y el tracking NEGATIVO en los titulares. */
+body{
+  margin:0; background:var(--lienzo); color:var(--tinta);
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI Variable Text",
+    "Segoe UI",system-ui,sans-serif;
+  font-size:17px; line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,h4{
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI Variable Display",
+    "Segoe UI",system-ui,sans-serif;
+  margin:0; text-wrap:balance; font-weight:640;
+}
+h1{font-size:clamp(2.1rem,5.2vw,3.4rem); letter-spacing:-.026em; line-height:1.06}
+h2{font-size:clamp(1.35rem,2.6vw,1.85rem); letter-spacing:-.021em; line-height:1.16}
+h3{font-size:1.08rem; letter-spacing:-.014em; line-height:1.3}
+p{margin:0 0 .8em}
+a{color:var(--acento); text-decoration:none}
+a:hover{text-decoration:underline; text-underline-offset:3px}
+code{font-family:ui-monospace,"SF Mono","Cascadia Code",Consolas,monospace; font-size:.84em;
+  background:var(--hundido); color:var(--acento); padding:2px 6px; border-radius:6px;
+  border:1px solid var(--linea)}
+.num,.tab{font-variant-numeric:tabular-nums}
+:focus-visible{outline:2.5px solid var(--acento-2); outline-offset:3px; border-radius:6px}
+
+/* ── La barra ─────────────────────────────────────────────────────────────
+   Fija, translúcida y con blur: es el gesto que más dice "Apple" y cuesta 3 líneas. */
+.nav{
+  position:sticky; top:0; z-index:50; height:var(--nav-alto);
+  display:flex; align-items:center; gap:6px; padding:0 20px;
+  background:color-mix(in srgb,var(--lienzo) 78%,transparent);
+  backdrop-filter:saturate(180%) blur(20px);
+  -webkit-backdrop-filter:saturate(180%) blur(20px);
+  border-bottom:1px solid color-mix(in srgb,var(--linea) 70%,transparent);
+}
+.nav .marca{display:flex; align-items:center; gap:.5em; font-weight:660; letter-spacing:-.018em;
+  white-space:nowrap; margin-right:12px; color:var(--tinta)}
+.nav .marca:hover{text-decoration:none}
+.nav .marca .ico{font-size:1.1em}
+.nav-links{display:flex; gap:2px; align-items:center; overflow-x:auto; scrollbar-width:none;
+  flex:1; min-width:0}
+.nav-links::-webkit-scrollbar{display:none}
+.nav a.pag{
+  display:flex; align-items:center; gap:.42em; padding:6px 11px; border-radius:9px;
+  color:var(--tinta-2); font-size:.875rem; font-weight:530; white-space:nowrap;
+  transition:background .16s, color .16s;
+}
+.nav a.pag:hover{background:var(--hundido); color:var(--tinta); text-decoration:none}
+.nav a.pag[aria-current=page]{background:var(--acento-suave); color:var(--acento); font-weight:640}
+.nav .sep{width:1px; height:20px; background:var(--linea-2); margin:0 7px; flex:0 0 auto}
+.nav .grupo-tit{font-size:.66rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--tinta-3); padding:0 7px 0 3px; white-space:nowrap; flex:0 0 auto}
+.nav .der{margin-left:auto; display:flex; gap:6px; align-items:center; flex:0 0 auto}
+.nav button.tema{background:none; border:1px solid var(--linea); color:var(--tinta-2);
+  border-radius:9px; padding:6px 10px; cursor:pointer; font:inherit; font-size:.85rem}
+.nav button.tema:hover{border-color:var(--linea-2); color:var(--tinta)}
+.nav a.fuera{font-size:.83rem; color:var(--tinta-3); padding:6px 10px; border-radius:9px}
+.nav a.fuera:hover{color:var(--tinta); background:var(--hundido); text-decoration:none}
+@media(max-width:720px){ .nav .grupo-tit{display:none} }
+
+/* ── El lienzo ──────────────────────────────────────────────────────────── */
+.hoja{max-width:1160px; margin:0 auto; padding:0 24px 96px}
+.hoja.ancha{max-width:1320px}
+
+/* la cabecera de cada página: titular grande + una línea. Nada más. */
+.cabecera{padding:64px 0 34px; max-width:760px}
+.cabecera .sobre{font-size:.78rem; font-weight:680; letter-spacing:.09em; text-transform:uppercase;
+  color:var(--acento); margin:0 0 12px}
+.cabecera p{color:var(--tinta-2); font-size:1.16rem; margin:16px 0 0; line-height:1.5}
+@media(max-width:640px){ .cabecera{padding:38px 0 24px} }
+
+/* ── Tarjetas ─────────────────────────────────────────────────────────────
+   El aire es el diseño: 22px de padding y 18px de hueco, casi el doble que antes. */
+.rejilla{display:grid; grid-template-columns:repeat(auto-fill,minmax(290px,1fr)); gap:18px}
+.tarjeta{background:var(--tarjeta); border:1px solid var(--linea); border-radius:var(--radio);
+  padding:22px; box-shadow:var(--sombra); display:flex; flex-direction:column; gap:10px}
+a.tarjeta{color:inherit}
+a.tarjeta:hover{text-decoration:none; box-shadow:var(--sombra-alta); border-color:var(--linea-2);
+  transform:translateY(-2px)}
+a.tarjeta{transition:box-shadow .22s cubic-bezier(.2,.8,.3,1), transform .22s cubic-bezier(.2,.8,.3,1),
+  border-color .22s}
+.tarjeta h3{display:flex; align-items:center; gap:.45em}
+.tarjeta p{color:var(--tinta-2); font-size:.94rem; margin:0}
+.tarjeta .ico{font-size:1.5rem; line-height:1}
+
+/* la cifra viva de la portada */
+.cifra{font-size:2.1rem; font-weight:700; letter-spacing:-.03em; line-height:1;
+  font-variant-numeric:tabular-nums; color:var(--tinta)}
+.cifra small{font-size:.86rem; font-weight:520; color:var(--tinta-3); letter-spacing:0;
+  margin-left:.45em}
+
+/* ── Piezas sueltas ───────────────────────────────────────────────────────── */
+.pastilla{display:inline-flex; align-items:center; gap:.35em; font-size:.75rem; font-weight:620;
+  padding:3px 9px; border-radius:999px; border:1px solid var(--linea-2); color:var(--tinta-3)}
+.pastilla.acc{color:var(--acento); border-color:var(--acento); background:var(--acento-suave)}
+.pastilla.ok{color:var(--ok); border-color:var(--ok)}
+.pastilla.avi{color:var(--aviso); border-color:var(--aviso)}
+.pastilla.ale{color:var(--alerta); border-color:var(--alerta)}
+
+.boton{display:inline-flex; align-items:center; gap:.5em; background:var(--acento); color:#fff;
+  border:1px solid transparent; border-radius:980px; padding:11px 22px; font:inherit;
+  font-size:.95rem; font-weight:600; cursor:pointer}
+.boton:hover{background:var(--acento-2); text-decoration:none; color:#fff}
+.boton.claro{background:var(--tarjeta); color:var(--tinta); border-color:var(--linea-2)}
+.boton.claro:hover{background:var(--hundido); color:var(--tinta)}
+
+.aviso{border-left:3px solid var(--aviso); background:var(--hundido); padding:12px 16px;
+  border-radius:0 var(--radio-s) var(--radio-s) 0; color:var(--tinta-2); font-size:.92rem}
+
+/* 🔴 Todo lo ancho (tablas, diagramas) scrollea DENTRO de su caja: el cuerpo de la
+   página no puede moverse en horizontal nunca, y estas se miran desde el móvil. */
+.scrollx{overflow-x:auto; -webkit-overflow-scrolling:touch}
+table{border-collapse:collapse; width:100%; font-size:.92rem}
+th,td{text-align:left; padding:11px 14px; border-bottom:1px solid var(--linea); vertical-align:top}
+thead th{font-size:.74rem; text-transform:uppercase; letter-spacing:.07em; color:var(--tinta-3);
+  font-weight:680; background:var(--hundido)}
+
+.pie{margin-top:70px; padding:26px 0; border-top:1px solid var(--linea);
+  color:var(--tinta-3); font-size:.84rem; display:flex; gap:14px; flex-wrap:wrap;
+  align-items:center; justify-content:space-between}
+
+/* ── Movimiento ───────────────────────────────────────────────────────────
+   Transición nativa entre páginas (View Transitions API): sin librería, y los
+   navegadores que no la soportan simplemente navegan como siempre. */
+@view-transition{ navigation:auto }
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important; transition-duration:.01ms!important}
+  @view-transition{ navigation:none }
+}
+
   /* Paleta y tipografía = las MISMAS de la guía y los logros (web/guia-fuente.html):
      esta página es una hoja más del mismo sitio, no un diseño aparte.
      🔴 Es una herramienta de TRABAJO, no una guía de jugador: enseña recompensas,
      economía y las sagas secretas. No enlazar desde el mapa. */
-  :root{
-    --ground:#f3f1f8; --surface:#ffffff; --surface-2:#ece8f5; --sunken:#f7f5fb;
-    --ink:#1e1828; --ink-soft:#585070; --ink-faint:#877e9d;
-    --line:#e1dcef; --line-strong:#ccc4e0;
-    --arcane:#6b46d0; --arcane-2:#8a63ea; --glow:rgba(120,80,240,.16);
-    --gold:#a9701d; --gold-2:#c68a2c;
-    --sci:#177f86; --folk:#4a8f2f; --danger:#c1443b;
-    --shadow:0 1px 2px rgba(40,25,70,.05), 0 10px 34px rgba(70,45,120,.09);
-    /* rampa de UN hue para el quesito y el calor: r1 = mas usado, r8 = menos.
-       Como las categorias van ORDENADAS por magnitud, el degradado codifica el rango. */
-    --r1:#3f2088; --r2:#522c9f; --r3:#6539bc; --r4:#7a4bd6;
-    --r5:#9169e2; --r6:#a888ec; --r7:#c1a8f3; --r8:#d9c8f8;
-    --chip:#f1edfa;
-  }
-  @media (prefers-color-scheme:dark){
-    :root{
-      --ground:#131019; --surface:#1c1730; --surface-2:#271f3d; --sunken:#171223;
-      --ink:#ede9f8; --ink-soft:#b6accd; --ink-faint:#8b81a6;
-      --line:#302846; --line-strong:#43385f;
-      --arcane:#9c82ff; --arcane-2:#b7a3ff; --glow:rgba(140,105,255,.26);
-      --gold:#e6b25a; --gold-2:#f0c479;
-      --sci:#4ac9d0; --folk:#87cc62; --danger:#ec7d75;
-      --shadow:0 1px 2px rgba(0,0,0,.45), 0 16px 44px rgba(0,0,0,.4);
-      --r1:#d5c5ff; --r2:#c2aefc; --r3:#af97f8; --r4:#9c80f2;
-      --r5:#8a6be8; --r6:#7757d8; --r7:#6546c1; --r8:#5438a5;
-      --chip:#241d3a;
-    }
-  }
-  :root[data-theme="light"]{
-    --ground:#f3f1f8; --surface:#ffffff; --surface-2:#ece8f5; --sunken:#f7f5fb;
-    --ink:#1e1828; --ink-soft:#585070; --ink-faint:#877e9d;
-    --line:#e1dcef; --line-strong:#ccc4e0;
-    --arcane:#6b46d0; --arcane-2:#8a63ea; --glow:rgba(120,80,240,.16);
-    --gold:#a9701d; --gold-2:#c68a2c;
-    --sci:#177f86; --folk:#4a8f2f; --danger:#c1443b;
-    --shadow:0 1px 2px rgba(40,25,70,.05), 0 10px 34px rgba(70,45,120,.09);
-    /* rampa de UN hue para el quesito y el calor: r1 = mas usado, r8 = menos.
-       Como las categorias van ORDENADAS por magnitud, el degradado codifica el rango. */
-    --r1:#3f2088; --r2:#522c9f; --r3:#6539bc; --r4:#7a4bd6;
-    --r5:#9169e2; --r6:#a888ec; --r7:#c1a8f3; --r8:#d9c8f8;
-    --chip:#f1edfa;
-  }
-  :root[data-theme="dark"]{
-    --ground:#131019; --surface:#1c1730; --surface-2:#271f3d; --sunken:#171223;
-    --ink:#ede9f8; --ink-soft:#b6accd; --ink-faint:#8b81a6;
-    --line:#302846; --line-strong:#43385f;
-    --arcane:#9c82ff; --arcane-2:#b7a3ff; --glow:rgba(140,105,255,.26);
-    --gold:#e6b25a; --gold-2:#f0c479;
-    --sci:#4ac9d0; --folk:#87cc62; --danger:#ec7d75;
-    --shadow:0 1px 2px rgba(0,0,0,.45), 0 16px 44px rgba(0,0,0,.4);
-    --r1:#d5c5ff; --r2:#c2aefc; --r3:#af97f8; --r4:#9c80f2;
-    --r5:#8a6be8; --r6:#7757d8; --r7:#6546c1; --r8:#5438a5;
-    --chip:#241d3a;
-  }
+  
+  
+  
+  
 
   *{box-sizing:border-box}
-  body{margin:0;background:var(--ground);color:var(--ink);
+  body{margin:0;background:var(--lienzo);color:var(--tinta);
     font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
     font-size:15.5px;line-height:1.55}
   .wrap{max-width:1180px;margin:0 auto;padding:26px 16px 72px}
   h1,h2,h3{font-family:ui-serif,Palatino,Georgia,serif;font-weight:600;text-wrap:balance;margin:0}
   code{font-family:ui-monospace,"Cascadia Code",Consolas,monospace;font-size:.86em;
-    background:var(--chip);color:var(--arcane-2);padding:1px 5px;border-radius:5px}
+    background:var(--acento-suave);color:var(--acento-2);padding:1px 5px;border-radius:5px}
   .num{font-variant-numeric:tabular-nums}
 
   .eyebrow{font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;font-weight:700;
-    color:var(--arcane);margin:0 0 6px}
-  header.hero{border:1px solid var(--line);border-radius:16px;padding:26px 24px;
-    background:linear-gradient(160deg,var(--surface-2),var(--surface));box-shadow:var(--shadow)}
+    color:var(--acento);margin:0 0 6px}
+  header.hero{border:1px solid var(--linea);border-radius:16px;padding:26px 24px;
+    background:linear-gradient(160deg,var(--hundido),var(--tarjeta));box-shadow:var(--sombra)}
   header.hero h1{font-size:clamp(24px,4.4vw,33px);line-height:1.12}
-  .aviso{margin-top:16px;border-left:3px solid var(--gold);background:var(--sunken);
-    padding:10px 14px;border-radius:0 10px 10px 0;font-size:13.5px;color:var(--ink-soft)}
+  .aviso{margin-top:16px;border-left:3px solid var(--aviso);background:var(--hundido);
+    padding:10px 14px;border-radius:0 10px 10px 0;font-size:13.5px;color:var(--tinta-2)}
 
   /* el titular: una cifra que justifica la página entera */
   .titular{display:flex;flex-wrap:wrap;gap:20px;align-items:baseline;margin-top:20px}
-  .cifra{font-size:clamp(46px,10vw,76px);line-height:.9;font-weight:800;color:var(--arcane);
+  .cifra{font-size:clamp(46px,10vw,76px);line-height:.9;font-weight:800;color:var(--acento);
     font-variant-numeric:tabular-nums;letter-spacing:-.03em}
-  .titular p{margin:0;max-width:46ch;color:var(--ink-soft);font-size:14.5px}
+  .titular p{margin:0;max-width:46ch;color:var(--tinta-2);font-size:14.5px}
 
   .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(132px,1fr));gap:10px;margin-top:20px}
-  .kpi{background:var(--sunken);border:1px solid var(--line);border-radius:11px;padding:11px 13px}
+  .kpi{background:var(--hundido);border:1px solid var(--linea);border-radius:11px;padding:11px 13px}
   .kpi b{display:block;font-size:21px;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
-  .kpi span{font-size:11.5px;color:var(--ink-faint);text-transform:uppercase;letter-spacing:.07em}
+  .kpi span{font-size:11.5px;color:var(--tinta-3);text-transform:uppercase;letter-spacing:.07em}
 
   section{margin-top:38px}
   section>h2{font-size:22px;margin-bottom:4px}
-  section>.sub{color:var(--ink-soft);font-size:14px;margin:0 0 16px;max-width:72ch}
+  section>.sub{color:var(--tinta-2);font-size:14px;margin:0 0 16px;max-width:72ch}
 
-  .card{background:var(--surface);border:1px solid var(--line);border-radius:14px;
-    padding:18px 18px 14px;box-shadow:var(--shadow)}
+  .card{background:var(--tarjeta);border:1px solid var(--linea);border-radius:14px;
+    padding:18px 18px 14px;box-shadow:var(--sombra)}
 
   /* ── barras de magnitud: UNA serie, UN tono. Lo no usado va en neutro Y con etiqueta,
         para que no dependa del color (accesibilidad). ── */
   .barras{display:flex;flex-direction:column;gap:7px}
   .fila{display:grid;grid-template-columns:118px 1fr 62px;gap:10px;align-items:center;
     padding:3px 4px;border-radius:8px}
-  .fila:hover{background:var(--sunken)}
-  .fila .et{font-size:13.5px;color:var(--ink-soft);text-align:right;overflow:hidden;
+  .fila:hover{background:var(--hundido)}
+  .fila .et{font-size:13.5px;color:var(--tinta-2);text-align:right;overflow:hidden;
     text-overflow:ellipsis;white-space:nowrap}
-  .pista{background:var(--sunken);border-radius:4px;height:17px;position:relative;overflow:hidden}
+  .pista{background:var(--hundido);border-radius:4px;height:17px;position:relative;overflow:hidden}
   /* 🔴 `display:block` NO es opcional: `.barra` es un <span>, y un elemento inline IGNORA
      width y height — la barra existia pero media cero y no se veia nada. La pista si se veia
      porque es un grid item y esos se blockifican solos. */
-  .barra{display:block;height:100%;background:var(--arcane);border-radius:0 4px 4px 0;min-width:3px;
+  .barra{display:block;height:100%;background:var(--acento);border-radius:0 4px 4px 0;min-width:3px;
     transition:width .5s cubic-bezier(.2,.8,.3,1)}
-  .fila.cero .barra{background:repeating-linear-gradient(135deg,var(--line-strong) 0 5px,transparent 5px 10px);
+  .fila.cero .barra{background:repeating-linear-gradient(135deg,var(--linea-2) 0 5px,transparent 5px 10px);
     width:100%!important;opacity:.6;border-radius:4px}
-  .fila.cero .et{color:var(--ink-faint)}
-  .fila .val{font-size:13px;color:var(--ink-soft);font-variant-numeric:tabular-nums}
-  .fila.cero .val{color:var(--danger);font-weight:700;font-size:11.5px;letter-spacing:.04em}
+  .fila.cero .et{color:var(--tinta-3)}
+  .fila .val{font-size:13px;color:var(--tinta-2);font-variant-numeric:tabular-nums}
+  .fila.cero .val{color:var(--alerta);font-weight:700;font-size:11.5px;letter-spacing:.04em}
 
   /* ── controles ── */
   .controles{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px;align-items:center}
   select,input[type=search],button.orden{font:inherit;font-size:13.5px;padding:7px 11px;
-    border-radius:9px;border:1px solid var(--line-strong);background:var(--surface);color:var(--ink)}
+    border-radius:9px;border:1px solid var(--linea-2);background:var(--tarjeta);color:var(--tinta)}
   input[type=search]{min-width:190px}
   button.orden{cursor:pointer}
-  button.orden[aria-pressed=true]{background:var(--arcane);border-color:var(--arcane);color:#fff}
-  :focus-visible{outline:2px solid var(--arcane-2);outline-offset:2px}
+  button.orden[aria-pressed=true]{background:var(--acento);border-color:var(--acento);color:#fff}
+  :focus-visible{outline:2px solid var(--acento-2);outline-offset:2px}
 
   /* ── tabla ── */
-  .tablabox{overflow-x:auto;border:1px solid var(--line);border-radius:14px;background:var(--surface);
-    box-shadow:var(--shadow)}
+  .tablabox{overflow-x:auto;border:1px solid var(--linea);border-radius:14px;background:var(--tarjeta);
+    box-shadow:var(--sombra)}
   table{border-collapse:collapse;width:100%;font-size:13.7px;min-width:820px}
-  th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top}
-  thead th{position:sticky;top:0;background:var(--surface-2);font-size:11.5px;
-    text-transform:uppercase;letter-spacing:.07em;color:var(--ink-soft);z-index:2;white-space:nowrap}
-  tbody tr:hover{background:var(--sunken)}
+  th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--linea);vertical-align:top}
+  thead th{position:sticky;top:0;background:var(--hundido);font-size:11.5px;
+    text-transform:uppercase;letter-spacing:.07em;color:var(--tinta-2);z-index:2;white-space:nowrap}
+  tbody tr:hover{background:var(--hundido)}
   td.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
-  .qid{font-family:ui-monospace,Consolas,monospace;font-size:11.5px;color:var(--ink-faint);
+  .qid{font-family:ui-monospace,Consolas,monospace;font-size:11.5px;color:var(--tinta-3);
     display:block;margin-top:2px}
   .tag{display:inline-block;font-size:11px;padding:1.5px 7px;border-radius:20px;
-    background:var(--chip);color:var(--arcane-2);margin:1px 3px 1px 0;white-space:nowrap}
-  .tag.rep{background:transparent;border:1px solid var(--folk);color:var(--folk)}
-  .tag.sec{background:transparent;border:1px dashed var(--gold);color:var(--gold)}
+    background:var(--acento-suave);color:var(--acento-2);margin:1px 3px 1px 0;white-space:nowrap}
+  .tag.rep{background:transparent;border:1px solid var(--ok);color:var(--ok)}
+  .tag.sec{background:transparent;border:1px dashed var(--aviso);color:var(--aviso)}
   /* la mision pide algo que ella misma NO te da: el numero de al lado se queda corto */
-  .mas{display:block;font-size:10.5px;color:var(--gold);letter-spacing:.03em;
+  .mas{display:block;font-size:10.5px;color:var(--aviso);letter-spacing:.03em;
     font-variant-numeric:normal;cursor:help;margin-top:1px}
 
   .sagas{display:grid;grid-template-columns:repeat(auto-fill,minmax(268px,1fr));gap:12px}
-  .saga{background:var(--surface);border:1px solid var(--line);border-radius:13px;padding:14px 15px;
-    box-shadow:var(--shadow)}
+  .saga{background:var(--tarjeta);border:1px solid var(--linea);border-radius:13px;padding:14px 15px;
+    box-shadow:var(--sombra)}
   .saga h3{font-size:16px;margin-bottom:2px}
-  .saga .meta{font-size:12.5px;color:var(--ink-faint);margin-bottom:9px}
-  .mix{display:flex;height:9px;border-radius:5px;overflow:hidden;gap:2px;background:var(--sunken)}
-  .mix i{display:block;background:var(--arcane);opacity:.9}
+  .saga .meta{font-size:12.5px;color:var(--tinta-3);margin-bottom:9px}
+  .mix{display:flex;height:9px;border-radius:5px;overflow:hidden;gap:2px;background:var(--hundido)}
+  .mix i{display:block;background:var(--acento);opacity:.9}
   .mix i:nth-child(2n){opacity:.62} .mix i:nth-child(3n){opacity:.4}
-  .saga ul{margin:9px 0 0;padding-left:17px;font-size:12.5px;color:var(--ink-soft)}
+  .saga ul{margin:9px 0 0;padding-left:17px;font-size:12.5px;color:var(--tinta-2)}
 
   /* ── selector de vista ── */
   .vistas{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
   .vistas button{font:inherit;font-size:13.5px;padding:7px 14px;border-radius:9px;cursor:pointer;
-    border:1px solid var(--line-strong);background:var(--surface);color:var(--ink-soft)}
-  .vistas button[aria-pressed=true]{background:var(--arcane);border-color:var(--arcane);
+    border:1px solid var(--linea-2);background:var(--tarjeta);color:var(--tinta-2)}
+  .vistas button[aria-pressed=true]{background:var(--acento);border-color:var(--acento);
     color:#fff;font-weight:600}
   .vista{display:none} .vista.on{display:block}
 
@@ -174,59 +321,77 @@
   .leyenda{display:flex;flex-direction:column;gap:5px;min-width:210px;flex:1 1 210px}
   .leyenda div{display:grid;grid-template-columns:13px 1fr auto;gap:9px;align-items:center;
     font-size:13.5px;padding:2px 4px;border-radius:7px}
-  .leyenda div:hover{background:var(--sunken)}
+  .leyenda div:hover{background:var(--hundido)}
   .leyenda i{width:13px;height:13px;border-radius:3px;display:block}
-  .leyenda b{font-variant-numeric:tabular-nums;color:var(--ink-soft);font-weight:600}
-  .centro{font-family:ui-serif,Palatino,Georgia,serif;fill:var(--ink);text-anchor:middle}
+  .leyenda b{font-variant-numeric:tabular-nums;color:var(--tinta-2);font-weight:600}
+  .centro{font-family:ui-serif,Palatino,Georgia,serif;fill:var(--tinta);text-anchor:middle}
   .centro tspan.n{font-size:30px;font-weight:700}
-  .centro tspan.s{font-size:11px;fill:var(--ink-faint);text-transform:uppercase;letter-spacing:.1em}
+  .centro tspan.s{font-size:11px;fill:var(--tinta-3);text-transform:uppercase;letter-spacing:.1em}
 
   /* ── mapa de calor ── */
   .calorbox{overflow-x:auto}
   table.calor{border-collapse:separate;border-spacing:3px;min-width:560px;font-size:12.5px}
-  table.calor th{font-weight:600;color:var(--ink-soft);padding:0 6px;white-space:nowrap;
+  table.calor th{font-weight:600;color:var(--tinta-2);padding:0 6px;white-space:nowrap;
     font-size:11.5px;text-transform:uppercase;letter-spacing:.05em;background:none;position:static}
   table.calor th.rot{writing-mode:vertical-rl;transform:rotate(180deg);text-align:left;
     height:82px;padding:4px 0}
-  table.calor td.s{text-align:right;color:var(--ink-soft);white-space:nowrap;padding-right:8px;
+  table.calor td.s{text-align:right;color:var(--tinta-2);white-space:nowrap;padding-right:8px;
     max-width:150px;overflow:hidden;text-overflow:ellipsis}
   /* el relleno va en su propio <span> y el numero encima: asi el texto lleva SIEMPRE
      la tinta del tema y no hay que adivinar si sobre este morado toca blanco o negro. */
   table.calor td.c{width:34px;height:26px;text-align:center;border-radius:5px;position:relative;
-    background:var(--sunken);font-variant-numeric:tabular-nums;color:var(--ink);cursor:help}
-  table.calor td.c .fondo{position:absolute;inset:0;border-radius:5px;background:var(--arcane)}
+    background:var(--hundido);font-variant-numeric:tabular-nums;color:var(--tinta);cursor:help}
+  table.calor td.c .fondo{position:absolute;inset:0;border-radius:5px;background:var(--acento)}
   table.calor td.c b{position:relative;font-weight:600;mix-blend-mode:normal}
-  table.calor tr:hover td.c{outline:1px solid var(--line-strong);outline-offset:-1px}
+  table.calor tr:hover td.c{outline:1px solid var(--linea-2);outline-offset:-1px}
 
   /* ── barra apilada trámite / faena ──
      Sin texto DENTRO de las bandas: el rótulo va debajo, con tinta del tema. Metido dentro
      habría que adivinar si sobre cada morado toca blanco o negro, y cambia con el tema. */
-  .split{display:flex;height:30px;border-radius:9px;overflow:hidden;background:var(--sunken);
+  .split{display:flex;height:30px;border-radius:9px;overflow:hidden;background:var(--hundido);
     gap:2px}
   .split span{display:block;cursor:help}
   .split span.t{background:var(--r3)} .split span.f{background:var(--r6)}
   .splitpie{display:flex;gap:22px;flex-wrap:wrap;margin-top:11px;font-size:13.5px;
-    color:var(--ink-soft)}
+    color:var(--tinta-2)}
   .splitpie div{display:flex;align-items:center;gap:8px}
   .splitpie i{width:13px;height:13px;border-radius:3px;display:block;flex:0 0 auto}
-  .splitpie b{color:var(--ink);font-variant-numeric:tabular-nums}
+  .splitpie b{color:var(--tinta);font-variant-numeric:tabular-nums}
 
   .chips{display:flex;flex-wrap:wrap;gap:6px}
-  .chip{background:var(--sunken);border:1px solid var(--line);border-radius:20px;
+  .chip{background:var(--hundido);border:1px solid var(--linea);border-radius:20px;
     padding:4px 11px;font-size:13px}
 
-  details{border:1px solid var(--line);border-radius:12px;background:var(--surface);
+  details{border:1px solid var(--linea);border-radius:12px;background:var(--tarjeta);
     padding:12px 15px;margin-top:10px}
   summary{cursor:pointer;font-weight:600}
-  .formula{font-family:ui-monospace,Consolas,monospace;font-size:12.5px;color:var(--ink-soft);
+  .formula{font-family:ui-monospace,Consolas,monospace;font-size:12.5px;color:var(--tinta-2);
     white-space:pre-wrap;margin-top:10px;line-height:1.7}
-  footer{margin-top:44px;padding-top:18px;border-top:1px solid var(--line);
-    font-size:12.5px;color:var(--ink-faint)}
+  footer{margin-top:44px;padding-top:18px;border-top:1px solid var(--linea);
+    font-size:12.5px;color:var(--tinta-3)}
   @media (prefers-reduced-motion:reduce){*{transition:none!important}}
   @media (max-width:560px){ .fila{grid-template-columns:96px 1fr 54px} }
 </style>
 </head>
 <body>
+
+<nav class="nav">
+<a class="marca" href="https://duleelhorror.github.io/elreino6-guia/inicio.html"><span class="ico">⌂</span> El Reino <b>6</b></a>
+<div class="nav-links">
+<span class="grupo-tit">Decidir</span>
+<a class="pag" href="https://duleelhorror.github.io/elreino6-guia/misiones.html" aria-current="page"><span>📊</span> Misiones</a>
+<a class="pag" href="https://duleelhorror.github.io/elreino6-guia/taller.html"><span>🛠️</span> El Taller</a>
+<a class="pag" href="https://duleelhorror.github.io/elreino6-guia/sugerencias.html"><span>💡</span> Sugerencias</a>
+<span class="sep"></span>
+<span class="grupo-tit">Producir</span>
+<a class="pag" href="https://duleelhorror.github.io/elreino6-guia/sprites.html"><span>🎨</span> Sprites que faltan</a>
+<a class="pag" href="https://duleelhorror.github.io/elreino6-guia/plantillas.html"><span>🧊</span> Plantillas</a>
+</div>
+<div class="der">
+<a class="fuera" href="https://duleelhorror.github.io/elreino6-guia/index.html">🗼 La guía</a>
+<button class="tema" onclick="TEMA()" title="Cambiar tema">◐</button>
+</div></nav>
+<script>function TEMA(){var r=document.documentElement;r.dataset.theme=r.dataset.theme==='dark'?'light':'dark';try{localStorage.setItem('er6tema',r.dataset.theme)}catch(e){}}try{var t=localStorage.getItem('er6tema');if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
 
 <div class="wrap">
 
@@ -297,7 +462,7 @@
     <select id="fSaga"><option value="">Todas las sagas</option></select>
     <input type="search" id="fTexto" placeholder="Buscar misión, NPC…" aria-label="Buscar">
     <button class="orden" id="oDur" aria-pressed="false">Ordenar por duración</button>
-    <span id="cuenta" style="font-size:13px;color:var(--ink-faint)"></span>
+    <span id="cuenta" style="font-size:13px;color:var(--tinta-3)"></span>
   </div>
   <div class="tablabox">
     <table>
@@ -472,7 +637,7 @@ $("#calor").innerHTML =
           <span class="fondo" style="opacity:${v ? (.12 + .43 * v / maxCelda).toFixed(2) : 0}"></span>
           <b>${v || ""}</b></td>`;
       }).join("") +
-      `<td class="n" style="padding-left:10px;color:var(--ink-soft)">${s.n}</td></tr>`;
+      `<td class="n" style="padding-left:10px;color:var(--tinta-2)">${s.n}</td></tr>`;
   }).join("");
 
 /* ── el selector ── */
@@ -501,7 +666,7 @@ function pinta(){
         ${q.llave ? '<span class="tag">llave</span>' : ""}
         <span class="qid">${esc(q.id)}</span></td>
       <td>${esc(q.saga)}</td>
-      <td>${q.npc ? esc(q.npc) : '<span style="color:var(--danger)">sin NPC</span>'}</td>
+      <td>${q.npc ? esc(q.npc) : '<span style="color:var(--alerta)">sin NPC</span>'}</td>
       <td>${q.objetivos.map(o => `<span class="tag">${esc(o)}</span>`).join("")}</td>
       <td class="n">${q.fases}</td>
       <td class="n">${dur(q.seg)}${q.faena ? `<span class="mas"

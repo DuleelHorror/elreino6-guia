@@ -1,0 +1,313 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Plantillas — El Reino 6</title>
+<style>
+/* ═══════════════════════════════════════════════════════════════════════════
+   TEMA — El Reino 6 · herramientas del servidor
+   🔴 ESTE ES EL ÚNICO SITIO donde vive la paleta. Antes estaba copiada 4 veces en
+   cada una de las 7 páginas (28 copias, ~63 KB), y cambiar un color eran 28 ediciones.
+   `web/comun/envolver.py` lo inyecta en cada página al construirla, porque cada página
+   tiene que seguir siendo AUTÓNOMA (el Artifact no puede cargar un .css externo).
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ── El color ──────────────────────────────────────────────────────────────
+   Claro y aireado, pero anclado al morado arcano del server: un Apple genérico
+   sería gris neutro, y esto tiene que parecerse a El Reino 6. Los neutros llevan
+   una gota de ese morado — elegidos, no heredados de un gris de fábrica. */
+:root{
+  --lienzo:#f6f5f9;  --tarjeta:#ffffff;  --hundido:#f1eff7;
+  --tinta:#16121d;   --tinta-2:#5a5273;  --tinta-3:#8b849e;
+  --linea:#e7e3f0;   --linea-2:#d6d0e6;
+  --acento:#5b34c7;  --acento-2:#7a55e8; --acento-suave:#f0ebff;
+
+  /* semánticos: separados del acento a propósito, para que "verde" siempre
+     signifique lo mismo y no compita con la identidad */
+  --ok:#2e7d52; --aviso:#b5791c; --alerta:#c0392e; --info:#1d6f8b;
+
+  /* dos colores con SIGNIFICADO PROPIO, que no se pueden fundir con los de arriba:
+     --llave = "esta misión desbloquea una mecánica" (el glow dorado del mapa)
+     --sugerencia = "esto es una propuesta, no existe" (los nodos de la pantalla de sugerencias) */
+  --llave:#d98a12; --sugerencia:#c43d86;
+  --brillo:rgba(120,80,240,.16);
+
+  /* rampa de UN hue para las gráficas de la pantalla de misiones: r1 = más, r8 = menos.
+     Vive aquí y no allí para que la paleta siga estando en un solo sitio. */
+  --r1:#3f2088; --r2:#522c9f; --r3:#6539bc; --r4:#7a4bd6;
+  --r5:#9169e2; --r6:#a888ec; --r7:#c1a8f3; --r8:#d9c8f8;
+
+  --sombra:0 1px 2px rgba(30,20,60,.04), 0 8px 28px rgba(60,40,110,.07);
+  --sombra-alta:0 2px 6px rgba(30,20,60,.06), 0 20px 56px rgba(60,40,110,.13);
+  --radio:16px; --radio-s:10px;
+  --nav-alto:56px;
+}
+
+/* 🌓 El claro es la IDENTIDAD, no un tema entre dos: por eso NO se sigue
+   `prefers-color-scheme` y la página abre clara siempre. Pero el visor de
+   Artifacts tiene un botón de tema que estampa `data-theme` en la raíz, así que
+   el oscuro tiene su piel correcta — si no, se vería rota para quien lo pulse.
+   No es una inversión automática: son pasos elegidos sobre el fondo oscuro. */
+:root[data-theme="dark"]{
+  --lienzo:#0f0d15;  --tarjeta:#1a1626;  --hundido:#141020;
+  --tinta:#f2f0f9;   --tinta-2:#b3abc8;  --tinta-3:#857d9c;
+  --linea:#2a2440;   --linea-2:#3b3357;
+  --acento:#a486ff;  --acento-2:#c0aaff; --acento-suave:#241d3c;
+  --ok:#5cc98a; --aviso:#e0ab55; --alerta:#f08a80; --info:#5cc2dd;
+  --llave:#ffce6b; --sugerencia:#ff86c9;
+  --brillo:rgba(140,105,255,.26);
+  /* la rampa se INVIERTE en oscuro: r1 sigue siendo "más" y por tanto el más luminoso.
+     No es un flip automático: son pasos elegidos contra el fondo oscuro. */
+  --r1:#d5c5ff; --r2:#c2aefc; --r3:#af97f8; --r4:#9c80f2;
+  --r5:#8a6be8; --r6:#7757d8; --r7:#6546c1; --r8:#5438a5;
+  --sombra:0 1px 2px rgba(0,0,0,.5), 0 8px 28px rgba(0,0,0,.4);
+  --sombra-alta:0 2px 6px rgba(0,0,0,.55), 0 20px 56px rgba(0,0,0,.5);
+}
+
+*{box-sizing:border-box}
+
+/* ── La tipografía ────────────────────────────────────────────────────────
+   SIN webfont, y no es pereza: la CSP del Artifact bloquea cualquier CDN de
+   fuentes, y empotrar una como data: URI son ~80 KB por peso EN CADA PÁGINA.
+   El stack da SF Pro en Mac y Segoe UI Variable en Windows, que son justo las
+   dos caras de sistema que se parecen a lo que se ha pedido.
+   Lo que de verdad hace que "lea Apple" no es la fuente: es el TAMAÑO grande,
+   el peso alto y el tracking NEGATIVO en los titulares. */
+body{
+  margin:0; background:var(--lienzo); color:var(--tinta);
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI Variable Text",
+    "Segoe UI",system-ui,sans-serif;
+  font-size:17px; line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,h4{
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI Variable Display",
+    "Segoe UI",system-ui,sans-serif;
+  margin:0; text-wrap:balance; font-weight:640;
+}
+h1{font-size:clamp(2.1rem,5.2vw,3.4rem); letter-spacing:-.026em; line-height:1.06}
+h2{font-size:clamp(1.35rem,2.6vw,1.85rem); letter-spacing:-.021em; line-height:1.16}
+h3{font-size:1.08rem; letter-spacing:-.014em; line-height:1.3}
+p{margin:0 0 .8em}
+a{color:var(--acento); text-decoration:none}
+a:hover{text-decoration:underline; text-underline-offset:3px}
+code{font-family:ui-monospace,"SF Mono","Cascadia Code",Consolas,monospace; font-size:.84em;
+  background:var(--hundido); color:var(--acento); padding:2px 6px; border-radius:6px;
+  border:1px solid var(--linea)}
+.num,.tab{font-variant-numeric:tabular-nums}
+:focus-visible{outline:2.5px solid var(--acento-2); outline-offset:3px; border-radius:6px}
+
+/* ── La barra ─────────────────────────────────────────────────────────────
+   Fija, translúcida y con blur: es el gesto que más dice "Apple" y cuesta 3 líneas. */
+.nav{
+  position:sticky; top:0; z-index:50; height:var(--nav-alto);
+  display:flex; align-items:center; gap:6px; padding:0 20px;
+  background:color-mix(in srgb,var(--lienzo) 78%,transparent);
+  backdrop-filter:saturate(180%) blur(20px);
+  -webkit-backdrop-filter:saturate(180%) blur(20px);
+  border-bottom:1px solid color-mix(in srgb,var(--linea) 70%,transparent);
+}
+.nav .marca{display:flex; align-items:center; gap:.5em; font-weight:660; letter-spacing:-.018em;
+  white-space:nowrap; margin-right:12px; color:var(--tinta)}
+.nav .marca:hover{text-decoration:none}
+.nav .marca .ico{font-size:1.1em}
+.nav-links{display:flex; gap:2px; align-items:center; overflow-x:auto; scrollbar-width:none;
+  flex:1; min-width:0}
+.nav-links::-webkit-scrollbar{display:none}
+.nav a.pag{
+  display:flex; align-items:center; gap:.42em; padding:6px 11px; border-radius:9px;
+  color:var(--tinta-2); font-size:.875rem; font-weight:530; white-space:nowrap;
+  transition:background .16s, color .16s;
+}
+.nav a.pag:hover{background:var(--hundido); color:var(--tinta); text-decoration:none}
+.nav a.pag[aria-current=page]{background:var(--acento-suave); color:var(--acento); font-weight:640}
+.nav .sep{width:1px; height:20px; background:var(--linea-2); margin:0 7px; flex:0 0 auto}
+.nav .grupo-tit{font-size:.66rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--tinta-3); padding:0 7px 0 3px; white-space:nowrap; flex:0 0 auto}
+.nav .der{margin-left:auto; display:flex; gap:6px; align-items:center; flex:0 0 auto}
+.nav button.tema{background:none; border:1px solid var(--linea); color:var(--tinta-2);
+  border-radius:9px; padding:6px 10px; cursor:pointer; font:inherit; font-size:.85rem}
+.nav button.tema:hover{border-color:var(--linea-2); color:var(--tinta)}
+.nav a.fuera{font-size:.83rem; color:var(--tinta-3); padding:6px 10px; border-radius:9px}
+.nav a.fuera:hover{color:var(--tinta); background:var(--hundido); text-decoration:none}
+@media(max-width:720px){ .nav .grupo-tit{display:none} }
+
+/* ── El lienzo ──────────────────────────────────────────────────────────── */
+.hoja{max-width:1160px; margin:0 auto; padding:0 24px 96px}
+.hoja.ancha{max-width:1320px}
+
+/* la cabecera de cada página: titular grande + una línea. Nada más. */
+.cabecera{padding:64px 0 34px; max-width:760px}
+.cabecera .sobre{font-size:.78rem; font-weight:680; letter-spacing:.09em; text-transform:uppercase;
+  color:var(--acento); margin:0 0 12px}
+.cabecera p{color:var(--tinta-2); font-size:1.16rem; margin:16px 0 0; line-height:1.5}
+@media(max-width:640px){ .cabecera{padding:38px 0 24px} }
+
+/* ── Tarjetas ─────────────────────────────────────────────────────────────
+   El aire es el diseño: 22px de padding y 18px de hueco, casi el doble que antes. */
+.rejilla{display:grid; grid-template-columns:repeat(auto-fill,minmax(290px,1fr)); gap:18px}
+.tarjeta{background:var(--tarjeta); border:1px solid var(--linea); border-radius:var(--radio);
+  padding:22px; box-shadow:var(--sombra); display:flex; flex-direction:column; gap:10px}
+a.tarjeta{color:inherit}
+a.tarjeta:hover{text-decoration:none; box-shadow:var(--sombra-alta); border-color:var(--linea-2);
+  transform:translateY(-2px)}
+a.tarjeta{transition:box-shadow .22s cubic-bezier(.2,.8,.3,1), transform .22s cubic-bezier(.2,.8,.3,1),
+  border-color .22s}
+.tarjeta h3{display:flex; align-items:center; gap:.45em}
+.tarjeta p{color:var(--tinta-2); font-size:.94rem; margin:0}
+.tarjeta .ico{font-size:1.5rem; line-height:1}
+
+/* la cifra viva de la portada */
+.cifra{font-size:2.1rem; font-weight:700; letter-spacing:-.03em; line-height:1;
+  font-variant-numeric:tabular-nums; color:var(--tinta)}
+.cifra small{font-size:.86rem; font-weight:520; color:var(--tinta-3); letter-spacing:0;
+  margin-left:.45em}
+
+/* ── Piezas sueltas ───────────────────────────────────────────────────────── */
+.pastilla{display:inline-flex; align-items:center; gap:.35em; font-size:.75rem; font-weight:620;
+  padding:3px 9px; border-radius:999px; border:1px solid var(--linea-2); color:var(--tinta-3)}
+.pastilla.acc{color:var(--acento); border-color:var(--acento); background:var(--acento-suave)}
+.pastilla.ok{color:var(--ok); border-color:var(--ok)}
+.pastilla.avi{color:var(--aviso); border-color:var(--aviso)}
+.pastilla.ale{color:var(--alerta); border-color:var(--alerta)}
+
+.boton{display:inline-flex; align-items:center; gap:.5em; background:var(--acento); color:#fff;
+  border:1px solid transparent; border-radius:980px; padding:11px 22px; font:inherit;
+  font-size:.95rem; font-weight:600; cursor:pointer}
+.boton:hover{background:var(--acento-2); text-decoration:none; color:#fff}
+.boton.claro{background:var(--tarjeta); color:var(--tinta); border-color:var(--linea-2)}
+.boton.claro:hover{background:var(--hundido); color:var(--tinta)}
+
+.aviso{border-left:3px solid var(--aviso); background:var(--hundido); padding:12px 16px;
+  border-radius:0 var(--radio-s) var(--radio-s) 0; color:var(--tinta-2); font-size:.92rem}
+
+/* 🔴 Todo lo ancho (tablas, diagramas) scrollea DENTRO de su caja: el cuerpo de la
+   página no puede moverse en horizontal nunca, y estas se miran desde el móvil. */
+.scrollx{overflow-x:auto; -webkit-overflow-scrolling:touch}
+table{border-collapse:collapse; width:100%; font-size:.92rem}
+th,td{text-align:left; padding:11px 14px; border-bottom:1px solid var(--linea); vertical-align:top}
+thead th{font-size:.74rem; text-transform:uppercase; letter-spacing:.07em; color:var(--tinta-3);
+  font-weight:680; background:var(--hundido)}
+
+.pie{margin-top:70px; padding:26px 0; border-top:1px solid var(--linea);
+  color:var(--tinta-3); font-size:.84rem; display:flex; gap:14px; flex-wrap:wrap;
+  align-items:center; justify-content:space-between}
+
+/* ── Movimiento ───────────────────────────────────────────────────────────
+   Transición nativa entre páginas (View Transitions API): sin librería, y los
+   navegadores que no la soportan simplemente navegan como siempre. */
+@view-transition{ navigation:auto }
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important; transition-duration:.01ms!important}
+  @view-transition{ navigation:none }
+}
+
+
+/* ── lo propio de plantillas ── */
+.plant{background:var(--tarjeta); border:1px solid var(--linea); border-radius:var(--radio);
+  box-shadow:var(--sombra); overflow:hidden; margin-bottom:26px}
+.plant-cab{padding:24px 28px 0}
+.plant-cab h2{display:flex; align-items:center; gap:.4em}
+.plant-cab .que{color:var(--tinta-2); margin:10px 0 0; max-width:70ch}
+.plant-cuerpo{display:grid; grid-template-columns:minmax(240px,340px) 1fr; gap:30px;
+  padding:24px 28px 28px; align-items:start}
+@media(max-width:760px){ .plant-cuerpo{grid-template-columns:1fr} }
+
+.plant figure{margin:0}
+/* 🔴 `pixelated` NO es opcional: sin él el navegador suaviza la plantilla al escalarla y la
+   rejilla de píxeles —que es justo lo que hay que seguir al pintar— deja de verse. */
+.plant figure img{width:100%; height:auto; display:block; border-radius:var(--radio-s);
+  image-rendering:pixelated; border:1px solid var(--linea); background:var(--hundido)}
+.plant figcaption{color:var(--tinta-3); font-size:.82rem; margin-top:9px; text-align:center}
+
+.pasos{list-style:none; padding:0; margin:0 0 20px; counter-reset:p}
+.pasos li{counter-increment:p; position:relative; padding-left:38px; margin-bottom:14px;
+  color:var(--tinta-2)}
+.pasos li::before{content:counter(p); position:absolute; left:0; top:1px;
+  width:25px; height:25px; border-radius:50%; background:var(--acento-suave); color:var(--acento);
+  font-size:.8rem; font-weight:700; display:grid; place-items:center}
+.pasos li b{color:var(--tinta)}
+.ficha{display:flex; gap:22px; flex-wrap:wrap; margin:0 0 20px; padding:14px 0;
+  border-top:1px solid var(--linea); border-bottom:1px solid var(--linea)}
+.ficha div{font-size:.86rem}
+.ficha dt{color:var(--tinta-3); font-size:.72rem; text-transform:uppercase; letter-spacing:.07em;
+  font-weight:700; margin-bottom:2px}
+.ficha dd{margin:0; font-weight:600; font-variant-numeric:tabular-nums}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+<a class="marca" href="https://duleelhorror.github.io/elreino6-guia/inicio.html"><span class="ico">⌂</span> El Reino <b>6</b></a>
+<div class="nav-links">
+<span class="grupo-tit">Decidir</span>
+<a class="pag" href="https://duleelhorror.github.io/elreino6-guia/misiones.html"><span>📊</span> Misiones</a>
+<a class="pag" href="https://duleelhorror.github.io/elreino6-guia/taller.html"><span>🛠️</span> El Taller</a>
+<a class="pag" href="https://duleelhorror.github.io/elreino6-guia/sugerencias.html"><span>💡</span> Sugerencias</a>
+<span class="sep"></span>
+<span class="grupo-tit">Producir</span>
+<a class="pag" href="https://duleelhorror.github.io/elreino6-guia/sprites.html"><span>🎨</span> Sprites que faltan</a>
+<a class="pag" href="https://duleelhorror.github.io/elreino6-guia/plantillas.html" aria-current="page"><span>🧊</span> Plantillas</a>
+</div>
+<div class="der">
+<a class="fuera" href="https://duleelhorror.github.io/elreino6-guia/index.html">🗼 La guía</a>
+<button class="tema" onclick="TEMA()" title="Cambiar tema">◐</button>
+</div></nav>
+<script>function TEMA(){var r=document.documentElement;r.dataset.theme=r.dataset.theme==='dark'?'light':'dark';try{localStorage.setItem('er6tema',r.dataset.theme)}catch(e){}}try{var t=localStorage.getItem('er6tema');if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+
+<div class="hoja">
+  <header class="cabecera">
+    <p class="sobre">Producir</p>
+    <h1>Plantillas</h1>
+    <p>Las plantillas en blanco para dibujar cosas nuevas. Descargas, pintas, me la pasas
+       diciendo qué es — <i>«esto es una lavadora»</i> — y yo la convierto y le cuelgo la mecánica.</p>
+  </header>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       🔴 AÑADIR UNA PLANTILLA = COPIAR UNA SECCION ENTERA de las de abajo y cambiarle el id.
+       El id tiene que empezar por «plantilla-», que es como las cuentan la portada y el build.
+       Las imágenes van con un marcador que `build_plantillas.py` sustituye por la imagen
+       EMPOTRADA (data: URI): la página se publica en dos sitios y un enlace relativo solo
+       funcionaría en uno de los dos.
+       ═══════════════════════════════════════════════════════════════════════ -->
+
+  <section class="plant" id="plantilla-cubo">
+    <div class="plant-cab">
+      <h2><span>🧊</span> El cubo</h2>
+      <p class="que">Un bloque del pack no es un sprite: es un <b>cubo con seis caras</b>. Esta es
+        la plantilla desplegada — se pinta como si fuera la skin de un jugador. De aquí salen las
+        máquinas: mesas de trabajo, hornos, cualquier cosa a la que luego se le cuelgue una mecánica.</p>
+    </div>
+    <div class="plant-cuerpo">
+      <figure>
+        <img src="data:image/png;base64,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" alt="Guía del cubo desplegado: arriba, izquierda, frente, derecha, detrás y abajo">
+        <figcaption>Qué va en cada cara. Solo para mirar.</figcaption>
+      </figure>
+      <div>
+        <dl class="ficha">
+          <div><dt>Tamaño final</dt><dd>16 × 16 por cara</dd></div>
+          <div><dt>Se descarga a</dt><dd>512 × 384</dd></div>
+          <div><dt>Caras</dt><dd>6</dd></div>
+        </dl>
+        <ol class="pasos">
+          <li>Descarga la plantilla en blanco.</li>
+          <li>Píntala <b>a cuadritos</b>, siguiendo la rejilla fina. La textura final es de 16×16
+              por cara y cada cuadrito acaba siendo <b>un píxel</b>: con degradados o pinceles
+              suaves sale borroso.</li>
+          <li>Pásamela y dime <b>qué es</b>. Yo hago el bloque, el modelo y las mecánicas.</li>
+        </ol>
+        <p class="aviso">Las líneas magenta son la guía: <b>no hace falta borrarlas</b>, se quitan
+          solas al convertir. Y los tres lados pueden llevar lo mismo repetido.</p>
+        <p style="margin-top:20px">
+          <a class="boton" download="plantilla_cubo.png" href="data:image/png;base64,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">⬇&nbsp;&nbsp;Descargar la plantilla</a>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <footer class="pie"><span>El Reino 6 · Plantillas</span><span>Se genera de <code>web/plantillas-fuente.html</code></span></footer>
+</div>
+
+</body>
+</html>

@@ -4,69 +4,227 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>El Reino 6 — Guía del Reino</title>
-<style>
-  :root{
-    /* claro (por defecto) — neutro con sesgo lavanda, elegido no heredado */
-    --ground:#f3f1f8; --surface:#ffffff; --surface-2:#ece8f5; --sunken:#f7f5fb;
-    --ink:#1e1828; --ink-soft:#585070; --ink-faint:#877e9d;
-    --line:#e1dcef; --line-strong:#ccc4e0;
-    --arcane:#6b46d0; --arcane-2:#8a63ea; --glow:rgba(120,80,240,.16);
-    --gold:#a9701d; --gold-2:#c68a2c;
-    --sci:#177f86; --folk:#4a8f2f; --danger:#c1443b;
-    --shadow:0 1px 2px rgba(40,25,70,.05), 0 10px 34px rgba(70,45,120,.09);
-    --chip:#f1edfa;
-  }
-  @media (prefers-color-scheme:dark){
-    :root{
-      --ground:#131019; --surface:#1c1730; --surface-2:#271f3d; --sunken:#171223;
-      --ink:#ede9f8; --ink-soft:#b6accd; --ink-faint:#8b81a6;
-      --line:#302846; --line-strong:#43385f;
-      --arcane:#9c82ff; --arcane-2:#b7a3ff; --glow:rgba(140,105,255,.26);
-      --gold:#e6b25a; --gold-2:#f0c479;
-      --sci:#4ac9d0; --folk:#87cc62; --danger:#ec7d75;
-      --shadow:0 1px 2px rgba(0,0,0,.45), 0 16px 44px rgba(0,0,0,.4);
-      --chip:#241d3a;
-    }
-  }
-  :root[data-theme="light"]{
-    --ground:#f3f1f8; --surface:#ffffff; --surface-2:#ece8f5; --sunken:#f7f5fb;
-    --ink:#1e1828; --ink-soft:#585070; --ink-faint:#877e9d;
-    --line:#e1dcef; --line-strong:#ccc4e0;
-    --arcane:#6b46d0; --arcane-2:#8a63ea; --glow:rgba(120,80,240,.16);
-    --gold:#a9701d; --gold-2:#c68a2c;
-    --sci:#177f86; --folk:#4a8f2f; --danger:#c1443b;
-    --shadow:0 1px 2px rgba(40,25,70,.05), 0 10px 34px rgba(70,45,120,.09);
-    --chip:#f1edfa;
-  }
-  :root[data-theme="dark"]{
-    --ground:#131019; --surface:#1c1730; --surface-2:#271f3d; --sunken:#171223;
-    --ink:#ede9f8; --ink-soft:#b6accd; --ink-faint:#8b81a6;
-    --line:#302846; --line-strong:#43385f;
-    --arcane:#9c82ff; --arcane-2:#b7a3ff; --glow:rgba(140,105,255,.26);
-    --gold:#e6b25a; --gold-2:#f0c479;
-    --sci:#4ac9d0; --folk:#87cc62; --danger:#ec7d75;
-    --shadow:0 1px 2px rgba(0,0,0,.45), 0 16px 44px rgba(0,0,0,.4);
-    --chip:#241d3a;
-  }
+<style>/* ═══════════════════════════════════════════════════════════════════════════
+   TEMA — El Reino 6 · herramientas del servidor
+   🔴 ESTE ES EL ÚNICO SITIO donde vive la paleta. Antes estaba copiada 4 veces en
+   cada una de las 7 páginas (28 copias, ~63 KB), y cambiar un color eran 28 ediciones.
+   `web/comun/envolver.py` lo inyecta en cada página al construirla, porque cada página
+   tiene que seguir siendo AUTÓNOMA (el Artifact no puede cargar un .css externo).
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ── El color ──────────────────────────────────────────────────────────────
+   Claro y aireado, pero anclado al morado arcano del server: un Apple genérico
+   sería gris neutro, y esto tiene que parecerse a El Reino 6. Los neutros llevan
+   una gota de ese morado — elegidos, no heredados de un gris de fábrica. */
+:root{
+  --lienzo:#f6f5f9;  --tarjeta:#ffffff;  --hundido:#f1eff7;
+  --tinta:#16121d;   --tinta-2:#5a5273;  --tinta-3:#8b849e;
+  --linea:#e7e3f0;   --linea-2:#d6d0e6;
+  --acento:#5b34c7;  --acento-2:#7a55e8; --acento-suave:#f0ebff;
+
+  /* semánticos: separados del acento a propósito, para que "verde" siempre
+     signifique lo mismo y no compita con la identidad */
+  --ok:#2e7d52; --aviso:#b5791c; --alerta:#c0392e; --info:#1d6f8b;
+
+  /* dos colores con SIGNIFICADO PROPIO, que no se pueden fundir con los de arriba:
+     --llave = "esta misión desbloquea una mecánica" (el glow dorado del mapa)
+     --sugerencia = "esto es una propuesta, no existe" (los nodos de la pantalla de sugerencias) */
+  --llave:#d98a12; --sugerencia:#c43d86;
+  --brillo:rgba(120,80,240,.16);
+
+  /* rampa de UN hue para las gráficas de la pantalla de misiones: r1 = más, r8 = menos.
+     Vive aquí y no allí para que la paleta siga estando en un solo sitio. */
+  --r1:#3f2088; --r2:#522c9f; --r3:#6539bc; --r4:#7a4bd6;
+  --r5:#9169e2; --r6:#a888ec; --r7:#c1a8f3; --r8:#d9c8f8;
+
+  --sombra:0 1px 2px rgba(30,20,60,.04), 0 8px 28px rgba(60,40,110,.07);
+  --sombra-alta:0 2px 6px rgba(30,20,60,.06), 0 20px 56px rgba(60,40,110,.13);
+  --radio:16px; --radio-s:10px;
+  --nav-alto:56px;
+}
+
+/* 🌓 El claro es la IDENTIDAD, no un tema entre dos: por eso NO se sigue
+   `prefers-color-scheme` y la página abre clara siempre. Pero el visor de
+   Artifacts tiene un botón de tema que estampa `data-theme` en la raíz, así que
+   el oscuro tiene su piel correcta — si no, se vería rota para quien lo pulse.
+   No es una inversión automática: son pasos elegidos sobre el fondo oscuro. */
+:root[data-theme="dark"]{
+  --lienzo:#0f0d15;  --tarjeta:#1a1626;  --hundido:#141020;
+  --tinta:#f2f0f9;   --tinta-2:#b3abc8;  --tinta-3:#857d9c;
+  --linea:#2a2440;   --linea-2:#3b3357;
+  --acento:#a486ff;  --acento-2:#c0aaff; --acento-suave:#241d3c;
+  --ok:#5cc98a; --aviso:#e0ab55; --alerta:#f08a80; --info:#5cc2dd;
+  --llave:#ffce6b; --sugerencia:#ff86c9;
+  --brillo:rgba(140,105,255,.26);
+  /* la rampa se INVIERTE en oscuro: r1 sigue siendo "más" y por tanto el más luminoso.
+     No es un flip automático: son pasos elegidos contra el fondo oscuro. */
+  --r1:#d5c5ff; --r2:#c2aefc; --r3:#af97f8; --r4:#9c80f2;
+  --r5:#8a6be8; --r6:#7757d8; --r7:#6546c1; --r8:#5438a5;
+  --sombra:0 1px 2px rgba(0,0,0,.5), 0 8px 28px rgba(0,0,0,.4);
+  --sombra-alta:0 2px 6px rgba(0,0,0,.55), 0 20px 56px rgba(0,0,0,.5);
+}
+
+*{box-sizing:border-box}
+
+/* ── La tipografía ────────────────────────────────────────────────────────
+   SIN webfont, y no es pereza: la CSP del Artifact bloquea cualquier CDN de
+   fuentes, y empotrar una como data: URI son ~80 KB por peso EN CADA PÁGINA.
+   El stack da SF Pro en Mac y Segoe UI Variable en Windows, que son justo las
+   dos caras de sistema que se parecen a lo que se ha pedido.
+   Lo que de verdad hace que "lea Apple" no es la fuente: es el TAMAÑO grande,
+   el peso alto y el tracking NEGATIVO en los titulares. */
+body{
+  margin:0; background:var(--lienzo); color:var(--tinta);
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI Variable Text",
+    "Segoe UI",system-ui,sans-serif;
+  font-size:17px; line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,h4{
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI Variable Display",
+    "Segoe UI",system-ui,sans-serif;
+  margin:0; text-wrap:balance; font-weight:640;
+}
+h1{font-size:clamp(2.1rem,5.2vw,3.4rem); letter-spacing:-.026em; line-height:1.06}
+h2{font-size:clamp(1.35rem,2.6vw,1.85rem); letter-spacing:-.021em; line-height:1.16}
+h3{font-size:1.08rem; letter-spacing:-.014em; line-height:1.3}
+p{margin:0 0 .8em}
+a{color:var(--acento); text-decoration:none}
+a:hover{text-decoration:underline; text-underline-offset:3px}
+code{font-family:ui-monospace,"SF Mono","Cascadia Code",Consolas,monospace; font-size:.84em;
+  background:var(--hundido); color:var(--acento); padding:2px 6px; border-radius:6px;
+  border:1px solid var(--linea)}
+.num,.tab{font-variant-numeric:tabular-nums}
+:focus-visible{outline:2.5px solid var(--acento-2); outline-offset:3px; border-radius:6px}
+
+/* ── La barra ─────────────────────────────────────────────────────────────
+   Fija, translúcida y con blur: es el gesto que más dice "Apple" y cuesta 3 líneas. */
+.nav{
+  position:sticky; top:0; z-index:50; height:var(--nav-alto);
+  display:flex; align-items:center; gap:6px; padding:0 20px;
+  background:color-mix(in srgb,var(--lienzo) 78%,transparent);
+  backdrop-filter:saturate(180%) blur(20px);
+  -webkit-backdrop-filter:saturate(180%) blur(20px);
+  border-bottom:1px solid color-mix(in srgb,var(--linea) 70%,transparent);
+}
+.nav .marca{display:flex; align-items:center; gap:.5em; font-weight:660; letter-spacing:-.018em;
+  white-space:nowrap; margin-right:12px; color:var(--tinta)}
+.nav .marca:hover{text-decoration:none}
+.nav .marca .ico{font-size:1.1em}
+.nav-links{display:flex; gap:2px; align-items:center; overflow-x:auto; scrollbar-width:none;
+  flex:1; min-width:0}
+.nav-links::-webkit-scrollbar{display:none}
+.nav a.pag{
+  display:flex; align-items:center; gap:.42em; padding:6px 11px; border-radius:9px;
+  color:var(--tinta-2); font-size:.875rem; font-weight:530; white-space:nowrap;
+  transition:background .16s, color .16s;
+}
+.nav a.pag:hover{background:var(--hundido); color:var(--tinta); text-decoration:none}
+.nav a.pag[aria-current=page]{background:var(--acento-suave); color:var(--acento); font-weight:640}
+.nav .sep{width:1px; height:20px; background:var(--linea-2); margin:0 7px; flex:0 0 auto}
+.nav .grupo-tit{font-size:.66rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--tinta-3); padding:0 7px 0 3px; white-space:nowrap; flex:0 0 auto}
+.nav .der{margin-left:auto; display:flex; gap:6px; align-items:center; flex:0 0 auto}
+.nav button.tema{background:none; border:1px solid var(--linea); color:var(--tinta-2);
+  border-radius:9px; padding:6px 10px; cursor:pointer; font:inherit; font-size:.85rem}
+.nav button.tema:hover{border-color:var(--linea-2); color:var(--tinta)}
+.nav a.fuera{font-size:.83rem; color:var(--tinta-3); padding:6px 10px; border-radius:9px}
+.nav a.fuera:hover{color:var(--tinta); background:var(--hundido); text-decoration:none}
+@media(max-width:720px){ .nav .grupo-tit{display:none} }
+
+/* ── El lienzo ──────────────────────────────────────────────────────────── */
+.hoja{max-width:1160px; margin:0 auto; padding:0 24px 96px}
+.hoja.ancha{max-width:1320px}
+
+/* la cabecera de cada página: titular grande + una línea. Nada más. */
+.cabecera{padding:64px 0 34px; max-width:760px}
+.cabecera .sobre{font-size:.78rem; font-weight:680; letter-spacing:.09em; text-transform:uppercase;
+  color:var(--acento); margin:0 0 12px}
+.cabecera p{color:var(--tinta-2); font-size:1.16rem; margin:16px 0 0; line-height:1.5}
+@media(max-width:640px){ .cabecera{padding:38px 0 24px} }
+
+/* ── Tarjetas ─────────────────────────────────────────────────────────────
+   El aire es el diseño: 22px de padding y 18px de hueco, casi el doble que antes. */
+.rejilla{display:grid; grid-template-columns:repeat(auto-fill,minmax(290px,1fr)); gap:18px}
+.tarjeta{background:var(--tarjeta); border:1px solid var(--linea); border-radius:var(--radio);
+  padding:22px; box-shadow:var(--sombra); display:flex; flex-direction:column; gap:10px}
+a.tarjeta{color:inherit}
+a.tarjeta:hover{text-decoration:none; box-shadow:var(--sombra-alta); border-color:var(--linea-2);
+  transform:translateY(-2px)}
+a.tarjeta{transition:box-shadow .22s cubic-bezier(.2,.8,.3,1), transform .22s cubic-bezier(.2,.8,.3,1),
+  border-color .22s}
+.tarjeta h3{display:flex; align-items:center; gap:.45em}
+.tarjeta p{color:var(--tinta-2); font-size:.94rem; margin:0}
+.tarjeta .ico{font-size:1.5rem; line-height:1}
+
+/* la cifra viva de la portada */
+.cifra{font-size:2.1rem; font-weight:700; letter-spacing:-.03em; line-height:1;
+  font-variant-numeric:tabular-nums; color:var(--tinta)}
+.cifra small{font-size:.86rem; font-weight:520; color:var(--tinta-3); letter-spacing:0;
+  margin-left:.45em}
+
+/* ── Piezas sueltas ───────────────────────────────────────────────────────── */
+.pastilla{display:inline-flex; align-items:center; gap:.35em; font-size:.75rem; font-weight:620;
+  padding:3px 9px; border-radius:999px; border:1px solid var(--linea-2); color:var(--tinta-3)}
+.pastilla.acc{color:var(--acento); border-color:var(--acento); background:var(--acento-suave)}
+.pastilla.ok{color:var(--ok); border-color:var(--ok)}
+.pastilla.avi{color:var(--aviso); border-color:var(--aviso)}
+.pastilla.ale{color:var(--alerta); border-color:var(--alerta)}
+
+.boton{display:inline-flex; align-items:center; gap:.5em; background:var(--acento); color:#fff;
+  border:1px solid transparent; border-radius:980px; padding:11px 22px; font:inherit;
+  font-size:.95rem; font-weight:600; cursor:pointer}
+.boton:hover{background:var(--acento-2); text-decoration:none; color:#fff}
+.boton.claro{background:var(--tarjeta); color:var(--tinta); border-color:var(--linea-2)}
+.boton.claro:hover{background:var(--hundido); color:var(--tinta)}
+
+.aviso{border-left:3px solid var(--aviso); background:var(--hundido); padding:12px 16px;
+  border-radius:0 var(--radio-s) var(--radio-s) 0; color:var(--tinta-2); font-size:.92rem}
+
+/* 🔴 Todo lo ancho (tablas, diagramas) scrollea DENTRO de su caja: el cuerpo de la
+   página no puede moverse en horizontal nunca, y estas se miran desde el móvil. */
+.scrollx{overflow-x:auto; -webkit-overflow-scrolling:touch}
+table{border-collapse:collapse; width:100%; font-size:.92rem}
+th,td{text-align:left; padding:11px 14px; border-bottom:1px solid var(--linea); vertical-align:top}
+thead th{font-size:.74rem; text-transform:uppercase; letter-spacing:.07em; color:var(--tinta-3);
+  font-weight:680; background:var(--hundido)}
+
+.pie{margin-top:70px; padding:26px 0; border-top:1px solid var(--linea);
+  color:var(--tinta-3); font-size:.84rem; display:flex; gap:14px; flex-wrap:wrap;
+  align-items:center; justify-content:space-between}
+
+/* ── Movimiento ───────────────────────────────────────────────────────────
+   Transición nativa entre páginas (View Transitions API): sin librería, y los
+   navegadores que no la soportan simplemente navegan como siempre. */
+@view-transition{ navigation:auto }
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important; transition-duration:.01ms!important}
+  @view-transition{ navigation:none }
+}
+
+  
+  
+  
+  
 
   *{box-sizing:border-box}
   html{scroll-behavior:smooth; scroll-padding-top:110px}
   @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
   body{
-    margin:0; background:var(--ground); color:var(--ink);
+    margin:0; background:var(--lienzo); color:var(--tinta);
     font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
     font-size:17px; line-height:1.62; -webkit-font-smoothing:antialiased;
   }
   .serif{font-family:ui-serif,"Palatino Linotype","Book Antiqua",Palatino,Georgia,serif}
   code,.mono{font-family:ui-monospace,"Cascadia Code",Consolas,monospace;
-    font-size:.86em; background:var(--chip); color:var(--arcane-2);
-    padding:.08em .42em; border-radius:5px; border:1px solid var(--line);
+    font-size:.86em; background:var(--acento-suave); color:var(--acento-2);
+    padding:.08em .42em; border-radius:5px; border:1px solid var(--linea);
     white-space:nowrap;}
 
   /* layout */
   .wrap{max-width:1000px; margin:0 auto; padding:0 22px}
   .prose{max-width:70ch}
-  section{padding:66px 0; border-top:1px solid var(--line)}
+  section{padding:66px 0; border-top:1px solid var(--linea)}
   section:first-of-type{border-top:0}
   h2{font-family:ui-serif,Palatino,Georgia,serif; font-weight:600;
      font-size:clamp(1.7rem,4vw,2.5rem); line-height:1.12; margin:.15em 0 .5em;
@@ -75,32 +233,32 @@
      font-size:1.24rem; margin:0 0 .35em; letter-spacing:-.005em}
   p{margin:0 0 1em}
   .eyebrow{font-size:.72rem; text-transform:uppercase; letter-spacing:.18em;
-    font-weight:700; color:var(--arcane); display:inline-flex; gap:.55em; align-items:center}
-  .eyebrow .n{font-family:ui-monospace,monospace; color:var(--gold); background:none;
+    font-weight:700; color:var(--acento); display:inline-flex; gap:.55em; align-items:center}
+  .eyebrow .n{font-family:ui-monospace,monospace; color:var(--aviso); background:none;
     border:0; padding:0}
-  .lead{font-size:1.14rem; color:var(--ink-soft)}
-  a{color:var(--arcane)}
+  .lead{font-size:1.14rem; color:var(--tinta-2)}
+  a{color:var(--acento)}
 
   /* top bar */
-  .bar{position:sticky; top:0; z-index:30; background:color-mix(in srgb,var(--ground) 86%, transparent);
-    backdrop-filter:blur(10px); border-bottom:1px solid var(--line)}
+  .bar{position:sticky; top:0; z-index:30; background:color-mix(in srgb,var(--lienzo) 86%, transparent);
+    backdrop-filter:blur(10px); border-bottom:1px solid var(--linea)}
   .bar-in{max-width:1000px; margin:0 auto; padding:10px 22px; display:flex; align-items:center; gap:12px}
   .crest{font-size:1.15rem; font-family:ui-serif,Palatino,Georgia,serif; font-weight:600;
     display:flex; align-items:center; gap:.5em; white-space:nowrap}
-  .crest .torre{color:var(--arcane)}
+  .crest .torre{color:var(--acento)}
   .menu{position:relative; margin-left:auto}
   .menu-btn{display:inline-flex; align-items:center; gap:.5em; font:inherit; font-size:.85rem;
-    font-weight:600; color:var(--ink-soft); background:var(--surface-2); border:1px solid var(--line);
+    font-weight:600; color:var(--tinta-2); background:var(--hundido); border:1px solid var(--linea);
     border-radius:9px; padding:7px 13px; cursor:pointer;
     transition:color .15s, border-color .15s, background .15s}
-  .menu-btn:hover{color:var(--ink); border-color:var(--arcane)}
-  .menu-btn[aria-expanded="true"]{color:var(--arcane); border-color:var(--arcane); background:var(--chip)}
+  .menu-btn:hover{color:var(--tinta); border-color:var(--acento)}
+  .menu-btn[aria-expanded="true"]{color:var(--acento); border-color:var(--acento); background:var(--acento-suave)}
   .menu-btn .mi{font-size:1.02em; line-height:1}
   .menu-btn .mi.x{display:none}
   .menu-btn[aria-expanded="true"] .mi.b{display:none}
   .menu-btn[aria-expanded="true"] .mi.x{display:inline}
   .menu-panel{position:absolute; top:calc(100% + 9px); right:0; z-index:50;
-    background:color-mix(in srgb,var(--ground) 94%, #000); border:1px solid var(--line);
+    background:color-mix(in srgb,var(--lienzo) 94%, #000); border:1px solid var(--linea);
     border-radius:14px; box-shadow:0 20px 48px rgba(0,0,0,.55); padding:14px 16px;
     width:min(92vw,540px); display:grid; grid-template-columns:1fr 1fr; gap:4px 26px;
     opacity:0; visibility:hidden; transform:translateY(-6px); pointer-events:none;
@@ -109,125 +267,125 @@
   @media (prefers-reduced-motion:reduce){.menu-panel{transition:none}}
   .menu-grp{display:flex; flex-direction:column; gap:1px}
   .menu-h{font-size:.64rem; text-transform:uppercase; letter-spacing:.16em; font-weight:700;
-    color:var(--gold); padding:9px 8px 4px}
-  .menu-panel a{color:var(--ink-soft); text-decoration:none; font-size:.9rem; font-weight:600;
+    color:var(--aviso); padding:9px 8px 4px}
+  .menu-panel a{color:var(--tinta-2); text-decoration:none; font-size:.9rem; font-weight:600;
     padding:7px 10px; border-radius:8px; white-space:nowrap}
-  .menu-panel a:hover{color:var(--ink); background:var(--surface-2)}
-  .menu-panel a.on{color:var(--arcane); background:var(--chip)}
+  .menu-panel a:hover{color:var(--tinta); background:var(--hundido)}
+  .menu-panel a.on{color:var(--acento); background:var(--acento-suave)}
   @media (max-width:560px){.menu-panel{grid-template-columns:1fr; gap:1px}}
 
   /* hero */
   .hero{position:relative; padding:88px 0 60px; overflow:hidden; border-top:0}
   .hero::before{content:""; position:absolute; inset:-30% 0 auto 0; height:520px;
-    background:radial-gradient(60% 70% at 50% 0%, var(--glow), transparent 70%); pointer-events:none}
+    background:radial-gradient(60% 70% at 50% 0%, var(--brillo), transparent 70%); pointer-events:none}
   .hero .kick{font-size:.78rem; letter-spacing:.24em; text-transform:uppercase;
-    color:var(--gold); font-weight:700}
+    color:var(--aviso); font-weight:700}
   .hero h1{font-family:ui-serif,Palatino,Georgia,serif; font-weight:600;
     font-size:clamp(2.6rem,8vw,5rem); line-height:.98; margin:.2em 0 .28em;
     letter-spacing:-.02em; text-wrap:balance}
-  .hero h1 .six{color:var(--arcane); position:relative}
-  .hero .sub{font-size:1.22rem; color:var(--ink-soft); max-width:60ch}
+  .hero h1 .six{color:var(--acento); position:relative}
+  .hero .sub{font-size:1.22rem; color:var(--tinta-2); max-width:60ch}
   .metabar{display:flex; flex-wrap:wrap; gap:10px; margin-top:30px}
-  .stat{background:var(--surface); border:1px solid var(--line); border-radius:12px;
-    padding:12px 16px; box-shadow:var(--shadow)}
+  .stat{background:var(--tarjeta); border:1px solid var(--linea); border-radius:12px;
+    padding:12px 16px; box-shadow:var(--sombra)}
   .stat b{display:block; font-family:ui-serif,Palatino,serif; font-size:1.5rem; line-height:1;
-    color:var(--arcane); font-variant-numeric:tabular-nums}
-  .stat span{font-size:.78rem; color:var(--ink-faint); text-transform:uppercase; letter-spacing:.08em}
+    color:var(--acento); font-variant-numeric:tabular-nums}
+  .stat span{font-size:.78rem; color:var(--tinta-3); text-transform:uppercase; letter-spacing:.08em}
 
   /* cards + grids */
   .grid{display:grid; gap:16px; margin-top:26px}
   .g2{grid-template-columns:repeat(auto-fit,minmax(270px,1fr))}
   .g3{grid-template-columns:repeat(auto-fit,minmax(215px,1fr))}
-  .card{background:var(--surface); border:1px solid var(--line); border-radius:16px;
-    padding:22px; box-shadow:var(--shadow)}
-  .card.tint{background:linear-gradient(180deg,var(--surface),var(--sunken))}
+  .card{background:var(--tarjeta); border:1px solid var(--linea); border-radius:16px;
+    padding:22px; box-shadow:var(--sombra)}
+  .card.tint{background:linear-gradient(180deg,var(--tarjeta),var(--hundido))}
 
   .pill{display:inline-flex; align-items:center; gap:.4em; font-size:.72rem; font-weight:700;
-    letter-spacing:.03em; padding:3px 10px; border-radius:999px; border:1px solid var(--line-strong)}
-  .pill.sci{color:var(--sci); border-color:color-mix(in srgb,var(--sci) 40%,var(--line))}
-  .pill.folk{color:var(--folk); border-color:color-mix(in srgb,var(--folk) 40%,var(--line))}
-  .pill.gold{color:var(--gold)}
-  .pill.arc{color:var(--arcane)}
-  .pill.red{color:var(--danger)}
+    letter-spacing:.03em; padding:3px 10px; border-radius:999px; border:1px solid var(--linea-2)}
+  .pill.sci{color:var(--info); border-color:color-mix(in srgb,var(--info) 40%,var(--linea))}
+  .pill.folk{color:var(--ok); border-color:color-mix(in srgb,var(--ok) 40%,var(--linea))}
+  .pill.gold{color:var(--aviso)}
+  .pill.arc{color:var(--acento)}
+  .pill.red{color:var(--alerta)}
 
   /* faction split */
   .factions{display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:26px}
   @media(max-width:640px){.factions{grid-template-columns:1fr}}
-  .fac{border-radius:16px; padding:24px; border:1px solid var(--line); background:var(--surface); box-shadow:var(--shadow)}
-  .fac.sci{border-top:3px solid var(--sci)}
-  .fac.folk{border-top:3px solid var(--folk)}
+  .fac{border-radius:16px; padding:24px; border:1px solid var(--linea); background:var(--tarjeta); box-shadow:var(--sombra)}
+  .fac.sci{border-top:3px solid var(--info)}
+  .fac.folk{border-top:3px solid var(--ok)}
   .fac h3{display:flex; align-items:center; gap:.5em}
   .fac ul{margin:.6em 0 0; padding-left:1.1em}
-  .fac li{margin:.3em 0; color:var(--ink-soft)}
+  .fac li{margin:.3em 0; color:var(--tinta-2)}
 
   /* plugin group */
   .pgroup{margin-top:26px}
   .pgroup h4{font-size:.76rem; text-transform:uppercase; letter-spacing:.14em; font-weight:800;
-    color:var(--ink-faint); margin:0 0 12px; padding-bottom:8px; border-bottom:1px solid var(--line)}
+    color:var(--tinta-3); margin:0 0 12px; padding-bottom:8px; border-bottom:1px solid var(--linea)}
   .plist{display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:10px}
-  .plug{background:var(--surface); border:1px solid var(--line); border-radius:12px; padding:13px 15px}
+  .plug{background:var(--tarjeta); border:1px solid var(--linea); border-radius:12px; padding:13px 15px}
   .plug b{display:block; font-size:.95rem}
-  .plug span{font-size:.85rem; color:var(--ink-soft)}
+  .plug span{font-size:.85rem; color:var(--tinta-2)}
 
   /* class cards */
   .cls{position:relative; overflow:hidden}
   .cls .glyph{font-size:2rem; line-height:1}
   .cls .top{display:flex; justify-content:space-between; align-items:flex-start; gap:10px; margin-bottom:10px}
   .cls h3{margin:0}
-  .cls .role{font-size:.8rem; color:var(--gold); font-weight:700; letter-spacing:.02em}
-  .cls p{font-size:.92rem; color:var(--ink-soft); margin:.4em 0 .8em}
-  .diff{display:inline-flex; gap:3px; align-items:center; font-size:.72rem; color:var(--ink-faint); font-weight:700}
-  .dot{width:7px; height:7px; border-radius:50%; background:var(--line-strong)}
-  .dot.on{background:var(--arcane)}
+  .cls .role{font-size:.8rem; color:var(--aviso); font-weight:700; letter-spacing:.02em}
+  .cls p{font-size:.92rem; color:var(--tinta-2); margin:.4em 0 .8em}
+  .diff{display:inline-flex; gap:3px; align-items:center; font-size:.72rem; color:var(--tinta-3); font-weight:700}
+  .dot{width:7px; height:7px; border-radius:50%; background:var(--linea-2)}
+  .dot.on{background:var(--acento)}
 
   /* timeline (la espina) */
   .spine{margin-top:30px; position:relative; padding-left:34px}
   .spine::before{content:""; position:absolute; left:11px; top:6px; bottom:6px; width:2px;
-    background:linear-gradient(var(--arcane),var(--line))}
+    background:linear-gradient(var(--acento),var(--linea))}
   .step{position:relative; padding:0 0 26px}
   .step::before{content:""; position:absolute; left:-28px; top:3px; width:16px; height:16px;
-    border-radius:50%; background:var(--surface); border:3px solid var(--arcane); box-shadow:0 0 0 4px var(--ground)}
-  .step.future::before{border-color:var(--line-strong)}
+    border-radius:50%; background:var(--tarjeta); border:3px solid var(--acento); box-shadow:0 0 0 4px var(--lienzo)}
+  .step.future::before{border-color:var(--linea-2)}
   .step h3{margin-bottom:.1em}
-  .step .who{font-size:.82rem; color:var(--arcane); font-weight:700}
-  .step p{font-size:.94rem; color:var(--ink-soft); margin:.35em 0 0}
-  .step.future h3,.step.future .who{color:var(--ink-faint)}
+  .step .who{font-size:.82rem; color:var(--acento); font-weight:700}
+  .step p{font-size:.94rem; color:var(--tinta-2); margin:.35em 0 0}
+  .step.future h3,.step.future .who{color:var(--tinta-3)}
 
   /* npc roster */
   .npc{display:flex; flex-direction:column; gap:8px}
   .npc .head{display:flex; align-items:center; gap:12px}
   .npc .av{width:46px; height:46px; border-radius:12px; display:grid; place-items:center; font-size:1.5rem;
-    background:var(--surface-2); border:1px solid var(--line); flex:none}
+    background:var(--hundido); border:1px solid var(--linea); flex:none}
   .npc .nm{font-family:ui-serif,Palatino,serif; font-weight:600; font-size:1.1rem; line-height:1.1}
-  .npc .rl{font-size:.78rem; color:var(--ink-faint)}
-  .npc p{font-size:.9rem; color:var(--ink-soft); margin:.2em 0 0}
+  .npc .rl{font-size:.78rem; color:var(--tinta-3)}
+  .npc p{font-size:.9rem; color:var(--tinta-2); margin:.2em 0 0}
 
   /* quests */
-  .quest{border-left:3px solid var(--gold); padding-left:18px; margin-top:22px}
+  .quest{border-left:3px solid var(--aviso); padding-left:18px; margin-top:22px}
   .quest h3{margin-bottom:.15em}
-  .quest .meta{font-size:.82rem; color:var(--ink-faint); margin-bottom:.5em}
+  .quest .meta{font-size:.82rem; color:var(--tinta-3); margin-bottom:.5em}
   .steps{display:flex; flex-wrap:wrap; gap:7px; margin-top:8px}
-  .steps span{font-size:.8rem; background:var(--surface-2); border:1px solid var(--line);
-    padding:4px 10px; border-radius:8px; color:var(--ink-soft)}
-  .reward{color:var(--gold); font-weight:700}
+  .steps span{font-size:.8rem; background:var(--hundido); border:1px solid var(--linea);
+    padding:4px 10px; border-radius:8px; color:var(--tinta-2)}
+  .reward{color:var(--aviso); font-weight:700}
 
   /* callout */
-  .note{background:var(--sunken); border:1px solid var(--line); border-left:3px solid var(--arcane);
+  .note{background:var(--hundido); border:1px solid var(--linea); border-left:3px solid var(--acento);
     border-radius:0 12px 12px 0; padding:16px 20px; margin-top:22px}
-  .note b{color:var(--arcane)}
+  .note b{color:var(--acento)}
 
   /* economy */
   .ledger{width:100%; border-collapse:collapse; margin-top:20px; font-size:.92rem}
-  .ledger th,.ledger td{text-align:left; padding:10px 12px; border-bottom:1px solid var(--line)}
-  .ledger th{font-size:.72rem; text-transform:uppercase; letter-spacing:.1em; color:var(--ink-faint)}
+  .ledger th,.ledger td{text-align:left; padding:10px 12px; border-bottom:1px solid var(--linea)}
+  .ledger th{font-size:.72rem; text-transform:uppercase; letter-spacing:.1em; color:var(--tinta-3)}
   .ledger td:last-child,.ledger th:last-child{text-align:right; font-variant-numeric:tabular-nums}
-  .ledger tr.tot td{font-weight:800; color:var(--gold); border-bottom:0}
+  .ledger tr.tot td{font-weight:800; color:var(--aviso); border-bottom:0}
 
   ul.clean{list-style:none; padding:0; margin:18px 0 0; display:grid; gap:10px}
-  ul.clean li{display:flex; gap:12px; align-items:flex-start; color:var(--ink-soft)}
-  ul.clean .mk{color:var(--arcane); font-weight:800; flex:none}
+  ul.clean li{display:flex; gap:12px; align-items:flex-start; color:var(--tinta-2)}
+  ul.clean .mk{color:var(--acento); font-weight:800; flex:none}
 
-  footer{border-top:1px solid var(--line); padding:40px 0 70px; color:var(--ink-faint); font-size:.9rem}
+  footer{border-top:1px solid var(--linea); padding:40px 0 70px; color:var(--tinta-3); font-size:.9rem}
 
   .reveal{opacity:0; transform:translateY(14px); transition:opacity .6s ease, transform .6s ease}
   .reveal.in{opacity:1; transform:none}
@@ -235,20 +393,20 @@
 
   /* quest map — node graph */
   .qmap{margin-top:34px; display:flex; flex-direction:column; align-items:center}
-  .qtag{font-size:.72rem; text-transform:uppercase; letter-spacing:.16em; font-weight:800; color:var(--gold);
-    background:var(--chip); border:1px solid var(--line-strong); border-radius:999px; padding:6px 16px; text-align:center}
-  .qnode{width:100%; max-width:540px; background:var(--surface); border:1px solid var(--line);
-    border-left:4px solid var(--arcane); border-radius:14px; padding:13px 18px; box-shadow:var(--shadow)}
-  .qnode.sci{border-left-color:var(--sci)} .qnode.folk{border-left-color:var(--folk)} .qnode.gold{border-left-color:var(--gold)}
+  .qtag{font-size:.72rem; text-transform:uppercase; letter-spacing:.16em; font-weight:800; color:var(--aviso);
+    background:var(--acento-suave); border:1px solid var(--linea-2); border-radius:999px; padding:6px 16px; text-align:center}
+  .qnode{width:100%; max-width:540px; background:var(--tarjeta); border:1px solid var(--linea);
+    border-left:4px solid var(--acento); border-radius:14px; padding:13px 18px; box-shadow:var(--sombra)}
+  .qnode.sci{border-left-color:var(--info)} .qnode.folk{border-left-color:var(--ok)} .qnode.gold{border-left-color:var(--aviso)}
   .qnode .qh{display:flex; align-items:baseline; justify-content:space-between; gap:10px}
   .qnode .qt{font-family:ui-serif,Palatino,serif; font-weight:600; font-size:1.05rem; line-height:1.15}
-  .qnode .qwho{font-size:.72rem; font-weight:700; white-space:nowrap; color:var(--arcane)}
-  .qnode .qwho.sci{color:var(--sci)} .qnode .qwho.folk{color:var(--folk)} .qnode .qwho.gold{color:var(--gold)}
-  .qnode .qd{font-size:.85rem; color:var(--ink-soft); margin:.25em 0 0}
-  .qnode .qr{font-size:.78rem; color:var(--gold); font-weight:700; margin-top:6px}
-  .qconn{width:2px; height:24px; background:linear-gradient(var(--arcane),var(--arcane-2)); margin:3px auto}
+  .qnode .qwho{font-size:.72rem; font-weight:700; white-space:nowrap; color:var(--acento)}
+  .qnode .qwho.sci{color:var(--info)} .qnode .qwho.folk{color:var(--ok)} .qnode .qwho.gold{color:var(--aviso)}
+  .qnode .qd{font-size:.85rem; color:var(--tinta-2); margin:.25em 0 0}
+  .qnode .qr{font-size:.78rem; color:var(--aviso); font-weight:700; margin-top:6px}
+  .qconn{width:2px; height:24px; background:linear-gradient(var(--acento),var(--acento-2)); margin:3px auto}
   .qfork{position:relative; width:100%; max-width:540px; height:30px}
-  .qfork i{position:absolute; background:var(--arcane)}
+  .qfork i{position:absolute; background:var(--acento)}
   .qfork .v1{top:0; left:50%; width:2px; height:14px; transform:translateX(-50%)}
   .qfork .h{top:14px; left:24%; right:24%; height:2px}
   .qfork .v2{top:14px; width:2px; height:16px}
@@ -256,47 +414,47 @@
   .qcols{display:grid; grid-template-columns:1fr 1fr; gap:18px; width:100%; max-width:820px; align-items:start; margin-top:2px}
   @media(max-width:620px){.qcols{grid-template-columns:1fr} .qfork{display:none}}
   .qcol{display:flex; flex-direction:column; align-items:center}
-  .clabel{font-size:.74rem; text-transform:uppercase; letter-spacing:.1em; font-weight:800; color:var(--ink-faint); margin-bottom:12px; text-align:center}
+  .clabel{font-size:.74rem; text-transform:uppercase; letter-spacing:.1em; font-weight:800; color:var(--tinta-3); margin-bottom:12px; text-align:center}
   .qcol .qnode{max-width:100%}
   .qbadge{display:inline-block; font-size:.64rem; font-weight:800; letter-spacing:.05em; text-transform:uppercase;
-    padding:2px 8px; border-radius:6px; background:var(--chip); border:1px solid var(--line); color:var(--ink-faint); margin-left:6px; vertical-align:middle}
+    padding:2px 8px; border-radius:6px; background:var(--acento-suave); border:1px solid var(--linea); color:var(--tinta-3); margin-left:6px; vertical-align:middle}
 
   /* npc roster extras */
-  .zone{font-size:.76rem; text-transform:uppercase; letter-spacing:.12em; font-weight:800; color:var(--gold);
-    margin:30px 0 14px; padding-bottom:8px; border-bottom:1px solid var(--line); display:flex; align-items:center; gap:.5em}
+  .zone{font-size:.76rem; text-transform:uppercase; letter-spacing:.12em; font-weight:800; color:var(--aviso);
+    margin:30px 0 14px; padding-bottom:8px; border-bottom:1px solid var(--linea); display:flex; align-items:center; gap:.5em}
   .chips{display:flex; flex-wrap:wrap; gap:8px}
-  .nchip{display:inline-flex; align-items:center; gap:.45em; font-size:.88rem; background:var(--surface);
-    border:1px solid var(--line); border-radius:10px; padding:8px 13px; color:var(--ink-soft)}
-  .nchip b{color:var(--ink); font-weight:600}
+  .nchip{display:inline-flex; align-items:center; gap:.45em; font-size:.88rem; background:var(--tarjeta);
+    border:1px solid var(--linea); border-radius:10px; padding:8px 13px; color:var(--tinta-2)}
+  .nchip b{color:var(--tinta); font-weight:600}
   /* ===== Modal de Novedades ===== */
   .upd-ov{position:fixed; inset:0; z-index:200; display:none; align-items:center; justify-content:center;
     padding:20px; background:rgba(15,10,28,.62); backdrop-filter:blur(4px)}
   .upd-ov.on{display:flex}
-  .upd{background:var(--surface); border:1px solid var(--line-strong); border-radius:18px; max-width:580px;
-    width:100%; max-height:86vh; overflow:auto; box-shadow:var(--shadow); animation:updIn .34s ease}
+  .upd{background:var(--tarjeta); border:1px solid var(--linea-2); border-radius:18px; max-width:580px;
+    width:100%; max-height:86vh; overflow:auto; box-shadow:var(--sombra); animation:updIn .34s ease}
   @keyframes updIn{from{opacity:0; transform:translateY(14px) scale(.985)} to{opacity:1; transform:none}}
-  .upd-h{padding:22px 24px 16px; border-bottom:1px solid var(--line);
-    background:linear-gradient(135deg, var(--glow), transparent); position:relative}
-  .upd-h .eyebrow{color:var(--arcane); font-weight:700; letter-spacing:.05em; text-transform:uppercase; font-size:.73rem}
-  .upd-h h2{margin:.28em 0 0; font-size:1.42rem; color:var(--ink)}
-  .upd-h .date{color:var(--ink-faint); font-size:.85rem; margin-top:4px}
-  .upd-x{position:absolute; top:15px; right:16px; cursor:pointer; border:none; background:var(--chip);
-    color:var(--ink-soft); width:32px; height:32px; border-radius:9px; font-size:1rem; line-height:1}
-  .upd-x:hover{color:var(--ink)}
+  .upd-h{padding:22px 24px 16px; border-bottom:1px solid var(--linea);
+    background:linear-gradient(135deg, var(--brillo), transparent); position:relative}
+  .upd-h .eyebrow{color:var(--acento); font-weight:700; letter-spacing:.05em; text-transform:uppercase; font-size:.73rem}
+  .upd-h h2{margin:.28em 0 0; font-size:1.42rem; color:var(--tinta)}
+  .upd-h .date{color:var(--tinta-3); font-size:.85rem; margin-top:4px}
+  .upd-x{position:absolute; top:15px; right:16px; cursor:pointer; border:none; background:var(--acento-suave);
+    color:var(--tinta-2); width:32px; height:32px; border-radius:9px; font-size:1rem; line-height:1}
+  .upd-x:hover{color:var(--tinta)}
   .upd-b{padding:14px 24px 8px}
-  .upd-b .u{display:flex; gap:.75em; padding:11px 0; border-bottom:1px solid var(--line)}
+  .upd-b .u{display:flex; gap:.75em; padding:11px 0; border-bottom:1px solid var(--linea)}
   .upd-b .u:last-child{border-bottom:none}
   .upd-b .u .ic{font-size:1.3rem; flex:none; width:1.5em; text-align:center; line-height:1.4}
-  .upd-b .u p{margin:0; color:var(--ink-soft); font-size:.94rem; line-height:1.5}
-  .upd-b .u p b{color:var(--ink); font-weight:650}
+  .upd-b .u p{margin:0; color:var(--tinta-2); font-size:.94rem; line-height:1.5}
+  .upd-b .u p b{color:var(--tinta); font-weight:650}
   .upd-f{padding:14px 24px 22px; display:flex; justify-content:flex-end}
-  .upd-f button{background:var(--arcane); color:#fff; border:none; border-radius:11px; padding:11px 22px;
+  .upd-f button{background:var(--acento); color:#fff; border:none; border-radius:11px; padding:11px 22px;
     font-weight:700; cursor:pointer; font-size:.95rem}
-  .upd-f button:hover{background:var(--arcane-2)}
-  .upd-btn{position:fixed; bottom:18px; right:18px; z-index:150; background:var(--arcane); color:#fff;
-    border:none; border-radius:999px; padding:11px 18px; font-weight:700; cursor:pointer; box-shadow:var(--shadow);
+  .upd-f button:hover{background:var(--acento-2)}
+  .upd-btn{position:fixed; bottom:18px; right:18px; z-index:150; background:var(--acento); color:#fff;
+    border:none; border-radius:999px; padding:11px 18px; font-weight:700; cursor:pointer; box-shadow:var(--sombra);
     display:inline-flex; align-items:center; gap:.5em; font-size:.9rem}
-  .upd-btn:hover{background:var(--arcane-2)}
+  .upd-btn:hover{background:var(--acento-2)}
 </style>
 </head>
 <body>
@@ -334,7 +492,7 @@
 
 <div class="bar">
   <div class="bar-in">
-    <span class="crest"><span class="torre">🗼</span> El Reino <span style="color:var(--arcane)">6</span></span>
+    <span class="crest"><span class="torre">🗼</span> El Reino <span style="color:var(--acento)">6</span></span>
     <div class="menu">
       <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="menuPanel" aria-haspopup="true">
         <span class="mi b" aria-hidden="true">☰</span><span class="mi x" aria-hidden="true">✕</span> Secciones
@@ -375,7 +533,21 @@
 </div>
 
 <header class="hero">
-  <div class="wrap">
+  <nav class="nav">
+<a class="marca" href="https://duleelhorror.github.io/elreino6-guia/index.html" aria-current="page"><span class="ico">🗼</span> El Reino <b>6</b></a>
+<div class="nav-links">
+<span class="grupo-tit">Consultar</span>
+<a class="pag" href="https://duleelhorror.github.io/elreino6-guia/mapa.html"><span>🗺️</span> Mapa de misiones</a>
+<a class="pag" href="https://duleelhorror.github.io/elreino6-guia/bestiario.html"><span>🐺</span> Bestiario</a>
+<a class="pag" href="https://duleelhorror.github.io/elreino6-guia/logros.html"><span>🏆</span> Logros</a>
+</div>
+<div class="der">
+<a class="fuera" href="https://duleelhorror.github.io/elreino6-guia/inicio.html">⌂ Herramientas</a>
+<button class="tema" onclick="TEMA()" title="Cambiar tema">◐</button>
+</div></nav>
+<script>function TEMA(){var r=document.documentElement;r.dataset.theme=r.dataset.theme==='dark'?'light':'dark';try{localStorage.setItem('er6tema',r.dataset.theme)}catch(e){}}try{var t=localStorage.getItem('er6tema');if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+
+<div class="wrap">
     <div class="kick">Guía para el administrador · Servidor de Minecraft</div>
     <h1 class="serif">El Reino <span class="six">6</span></h1>
     <p class="sub">Todo lo que hemos construido, cómo está pensado y hacia dónde va. Escrito en fácil, sin tecnicismos, para que se entienda de un vistazo.</p>
@@ -412,7 +584,7 @@
     <div class="factions">
       <div class="fac sci reveal">
         <h3><span class="pill sci">🔬 Forasteros</span></h3>
-        <p style="margin:.7em 0 0; color:var(--ink-soft)">Vinieron de fuera por la Torre. <strong>Científicos</strong> (racionalistas, ateos: "esto es CIENCIA, no magia") y <strong>obreros</strong> (la mano de obra práctica, hartos de los de bata).</p>
+        <p style="margin:.7em 0 0; color:var(--tinta-2)">Vinieron de fuera por la Torre. <strong>Científicos</strong> (racionalistas, ateos: "esto es CIENCIA, no magia") y <strong>obreros</strong> (la mano de obra práctica, hartos de los de bata).</p>
         <ul>
           <li>Niegan la magia aunque no sepan explicar la torre.</li>
           <li>Miran al pueblo por encima del hombro.</li>
@@ -421,7 +593,7 @@
       </div>
       <div class="fac folk reveal">
         <h3><span class="pill folk">🪄 Autóctonos</span></h3>
-        <p style="margin:.7em 0 0; color:var(--ink-soft)">El pueblo de toda la vida, que nunca salió de aquí. Para ellos <strong>la magia es lo más normal del mundo</strong>, y están medio cabreados con los científicos por el jaleo de las excavaciones.</p>
+        <p style="margin:.7em 0 0; color:var(--tinta-2)">El pueblo de toda la vida, que nunca salió de aquí. Para ellos <strong>la magia es lo más normal del mundo</strong>, y están medio cabreados con los científicos por el jaleo de las excavaciones.</p>
         <ul>
           <li>La magia y la alquimia son cosa suya.</li>
           <li>Ejemplos: la Alquimista, el Semental, el Loco del Pueblo.</li>
@@ -550,7 +722,7 @@
         <div class="diff">Dificultad <span class="dot on"></span><span class="dot on"></span><span class="dot on"></span> Difícil</div>
       </div>
       <div class="card cls tint reveal" style="display:grid; place-content:center; text-align:center">
-        <p style="margin:0; color:var(--ink-faint); font-size:.92rem">Cada jugador empieza sin clase y la desbloquea con el tutorial (ver <a href="#arranque">El arranque</a>). Así aprende el juego poco a poco.</p>
+        <p style="margin:0; color:var(--tinta-3); font-size:.92rem">Cada jugador empieza sin clase y la desbloquea con el tutorial (ver <a href="#arranque">El arranque</a>). Así aprende el juego poco a poco.</p>
       </div>
     </div>
   </section>
@@ -791,101 +963,101 @@
     <div class="quest reveal">
       <h3 class="serif">Operación Recluta <span class="pill sci" style="vertical-align:middle">Toni</span></h3>
       <div class="meta">Tutorial de survival · recolectar y entregar</div>
-      <p style="color:var(--ink-soft); margin:0">Ayudas a montar el campamento de los científicos: madera, una mesa de trabajo, piedra y comida.</p>
+      <p style="color:var(--tinta-2); margin:0">Ayudas a montar el campamento de los científicos: madera, una mesa de trabajo, piedra y comida.</p>
       <div class="steps"><span>16 troncos</span><span>1 mesa</span><span>32 adoquines</span><span>6 filetes</span><span class="reward">🥜 30 Cacahuates</span></div>
     </div>
 
     <div class="quest reveal">
       <h3 class="serif">Bautismo de Fuego <span class="pill sci" style="vertical-align:middle">Anselmo</span></h3>
       <div class="meta">Combate + entrega · desbloquea tu clase</div>
-      <p style="color:var(--ink-soft); margin:0">Anselmo te evalúa: demuestras fuerza matando zombis, vuelves a informarle y le llevas el papeleo. Al final te asigna tu clase.</p>
+      <p style="color:var(--tinta-2); margin:0">Anselmo te evalúa: demuestras fuerza matando zombis, vuelves a informarle y le llevas el papeleo. Al final te asigna tu clase.</p>
       <div class="steps"><span>Matar 3 zombis</span><span>Hablar con Anselmo</span><span>Entregar 1 pluma</span><span class="reward">🥜 7 + clase</span></div>
     </div>
 
     <div class="quest reveal">
       <h3 class="serif">🗺️ El Escalafón <span class="pill sci" style="vertical-align:middle">Anselmo</span> <span class="qbadge">paralela · tutorial de talentos</span></h3>
       <div class="meta">Tutorial · el árbol de talentos (skill trees)</div>
-      <p style="color:var(--ink-soft); margin:0">Anselmo (RRHH) te vende los <strong>talentos</strong> como tu «plan de carrera / desarrollo profesional». Según subes de nivel ganas <strong>puntos</strong> para gastar en un <strong>tablero</strong> y mejorar tus poderes. Tras una «evaluación de desempeño» (matar unos zombis) te da el <strong>Mapa de Talentos</strong> (abre tu tablero) y 1 punto para estrenar. Es <strong>paralela</strong>: la haces cuando quieras tras elegir clase.</p>
+      <p style="color:var(--tinta-2); margin:0">Anselmo (RRHH) te vende los <strong>talentos</strong> como tu «plan de carrera / desarrollo profesional». Según subes de nivel ganas <strong>puntos</strong> para gastar en un <strong>tablero</strong> y mejorar tus poderes. Tras una «evaluación de desempeño» (matar unos zombis) te da el <strong>Mapa de Talentos</strong> (abre tu tablero) y 1 punto para estrenar. Es <strong>paralela</strong>: la haces cuando quieras tras elegir clase.</p>
       <div class="steps"><span>Matar 6 zombis</span><span>Hablar con Anselmo</span><span class="reward">🗺️ Mapa de Talentos + 1 punto + 🥜6</span></div>
     </div>
 
     <div class="quest reveal">
       <h3 class="serif">El Semental de la Flecha <span class="pill folk" style="vertical-align:middle">Semental</span></h3>
       <div class="meta">Tutorial de casteo · 5 combates, cada uno enseña algo</div>
-      <p style="color:var(--ink-soft); margin:0">Cinco pruebas de combate. Cada una explica una parte de tus poderes: la barra, el maná, el enfriamiento y los ingredientes de los magos.</p>
+      <p style="color:var(--tinta-2); margin:0">Cinco pruebas de combate. Cada una explica una parte de tus poderes: la barra, el maná, el enfriamiento y los ingredientes de los magos.</p>
       <div class="steps"><span>5 zombis</span><span>5 esqueletos</span><span>5 arañas</span><span>3 creepers</span><span>Horda final</span><span class="reward">🥜 18 + arco</span></div>
     </div>
 
     <div class="quest reveal">
       <h3 class="serif">La Alquimista <span class="pill folk" style="vertical-align:middle">Alquimista</span></h3>
       <div class="meta">Recado · te da los primeros ingredientes de magia</div>
-      <p style="color:var(--ink-soft); margin:0">La viciada te mete en el ajo: le llevas un par de flores y te da un pack de ingredientes de alquimia… y te manda a por semillas al camello de la cueva.</p>
+      <p style="color:var(--tinta-2); margin:0">La viciada te mete en el ajo: le llevas un par de flores y te da un pack de ingredientes de alquimia… y te manda a por semillas al camello de la cueva.</p>
       <div class="steps"><span>Entregar 1 amapola + 1 diente de león</span><span class="reward">🎁 Pack de reagentes + brújula a Nando</span></div>
     </div>
 
     <div class="quest reveal">
       <h3 class="serif">Nando el travieso <span class="pill folk" style="vertical-align:middle">Nando</span></h3>
       <div class="meta">Recado · consigues las semillas de marihuana</div>
-      <p style="color:var(--ink-soft); margin:0">El camello fino te fía el material a cambio de unos panes. Su "alijo" trae <strong>solo las semillas</strong> para empezar el cultivo.</p>
+      <p style="color:var(--tinta-2); margin:0">El camello fino te fía el material a cambio de unos panes. Su "alijo" trae <strong>solo las semillas</strong> para empezar el cultivo.</p>
       <div class="steps"><span>Entregar 3 panes</span><span class="reward">🎁 Alijo de semillas + recetario</span></div>
     </div>
 
     <div class="quest reveal">
       <h3 class="serif">Saga de Cultivo <span class="pill folk" style="vertical-align:middle">Alquimista</span> <span class="qbadge">3 misiones</span></h3>
       <div class="meta">Aprendizaje guiado · plantar → secar → cocinar la maría</div>
-      <p style="color:var(--ink-soft); margin:0">La Alquimista te enseña el negocio paso a paso, regalándote el invernadero y el laboratorio por el camino, y al final desbloquea la venta.</p>
+      <p style="color:var(--tinta-2); margin:0">La Alquimista te enseña el negocio paso a paso, regalándote el invernadero y el laboratorio por el camino, y al final desbloquea la venta.</p>
       <div class="steps"><span>I · La Huerta 🥜6</span><span>II · El Secadero 🥜8 + invernadero</span><span>III · El Laboratorio 🥜12 + laboratorio</span><span class="reward">+ ingredientes · desbloquea vender</span></div>
     </div>
 
     <div class="quest reveal">
       <h3 class="serif">Vía Crucis Administrativa <span class="pill sci" style="vertical-align:middle">Toni</span> <span class="qbadge">principal</span></h3>
       <div class="meta">Comedia burocrática · 6 ventanillas del Ayuntamiento</div>
-      <p style="color:var(--ink-soft); margin:0">Toni te manda a sacar un permiso y empieza el circo del papeleo: sellos, firmas, tasas, esperas absurdas y funcionarios que te marean de ventanilla en ventanilla. Es la puerta de <strong>la historia principal del pueblo</strong> (el Acto 1).</p>
+      <p style="color:var(--tinta-2); margin:0">Toni te manda a sacar un permiso y empieza el circo del papeleo: sellos, firmas, tasas, esperas absurdas y funcionarios que te marean de ventanilla en ventanilla. Es la puerta de <strong>la historia principal del pueblo</strong> (el Acto 1).</p>
       <div class="steps"><span>Ujier</span><span>Sellos</span><span>Registrador</span><span>Interventor</span><span>Inspector</span><span>Ministro</span><span class="reward">🥜 28 + gancho de la Torre Negra</span></div>
     </div>
 
     <h3 class="serif" style="margin-top:2.4rem">El Acto 1 · las sagas del pueblo <span class="qbadge">tras el tutorial</span></h3>
-    <p style="color:var(--ink-soft); margin:.2em 0 0">Terminado el arranque, empiezan las líneas de los vecinos. Estas dos ya están jugables:</p>
+    <p style="color:var(--tinta-2); margin:.2em 0 0">Terminado el arranque, empiezan las líneas de los vecinos. Estas dos ya están jugables:</p>
 
     <div class="quest reveal">
       <h3 class="serif">Operación Carpincho <span class="pill sci" style="vertical-align:middle">Toni → el Ministro</span> <span class="qbadge">6 misiones</span></h3>
       <div class="meta">Infiltración + combate · destapar al Ministro corrupto</div>
-      <p style="color:var(--ink-soft); margin:0">El Ministro congeló la obra con una excusa falsa para echar al pueblo y montar sus «Apartamentos Pan de Gamba». Te infiltras en el archivo del Ayuntamiento, quemas las órdenes de desahucio, frenas a los <strong>Precintadores</strong> y llegas al <strong>careo final contra el jefe</strong>.</p>
+      <p style="color:var(--tinta-2); margin:0">El Ministro congeló la obra con una excusa falsa para echar al pueblo y montar sus «Apartamentos Pan de Gamba». Te infiltras en el archivo del Ayuntamiento, quemas las órdenes de desahucio, frenas a los <strong>Precintadores</strong> y llegas al <strong>careo final contra el jefe</strong>.</p>
       <div class="steps"><span>Colarse en el archivo</span><span>Quemar las órdenes</span><span>Vencer a los Precintadores</span><span>Careo con el Ministro</span><span class="reward">🥜 84 + Medalla del Capincherío</span></div>
     </div>
 
     <div class="quest reveal">
       <h3 class="serif">El Bar Co <span class="pill folk" style="vertical-align:middle">Señor Trapo</span> <span class="qbadge">7 misiones</span></h3>
       <div class="meta">Aprendizaje · fabricar cerveza artesana</div>
-      <p style="color:var(--ink-soft); margin:0">El Señor Trapo, un cerdo tabernero, te enseña a hacer <strong>cerveza</strong> paso a paso en la bodega de su barco volcado: fermentar en el caldero, destilar, añejar en barrica, sellar y servir. Incluso la mítica «Birra del Naufragio».</p>
+      <p style="color:var(--tinta-2); margin:0">El Señor Trapo, un cerdo tabernero, te enseña a hacer <strong>cerveza</strong> paso a paso en la bodega de su barco volcado: fermentar en el caldero, destilar, añejar en barrica, sellar y servir. Incluso la mítica «Birra del Naufragio».</p>
       <div class="steps"><span>Fermentar</span><span>Destilar</span><span>Añejar</span><span>Sellar</span><span>Birra del Naufragio</span><span class="reward">🥜 46 + jarra y delantal</span></div>
     </div>
 
     <div class="quest reveal">
       <h3 class="serif">🪨 El Pulso de la Piedra <span class="pill sci" style="vertical-align:middle">Doctora Pizarrica</span> <span class="qbadge">3 misiones · nueva</span></h3>
       <div class="meta">Geología + misterio · ¿la Torre afecta al subsuelo?</div>
-      <p style="color:var(--ink-soft); margin:0">La <strong>Doctora Pizarrica</strong> (una geóloga que quería estudiar animales y acabó odiando las piedras) te manda recoger <strong>una muestra de cada roca</strong>, bajar con un <strong>sismógrafo</strong> a lo más hondo de una mina para medir los <strong>temblores de la Torre</strong>, y traerle <strong>un mineral de cada</strong> para su catálogo. La lectura revela algo inquietante: la Torre <strong>está cambiando la roca del Reino desde abajo</strong>. Se abre tras <em>Operación Carpincho</em>.</p>
+      <p style="color:var(--tinta-2); margin:0">La <strong>Doctora Pizarrica</strong> (una geóloga que quería estudiar animales y acabó odiando las piedras) te manda recoger <strong>una muestra de cada roca</strong>, bajar con un <strong>sismógrafo</strong> a lo más hondo de una mina para medir los <strong>temblores de la Torre</strong>, y traerle <strong>un mineral de cada</strong> para su catálogo. La lectura revela algo inquietante: la Torre <strong>está cambiando la roca del Reino desde abajo</strong>. Se abre tras <em>Operación Carpincho</em>.</p>
       <div class="steps"><span>Muestras de roca</span><span>Sismógrafo a lo más hondo</span><span>Catálogo mineral</span><span class="reward">🥜 29 + Medalla de Geóloga</span></div>
     </div>
 
     <div class="quest reveal">
       <h3 class="serif">⚡ Doce Voltios <span class="pill sci" style="vertical-align:middle">Toni</span> <span class="qbadge">tutorial · desbloquea el Tablón</span></h3>
       <div class="meta">Tutorial · darle corriente al Tablón de Encargos</div>
-      <p style="color:var(--ink-soft); margin:0">El Tablón existe pero <strong>no funciona: no tiene corriente</strong>. Toni te explica (con una lógica absurda) que va a <strong>«12 voltios»</strong> y hay que bajar <strong>2 palancas</strong> del circuito: una <strong>debajo del puente Mambutu</strong> (que alguien montó ahí subido a un andamio que ya no existe) y otra <strong>por fuera de la iglesia</strong>. Recoges los 2 fusibles, se los llevas a Toni y te da el <strong>Enchufe</strong> que lo desbloquea. <strong>Hasta hacer esto, no puedes usar el Tablón.</strong></p>
+      <p style="color:var(--tinta-2); margin:0">El Tablón existe pero <strong>no funciona: no tiene corriente</strong>. Toni te explica (con una lógica absurda) que va a <strong>«12 voltios»</strong> y hay que bajar <strong>2 palancas</strong> del circuito: una <strong>debajo del puente Mambutu</strong> (que alguien montó ahí subido a un andamio que ya no existe) y otra <strong>por fuera de la iglesia</strong>. Recoges los 2 fusibles, se los llevas a Toni y te da el <strong>Enchufe</strong> que lo desbloquea. <strong>Hasta hacer esto, no puedes usar el Tablón.</strong></p>
       <div class="steps"><span>Palanca del puente Mambutu</span><span>Palanca de la iglesia</span><span>Entregar los 2 fusibles a Toni</span><span class="reward">🥜 10 + Enchufe del Tablón</span></div>
     </div>
 
     <div class="quest reveal">
       <h3 class="serif">🕵️ Los Dedos Largos <span class="pill folk" style="vertical-align:middle">Edelmiro Garrapata</span> <span class="qbadge">9 misiones · nueva</span></h3>
       <div class="meta">El entrenamiento del hampa · pura habilidad, nada de traer materiales</div>
-      <p style="color:var(--ink-soft); margin:0"><strong>Garrapata</strong> es el mejor teórico del robo del Reino y el peor ladrón que ha existido: sabe hacerlo, lo tiene medido y escrito, y no puede ejecutarlo <strong>porque hace ruido</strong>. Tiene un método de <strong>veinticinco lecciones</strong> que nunca ha probado nadie, así que te entrena a ti para comprobar si funciona. Aguantar agachado sin respirar, tocar la campana del pueblo a plena luz para <strong>medir cuánto tarda alguien en salir</strong>, cruzar la plaza entera en cuclillas, fabricar una ganzúa que parezca un simple alambre… y colarte en una <strong>casa sembrada de trampas</strong> para llegar al cofre del fondo <strong>sin pisar nada</strong>. Y luego volver a entrar para <strong>devolver lo que cogiste</strong>. Al acabar te escribe una <strong>carta de recomendación</strong> para cierta gente del puerto. Se abre después de <em>El Alijo de la Cueva</em>.</p>
+      <p style="color:var(--tinta-2); margin:0"><strong>Garrapata</strong> es el mejor teórico del robo del Reino y el peor ladrón que ha existido: sabe hacerlo, lo tiene medido y escrito, y no puede ejecutarlo <strong>porque hace ruido</strong>. Tiene un método de <strong>veinticinco lecciones</strong> que nunca ha probado nadie, así que te entrena a ti para comprobar si funciona. Aguantar agachado sin respirar, tocar la campana del pueblo a plena luz para <strong>medir cuánto tarda alguien en salir</strong>, cruzar la plaza entera en cuclillas, fabricar una ganzúa que parezca un simple alambre… y colarte en una <strong>casa sembrada de trampas</strong> para llegar al cofre del fondo <strong>sin pisar nada</strong>. Y luego volver a entrar para <strong>devolver lo que cogiste</strong>. Al acabar te escribe una <strong>carta de recomendación</strong> para cierta gente del puerto. Se abre después de <em>El Alijo de la Cueva</em>.</p>
       <div class="steps"><span>Aguanta 11 segundos</span><span>Siete campanadas</span><span>300 bloques agachado</span><span>La casa de las trampas</span><span class="reward">🥜 45 + la carta al Gremio</span></div>
     </div>
 
-    <div class="quest reveal" style="border-left-color:var(--arcane)">
+    <div class="quest reveal" style="border-left-color:var(--acento)">
       <h3 class="serif">🎟️ Tablón de Encargos <span class="pill arc" style="vertical-align:middle">Diarias</span> <span class="qbadge">nuevo · repetible</span></h3>
       <div class="meta">Loop diario · misiones que rotan cada día</div>
-      <p style="color:var(--ink-soft); margin:0">Un <strong>tablón físico</strong> te da <strong>misiones diarias aleatorias</strong> (matar bichos, minar, talar, pescar, correr…). Al completarlas subes tu <strong>Pase del Reino</strong> y ganas <strong>Fichas 🎟️</strong>, una moneda especial. Las Fichas se gastan en la <strong>Tienda de Fichas</strong> para comprar llaves del <strong>Cofre de la Suerte</strong> (una lootbox con premios). Es el enganche para volver cada día.</p>
+      <p style="color:var(--tinta-2); margin:0">Un <strong>tablón físico</strong> te da <strong>misiones diarias aleatorias</strong> (matar bichos, minar, talar, pescar, correr…). Al completarlas subes tu <strong>Pase del Reino</strong> y ganas <strong>Fichas 🎟️</strong>, una moneda especial. Las Fichas se gastan en la <strong>Tienda de Fichas</strong> para comprar llaves del <strong>Cofre de la Suerte</strong> (una lootbox con premios). Es el enganche para volver cada día.</p>
       <div class="steps"><span>4 encargos al día</span><span>Suben el Pase</span><span class="reward">🎟️ Fichas → Cofre de la Suerte</span></div>
     </div>
   </section>
@@ -898,10 +1070,10 @@
     </div>
 
     <div class="reveal" style="text-align:center;margin:22px 0 4px">
-      <a href="https://duleelhorror.github.io/elreino6-guia/mapa.html" style="display:inline-flex;align-items:center;gap:.5em;background:var(--arcane);color:#fff;text-decoration:none;font-weight:700;padding:12px 22px;border-radius:12px;box-shadow:var(--shadow)">🗺️ Abrir el MAPA INTERACTIVO completo →</a>
-      <p style="font-size:.85rem;color:var(--ink-faint);margin:.6em 0 0">Grafo navegable con todas las misiones, ramas y datos (clic en cada nodo). Ideal cuando la historia se ramifica.</p>
-      <p style="margin:1.1em 0 0"><a href="https://duleelhorror.github.io/elreino6-guia/bestiario.html" style="display:inline-flex;align-items:center;gap:.5em;background:var(--surface-2);color:var(--ink);text-decoration:none;font-weight:700;padding:10px 20px;border-radius:12px;border:1px solid var(--line-strong)">🐺 Abrir el BESTIARIO →</a></p>
-      <p style="font-size:.85rem;color:var(--ink-faint);margin:.6em 0 0">Qué criaturas hay en el mundo, dónde y cómo aparecen, y qué sueltan. Los números salen directos de los ficheros del servidor.</p>
+      <a href="https://duleelhorror.github.io/elreino6-guia/mapa.html" style="display:inline-flex;align-items:center;gap:.5em;background:var(--acento);color:#fff;text-decoration:none;font-weight:700;padding:12px 22px;border-radius:12px;box-shadow:var(--sombra)">🗺️ Abrir el MAPA INTERACTIVO completo →</a>
+      <p style="font-size:.85rem;color:var(--tinta-3);margin:.6em 0 0">Grafo navegable con todas las misiones, ramas y datos (clic en cada nodo). Ideal cuando la historia se ramifica.</p>
+      <p style="margin:1.1em 0 0"><a href="https://duleelhorror.github.io/elreino6-guia/bestiario.html" style="display:inline-flex;align-items:center;gap:.5em;background:var(--hundido);color:var(--tinta);text-decoration:none;font-weight:700;padding:10px 20px;border-radius:12px;border:1px solid var(--linea-2)">🐺 Abrir el BESTIARIO →</a></p>
+      <p style="font-size:.85rem;color:var(--tinta-3);margin:.6em 0 0">Qué criaturas hay en el mundo, dónde y cómo aparecen, y qué sueltan. Los números salen directos de los ficheros del servidor.</p>
     </div>
 
     <div class="qmap reveal">
@@ -995,21 +1167,21 @@
         <div class="qr">🥜 46 + jarra y delantal</div>
       </div>
       <div class="qconn"></div>
-      <div class="qnode" style="border-left-color:var(--arcane)">
-        <div class="qh"><span class="qt">⚡ Doce Voltios</span><span class="qwho" style="color:var(--arcane)">🔬 Toni · tutorial</span></div>
+      <div class="qnode" style="border-left-color:var(--acento)">
+        <div class="qh"><span class="qt">⚡ Doce Voltios</span><span class="qwho" style="color:var(--acento)">🔬 Toni · tutorial</span></div>
         <div class="qd">El tutorial del Tablón: activas <strong>2 palancas</strong> (una bajo el puente Mambutu, otra fuera de la iglesia) para darle sus «12 voltios». Hasta hacerlo, el Tablón no funciona.</div>
         <div class="qr">🥜 10 + Enchufe (desbloquea el Tablón)</div>
       </div>
       <div class="qconn"></div>
-      <div class="qnode" style="border-left-color:var(--arcane)">
-        <div class="qh"><span class="qt">🎟️ Tablón de Encargos</span><span class="qwho" style="color:var(--arcane)">Diarias · repetible</span></div>
+      <div class="qnode" style="border-left-color:var(--acento)">
+        <div class="qh"><span class="qt">🎟️ Tablón de Encargos</span><span class="qwho" style="color:var(--acento)">Diarias · repetible</span></div>
         <div class="qd">Ya desbloqueado: <strong>misiones diarias</strong> que dan <strong>Fichas</strong> → Tienda de Fichas → Cofre de la Suerte.</div>
         <div class="qr">🎟️ Fichas → lootbox</div>
       </div>
     </div>
 
     <div class="prose">
-      <div class="note reveal"><b>Cómo leerlo:</b> cada tarjeta es una misión y las líneas indican "necesitas la de arriba para empezar la de abajo". El color del borde dice de qué facción es el personaje: <span style="color:var(--sci); font-weight:700">azulado = forasteros</span>, <span style="color:var(--folk); font-weight:700">verde = pueblo</span>, <span style="color:var(--gold); font-weight:700">dorado = sistema/economía</span>.</div>
+      <div class="note reveal"><b>Cómo leerlo:</b> cada tarjeta es una misión y las líneas indican "necesitas la de arriba para empezar la de abajo". El color del borde dice de qué facción es el personaje: <span style="color:var(--info); font-weight:700">azulado = forasteros</span>, <span style="color:var(--ok); font-weight:700">verde = pueblo</span>, <span style="color:var(--aviso); font-weight:700">dorado = sistema/economía</span>.</div>
     </div>
   </section>
 
@@ -1053,7 +1225,7 @@
 
       <h3 style="margin-top:1.6rem">Los oficios (Jobs): el sueldo del día a día 🛠️</h3>
       <p>Aparte de las misiones, hay <strong>5 oficios</strong> que pagan Cacahuates por currar: <strong>Minero, Leñador, Hortelano, Cazador y Pescador</strong>. Se desbloquean al terminar la misión <em>Alta en el Gremio</em>. Es el ingreso del día a día (picar, talar, cosechar, cazar, pescar).</p>
-      <p style="color:var(--ink-soft)">Está pensado para que la gente se <strong>especialice</strong> y NO pueda ir cambiando de oficio a cada rato para exprimir todos los sueldos. Cuatro frenos lo impiden:</p>
+      <p style="color:var(--tinta-2)">Está pensado para que la gente se <strong>especialice</strong> y NO pueda ir cambiando de oficio a cada rato para exprimir todos los sueldos. Cuatro frenos lo impiden:</p>
       <table class="ledger">
         <thead><tr><th>Freno</th><th>Qué hace</th></tr></thead>
         <tbody>
@@ -1067,7 +1239,7 @@
 
       <h3 style="margin-top:1.6rem">Cerrar tu cofre con llave 🔒</h3>
       <p>Lo que guardas <strong>se puede proteger</strong>, y no hace falta escribir ningún comando: pones un <strong>cartel</strong> en la cara del cofre y en la primera línea escribes <strong>[Private]</strong>. A partir de ahí ese cofre es <strong>solo tuyo</strong>.</p>
-      <p style="color:var(--ink-soft)">Si quieres dejar entrar a alguien, escribes su nombre en las líneas de abajo del cartel — o pones un segundo cartel con <strong>[More Users]</strong> y más nombres. Funciona igual con <strong>barriles, shulkers, tolvas y hornos</strong> de almacenamiento.</p>
+      <p style="color:var(--tinta-2)">Si quieres dejar entrar a alguien, escribes su nombre en las líneas de abajo del cartel — o pones un segundo cartel con <strong>[More Users]</strong> y más nombres. Funciona igual con <strong>barriles, shulkers, tolvas y hornos</strong> de almacenamiento.</p>
       <div class="note reveal"><b>Lo que NO protege, y es a propósito:</b> el <strong>alambique</strong> y el <strong>ahumador</strong> del Bar Co, el <strong>laboratorio</strong> de la Alquimista y los <strong>atriles</strong> (el Tablón de Encargos, el Directorio). Esos son <em>mecánicas del pueblo</em>: si se pudieran cerrar con un cartel, alguien bloquearía media aldea.</div>
     </div>
   </section>
@@ -1088,10 +1260,10 @@
       <h3 class="serif" style="margin-top:1.4em">Lo que tiene que hacer Pan (resumen)</h3>
     </div>
     <div class="grid g2" style="margin-top:8px">
-      <div class="card reveal"><h3 class="serif">1 · Crear el mundo-molde</h3><p style="color:var(--ink-soft);font-size:.94rem;margin:.3em 0 0">Un mundo vacío aparte donde construir la mazmorra sin estorbar al reino.</p></div>
-      <div class="card reveal"><h3 class="serif">2 · Construir la mazmorra</h3><p style="color:var(--ink-soft);font-size:.94rem;margin:.3em 0 0">Las salas, pasillos y la arena del jefe. A mano, o pegando una plantilla (schematic).</p></div>
-      <div class="card reveal"><h3 class="serif">3 · Marcar los puntos</h3><p style="color:var(--ink-soft);font-size:.94rem;margin:.3em 0 0">Con comandos: dónde aparece el grupo, la salida, el jefe, los generadores de bichos y los cofres.</p></div>
-      <div class="card reveal"><h3 class="serif">4 · Guardar y probar</h3><p style="color:var(--ink-soft);font-size:.94rem;margin:.3em 0 0">Guardar, validar y entrar con una party a probar. La puerta de entrada la monta Claude.</p></div>
+      <div class="card reveal"><h3 class="serif">1 · Crear el mundo-molde</h3><p style="color:var(--tinta-2);font-size:.94rem;margin:.3em 0 0">Un mundo vacío aparte donde construir la mazmorra sin estorbar al reino.</p></div>
+      <div class="card reveal"><h3 class="serif">2 · Construir la mazmorra</h3><p style="color:var(--tinta-2);font-size:.94rem;margin:.3em 0 0">Las salas, pasillos y la arena del jefe. A mano, o pegando una plantilla (schematic).</p></div>
+      <div class="card reveal"><h3 class="serif">3 · Marcar los puntos</h3><p style="color:var(--tinta-2);font-size:.94rem;margin:.3em 0 0">Con comandos: dónde aparece el grupo, la salida, el jefe, los generadores de bichos y los cofres.</p></div>
+      <div class="card reveal"><h3 class="serif">4 · Guardar y probar</h3><p style="color:var(--tinta-2);font-size:.94rem;margin:.3em 0 0">Guardar, validar y entrar con una party a probar. La puerta de entrada la monta Claude.</p></div>
     </div>
 
     <div class="prose reveal">
@@ -1103,49 +1275,49 @@
       <div class="card reveal">
         <h3 class="serif">🌍 Preparar el molde</h3>
         <ul style="list-style:none;padding:0;margin:.5em 0 0;font-size:.92rem;line-height:1.85">
-          <li><code>/mv create catacumbas_tpl normal -t flat</code><br><span style="color:var(--ink-faint)">crea el mundo vacío (plano) donde construir</span></li>
-          <li><code>/mv tp catacumbas_tpl</code><br><span style="color:var(--ink-faint)">te teletransporta ahí para construir</span></li>
+          <li><code>/mv create catacumbas_tpl normal -t flat</code><br><span style="color:var(--tinta-3)">crea el mundo vacío (plano) donde construir</span></li>
+          <li><code>/mv tp catacumbas_tpl</code><br><span style="color:var(--tinta-3)">te teletransporta ahí para construir</span></li>
         </ul>
       </div>
       <div class="card reveal">
         <h3 class="serif">🏗️ Crear y entrar al editor</h3>
         <ul style="list-style:none;padding:0;margin:.5em 0 0;font-size:.92rem;line-height:1.85">
-          <li><code>/dungeon create &lt;id&gt; &lt;mundo&gt; boss</code><br><span style="color:var(--ink-faint)">crea la mazmorra sobre el molde. <code>boss</code> = se completa matando al jefe (<code>trigger</code> = por botón/placa)</span></li>
-          <li><code>/dungeon edit &lt;id&gt;</code><br><span style="color:var(--ink-faint)">entra en <strong>modo editor</strong> (te lleva al molde para marcar cosas)</span></li>
+          <li><code>/dungeon create &lt;id&gt; &lt;mundo&gt; boss</code><br><span style="color:var(--tinta-3)">crea la mazmorra sobre el molde. <code>boss</code> = se completa matando al jefe (<code>trigger</code> = por botón/placa)</span></li>
+          <li><code>/dungeon edit &lt;id&gt;</code><br><span style="color:var(--tinta-3)">entra en <strong>modo editor</strong> (te lleva al molde para marcar cosas)</span></li>
         </ul>
       </div>
       <div class="card reveal">
         <h3 class="serif">📍 Marcar los puntos (dentro del editor)</h3>
         <ul style="list-style:none;padding:0;margin:.5em 0 0;font-size:.92rem;line-height:1.85">
-          <li><code>/dungeon setspawn</code><br><span style="color:var(--ink-faint)">donde aparece el grupo (ponte ahí y ejecútalo)</span></li>
-          <li><code>/dungeon setexit</code><br><span style="color:var(--ink-faint)">la salida</span></li>
-          <li><code>/dungeon setboss</code><br><span style="color:var(--ink-faint)">donde aparece el jefe</span></li>
-          <li><code>/dungeon addspawner &lt;id&gt;</code><br><span style="color:var(--ink-faint)">crea un generador de bichos en tu posición (ej. <code>s1</code>, <code>s2</code>…)</span></li>
+          <li><code>/dungeon setspawn</code><br><span style="color:var(--tinta-3)">donde aparece el grupo (ponte ahí y ejecútalo)</span></li>
+          <li><code>/dungeon setexit</code><br><span style="color:var(--tinta-3)">la salida</span></li>
+          <li><code>/dungeon setboss</code><br><span style="color:var(--tinta-3)">donde aparece el jefe</span></li>
+          <li><code>/dungeon addspawner &lt;id&gt;</code><br><span style="color:var(--tinta-3)">crea un generador de bichos en tu posición (ej. <code>s1</code>, <code>s2</code>…)</span></li>
         </ul>
       </div>
       <div class="card reveal">
         <h3 class="serif">🎁 Botín y coste</h3>
         <ul style="list-style:none;padding:0;margin:.5em 0 0;font-size:.92rem;line-height:1.85">
-          <li><code>/dungeon lootchest give &lt;id&gt;</code><br><span style="color:var(--ink-faint)">te da un cofre especial para colocar donde quieras</span></li>
-          <li><code>/dungeon lootchest loot &lt;id&gt; add</code><br><span style="color:var(--ink-faint)">añade a ese cofre el objeto que tengas en la mano</span></li>
-          <li><code>/dungeon addcost</code><br><span style="color:var(--ink-faint)">pone un coste de entrada en Cacahuates (sumidero de economía)</span></li>
-          <li><code>/dungeon boss reward edit</code><br><span style="color:var(--ink-faint)">edita las recompensas del jefe</span></li>
+          <li><code>/dungeon lootchest give &lt;id&gt;</code><br><span style="color:var(--tinta-3)">te da un cofre especial para colocar donde quieras</span></li>
+          <li><code>/dungeon lootchest loot &lt;id&gt; add</code><br><span style="color:var(--tinta-3)">añade a ese cofre el objeto que tengas en la mano</span></li>
+          <li><code>/dungeon addcost</code><br><span style="color:var(--tinta-3)">pone un coste de entrada en Cacahuates (sumidero de economía)</span></li>
+          <li><code>/dungeon boss reward edit</code><br><span style="color:var(--tinta-3)">edita las recompensas del jefe</span></li>
         </ul>
       </div>
       <div class="card reveal">
         <h3 class="serif">💾 Guardar y comprobar</h3>
         <ul style="list-style:none;padding:0;margin:.5em 0 0;font-size:.92rem;line-height:1.85">
-          <li><code>/dungeon save</code><br><span style="color:var(--ink-faint)">guarda todo lo del editor</span></li>
-          <li><code>/dungeon validate</code><br><span style="color:var(--ink-faint)">avisa si falta algo por configurar</span></li>
-          <li><code>/dungeon reload</code><br><span style="color:var(--ink-faint)">recarga los cambios</span></li>
+          <li><code>/dungeon save</code><br><span style="color:var(--tinta-3)">guarda todo lo del editor</span></li>
+          <li><code>/dungeon validate</code><br><span style="color:var(--tinta-3)">avisa si falta algo por configurar</span></li>
+          <li><code>/dungeon reload</code><br><span style="color:var(--tinta-3)">recarga los cambios</span></li>
         </ul>
       </div>
       <div class="card reveal">
         <h3 class="serif">🎮 Probarla</h3>
         <ul style="list-style:none;padding:0;margin:.5em 0 0;font-size:.92rem;line-height:1.85">
-          <li><code>/dungeon open &lt;id&gt;</code><br><span style="color:var(--ink-faint)">abre un grupo para esa mazmorra</span></li>
-          <li><code>/dungeon join &lt;código&gt;</code> · <code>/dungeon start</code><br><span style="color:var(--ink-faint)">los amigos se unen con el código; el líder la empieza</span></li>
-          <li><code>/dungeon list</code> · <code>/dungeon instances</code><br><span style="color:var(--ink-faint)">ver mazmorras / copias activas</span></li>
+          <li><code>/dungeon open &lt;id&gt;</code><br><span style="color:var(--tinta-3)">abre un grupo para esa mazmorra</span></li>
+          <li><code>/dungeon join &lt;código&gt;</code> · <code>/dungeon start</code><br><span style="color:var(--tinta-3)">los amigos se unen con el código; el líder la empieza</span></li>
+          <li><code>/dungeon list</code> · <code>/dungeon instances</code><br><span style="color:var(--tinta-3)">ver mazmorras / copias activas</span></li>
         </ul>
       </div>
     </div>
@@ -1158,10 +1330,10 @@
       <p><strong>Paleta de bloques</strong> (para que pegue con la iglesia): piedra y roca, ladrillo de piedra (agrietado, musgoso, cincelado), tablón y escaleras de <strong>abeto</strong>, <strong>toba</strong>, <strong>pizarra profunda</strong>, bloques de <strong>hueso</strong> y <strong>ventanales de cristal morado</strong>. Luz "de almas": faroles de alma, fuego de alma, velas y algo de amatista.</p>
     </div>
     <div class="grid g2" style="margin-top:8px">
-      <div class="card reveal"><h3 class="serif">1 · El Descenso</h3><p style="color:var(--ink-soft);font-size:.94rem;margin:.3em 0 0">Escalera de abeto + ladrillo, un cartel <em>"Prohibido el paso — sagrado"</em>, telarañas, farol de alma. Aquí <strong>aparece el grupo</strong>.</p></div>
-      <div class="card reveal"><h3 class="serif">2 · Cripta de los Capellanes</h3><p style="color:var(--ink-soft);font-size:.94rem;margin:.3em 0 0">Nichos con esqueletos, ladrillo agrietado/musgoso + pizarra, ventanal morado tenue. Primeros no-muertos + 1 cofre en una tumba.</p></div>
-      <div class="card reveal"><h3 class="serif">3 · El Osario</h3><p style="color:var(--ink-soft);font-size:.94rem;margin:.3em 0 0">Bloques de hueso, pizarra, agua estancada, murmullos. La Monja Errante que llora. Aquí puede ir una <strong>reja</strong> que se abre al limpiar la sala.</p></div>
-      <div class="card reveal"><h3 class="serif">4 · La Capilla Profana</h3><p style="color:var(--ink-soft);font-size:.94rem;margin:.3em 0 0">Sala grande con grandes ventanales morados, altar profanado, candelabros, fuego de alma. Arena del <strong>jefe: El Padre Podrido</strong> ✟ y el cofre final.</p></div>
+      <div class="card reveal"><h3 class="serif">1 · El Descenso</h3><p style="color:var(--tinta-2);font-size:.94rem;margin:.3em 0 0">Escalera de abeto + ladrillo, un cartel <em>"Prohibido el paso — sagrado"</em>, telarañas, farol de alma. Aquí <strong>aparece el grupo</strong>.</p></div>
+      <div class="card reveal"><h3 class="serif">2 · Cripta de los Capellanes</h3><p style="color:var(--tinta-2);font-size:.94rem;margin:.3em 0 0">Nichos con esqueletos, ladrillo agrietado/musgoso + pizarra, ventanal morado tenue. Primeros no-muertos + 1 cofre en una tumba.</p></div>
+      <div class="card reveal"><h3 class="serif">3 · El Osario</h3><p style="color:var(--tinta-2);font-size:.94rem;margin:.3em 0 0">Bloques de hueso, pizarra, agua estancada, murmullos. La Monja Errante que llora. Aquí puede ir una <strong>reja</strong> que se abre al limpiar la sala.</p></div>
+      <div class="card reveal"><h3 class="serif">4 · La Capilla Profana</h3><p style="color:var(--tinta-2);font-size:.94rem;margin:.3em 0 0">Sala grande con grandes ventanales morados, altar profanado, candelabros, fuego de alma. Arena del <strong>jefe: El Padre Podrido</strong> ✟ y el cofre final.</p></div>
     </div>
 
     <div class="note reveal" style="max-width:70ch;margin-top:16px"><b>🤝 Reparto:</b> <strong>Pan construye</strong> el molde y marca los puntos con los comandos de arriba. <strong>Claude</strong> conecta los bichos y el jefe, afina el botín y el coste, y monta la <strong>puerta de entrada inmersiva</strong> en la iglesia (un clic la abre; nada de teclear <code>/dungeon</code>). Cuando la cripta esté construida (aunque sea en gris), avisa y se cablea todo.</div>
@@ -1183,10 +1355,10 @@
       <h3 class="serif" style="margin-top:1.4em">Cómo se siente al jugarlo</h3>
     </div>
     <div class="grid g2" style="margin-top:8px">
-      <div class="card reveal"><h3 class="serif">1 · Pulsar el ordenador</h3><p style="color:var(--ink-soft);font-size:.94rem;margin:.3em 0 0">Cada célula tiene una cabeza con pinta de ordenador (la skin de HeadDatabase <strong>28990</strong>). Clic derecho → se abre una <strong>caja/menú</strong> con el nombre del ramal y su estado.</p></div>
-      <div class="card reveal"><h3 class="serif">2 · Activar el ramal</h3><p style="color:var(--ink-soft);font-size:.94rem;margin:.3em 0 0">Si está apagado, sale el botón <strong>⚡ ACTIVAR RAMAL</strong>. Al pulsarlo: suena un <strong>beacon</strong>, se encienden a la vez <strong>todas las bombillas</strong> de esa línea y el piloto final (una lámpara de rana), y aparece el <strong>mensaje</strong> de confirmación. Solo lo oyen/ven los que están cerca.</p></div>
-      <div class="card reveal"><h3 class="serif">3 · No se puede repetir</h3><p style="color:var(--ink-soft);font-size:.94rem;margin:.3em 0 0">Un ramal ya encendido no se activa otra vez (el menú muestra "ACTIVO" sin botón). Se puede en cualquier orden, y es <strong>global</strong>: si uno lo enciende, queda encendido para todos.</p></div>
-      <div class="card reveal"><h3 class="serif">4 · Los cuatro = completo</h3><p style="color:var(--ink-soft);font-size:.94rem;margin:.3em 0 0">Al encender los cuatro sale "REFRIGERACIÓN PRIMARIA 4/4" y queda guardado. Es la <strong>llave</strong> para el resto del evento (la Torre), que se montará después.</p></div>
+      <div class="card reveal"><h3 class="serif">1 · Pulsar el ordenador</h3><p style="color:var(--tinta-2);font-size:.94rem;margin:.3em 0 0">Cada célula tiene una cabeza con pinta de ordenador (la skin de HeadDatabase <strong>28990</strong>). Clic derecho → se abre una <strong>caja/menú</strong> con el nombre del ramal y su estado.</p></div>
+      <div class="card reveal"><h3 class="serif">2 · Activar el ramal</h3><p style="color:var(--tinta-2);font-size:.94rem;margin:.3em 0 0">Si está apagado, sale el botón <strong>⚡ ACTIVAR RAMAL</strong>. Al pulsarlo: suena un <strong>beacon</strong>, se encienden a la vez <strong>todas las bombillas</strong> de esa línea y el piloto final (una lámpara de rana), y aparece el <strong>mensaje</strong> de confirmación. Solo lo oyen/ven los que están cerca.</p></div>
+      <div class="card reveal"><h3 class="serif">3 · No se puede repetir</h3><p style="color:var(--tinta-2);font-size:.94rem;margin:.3em 0 0">Un ramal ya encendido no se activa otra vez (el menú muestra "ACTIVO" sin botón). Se puede en cualquier orden, y es <strong>global</strong>: si uno lo enciende, queda encendido para todos.</p></div>
+      <div class="card reveal"><h3 class="serif">4 · Los cuatro = completo</h3><p style="color:var(--tinta-2);font-size:.94rem;margin:.3em 0 0">Al encender los cuatro sale "REFRIGERACIÓN PRIMARIA 4/4" y queda guardado. Es la <strong>llave</strong> para el resto del evento (la Torre), que se montará después.</p></div>
     </div>
 
     <div class="prose reveal">
@@ -1194,19 +1366,19 @@
       <p>Tres cosas que el documento no traía y que solo se saben mirando el mundo:</p>
     </div>
     <div class="grid g2" style="margin-top:8px">
-      <div class="card reveal"><h3 class="serif">1 · Dónde van las 4 consolas</h3><p style="color:var(--ink-soft);font-size:.94rem;margin:.3em 0 0">Las coordenadas EXACTAS de las <strong>4 cabezas-ordenador</strong>. Ahora están puestas provisionalmente encima de cada piloto final; si van en otro sitio, Pan me pasa las 4 coords.</p></div>
-      <div class="card reveal"><h3 class="serif">2 · El bloque original del piloto</h3><p style="color:var(--ink-soft);font-size:.94rem;margin:.3em 0 0">Qué bloque hay ahora mismo en las 4 casillas que se convertirán en lámpara de rana (para que el "reiniciar pruebas" lo deje como estaba). Se mira con <code>/data get block X Y Z</code>.</p></div>
-      <div class="card reveal"><h3 class="serif">3 · Colocar las cabezas</h3><p style="color:var(--ink-soft);font-size:.94rem;margin:.3em 0 0">Poner las 4 cabezas HDB <strong>28990</strong> en su sitio. Con eso hecho, Claude despliega el datapack y lo deja funcionando.</p></div>
+      <div class="card reveal"><h3 class="serif">1 · Dónde van las 4 consolas</h3><p style="color:var(--tinta-2);font-size:.94rem;margin:.3em 0 0">Las coordenadas EXACTAS de las <strong>4 cabezas-ordenador</strong>. Ahora están puestas provisionalmente encima de cada piloto final; si van en otro sitio, Pan me pasa las 4 coords.</p></div>
+      <div class="card reveal"><h3 class="serif">2 · El bloque original del piloto</h3><p style="color:var(--tinta-2);font-size:.94rem;margin:.3em 0 0">Qué bloque hay ahora mismo en las 4 casillas que se convertirán en lámpara de rana (para que el "reiniciar pruebas" lo deje como estaba). Se mira con <code>/data get block X Y Z</code>.</p></div>
+      <div class="card reveal"><h3 class="serif">3 · Colocar las cabezas</h3><p style="color:var(--tinta-2);font-size:.94rem;margin:.3em 0 0">Poner las 4 cabezas HDB <strong>28990</strong> en su sitio. Con eso hecho, Claude despliega el datapack y lo deja funcionando.</p></div>
     </div>
 
     <div class="prose reveal">
       <h3 class="serif" style="margin-top:1.4em">Los 4 ramales (dónde se encienden las luces)</h3>
     </div>
     <div class="grid g2" style="margin-top:8px">
-      <div class="card reveal"><h3 class="serif">CR-01 · Procesamiento</h3><p style="color:var(--ink-soft);font-size:.94rem;margin:.3em 0 0">4 bombillas de cobre + piloto final en <code>-10961 46 -7483</code>.</p></div>
-      <div class="card reveal"><h3 class="serif">CR-02 · Memoria</h3><p style="color:var(--ink-soft);font-size:.94rem;margin:.3em 0 0">7 bombillas de cobre + piloto final en <code>-10959 46 -7449</code>.</p></div>
-      <div class="card reveal"><h3 class="serif">CR-03 · Entorno</h3><p style="color:var(--ink-soft);font-size:.94rem;margin:.3em 0 0">3 bombillas de cobre + piloto final en <code>-10930 48 -7435</code>.</p></div>
-      <div class="card reveal"><h3 class="serif">CR-04 · Estabilización</h3><p style="color:var(--ink-soft);font-size:.94rem;margin:.3em 0 0">4 bombillas de cobre + piloto final en <code>-10911 47 -7429</code>.</p></div>
+      <div class="card reveal"><h3 class="serif">CR-01 · Procesamiento</h3><p style="color:var(--tinta-2);font-size:.94rem;margin:.3em 0 0">4 bombillas de cobre + piloto final en <code>-10961 46 -7483</code>.</p></div>
+      <div class="card reveal"><h3 class="serif">CR-02 · Memoria</h3><p style="color:var(--tinta-2);font-size:.94rem;margin:.3em 0 0">7 bombillas de cobre + piloto final en <code>-10959 46 -7449</code>.</p></div>
+      <div class="card reveal"><h3 class="serif">CR-03 · Entorno</h3><p style="color:var(--tinta-2);font-size:.94rem;margin:.3em 0 0">3 bombillas de cobre + piloto final en <code>-10930 48 -7435</code>.</p></div>
+      <div class="card reveal"><h3 class="serif">CR-04 · Estabilización</h3><p style="color:var(--tinta-2);font-size:.94rem;margin:.3em 0 0">4 bombillas de cobre + piloto final en <code>-10911 47 -7429</code>.</p></div>
     </div>
 
     <div class="prose reveal">
@@ -1217,15 +1389,15 @@
       <div class="card reveal">
         <h3 class="serif">⚙️ Poner en marcha</h3>
         <ul style="list-style:none;padding:0;margin:.5em 0 0;font-size:.92rem;line-height:1.85">
-          <li><code>/function reino_r2_cryo:setup</code><br><span style="color:var(--ink-faint)">crea las 4 consolas (una vez, tras colocar las cabezas)</span></li>
-          <li><code>/tag @s add cryo_admin</code><br><span style="color:var(--ink-faint)">para recibir los avisos del sistema</span></li>
+          <li><code>/function reino_r2_cryo:setup</code><br><span style="color:var(--tinta-3)">crea las 4 consolas (una vez, tras colocar las cabezas)</span></li>
+          <li><code>/tag @s add cryo_admin</code><br><span style="color:var(--tinta-3)">para recibir los avisos del sistema</span></li>
         </ul>
       </div>
       <div class="card reveal">
         <h3 class="serif">🔁 Pruebas</h3>
         <ul style="list-style:none;padding:0;margin:.5em 0 0;font-size:.92rem;line-height:1.85">
-          <li><code>/function reino_r2_cryo:reset</code><br><span style="color:var(--ink-faint)">reinicia todo: los 4 apagados, luces fuera</span></li>
-          <li><code>/scoreboard players get #cr01 r2_cryo</code><br><span style="color:var(--ink-faint)">ver el estado de un ramal (0 = apagado, 1 = activo)</span></li>
+          <li><code>/function reino_r2_cryo:reset</code><br><span style="color:var(--tinta-3)">reinicia todo: los 4 apagados, luces fuera</span></li>
+          <li><code>/scoreboard players get #cr01 r2_cryo</code><br><span style="color:var(--tinta-3)">ver el estado de un ramal (0 = apagado, 1 = activo)</span></li>
         </ul>
       </div>
     </div>
@@ -1245,11 +1417,11 @@
     </div>
 
     <div class="grid g2" style="margin-top:8px">
-      <div class="card reveal"><h3 class="serif">🔓 Descubrir visitando</h3><p style="color:var(--ink-soft);font-size:.94rem;margin:.3em 0 0">Un jugador nuevo NO puede viajar a un sitio donde nunca ha estado. Tiene que ir en persona y activar su Fragmento una vez. Eso se guarda por jugador y no se pierde.</p></div>
-      <div class="card reveal"><h3 class="serif">🔒 Se desbloquea con una saga</h3><p style="color:var(--ink-soft);font-size:.94rem;margin:.3em 0 0">El sistema puede quedar <strong>bloqueado hasta que el jugador complete una saga de misiones</strong> (que Pan decida). Ya está montado el "candado"; solo falta decir <strong>qué saga</strong> lo abre. Mientras tanto está abierto para probar.</p></div>
-      <div class="card reveal"><h3 class="serif">🚫 No te tp a donde estás</h3><p style="color:var(--ink-soft);font-size:.94rem;margin:.3em 0 0">En el menú <strong>no aparece el sitio donde ya estás</strong> (si estás en el Reino, no sale "El Reino"). Los nombres salen en blanco; <strong>El Reino</strong> en morado; y las zonas que aún no conoces salen como <em>"Conexión desconocida"</em>.</p></div>
-      <div class="card reveal"><h3 class="serif">🥜 Precio</h3><p style="color:var(--ink-soft);font-size:.94rem;margin:.3em 0 0">Volver al Reino siempre gratis (para no quedarse tirado sin dinero). En esta primera versión <strong>todos los viajes son gratis</strong>; el cobro de verdad llega con la versión definitiva (abajo).</p></div>
-      <div class="card reveal"><h3 class="serif">🛡️ Sin trampas</h3><p style="color:var(--ink-soft);font-size:.94rem;margin:.3em 0 0">No se puede saltar el descubrimiento ni viajar a algo cerrado: el sistema lo comprueba antes de cada viaje. Funciona con jugadores normales (sin ser OP).</p></div>
+      <div class="card reveal"><h3 class="serif">🔓 Descubrir visitando</h3><p style="color:var(--tinta-2);font-size:.94rem;margin:.3em 0 0">Un jugador nuevo NO puede viajar a un sitio donde nunca ha estado. Tiene que ir en persona y activar su Fragmento una vez. Eso se guarda por jugador y no se pierde.</p></div>
+      <div class="card reveal"><h3 class="serif">🔒 Se desbloquea con una saga</h3><p style="color:var(--tinta-2);font-size:.94rem;margin:.3em 0 0">El sistema puede quedar <strong>bloqueado hasta que el jugador complete una saga de misiones</strong> (que Pan decida). Ya está montado el "candado"; solo falta decir <strong>qué saga</strong> lo abre. Mientras tanto está abierto para probar.</p></div>
+      <div class="card reveal"><h3 class="serif">🚫 No te tp a donde estás</h3><p style="color:var(--tinta-2);font-size:.94rem;margin:.3em 0 0">En el menú <strong>no aparece el sitio donde ya estás</strong> (si estás en el Reino, no sale "El Reino"). Los nombres salen en blanco; <strong>El Reino</strong> en morado; y las zonas que aún no conoces salen como <em>"Conexión desconocida"</em>.</p></div>
+      <div class="card reveal"><h3 class="serif">🥜 Precio</h3><p style="color:var(--tinta-2);font-size:.94rem;margin:.3em 0 0">Volver al Reino siempre gratis (para no quedarse tirado sin dinero). En esta primera versión <strong>todos los viajes son gratis</strong>; el cobro de verdad llega con la versión definitiva (abajo).</p></div>
+      <div class="card reveal"><h3 class="serif">🛡️ Sin trampas</h3><p style="color:var(--tinta-2);font-size:.94rem;margin:.3em 0 0">No se puede saltar el descubrimiento ni viajar a algo cerrado: el sistema lo comprueba antes de cada viaje. Funciona con jugadores normales (sin ser OP).</p></div>
     </div>
 
     <div class="prose reveal">
@@ -1257,8 +1429,8 @@
       <p>Es un sistema grande. Para no tardar meses, va en <strong>dos fases</strong>:</p>
     </div>
     <div class="grid g2" style="margin-top:8px">
-      <div class="card reveal"><h3 class="serif">1 · Versión de prueba (ahora) ✅ subida</h3><p style="color:var(--ink-soft);font-size:.94rem;margin:.3em 0 0">Hecha con las herramientas que ya domina el server (sin plugin nuevo). Sirve para <strong>ver y afinar la sensación</strong>: el efecto de la nube, el descubrir-por-visita y un par de destinos. Ya está en el server; falta encenderla en el juego.</p></div>
-      <div class="card reveal"><h3 class="serif">2 · Versión definitiva (después)</h3><p style="color:var(--ink-soft);font-size:.94rem;margin:.3em 0 0">Un <strong>plugin propio</strong> pequeño. Añade lo fino: cobro real con devolución si el viaje falla, menú que cambia solo según cada jugador, control de eventos y panel de admin. Se hace cuando la versión de prueba convenza.</p></div>
+      <div class="card reveal"><h3 class="serif">1 · Versión de prueba (ahora) ✅ subida</h3><p style="color:var(--tinta-2);font-size:.94rem;margin:.3em 0 0">Hecha con las herramientas que ya domina el server (sin plugin nuevo). Sirve para <strong>ver y afinar la sensación</strong>: el efecto de la nube, el descubrir-por-visita y un par de destinos. Ya está en el server; falta encenderla en el juego.</p></div>
+      <div class="card reveal"><h3 class="serif">2 · Versión definitiva (después)</h3><p style="color:var(--tinta-2);font-size:.94rem;margin:.3em 0 0">Un <strong>plugin propio</strong> pequeño. Añade lo fino: cobro real con devolución si el viaje falla, menú que cambia solo según cada jugador, control de eventos y panel de admin. Se hace cuando la versión de prueba convenza.</p></div>
     </div>
 
     <div class="prose reveal">
@@ -1269,31 +1441,31 @@
       <div class="card reveal">
         <h3 class="serif">🔌 1 · Encender y probar el efecto</h3>
         <ul style="list-style:none;padding:0;margin:.5em 0 0;font-size:.92rem;line-height:1.85">
-          <li><code>/reload</code><br><span style="color:var(--ink-faint)">carga el sistema (comprobar: <code>/datapack list</code> muestra <code>file/red_anclaje</code> encendido)</span></li>
-          <li><code>/cw reload</code><br><span style="color:var(--ink-faint)">aplica el permiso que usan los botones del menú</span></li>
-          <li><code>/function reino_anclaje:efecto_test</code><br><span style="color:var(--ink-faint)">te envuelve en la <strong>nube morada</strong> SIN viajar → para ver si el efecto gusta (si no, se afina)</span></li>
+          <li><code>/reload</code><br><span style="color:var(--tinta-3)">carga el sistema (comprobar: <code>/datapack list</code> muestra <code>file/red_anclaje</code> encendido)</span></li>
+          <li><code>/cw reload</code><br><span style="color:var(--tinta-3)">aplica el permiso que usan los botones del menú</span></li>
+          <li><code>/function reino_anclaje:efecto_test</code><br><span style="color:var(--tinta-3)">te envuelve en la <strong>nube morada</strong> SIN viajar → para ver si el efecto gusta (si no, se afina)</span></li>
         </ul>
       </div>
       <div class="card reveal">
         <h3 class="serif">🏗️ 2 · Colocar los Fragmentos</h3>
         <ul style="list-style:none;padding:0;margin:.5em 0 0;font-size:.92rem;line-height:1.85">
-          <li><span style="color:var(--ink-faint)">Ponte <strong>exactamente donde quieras el nexo</strong> y ejecuta:</span><br><code>/function reino_anclaje:poner_reino</code><br><span style="color:var(--ink-faint)">coloca un <strong>nexo de reaparición ENCENDIDO</strong> (respawn anchor cargado, que brilla) con su zona de clic y un <strong>cartel flotante</strong>, y te apartas. Ahora mismo hay dos: <code>poner_reino</code> y <code>poner_torre_mago</code>. Recordatorio: <code>/function reino_anclaje:ayuda_fragmentos</code>.</span></li>
-          <li><span style="color:var(--ink-faint)">Clic derecho al nexo = abre la Red. Puedes construir un <strong>esqueje</strong> alrededor (piedra oscura / obsidiana llorona) para adornarlo.</span></li>
+          <li><span style="color:var(--tinta-3)">Ponte <strong>exactamente donde quieras el nexo</strong> y ejecuta:</span><br><code>/function reino_anclaje:poner_reino</code><br><span style="color:var(--tinta-3)">coloca un <strong>nexo de reaparición ENCENDIDO</strong> (respawn anchor cargado, que brilla) con su zona de clic y un <strong>cartel flotante</strong>, y te apartas. Ahora mismo hay dos: <code>poner_reino</code> y <code>poner_torre_mago</code>. Recordatorio: <code>/function reino_anclaje:ayuda_fragmentos</code>.</span></li>
+          <li><span style="color:var(--tinta-3)">Clic derecho al nexo = abre la Red. Puedes construir un <strong>esqueje</strong> alrededor (piedra oscura / obsidiana llorona) para adornarlo.</span></li>
         </ul>
       </div>
       <div class="card reveal">
         <h3 class="serif">🎮 3 · Probar el viaje entero</h3>
         <ul style="list-style:none;padding:0;margin:.5em 0 0;font-size:.92rem;line-height:1.85">
-          <li><span style="color:var(--ink-faint)">Clic derecho al Fragmento del Reino → menú → "El Reino" → nube → apareces en la plaza. (El del Reino ya tiene sus coordenadas puestas.)</span></li>
-          <li><span style="color:var(--ink-faint)">Probar también con una <strong>cuenta normal</strong> (sin OP) que el menú funciona.</span></li>
+          <li><span style="color:var(--tinta-3)">Clic derecho al Fragmento del Reino → menú → "El Reino" → nube → apareces en la plaza. (El del Reino ya tiene sus coordenadas puestas.)</span></li>
+          <li><span style="color:var(--tinta-3)">Probar también con una <strong>cuenta normal</strong> (sin OP) que el menú funciona.</span></li>
         </ul>
       </div>
       <div class="card reveal" style="border-color:rgba(180,120,255,.45)">
         <h3 class="serif">📍 4 · Lo que hace falta de Pan</h3>
         <ul style="list-style:none;padding:0;margin:.5em 0 0;font-size:.92rem;line-height:1.85">
-          <li><span style="color:var(--ink-faint)"><strong>Qué SAGA de misiones desbloquea el sistema</strong> (para activar el candado). Ya están puestos el Reino y la Torre del Mago con sus coordenadas.</span></li>
-          <li><span style="color:var(--ink-faint)"><strong>Más destinos</strong> cuando los quieras (Torres-Eco, mazmorras…): me pasas dónde aparece el jugador y si cuesta Cacahuates.</span></li>
-          <li><span style="color:var(--ink-faint)">Con eso, Claude lo deja terminado: una línea por destino y a subir.</span></li>
+          <li><span style="color:var(--tinta-3)"><strong>Qué SAGA de misiones desbloquea el sistema</strong> (para activar el candado). Ya están puestos el Reino y la Torre del Mago con sus coordenadas.</span></li>
+          <li><span style="color:var(--tinta-3)"><strong>Más destinos</strong> cuando los quieras (Torres-Eco, mazmorras…): me pasas dónde aparece el jugador y si cuesta Cacahuates.</span></li>
+          <li><span style="color:var(--tinta-3)">Con eso, Claude lo deja terminado: una línea por destino y a subir.</span></li>
         </ul>
       </div>
     </div>
@@ -1308,12 +1480,12 @@
       <p>Más allá de las misiones, el Reino tiene sus propias reglas de convivencia y unos sistemas que hacen que el mundo se sienta vivo. Esto es lo que un jugador nota nada más entrar.</p>
     </div>
     <div class="grid g2" style="margin-top:22px">
-      <div class="card reveal"><h3 class="serif">🌪️ Eventos por el mundo</h3><p style="color:var(--ink-soft); font-size:.94rem; margin:.3em 0 0">Cada tanto salta un evento con <strong>aviso previo</strong>: <strong>fiebre del oro</strong>, <strong>noche de horda</strong>, <strong>doble botín</strong>, <strong>expedición minera</strong>, abundancia de hierro… Buffs y retos que duran un rato. No rompen el mundo (nada de meteoritos ni destrozos): son para picar más a gusto o buscarte la vida.</p></div>
-      <div class="card reveal"><h3 class="serif">⚰️ Al morir no pierdes nada <span class="pill gold">cambiado</span></h3><p style="color:var(--ink-soft); font-size:.94rem; margin:.3em 0 0">Ya no hay tumbas ni carreras para recuperar tus cosas: <strong>te quedas con todo el inventario</strong>. El castigo va por otro lado y se nota a la larga: <strong>todo tu equipo se desgasta</strong> un poco (nunca se rompe del todo) y <strong>pierdes un tercio de la barra de experiencia</strong>. Morir cinco veces seguidas te deja el equipo para el arrastre, así que la reparación en la <strong>fragua de Lolo</strong> pasa a ser tu gasto de cada semana. Y sigues cogiendo la <strong>Resaca</strong> al levantarte.</p></div>
-      <div class="card reveal"><h3 class="serif">⚔️ PvP solo en el salvaje</h3><p style="color:var(--ink-soft); font-size:.94rem; margin:.3em 0 0">En el pueblo y las zonas habitadas <strong>ningún jugador te puede matar</strong>. Las peleas entre jugadores solo cuentan <strong>fuera</strong>, en el salvaje. Y las construcciones están protegidas: los <strong>creepers, el TNT y el fuego</strong> ya no te tiran la casa.</p></div>
-      <div class="card reveal"><h3 class="serif">🔒 Candados de cofres</h3><p style="color:var(--ink-soft); font-size:.94rem; margin:.3em 0 0">Pones un <strong>cartel</strong> en un cofre y queda cerrado con tu nombre: solo tú (y quien tú digas) lo abre. Tranquilidad para guardar tus cosas.</p></div>
-      <div class="card reveal"><h3 class="serif">🌳 Los árboles se replantan</h3><p style="color:var(--ink-soft); font-size:.94rem; margin:.3em 0 0">Talas el <strong>árbol entero de un hachazo</strong> y brota un arbolito nuevo en su sitio. Recoges madera rápido sin dejar el bosque hecho un solar.</p></div>
-      <div class="card reveal"><h3 class="serif">🍂 Estaciones del año <span class="pill folk">encendiéndose</span></h3><p style="color:var(--ink-soft); font-size:.94rem; margin:.3em 0 0">El Reino vive las <strong>cuatro estaciones</strong>: primavera, verano, otoño e invierno, cada una con su <strong>clima</strong>, sus colores en los árboles y sus <strong>bichos de temporada</strong> (zorros y lobos en invierno, ranas y luciérnagas en primavera…). Se están terminando de encender estos días.</p></div>
+      <div class="card reveal"><h3 class="serif">🌪️ Eventos por el mundo</h3><p style="color:var(--tinta-2); font-size:.94rem; margin:.3em 0 0">Cada tanto salta un evento con <strong>aviso previo</strong>: <strong>fiebre del oro</strong>, <strong>noche de horda</strong>, <strong>doble botín</strong>, <strong>expedición minera</strong>, abundancia de hierro… Buffs y retos que duran un rato. No rompen el mundo (nada de meteoritos ni destrozos): son para picar más a gusto o buscarte la vida.</p></div>
+      <div class="card reveal"><h3 class="serif">⚰️ Al morir no pierdes nada <span class="pill gold">cambiado</span></h3><p style="color:var(--tinta-2); font-size:.94rem; margin:.3em 0 0">Ya no hay tumbas ni carreras para recuperar tus cosas: <strong>te quedas con todo el inventario</strong>. El castigo va por otro lado y se nota a la larga: <strong>todo tu equipo se desgasta</strong> un poco (nunca se rompe del todo) y <strong>pierdes un tercio de la barra de experiencia</strong>. Morir cinco veces seguidas te deja el equipo para el arrastre, así que la reparación en la <strong>fragua de Lolo</strong> pasa a ser tu gasto de cada semana. Y sigues cogiendo la <strong>Resaca</strong> al levantarte.</p></div>
+      <div class="card reveal"><h3 class="serif">⚔️ PvP solo en el salvaje</h3><p style="color:var(--tinta-2); font-size:.94rem; margin:.3em 0 0">En el pueblo y las zonas habitadas <strong>ningún jugador te puede matar</strong>. Las peleas entre jugadores solo cuentan <strong>fuera</strong>, en el salvaje. Y las construcciones están protegidas: los <strong>creepers, el TNT y el fuego</strong> ya no te tiran la casa.</p></div>
+      <div class="card reveal"><h3 class="serif">🔒 Candados de cofres</h3><p style="color:var(--tinta-2); font-size:.94rem; margin:.3em 0 0">Pones un <strong>cartel</strong> en un cofre y queda cerrado con tu nombre: solo tú (y quien tú digas) lo abre. Tranquilidad para guardar tus cosas.</p></div>
+      <div class="card reveal"><h3 class="serif">🌳 Los árboles se replantan</h3><p style="color:var(--tinta-2); font-size:.94rem; margin:.3em 0 0">Talas el <strong>árbol entero de un hachazo</strong> y brota un arbolito nuevo en su sitio. Recoges madera rápido sin dejar el bosque hecho un solar.</p></div>
+      <div class="card reveal"><h3 class="serif">🍂 Estaciones del año <span class="pill folk">encendiéndose</span></h3><p style="color:var(--tinta-2); font-size:.94rem; margin:.3em 0 0">El Reino vive las <strong>cuatro estaciones</strong>: primavera, verano, otoño e invierno, cada una con su <strong>clima</strong>, sus colores en los árboles y sus <strong>bichos de temporada</strong> (zorros y lobos en invierno, ranas y luciérnagas en primavera…). Se están terminando de encender estos días.</p></div>
     </div>
   </section>
 
@@ -1323,25 +1495,25 @@
       <h2>Lo que viene (el plan de expansión)</h2>
       <p>El Reino se construye pieza a pieza, y cada personaje nuevo se diseña juntos antes de montarlo. Esto es lo que hay en la lista:</p>
       <div class="grid g2" style="margin-top:22px">
-        <div class="card reveal"><h3 class="serif">⚗️ La Alquimista</h3><p style="color:var(--ink-soft); font-size:.94rem; margin:.3em 0 0">Su <strong>tienda (la Botica) ya está hecha</strong> ✅. Falta su mini-tutorial que explique los ingredientes.</p></div>
-        <div class="card reveal"><h3 class="serif">📚 El Sabio</h3><p style="color:var(--ink-soft); font-size:.94rem; margin:.3em 0 0">Una "enciclopedia con patas": le preguntas por una clase y te explica su rol y sus 4 hechizos.</p></div>
-        <div class="card reveal"><h3 class="serif">🗺️ Tematizar los talentos</h3><p style="color:var(--ink-soft); font-size:.94rem; margin:.3em 0 0">El <strong>tutorial de talentos ya está vivo</strong> ✅ (lo da Anselmo). Falta el pulido: los árboles son los de MMOCore por defecto (nodos en inglés) → reescribirlos y traducirlos con temática del Reino para cada clase.</p></div>
-        <div class="card reveal"><h3 class="serif">🌀 Rancio el Profeta</h3><p style="color:var(--ink-soft); font-size:.94rem; margin:.3em 0 0">El Loco del Pueblo <strong>ya está colocado</strong> (junto a la fuente) con su lore de meta-relato. Falta darle misión y diálogos: es la llave de la gran historia.</p></div>
-        <div class="card reveal"><h3 class="serif">🗼 Arco de la Torre Negra</h3><p style="color:var(--ink-soft); font-size:.94rem; margin:.3em 0 0">La historia principal: la puerta sellada, la Torre del Mago ("¿magia o ciencia?") y la mina.</p></div>
-        <div class="card reveal"><h3 class="serif">⚔️ Más para el Tablón</h3><p style="color:var(--ink-soft); font-size:.94rem; margin:.3em 0 0">El <strong>Tablón de Encargos ya está vivo</strong> ✅. Lo siguiente: ampliarlo con objetivos de <strong>dungeon</strong> y <strong>boss raids</strong>, y más premios para el Cofre de la Suerte.</p></div>
-        <div class="card reveal"><h3 class="serif">🍓 Magia del Yogur</h3><p style="color:var(--ink-soft); font-size:.94rem; margin:.3em 0 0">Darle al sanador sus hechizos con ingredientes, igual que el Parrillero.</p></div>
-        <div class="card reveal"><h3 class="serif">⚖️ Equilibrar el equipo</h3><p style="color:var(--ink-soft); font-size:.94rem; margin:.3em 0 0">Que las armas con poderes cuesten algo (maná/durabilidad) para que no queden rotas.</p></div>
+        <div class="card reveal"><h3 class="serif">⚗️ La Alquimista</h3><p style="color:var(--tinta-2); font-size:.94rem; margin:.3em 0 0">Su <strong>tienda (la Botica) ya está hecha</strong> ✅. Falta su mini-tutorial que explique los ingredientes.</p></div>
+        <div class="card reveal"><h3 class="serif">📚 El Sabio</h3><p style="color:var(--tinta-2); font-size:.94rem; margin:.3em 0 0">Una "enciclopedia con patas": le preguntas por una clase y te explica su rol y sus 4 hechizos.</p></div>
+        <div class="card reveal"><h3 class="serif">🗺️ Tematizar los talentos</h3><p style="color:var(--tinta-2); font-size:.94rem; margin:.3em 0 0">El <strong>tutorial de talentos ya está vivo</strong> ✅ (lo da Anselmo). Falta el pulido: los árboles son los de MMOCore por defecto (nodos en inglés) → reescribirlos y traducirlos con temática del Reino para cada clase.</p></div>
+        <div class="card reveal"><h3 class="serif">🌀 Rancio el Profeta</h3><p style="color:var(--tinta-2); font-size:.94rem; margin:.3em 0 0">El Loco del Pueblo <strong>ya está colocado</strong> (junto a la fuente) con su lore de meta-relato. Falta darle misión y diálogos: es la llave de la gran historia.</p></div>
+        <div class="card reveal"><h3 class="serif">🗼 Arco de la Torre Negra</h3><p style="color:var(--tinta-2); font-size:.94rem; margin:.3em 0 0">La historia principal: la puerta sellada, la Torre del Mago ("¿magia o ciencia?") y la mina.</p></div>
+        <div class="card reveal"><h3 class="serif">⚔️ Más para el Tablón</h3><p style="color:var(--tinta-2); font-size:.94rem; margin:.3em 0 0">El <strong>Tablón de Encargos ya está vivo</strong> ✅. Lo siguiente: ampliarlo con objetivos de <strong>dungeon</strong> y <strong>boss raids</strong>, y más premios para el Cofre de la Suerte.</p></div>
+        <div class="card reveal"><h3 class="serif">🍓 Magia del Yogur</h3><p style="color:var(--tinta-2); font-size:.94rem; margin:.3em 0 0">Darle al sanador sus hechizos con ingredientes, igual que el Parrillero.</p></div>
+        <div class="card reveal"><h3 class="serif">⚖️ Equilibrar el equipo</h3><p style="color:var(--tinta-2); font-size:.94rem; margin:.3em 0 0">Que las armas con poderes cuesten algo (maná/durabilidad) para que no queden rotas.</p></div>
       </div>
 
       <h3 class="serif" style="margin:34px 0 4px">🔜 En camino (preparándose)</h3>
-      <p style="color:var(--ink-soft)">Mecánicas ya elegidas y montándose entre bambalinas. Cada una llegará con su propia mini-saga que la desbloquea.</p>
+      <p style="color:var(--tinta-2)">Mecánicas ya elegidas y montándose entre bambalinas. Cada una llegará con su propia mini-saga que la desbloquea.</p>
       <div class="grid g2" style="margin-top:16px">
-        <div class="card reveal"><h3 class="serif">🖐️ El Gremio de los Dedos Largos</h3><p style="color:var(--ink-soft); font-size:.94rem; margin:.3em 0 0">Carterismo: robar por la espalda a otro jugador (agacharse, acercarse y rebuscar). El toque golfo del barrio pobre, gateado por una saga.</p></div>
-        <div class="card reveal"><h3 class="serif">🏷️ La Lonja del Reino</h3><p style="color:var(--ink-soft); font-size:.94rem; margin:.3em 0 0">Casa de subastas entre jugadores: pones tus cosas a la venta y otros pujan. Un mercado de verdad, con su comisión.</p></div>
-        <div class="card reveal"><h3 class="serif">💀 Cazarrecompensas</h3><p style="color:var(--ink-soft); font-size:.94rem; margin:.3em 0 0">Pones precio a la cabeza de alguien pagando de tu bolsillo; quien lo cace, cobra. Picante del hampa (solo con PvP, en el salvaje).</p></div>
-        <div class="card reveal"><h3 class="serif">💍 Bodas</h3><p style="color:var(--ink-soft); font-size:.94rem; margin:.3em 0 0">Casarte con otro jugador ante el cura del pueblo: teletransporte a tu pareja y algún bonus. Comunidad y drama garantizado.</p></div>
-        <div class="card reveal"><h3 class="serif">🎩 Cosméticos</h3><p style="color:var(--ink-soft); font-size:.94rem; margin:.3em 0 0">Sombreros, partículas, mascotas, emotes y monturas. Puro postureo (no dan poder): los básicos por Cacahuates, los chulos por misión, pase o cofre.</p></div>
-        <div class="card reveal"><h3 class="serif">🎣 Torneos de pesca</h3><p style="color:var(--ink-soft); font-size:.94rem; margin:.3em 0 0">Peces raros que coleccionar y torneos con premios, de la mano del <strong>Bacalao Gabardinez</strong> (un pez disfrazado de humano) en el Puerto.</p></div>
+        <div class="card reveal"><h3 class="serif">🖐️ El Gremio de los Dedos Largos</h3><p style="color:var(--tinta-2); font-size:.94rem; margin:.3em 0 0">Carterismo: robar por la espalda a otro jugador (agacharse, acercarse y rebuscar). El toque golfo del barrio pobre, gateado por una saga.</p></div>
+        <div class="card reveal"><h3 class="serif">🏷️ La Lonja del Reino</h3><p style="color:var(--tinta-2); font-size:.94rem; margin:.3em 0 0">Casa de subastas entre jugadores: pones tus cosas a la venta y otros pujan. Un mercado de verdad, con su comisión.</p></div>
+        <div class="card reveal"><h3 class="serif">💀 Cazarrecompensas</h3><p style="color:var(--tinta-2); font-size:.94rem; margin:.3em 0 0">Pones precio a la cabeza de alguien pagando de tu bolsillo; quien lo cace, cobra. Picante del hampa (solo con PvP, en el salvaje).</p></div>
+        <div class="card reveal"><h3 class="serif">💍 Bodas</h3><p style="color:var(--tinta-2); font-size:.94rem; margin:.3em 0 0">Casarte con otro jugador ante el cura del pueblo: teletransporte a tu pareja y algún bonus. Comunidad y drama garantizado.</p></div>
+        <div class="card reveal"><h3 class="serif">🎩 Cosméticos</h3><p style="color:var(--tinta-2); font-size:.94rem; margin:.3em 0 0">Sombreros, partículas, mascotas, emotes y monturas. Puro postureo (no dan poder): los básicos por Cacahuates, los chulos por misión, pase o cofre.</p></div>
+        <div class="card reveal"><h3 class="serif">🎣 Torneos de pesca</h3><p style="color:var(--tinta-2); font-size:.94rem; margin:.3em 0 0">Peces raros que coleccionar y torneos con premios, de la mano del <strong>Bacalao Gabardinez</strong> (un pez disfrazado de humano) en el Puerto.</p></div>
       </div>
     </div>
   </section>
@@ -1350,7 +1522,7 @@
 
 <footer>
   <div class="wrap">
-    <p style="margin:0 0 .3em"><span class="serif" style="font-size:1.1rem; color:var(--ink)">El Reino 6</span> — documento vivo para el equipo de administración.</p>
+    <p style="margin:0 0 .3em"><span class="serif" style="font-size:1.1rem; color:var(--tinta)">El Reino 6</span> — documento vivo para el equipo de administración.</p>
     <p style="margin:0">Se actualiza según crece el Reino. Cualquier duda de cómo está montado algo, está escrito en las fichas de control del proyecto. · Julio 2026</p>
   </div>
 </footer>
