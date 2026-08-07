@@ -17,6 +17,10 @@
     --gold:#a9701d; --gold-2:#c68a2c;
     --sci:#177f86; --folk:#4a8f2f; --danger:#c1443b;
     --shadow:0 1px 2px rgba(40,25,70,.05), 0 10px 34px rgba(70,45,120,.09);
+    /* rampa de UN hue para el quesito y el calor: r1 = mas usado, r8 = menos.
+       Como las categorias van ORDENADAS por magnitud, el degradado codifica el rango. */
+    --r1:#3f2088; --r2:#522c9f; --r3:#6539bc; --r4:#7a4bd6;
+    --r5:#9169e2; --r6:#a888ec; --r7:#c1a8f3; --r8:#d9c8f8;
     --chip:#f1edfa;
   }
   @media (prefers-color-scheme:dark){
@@ -28,6 +32,8 @@
       --gold:#e6b25a; --gold-2:#f0c479;
       --sci:#4ac9d0; --folk:#87cc62; --danger:#ec7d75;
       --shadow:0 1px 2px rgba(0,0,0,.45), 0 16px 44px rgba(0,0,0,.4);
+      --r1:#d5c5ff; --r2:#c2aefc; --r3:#af97f8; --r4:#9c80f2;
+      --r5:#8a6be8; --r6:#7757d8; --r7:#6546c1; --r8:#5438a5;
       --chip:#241d3a;
     }
   }
@@ -39,6 +45,10 @@
     --gold:#a9701d; --gold-2:#c68a2c;
     --sci:#177f86; --folk:#4a8f2f; --danger:#c1443b;
     --shadow:0 1px 2px rgba(40,25,70,.05), 0 10px 34px rgba(70,45,120,.09);
+    /* rampa de UN hue para el quesito y el calor: r1 = mas usado, r8 = menos.
+       Como las categorias van ORDENADAS por magnitud, el degradado codifica el rango. */
+    --r1:#3f2088; --r2:#522c9f; --r3:#6539bc; --r4:#7a4bd6;
+    --r5:#9169e2; --r6:#a888ec; --r7:#c1a8f3; --r8:#d9c8f8;
     --chip:#f1edfa;
   }
   :root[data-theme="dark"]{
@@ -49,6 +59,8 @@
     --gold:#e6b25a; --gold-2:#f0c479;
     --sci:#4ac9d0; --folk:#87cc62; --danger:#ec7d75;
     --shadow:0 1px 2px rgba(0,0,0,.45), 0 16px 44px rgba(0,0,0,.4);
+    --r1:#d5c5ff; --r2:#c2aefc; --r3:#af97f8; --r4:#9c80f2;
+    --r5:#8a6be8; --r6:#7757d8; --r7:#6546c1; --r8:#5438a5;
     --chip:#241d3a;
   }
 
@@ -97,10 +109,13 @@
   .fila .et{font-size:13.5px;color:var(--ink-soft);text-align:right;overflow:hidden;
     text-overflow:ellipsis;white-space:nowrap}
   .pista{background:var(--sunken);border-radius:4px;height:17px;position:relative;overflow:hidden}
-  .barra{height:100%;background:var(--arcane);border-radius:0 4px 4px 0;min-width:2px;
+  /* 🔴 `display:block` NO es opcional: `.barra` es un <span>, y un elemento inline IGNORA
+     width y height — la barra existia pero media cero y no se veia nada. La pista si se veia
+     porque es un grid item y esos se blockifican solos. */
+  .barra{display:block;height:100%;background:var(--arcane);border-radius:0 4px 4px 0;min-width:3px;
     transition:width .5s cubic-bezier(.2,.8,.3,1)}
   .fila.cero .barra{background:repeating-linear-gradient(135deg,var(--line-strong) 0 5px,transparent 5px 10px);
-    width:100%!important;opacity:.65;border-radius:4px}
+    width:100%!important;opacity:.6;border-radius:4px}
   .fila.cero .et{color:var(--ink-faint)}
   .fila .val{font-size:13px;color:var(--ink-soft);font-variant-numeric:tabular-nums}
   .fila.cero .val{color:var(--danger);font-weight:700;font-size:11.5px;letter-spacing:.04em}
@@ -143,6 +158,46 @@
   .mix i:nth-child(2n){opacity:.62} .mix i:nth-child(3n){opacity:.4}
   .saga ul{margin:9px 0 0;padding-left:17px;font-size:12.5px;color:var(--ink-soft)}
 
+  /* ── selector de vista ── */
+  .vistas{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+  .vistas button{font:inherit;font-size:13.5px;padding:7px 14px;border-radius:9px;cursor:pointer;
+    border:1px solid var(--line-strong);background:var(--surface);color:var(--ink-soft)}
+  .vistas button[aria-pressed=true]{background:var(--arcane);border-color:var(--arcane);
+    color:#fff;font-weight:600}
+  .vista{display:none} .vista.on{display:block}
+
+  /* ── quesito ── */
+  .donutbox{display:flex;flex-wrap:wrap;gap:26px;align-items:center;justify-content:center}
+  .donut{flex:0 0 auto}
+  .donut circle{fill:none;stroke-width:26;transition:stroke-width .18s}
+  .donut circle:hover{stroke-width:31;cursor:help}
+  .leyenda{display:flex;flex-direction:column;gap:5px;min-width:210px;flex:1 1 210px}
+  .leyenda div{display:grid;grid-template-columns:13px 1fr auto;gap:9px;align-items:center;
+    font-size:13.5px;padding:2px 4px;border-radius:7px}
+  .leyenda div:hover{background:var(--sunken)}
+  .leyenda i{width:13px;height:13px;border-radius:3px;display:block}
+  .leyenda b{font-variant-numeric:tabular-nums;color:var(--ink-soft);font-weight:600}
+  .centro{font-family:ui-serif,Palatino,Georgia,serif;fill:var(--ink);text-anchor:middle}
+  .centro tspan.n{font-size:30px;font-weight:700}
+  .centro tspan.s{font-size:11px;fill:var(--ink-faint);text-transform:uppercase;letter-spacing:.1em}
+
+  /* ── mapa de calor ── */
+  .calorbox{overflow-x:auto}
+  table.calor{border-collapse:separate;border-spacing:3px;min-width:560px;font-size:12.5px}
+  table.calor th{font-weight:600;color:var(--ink-soft);padding:0 6px;white-space:nowrap;
+    font-size:11.5px;text-transform:uppercase;letter-spacing:.05em;background:none;position:static}
+  table.calor th.rot{writing-mode:vertical-rl;transform:rotate(180deg);text-align:left;
+    height:82px;padding:4px 0}
+  table.calor td.s{text-align:right;color:var(--ink-soft);white-space:nowrap;padding-right:8px;
+    max-width:150px;overflow:hidden;text-overflow:ellipsis}
+  /* el relleno va en su propio <span> y el numero encima: asi el texto lleva SIEMPRE
+     la tinta del tema y no hay que adivinar si sobre este morado toca blanco o negro. */
+  table.calor td.c{width:34px;height:26px;text-align:center;border-radius:5px;position:relative;
+    background:var(--sunken);font-variant-numeric:tabular-nums;color:var(--ink);cursor:help}
+  table.calor td.c .fondo{position:absolute;inset:0;border-radius:5px;background:var(--arcane)}
+  table.calor td.c b{position:relative;font-weight:600;mix-blend-mode:normal}
+  table.calor tr:hover td.c{outline:1px solid var(--line-strong);outline-offset:-1px}
+
   .chips{display:flex;flex-wrap:wrap;gap:6px}
   .chip{background:var(--sunken);border:1px solid var(--line);border-radius:20px;
     padding:4px 11px;font-size:13px}
@@ -182,9 +237,43 @@
 
 <section>
   <h2>Balance de objetivos</h2>
-  <p class="sub">En cuántas misiones aparece cada tipo de objetivo. Lo rayado es lo que
-     <b>PikaMug soporta y no hemos usado nunca</b> — ahí está la variedad que falta.</p>
-  <div class="card"><div class="barras" id="barras"></div></div>
+  <p class="sub">Tres formas de mirar lo mismo, porque cada una contesta una pregunta distinta:
+     <b>qué usamos más</b>, <b>cuánto pesa cada cosa</b> y <b>qué saga repite</b>.</p>
+
+  <div class="vistas" role="group" aria-label="Tipo de gráfica">
+    <button data-v="barras" aria-pressed="true">📊 Ranking</button>
+    <button data-v="donut" aria-pressed="false">🥧 Reparto</button>
+    <button data-v="calor" aria-pressed="false">🔥 Por saga</button>
+  </div>
+
+  <div class="card">
+    <div class="vista on" id="v-barras">
+      <p class="sub" style="margin:0 0 14px">En cuántas misiones aparece cada objetivo. Lo rayado
+         es lo que <b>PikaMug soporta y no hemos usado nunca</b>: ahí está la variedad que falta.</p>
+      <div class="barras" id="barras"></div>
+    </div>
+
+    <div class="vista" id="v-donut">
+      <p class="sub" style="margin:0 0 16px">Qué porción del total se lleva cada objetivo, contando
+         solo los que <b>sí</b> usamos. El tono va de más a menos usado.</p>
+      <div class="donutbox">
+        <svg class="donut" width="230" height="230" viewBox="0 0 230 230" role="img"
+             aria-labelledby="donutTit"><title id="donutTit">Reparto de objetivos</title>
+          <g id="anillo" transform="rotate(-90 115 115)"></g>
+          <text class="centro" x="115" y="108"><tspan class="n" id="donutN">—</tspan></text>
+          <text class="centro" x="115" y="128"><tspan class="s">usos en total</tspan></text>
+        </svg>
+        <div class="leyenda" id="leyenda"></div>
+      </div>
+    </div>
+
+    <div class="vista" id="v-calor">
+      <p class="sub" style="margin:0 0 16px">Cada fila es una saga; cada columna, un objetivo.
+         <b>Una fila con una sola casilla encendida es una saga que repite lo mismo de principio a
+         fin.</b> Solo las sagas de 2 misiones o más.</p>
+      <div class="calorbox"><table class="calor" id="calor"></table></div>
+    </div>
+  </div>
 </section>
 
 <section>
@@ -273,7 +362,12 @@ $("#kpis").innerHTML = [
   [D.reparto.filter(r => !r.quests).length, "objetivos sin usar"],
 ].map(([b, s]) => `<div class="kpi"><b>${esc(b)}</b><span>${esc(s)}</span></div>`).join("");
 
-/* ── barras: una serie, un tono; el cero va rayado Y etiquetado ───────── */
+/* ═══ BALANCE DE OBJETIVOS — tres vistas de los mismos datos ════════════
+   Las tres van con UN SOLO tono (el arcano de la casa) porque las categorias
+   estan ORDENADAS por magnitud: un degradado de un hue codifica el rango, y
+   es redundante con el tamaño. Cero paletas categoricas sin validar. */
+
+/* ── 1. RANKING (barras) ── el cero va rayado Y etiquetado, nunca solo color */
 const tope = Math.max(...D.reparto.map(r => r.quests), 1);
 $("#barras").innerHTML = D.reparto.map(r => `
   <div class="fila${r.quests ? "" : " cero"}" title="${esc(r.etiqueta)}: ${r.quests} misiones">
@@ -281,6 +375,71 @@ $("#barras").innerHTML = D.reparto.map(r => `
     <span class="pista"><span class="barra" style="width:${r.quests / tope * 100}%"></span></span>
     <span class="val">${r.quests ? r.quests : "sin usar"}</span>
   </div>`).join("");
+
+/* ── 2. REPARTO (quesito) ── solo lo que SI se usa; el tono baja con el rango */
+const usados = D.reparto.filter(r => r.quests).sort((a, b) => b.quests - a.quests);
+const suma = usados.reduce((s, r) => s + r.quests, 0);
+/* El tono sale del RANGO, no del indice: dos objetivos con el MISMO numero de
+   misiones llevan el MISMO tono, que es lo que toca cuando el color codifica
+   magnitud. Por indice, "Fabricar 1" y "Esquilar 1" saldrian distintos y estarian
+   mintiendo. La identidad la lleva la leyenda, no el color. */
+const escalones = [...new Set(usados.map(r => r.quests))];
+const tono = v => "var(--r" + Math.min(escalones.indexOf(v) + 1, 8) + ")";
+const RADIO = 88, CIRC = 2 * Math.PI * RADIO, HUECO = 2;
+let acc = 0;
+$("#donutN").textContent = suma;
+$("#anillo").innerHTML = usados.map(r => {
+  const largo = Math.max(r.quests / suma * CIRC - HUECO, 1.5);
+  const off = -acc; acc += r.quests / suma * CIRC;
+  return `<circle cx="115" cy="115" r="${RADIO}" style="stroke:${tono(r.quests)}"
+    stroke-dasharray="${largo.toFixed(2)} ${(CIRC - largo).toFixed(2)}"
+    stroke-dashoffset="${off.toFixed(2)}"
+    ><title>${esc(r.etiqueta)}: ${r.quests} misiones (${Math.round(r.quests / suma * 100)}%)</title></circle>`;
+}).join("");
+$("#leyenda").innerHTML = usados.map(r => `
+  <div title="${esc(r.etiqueta)}: ${r.quests} misiones">
+    <i style="background:${tono(r.quests)}"></i>
+    <span>${esc(r.etiqueta)}</span>
+    <b>${Math.round(r.quests / suma * 100)}%</b>
+  </div>`).join("");
+
+/* ── 3. POR SAGA (mapa de calor) ── donde se ve la saga que repite lo mismo.
+   El numero va en un <b> aparte del relleno: asi el texto siempre lleva tinta
+   del tema y no hay que adivinar si sobre este morado toca blanco o negro. Por eso
+   la opacidad del relleno TOPA en .55: pasado ahi, el numero deja de leerse (en
+   claro tinta oscura sobre morado oscuro, en oscuro tinta clara sobre morado claro). */
+const cols = usados.map(r => r.etiqueta);
+const porSaga = {};
+for (const q of D.quests) {
+  const s = porSaga[q.saga] || (porSaga[q.saga] = { n: 0, o: {} });
+  s.n++;
+  for (const o of q.objetivos) s.o[o] = (s.o[o] || 0) + 1;
+}
+const filas = Object.entries(porSaga).filter(([, s]) => s.n >= 2)
+  .sort((a, b) => b[1].n - a[1].n);
+const maxCelda = Math.max(1, ...filas.flatMap(([, s]) => cols.map(c => s.o[c] || 0)));
+$("#calor").innerHTML =
+  `<tr><th></th>${cols.map(c => `<th class="rot">${esc(c)}</th>`).join("")}
+       <th style="padding-left:10px">Total</th></tr>` +
+  filas.map(([saga, s]) => {
+    const distintos = cols.filter(c => s.o[c]).length;
+    return `<tr><td class="s" title="${esc(saga)} · ${s.n} misiones, ${distintos} objetivo${distintos === 1 ? "" : "s"} distinto${distintos === 1 ? "" : "s"}">${esc(saga)}</td>` +
+      cols.map(c => {
+        const v = s.o[c] || 0;
+        return `<td class="c" title="${esc(saga)} · ${esc(c)}: ${v} misiones">
+          <span class="fondo" style="opacity:${v ? (.12 + .43 * v / maxCelda).toFixed(2) : 0}"></span>
+          <b>${v || ""}</b></td>`;
+      }).join("") +
+      `<td class="n" style="padding-left:10px;color:var(--ink-soft)">${s.n}</td></tr>`;
+  }).join("");
+
+/* ── el selector ── */
+document.querySelectorAll(".vistas button").forEach(b => b.onclick = () => {
+  document.querySelectorAll(".vistas button").forEach(o =>
+    o.setAttribute("aria-pressed", String(o === b)));
+  document.querySelectorAll(".vista").forEach(v =>
+    v.classList.toggle("on", v.id === "v-" + b.dataset.v));
+});
 
 /* ── tabla ────────────────────────────────────────────────────────────── */
 const sagas = [...new Set(D.quests.map(q => q.saga))].sort();
