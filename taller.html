@@ -340,6 +340,8 @@ const DATA = [
 
 {g:'hecho', t:'⛏️ La Cantera — la 2ª dungeon', d:'Dungeon de nivel 10-15 a la que se llega en helicóptero. Los 7 infectados y el jefe («El Último Turno», que está ciego y caza por sonido) ya están montados, con sus skins.',
  falta:'Crear la dungeon en el plugin, colocar los spawners y <b>bloquear la Terminal de Vuelo dentro de la instancia</b>: como la entrada y la plantilla son el mismo mundo, el helicóptero se copia dentro y hoy podrías largarte a mitad de raid.', tags:['doc:dungeons.md','⚠ agujero conocido']},
+{g:'hecho', t:'🗺️ El Mapa del Reino — comprado, configurado y sin arrancar', d:'El mapa de verdad, el que se lleva en la mano: se dibuja solo mientras andas, con tu posición. Ya está comprado (10 $) y subido, y sale únicamente en el mundo normal, así que nadie puede llevárselo a una dungeon.',
+ falta:'<b>Reiniciar</b>, que aún no ha arrancado ni una vez. Y luego las dos cosas que lo hacen bonito en vez de correcto: el <b>marco de pergamino</b> (un dibujo que hay que hacer) y <b>quién te lo da</b> — no hay cartógrafo, ni misión, ni nada que lleve hasta él.', tags:['doc:mapa-cartographer.md','ya pagado']},
 
 /* ───────────── 2. PLUGINS QUE TENEMOS Y NO ESTÁN PUESTOS ───────────── */
 {g:'jar', t:'🥷 Pickpocket — robar de verdad', d:'Carterismo entre jugadores: te agachas detrás de alguien, mantienes, y le rebuscas los bolsillos.',
@@ -360,8 +362,31 @@ const DATA = [
  falta:'Subirlo y, sobre todo, <b>construir un circuito</b>. El plugin es lo de menos.', tags:['gratis']},
 {g:'jar', t:'🐟 CustomFishing (de pago)', d:'La alternativa cara a EvenMoreFish: minijuego de pesca más elaborado.',
  falta:'<b>Decidir si se compra</b>, teniendo EvenMoreFish gratis ya descargado. Probablemente no haga falta.', tags:['€ de pago','decidir']},
-{g:'jar', t:'🗺️ Cartographer2 (de pago) — el mapa vivo en la mano', d:'El mapa de verdad: se dibuja sobre un mapa que llevas encima y se actualiza mientras andas, con tu posición y los sitios marcados con su nombre. Se le puede poner un marco de pergamino nuestro y recolorearlo a sepia, y en los mundos sin cartografiar sale una hoja que diga lo que queramos.',
- falta:'<b>Decidir si se paga.</b> Es premium y el precio no se ha podido ver (su web bloquea). Todo lo demás ya está resuelto y apuntado: funciona en nuestra versión, el mapa <b>lo entregaría un NPC</b> sin que nadie teclee un comando, y se puede limitar a <b>solo el mundo normal</b> con una lista blanca — que aquí no es un capricho, es obligatorio, porque cada partida de dungeon crea un mundo con nombre distinto y una lista negra no puede nombrar lo que aún no existe.<br>Sus dos pegas: el dibujo es <b>automático</b> (no a mano) y <b>no se va revelando según exploras</b>.<br>🔴 Su código es público pero <b>sin licencia</b>, así que no se compila para saltarse el pago. Y si lo ves «gratis» en algún sitio de descargas, es pirata.', tags:['€ de pago','decidir','doc:PLUGINS-TODO.md','verificado en el jar']},
+
+/* ───────────── 2bis. DE LA TIENDA: lo que NO tenemos y merecería la pena ─────────────
+   Barrido de SpigotMC del 8-ago-2026: 1.615 plugins de pago mirados uno a uno, filtrados a
+   los que van en nuestra versión y siguen vivos en 2026. Ficha completa de cada uno, con
+   precio y descargas, en PLUGINS-TODO.md §SpigotMC. */
+{g:'tienda', t:'🌪️ Deadly Disasters — un mundo donde pasan desgracias', d:'Dieciocho desastres de verdad: terremotos que abren el suelo, tornados, tsunamis, socavones, derrumbes en las cuevas, lluvia de meteoritos, tormentas de arena, ventiscas, huracanes y una «purga». 43.500 servidores lo usan.',
+ falta:'<b>Montar el mundo.</b> El plugin es gratis y las dos cosas que daban miedo ya están comprobadas: se configura <b>mundo por mundo</b> (o sea que el Reino ni se entera) y las regiones protegidas <b>vienen a salvo de fábrica</b>, no hay que blindar nada. Falta crear el mundo, decidir qué desastres y a qué nivel, cómo se llega (el helicóptero ya sabe volar a mundos así) y qué misión lo abre.<br>Antes de darlo por bueno hay que mirar tres cosas: que no se pelee con <b>las estaciones</b> ni con los eventos que ya lanzamos, y cuánto disco se come un mundo que se destruye solo.<br>La versión de pago (unos 9,5 €) añade una sola cosa que importa: que <b>lo destrozado se reconstruya solo</b>. Eso hará falta cuando el mundo lleve semanas siendo un solar, no antes.', tags:['gratis','lo pidió el usuario','doc:PLUGINS-TODO.md']},
+{g:'tienda', t:'🔍 ClueScrolls — misiones que son una PISTA, no un recado', d:'Pergaminos con pistas encadenadas: te dan una adivinanza, la resuelves, y sale la siguiente. Trae 250 tipos de pista y tres niveles de pergamino, con premios por rareza.',
+ falta:'<b>Decidir si se pagan los 20 $</b>, que es el más caro de la lista. A cambio ataca el problema más gordo que tenemos: <b>tres de cada cuatro misiones del server son «tráeme algo»</b>. Encajaría con Garrapata, con el mapa del tesoro que sale del Cofre del Pirata Muerto, y con la Torre.<br>⚠️ Sus premios se reparten por peso y con su propio sistema: habría que casarlo con el libro de cuentas o abre un grifo de dinero.', tags:['€ 20 $','decidir','tipo de misión nuevo']},
+{g:'tienda', t:'💬 Interactions — que el jugador pueda RESPONDER', d:'Árboles de conversación: el NPC habla y tú eliges qué contestar, con condiciones y consecuencias.',
+ falta:'<b>Decidir si se pagan los 8 $.</b> Tenemos 473 diálogos y <b>ninguno pregunta nada</b>: todos son «Continuar ▶». Con esto, «El Arreglo» dejaría de elegir su final por qué misión aceptas y lo elegiría por lo que le dices a Tristo a la cara.<br>⚠️ Verificar cómo convive con las cajas de diálogo que ya usamos: o se llevan bien, o hay que elegir uno de los dos.', tags:['€ 8 $','decidir','la nota más alta de la tienda']},
+{g:'tienda', t:'🏗️ Constructor V4 — que la obra AVANCE sola', d:'Le das un edificio guardado a un NPC de los nuestros y lo construye bloque a bloque, delante de ti. Varios NPCs pueden trabajar en el mismo edificio a la vez, y se puede deshacer.',
+ falta:'<b>Nada más que decidirlo: cuesta 5 €.</b> Es la obra de la Torre, que lleva desde el primer día siendo un decorado que no se mueve. Y los Apartamentos Pan de Gamba del Ministro.', tags:['€ 5 €','barato','encaja con la trama']},
+{g:'tienda', t:'⚡ ExecutableEvents — el hermano que falta de los otros dos', d:'El tercero de la familia de ExecutableItems y ExecutableBlocks, que <b>ya están comprados los dos</b>. Añade 182 disparadores para colgar cosas de lo que pasa en el juego, con editor dentro del propio Minecraft.',
+ falta:'<b>Decidir si se pagan 12 €.</b> Es la pieza que nos ahorraría escribir un datapack para media mecánica, y ya sabemos usar la familia entera.', tags:['€ 12 €','completa lo que ya tenemos']},
+{g:'tienda', t:'🗺️ RPGRegions — descubrir sitios, y un bestiario que se lee en el juego', d:'Zonas que se «descubren» al llegar, estilo Skyrim, con requisitos y niveles. Y de regalo un bestiario en forma de libro que se rellena según te encuentras bichos.',
+ falta:'<b>Decidir (6 £).</b> Dos huecos de una vez: explorar no es objetivo de ninguna misión, y <b>el bestiario hoy es una página web</b> que hay que salir del juego para mirar.', tags:['€ 6 £','tipo de misión nuevo']},
+{g:'tienda', t:'⛏️ CustomArcheology — excavar yacimientos', d:'Arqueología propia: bloques y herramientas nuestros, con tabla de botín y generación por bioma y altura. Y sabe sembrar yacimientos <b>en terreno ya generado</b>, que es lo raro.',
+ falta:'<b>Decidir (12 $).</b> Ojo: en el catálogo de tipos de misión ponía que esto «no existe de estantería» y <b>era falso</b> — se buscó solo en la otra tienda. Le pegaría a Vera Pedregal y a la excavación de la Torre.', tags:['€ 12 $','corrige un doc']},
+{g:'tienda', t:'🦠 PlagueIt — una peste que se contagia', d:'Enfermedades de verdad: se pegan por comer, por el bioma, por el daño que recibes o por estar cerca de un infectado. Con fases, síntomas, jeringuillas y curas.',
+ falta:'<b>Decidir (7,5 €) y, sobre todo, escribir la saga.</b> Una peste que el Ayuntamiento niega por escrito mientras la gente cae se escribe sola, y le da por fin trabajo a la Alquimista fuera de la maría.', tags:['€ 7,5 €','encaja con la trama']},
+{g:'tienda', t:'🖥️ AdvancedGUI — pantallas táctiles de verdad', d:'Interfaces que se pintan en marcos colgados de la pared y <b>se pulsan</b>, hechas con un editor web.',
+ falta:'<b>Decidir (15 €).</b> Hoy nuestras «terminales» (la del buque de VOSTOK, las de Black Mesa) son una cabeza con un diálogo. Con esto serían un ordenador de verdad.', tags:['€ 15 €','ambientación']},
+{g:'tienda', t:'🎬 Cinemáticas — Kingscenes o CinematicView', d:'La cámara se mueve sola y cuenta algo: un recorrido grabado que se le reproduce al jugador.',
+ falta:'<b>Elegir cuál y pagarlo</b> (5 € el barato, 10 € el completo). Los dos salen más baratos que el que se fichó en la otra tienda. Es lo que pide el final de temporada: abrir la puerta de la Torre.', tags:['€ desde 5 €','final de temporada']},
 
 /* ───────────── 3. APAGADO A PROPÓSITO ───────────── */
 {g:'apagado', t:'🚪 Las Backrooms (11 mundos)', d:'Once niveles de horror liminal, traducidos enteros al español, con sus bichos y eventos. Un juego dentro del juego.',
@@ -420,6 +445,8 @@ const GRUPOS = [
    sub:'Está en el servidor y funciona, pero no hay ni un NPC, ni una misión, ni un sitio que lleve hasta ello. Es lo más barato de rescatar: el trabajo gordo ya está pagado.'},
   {k:'jar',     n:'Lo tenemos y no está puesto', ico:'🟡',
    sub:'Plugins ya descargados o comprados. Comprobado contra el servidor de verdad: salvo que se diga otra cosa, ni siquiera están subidos.'},
+  {k:'tienda',  n:'De la tienda: lo que NO tenemos y merecería la pena', ico:'🛒',
+   sub:'Barrido de SpigotMC del 8-ago-2026: 1.615 plugins de pago mirados uno a uno, filtrados a los que van en nuestra versión y siguen vivos. Aquí solo está lo que añade algo que hoy no se puede hacer — nada que duplique lo que ya tenemos. Ninguno está comprado.'},
   {k:'apagado', n:'Apagado a propósito', ico:'⏸️',
    sub:'Funciona, pero está desactivado por una razón concreta. Está aquí para que no se vuelva a proponer sin saber por qué se apagó.'},
   {k:'idea',    n:'Ideas que no se han empezado', ico:'🔵',
