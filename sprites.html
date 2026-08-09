@@ -1100,6 +1100,75 @@ const G = [
     "d": "🔴 es un <b>BLOQUE</b>, no un item: va en la <b>plantilla de cubo</b> (16×16 por cara). Radiocasete de los de asa, con altavoz, ruleta y las teclas"
    }
   ]
+ },
+ {
+  "t": "✅🌿 LOS 9 ÍTEMS DE SPDRUG (la maría y el tabaco) — puestos el 2026-08-09",
+  "sub": "🔴🔴 <b>Éstos NO se texturizan como los demás, y conviene saber por qué</b>: los fabrica <b>el plugin</b>, y <b>SPdrug no sabe nada de custom-model-data</b> (verificado: 0 referencias en sus 33 clases). No hay casilla en su config donde poner una textura. ✅ <b>Se hace con MythicChanger</b> (ya instalado), con <b><code>fake-changes.set-custom-model-data</code></b>: un cambio <b>VISUAL</b> que va en el paquete al cliente y <b>no toca el ítem del servidor</b>. Eso importa, porque el NBT real es lo que usa SPdrug para saber qué planta es y lo que casan las tiendas y la quest <code>alq_cultivo_3</code>. Comprobado en el jar que <code>fake</code> y <code>real</code> son caminos <b>separados</b> (<code>setFakeChange</code> / <code>setRealChange</code>) → <b>el peor caso posible es que no se vea el sprite</b>. 🔑 <b>Se reconocen por el LORE, no por el material</b>: la materia de cannabis y la hoja de tabaco son las dos <code>DRIED_KELP</code>, y los dos secos son los dos <code>NETHER_WART</code>. Generador: <b><code>mmo-generadores/gen_sprites_drogas.py</code></b> · reglas en <code>MythicChanger/rules/drogas_*.yml</code>. ⬜ <b>SIN PROBAR IN-GAME.</b> Lo que falta por confirmar es si <code>contains-lore</code> casa con el lore ya coloreado (a favor: la tienda de la Alquimista <b>ya</b> casa la maría con `contains-lore: ['id: cannabis']` y funciona) y si el packet-listener aplica el CMD. Revertir = borrar los 9 <code>rules/drogas_*.yml</code> + <code>/mythicchanger reload</code>.",
+  "items": [
+   {
+    "e": "✅",
+    "o": "Materia de cannabis",
+    "n": "DRIED_KELP",
+    "m": "10320",
+    "d": "«Cannabis fresco»"
+   },
+   {
+    "e": "✅",
+    "o": "Hoja de tabaco",
+    "n": "DRIED_KELP",
+    "m": "10321",
+    "d": "«Hoja de tabaco fresca»"
+   },
+   {
+    "e": "✅",
+    "o": "Cannabis seco",
+    "n": "NETHER_WART",
+    "m": "10322",
+    "d": "«Para la rama del cannabis»"
+   },
+   {
+    "e": "✅",
+    "o": "Tabaco seco",
+    "n": "NETHER_WART",
+    "m": "10323",
+    "d": "«Para la rama del tabaco»"
+   },
+   {
+    "e": "✅",
+    "o": "Cannabis (la droga)",
+    "n": "FERN",
+    "m": "10324",
+    "d": "«id: cannabis»"
+   },
+   {
+    "e": "✅",
+    "o": "Producto de tabaco",
+    "n": "BROWN_DYE",
+    "m": "10325",
+    "d": "«id: nicotine»"
+   },
+   {
+    "e": "✅",
+    "o": "Reloj de crecimiento",
+    "n": "CLOCK",
+    "m": "10326",
+    "d": "«Clic dcho. sobre el helecho crecido»"
+   },
+   {
+    "e": "✅",
+    "o": "Cigarro vacío",
+    "n": "PAPER",
+    "m": "10327",
+    "d": "«Haz producto de tabaco y combínalos»"
+   },
+   {
+    "e": "✅",
+    "o": "Cigarro (cargado)",
+    "n": "PAPER",
+    "m": "10328",
+    "d": "«Clic dcho. para fumar»"
+   }
+  ]
  }
 ];
 const FALTAN = 22, ITEMS = 33;
