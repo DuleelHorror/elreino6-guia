@@ -759,39 +759,39 @@ const G = [
   ]
  },
  {
-  "t": "⬜🎞️ LAS FASES DEL REVELADO (laboratorio de fotos)",
-  "sub": "El <b>carrete</b> ya tiene sprite (el usuario lo hizo el 3-ago), pero **las 5 fases intermedias son papel pelado** — y el jugador las va pasando de máquina en máquina, así que las mira todas. Ver <code>.claude/rules/laboratorio-fotos.md</code>.",
+  "t": "✅🎞️ LAS FASES DEL REVELADO (laboratorio de fotos)",
+  "sub": "El <b>carrete</b> ya tiene sprite (el usuario lo hizo el 3-ago), pero **las 5 fases intermedias son papel pelado** — y el jugador las va pasando de máquina en máquina, así que las mira todas. Ver <code>.claude/rules/laboratorio-fotos.md</code>. ✅✅ <b>HECHAS (2026-08-09)</b> — las entregó el usuario. Cada baño cambia el color del negativo (gris → cían → marrón → rojizo), así que <b>la cadena se lee de un vistazo</b>: hasta hoy las 5 fases eran papel pelado y en el inventario se veían idénticas. 🔑 Sus CMD (<b>10313-10317</b>) viven en <code>CMD_FASE</code> de <b><code>mmo-generadores/gen_foto.py</code></b>, NO en <code>instalar_sprites.py</code>: ese generador reescribe el datapack entero, y un CMD puesto a mano duraría hasta la siguiente ejecución.",
   "items": [
    {
-    "e": "⬜",
+    "e": "✅",
     "o": "<code>foto-fase1</code>",
     "n": "Tiras de negativo",
     "m": "paper",
     "d": "tras la mesa de corte · tira de negativos con perforaciones"
    },
    {
-    "e": "⬜",
+    "e": "✅",
     "o": "<code>foto-fase2</code>",
     "n": "Negativo revelado",
     "m": "paper",
     "d": "1ª cubeta · la misma tira, ya con imagen en negativo"
    },
    {
-    "e": "⬜",
+    "e": "✅",
     "o": "<code>foto-fase3</code>",
     "n": "Negativo detenido",
     "m": "paper",
     "d": "2ª cubeta · igual, goteando"
    },
    {
-    "e": "⬜",
+    "e": "✅",
     "o": "<code>foto-fase4</code>",
     "n": "Negativo fijado",
     "m": "paper",
     "d": "3ª cubeta · igual, más contrastada"
    },
    {
-    "e": "⬜",
+    "e": "✅",
     "o": "<code>foto-fase5</code>",
     "n": "Fotos escurriendo",
     "m": "paper",
@@ -811,7 +811,7 @@ const G = [
     "d": "🔒 El Arreglo · cascabel pequeño y abollado"
    },
    {
-    "e": "⬜",
+    "e": "✅",
     "o": "<b>el disco GENÉRICO</b>",
     "n": "<i>(vale para TODOS los discos)</i>",
     "m": "music_disc_*",
@@ -1087,13 +1087,6 @@ const G = [
    },
    {
     "e": "⬜",
-    "o": "<b>el casete</b>",
-    "n": "<i>(genérico, como el disco)</i>",
-    "m": "<i>(por decidir)</i>",
-    "d": "casete de cinta: carcasa, <b>dos bobinas</b> y la pegatina escrita a mano. Un solo dibujo para todas las cintas"
-   },
-   {
-    "e": "⬜",
     "o": "<b>el RADIOCASETE</b>",
     "n": "<i>(bloque)</i>",
     "m": "<i>(bloque nuevo)</i>",
@@ -1102,7 +1095,7 @@ const G = [
   ]
  }
 ];
-const FALTAN = 31, ITEMS = 42;
+const FALTAN = 24, ITEMS = 35;
 
 function TH(){const r=document.documentElement;
   const cur=r.dataset.theme||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');
