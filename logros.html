@@ -1,8 +1,3 @@
-<!doctype html>
-<html lang="es">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Los Logros de El Reino 6</title>
 <style>/* ═══════════════════════════════════════════════════════════════════════════
    TEMA — El Reino 6 · herramientas del servidor
@@ -275,8 +270,6 @@ thead th{font-size:.74rem; text-transform:uppercase; letter-spacing:.07em; color
     color:var(--tinta-3);font-size:13.5px}
   .vacio{color:var(--tinta-3);padding:28px 4px}
 </style>
-</head>
-<body>
 
 <nav class="nav">
 <a class="marca" href="https://duleelhorror.github.io/elreino6-guia/index.html"><span class="ico">🗼</span> El Reino <b>6</b></a>
@@ -1100,6 +1093,18 @@ const L = [
   "antes": "La Prueba del Calor"
  },
  {
+  "id": "fundicion",
+  "titulo": "Fundamentos Fundacionales",
+  "desc": "Cien lingotes. Al final se te olvida el horno y las manos van solas.",
+  "marco": "goal",
+  "oculto": false,
+  "bloque": "El establo, el refugio y la herrería",
+  "quest": "El Aprendiz al Revés · La Prueba de la Fundición",
+  "npc": "Lolo el Fundacional",
+  "comose": "",
+  "antes": "El Aprendiz al Revés"
+ },
+ {
   "id": "campana",
   "titulo": "Lección 12",
   "desc": "Siete campanadas y no salió nadie. Eso también es un dato.",
@@ -1244,6 +1249,18 @@ const L = [
   "antes": null
  },
  {
+  "id": "flechazos",
+  "titulo": "Flechazos",
+  "desc": "Veinte a distancia y sin pisar el barro. El dedo se te quedo duro.",
+  "marco": "task",
+  "oculto": false,
+  "bloque": "Sueltas",
+  "quest": "Flechazos",
+  "npc": "Semental de la Flecha",
+  "comose": "",
+  "antes": "Apunta y Reza"
+ },
+ {
   "id": "pecio",
   "titulo": "El Guardián del Pecio",
   "desc": "Bajaste a un barco hundido a por un plano. Y volviste.",
@@ -1385,6 +1402,3 @@ document.getElementById("n-sec").textContent   = L.filter(l => l.oculto).length;
 document.getElementById("n-libre").textContent = L.filter(l => !l.quest && !l.oculto).length;
 pinta();
 </script>
-
-</body>
-</html>

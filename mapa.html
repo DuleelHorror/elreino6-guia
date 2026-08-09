@@ -1,8 +1,3 @@
-<!doctype html>
-<html lang="es">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>El Reino 6 — Mapa de Misiones</title>
 <style>/* ═══════════════════════════════════════════════════════════════════════════
    TEMA — El Reino 6 · herramientas del servidor
@@ -266,8 +261,6 @@ thead th{font-size:.74rem; text-transform:uppercase; letter-spacing:.07em; color
   .panel .who{font-size:.85rem;color:var(--tinta-3);margin:-6px 0 12px}
   @media(max-width:560px){.panel{width:100%;max-width:100%;height:62%;top:auto;bottom:0;border-left:0;border-top:1px solid var(--linea-2);transform:translateY(102%)}.panel.on{transform:none}}
 </style>
-</head>
-<body>
 
 <nav class="nav">
 <a class="marca" href="https://duleelhorror.github.io/elreino6-guia/index.html"><span class="ico">🗼</span> El Reino <b>6</b></a>
@@ -4578,6 +4571,9 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
     {id:'tablon', loop:true, label:'🎟️ Tablón de Encargos', npc:'Sistema', faction:'arc', type:'Loop diario · repetible', reward:'Fichas 🎟️', status:'new',
       steps:['4 encargos aleatorios al día','Suben el Pase del Reino','Cada nivel del Pase da Fichas'], desc:'Misiones diarias que dan Fichas. El enganche para volver cada día.'},
     // Secundarias / nuevas (2026-07-11)
+    {id:'flechazos', label:'🏹 Flechazos', npc:'Semental de la Flecha', faction:'folk', type:'Quest suelta · practicar con el arco', coins:10, reward:'El Arco de Juguete (arma de la clase ABUELO, nivel 1)', status:'new',
+      steps:['1) Flechazos (Semental) → mata 12 zombis y 8 esqueletos CON EL ARCO EN LA MANO (si le pegas con otra cosa no cuenta; él te da 64 flechas al aceptar), y vuelve a hablar con él'],
+      desc:'La 2ª lección del Semental: dejar de arrearle al bicho con lo primero que pillas. Te premia con su propio arco, que es de juguete y lo dice completamente en serio. ⚠️ El arco es de la clase ABUELO: otras clases no pueden equiparlo.'},
     {id:'pecio', label:'⚓ El Guardián del Pecio', npc:'Semental de la Flecha', faction:'folk', type:'Secundaria · pesca un bicho raro', reward:'Plano de la Espada Pirata', status:'new',
       steps:['Ir al pecio hundido','Coger el cofre (aparece el Pescaíto Lerele)','Traer el plano al Semental'], desc:'Un barco hundido esconde el plano de una espada pirata… y un bicho que lo guarda. Secundaria del Semental.'},
     {id:'caballos', label:'🐴 Horse Luis', npc:'Horse Luis', faction:'folk', type:'Saga · 3 misiones (escuchar cuentos)', coins:9, reward:'Comprar caballos, sillas y cuerdas', status:'new', unlocks:'Comprar caballos, sillas y cuerdas en el establo',
@@ -4661,7 +4657,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
     ['nando','permiso'],['permiso','bolsa'],['bolsa','jobs'],['bolsa','carpincho'],
     ['carpincho','barco'],['barco','tablon_luz'],['tablon_luz','tablon'],
     // secundarias + saga del banco (2026-07-11) + Red de Anclaje (2026-07-15)
-    ['bolsa','pecio'],['bolsa','caballos'],['bolsa','lolo'],['lolo','lolo_ap'],['permiso','nico'],['nico','yaniko'],['permiso','arreglo'],['bolsa','estaciones'],['estaciones','carpincho'],['carpincho','geologia'],['geologia','mina'],['mina','dungeon_mina'],['mina','abismo'],['abismo','cantera'],['abismo','chavitox'],['cantera','dungeon_cantera'],['cuenta','anclaje'],['anclaje','anclaje_rep'],['anclaje_rep','anclaje_salto'],['anclaje_salto','anclaje_fractal'],['anclaje_fractal','jarvard'],['jarvard','papriko_antena'],['papriko_antena','vostok_p1'],
+    ['bolsa','pecio'],['semental','flechazos'],['bolsa','caballos'],['bolsa','lolo'],['lolo','lolo_ap'],['permiso','nico'],['nico','yaniko'],['permiso','arreglo'],['bolsa','estaciones'],['estaciones','carpincho'],['carpincho','geologia'],['geologia','mina'],['mina','dungeon_mina'],['mina','abismo'],['abismo','cantera'],['abismo','chavitox'],['cantera','dungeon_cantera'],['cuenta','anclaje'],['anclaje','anclaje_rep'],['anclaje_rep','anclaje_salto'],['anclaje_salto','anclaje_fractal'],['anclaje_fractal','jarvard'],['jarvard','papriko_antena'],['papriko_antena','vostok_p1'],
     ['talentos','mapa_reino'],
     ['tablon_luz','olegario'],
     ['tablon_luz','banco'],['banco','cuenta'],['cuenta','mercado'],
@@ -4824,6 +4820,3 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
   };
 })();
 </script>
-
-</body>
-</html>

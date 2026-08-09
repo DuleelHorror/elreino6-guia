@@ -1,8 +1,3 @@
-<!doctype html>
-<html lang="es">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>El Reino 6 — Items sin sprite</title>
 <style>/* ═══════════════════════════════════════════════════════════════════════════
    TEMA — El Reino 6 · herramientas del servidor
@@ -255,8 +250,6 @@ thead th{font-size:.74rem; text-transform:uppercase; letter-spacing:.07em; color
   footer{margin-top:46px;padding-top:18px;border-top:1px solid var(--linea);color:var(--tinta-3);font-size:.82rem}
   @media(max-width:560px){.hero h1{font-size:1.6rem}}
 </style>
-</head>
-<body>
 
 <nav class="nav">
 <a class="marca" href="https://duleelhorror.github.io/elreino6-guia/inicio.html"><span class="ico">⌂</span> El Reino <b>6</b></a>
@@ -297,6 +290,12 @@ thead th{font-size:.74rem; text-transform:uppercase; letter-spacing:.07em; color
       <code>texturas/a_16.py</code> (y si viene con fondo blanco, lo limpia <code>texturas/quitar_fondo.py</code>).</p>
     <p>Del resto me encargo yo: meterlo en ItemsAdder, asignarle su número de modelo, reconstruir el pack y
       subirlo. Lo único que hace falta después es <b>reiniciar</b> el server.</p>
+    <p><b>Los tres símbolos.</b> <b>⬜</b> = falta el dibujo y en el juego se ve un ítem de Minecraft
+      cualquiera. <b>🟡</b> = <b>ya hay uno puesto y funciona</b>, pero es un <b>provisional</b> que
+      dibujé yo a píxel: se puede jugar con él y no corre prisa cambiarlo (sustituirlo es sobrescribir
+      el PNG en la misma ruta — mismo id, mismo número de modelo, cero cambios de configuración).
+      <b>✅</b> = hecho y en el servidor. Los 🟡 <b>no cuentan</b> en la cifra de arriba, porque no
+      bloquean nada.</p>
     <p><b>Un sprite no es un item.</b> Los <code>×12</code> de la tabla son cuántos <b>items</b> hay, no
       cuántos dibujos hacen falta: cada familia de accesorios son 12 items porque son <b>6 rarezas × 2
       nombres</b>, y los dos nombres de una misma rareza pueden compartir dibujo.</p>
@@ -952,60 +951,60 @@ const G = [
   ]
  },
  {
-  "t": "⬜⛏️ LOS MINERALES DE TIERRA HOSTIL (5 vetas + 5 gemas + el bidón)",
+  "t": "🟡⛏️ LOS MINERALES DE TIERRA HOSTIL (5 vetas + 5 gemas + el bidón)",
   "sub": "La isla de los desastres a la que se llega en el barco de Gabardinez. Los minerales son **el motivo para ir**, así que son exclusivos de allí. Diseño completo en <code>.claude/rules/tierra-hostil.md</code>. 🔴 <b>Las VETAS van a 16×16 por cara</b> (son bloques); las gemas y el bidón, 16×16 de item. 🔑 <b>Que se distingan A OSCURAS y de un vistazo</b>: cada uno tiene **un color y una FORMA de inclusión distintos** (tubos / anillos / grietas / motas grasas / motas brillantes), para que no dependa solo del color — en una cueva con antorcha, la silueta se lee antes que el tono. 🟢🟢 <b>YA HAY PLACEHOLDER PUESTO (2026-08-08) — los 10 están dibujados y subidos</b>, y **el juego ya se puede probar**: cada mineral tiene su color y su forma de inclusión, así que se distinguen de un vistazo. Los dibujó <code>mmo-generadores/gen_minerales_tierra_hostil.py</code> (pixel art a mano, dentro del propio script). 🖼️ Míralos todos juntos en <b><code>texturas/_preview_tierra_hostil.png</code></b>. 🔑 <b>Sustituir uno por el bueno = sobrescribir el PNG en la MISMA RUTA</b> y rehacer el pack. Cero cambios de config: mismo id, mismo CMD, mismo generador. Por eso <b>no corre ninguna prisa</b> y se pueden ir dando de uno en uno. Las rutas son <code>ItemsAdder/contents/tierra_hostil/resourcepack/tierra_hostil/textures/{block,item}/ores/</code>. 📌 Los que <b>más ganan</b> con un dibujo de verdad son <b>las 5 gemas y el bidón</b> (las vetas placeholder ya cumplen bastante bien; las gemas son manchas con silueta).",
   "items": [
    {
-    "e": "⬜",
+    "e": "🟡",
     "o": "<code>fulgurita_ore</code>",
     "n": "Veta de fulgurita",
     "m": "<i>(bloque nuevo)</i>",
     "d": "Tierra Hostil, superficie · <b>arenisca clara</b> con <b>tubos ramificados de vidrio</b> blanco-azulado, angulosos, como una raíz de cristal"
    },
    {
-    "e": "⬜",
+    "e": "🟡",
     "o": "<code>fulgurita</code>",
     "n": "Fulgurita",
     "m": "<i>(item nuevo)</i>",
     "d": "esquirla de vidrio irregular, <b>translúcida azul muy pálido</b>, con brillo en un borde"
    },
    {
-    "e": "⬜",
+    "e": "🟡",
     "o": "<code>piedra_sorda_ore</code>",
     "n": "Veta de piedra sorda",
     "m": "<i>(bloque nuevo)</i>",
     "d": "Tierra Hostil, media altura · <b>piedra gris parda</b> con <b>anillos concéntricos</b> más claros, como ondas en el agua"
    },
    {
-    "e": "⬜",
+    "e": "🟡",
     "o": "<code>piedra_sorda</code>",
     "n": "Piedra sorda",
     "m": "<i>(item nuevo)</i>",
     "d": "canto rodado liso <b>gris verdoso</b> con los anillos marcados. Fea a propósito: la que avisa es la más sosa"
    },
    {
-    "e": "⬜",
+    "e": "🟡",
     "o": "<code>alabastro_ore</code>",
     "n": "Veta de alabastro",
     "m": "<i>(bloque nuevo)</i>",
     "d": "Tierra Hostil, hondo · <b>roca casi negra</b> con <b>vetas rectas blanco hueso</b>, como grietas rellenas"
    },
    {
-    "e": "⬜",
+    "e": "🟡",
     "o": "<code>alabastro</code>",
     "n": "Alabastro",
     "m": "<i>(item nuevo)</i>",
     "d": "esquirla <b>blanco hueso</b> de canto recto — que parezca <b>tallada</b>, no natural"
    },
    {
-    "e": "⬜",
+    "e": "🟡",
     "o": "<code>carbon_graso_ore</code>",
     "n": "Veta de carbón graso",
     "m": "<i>(bloque nuevo)</i>",
     "d": "Tierra Hostil · piedra oscura con <b>motas negras grandes y grasientas</b>, con <b>reflejo aceitoso</b> (toques verde-morado, como un charco de gasolina)"
    },
    {
-    "e": "⬜",
+    "e": "🟡",
     "o": "<code>carbon_graso</code>",
     "n": "Carbón graso",
     "m": "<i>(item nuevo)</i>",
@@ -1019,14 +1018,14 @@ const G = [
     "d": "bidón <b>rojo oxidado</b> con tapón y asa, un <b>chorretón</b> por el costado. Se hace con 4 carbones grasos"
    },
    {
-    "e": "⬜",
+    "e": "🟡",
     "o": "<code>uranio_ore</code>",
     "n": "Veta de uranio",
     "m": "<i>(bloque nuevo)</i>",
     "d": "Tierra Hostil, hondo · <b>roca gris muy oscura</b> con <b>motas verde ácido</b> que parezcan emitir luz (halo de 1 px más claro)"
    },
    {
-    "e": "⬜",
+    "e": "🟡",
     "o": "<code>uranio</code>",
     "n": "Uranio",
     "m": "<i>(item nuevo)</i>",
@@ -1145,7 +1144,7 @@ const G = [
   ]
  }
 ];
-const FALTAN = 69, ITEMS = 80;
+const FALTAN = 59, ITEMS = 70;
 
 function TH(){const r=document.documentElement;
   const cur=r.dataset.theme||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');
@@ -1167,6 +1166,3 @@ document.getElementById('board').innerHTML = G.map(g=>`
       <td class="m">${i.m}</td><td class="d">${i.d}</td></tr>`).join('')}</tbody>
   </table></div>`).join('');
 </script>
-
-</body>
-</html>
