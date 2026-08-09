@@ -317,67 +317,67 @@ thead th{font-size:.74rem; text-transform:uppercase; letter-spacing:.07em; color
 <script>
 const G = [
  {
-  "t": "⬜ Trofeos de bicho (botín del bestiario)",
-  "sub": "Lo que sueltan los bichos y el jugador guarda. Son la \"prueba\" de haber matado algo, así que se merecen cara.",
+  "t": "✅ Trofeos de bicho — <b>HECHOS</b> (el usuario entregó los 9 el 2026-08-09)",
+  "sub": "Lo que sueltan los bichos y el jugador guarda: la prueba de haber matado algo. 🔑 <b>Montados así</b>: namespace <b><code>trofeos</code></b> de ItemsAdder + <b>CMD 10310</b> en los 9 (el CMD es por MATERIAL, y cada trofeo usa uno distinto, así que pueden repetir número sin pisarse) + <code>Options.Model</code> en cada MythicItem de <code>items/reino_loot.yml</code>. Generador: <b><code>mmo-generadores/gen_trofeos_sprites.py</code></b>. 🔴 <b>Un cambio</b>: <code>PelloDeYeti</code> era <b>WHITE_WOOL</b>, un BLOQUE que Minecraft dibuja como cubo → pasó a <b>RABBIT_HIDE</b> (plano, y pega más con «pellejo»). Seguro: el botín se suelta por ID, no por material.",
   "items": [
    {
-    "e": "⬜",
+    "e": "✅",
     "o": "<code>ColaDeRata</code>",
     "n": "Cola de rata",
     "m": "string",
     "d": "el Ratero · cola pelada y rosa"
    },
    {
-    "e": "⬜",
+    "e": "✅",
     "o": "<code>GlandulaVeneno</code>",
     "n": "Glándula de veneno",
     "m": "fermented_spider_eye",
     "d": "bichos venenosos · saco translúcido verdoso"
    },
    {
-    "e": "⬜",
+    "e": "✅",
     "o": "<code>PelloDeYeti</code>",
     "n": "Pelo de yeti",
     "m": "white_wool",
     "d": "el Yeti · mechón de pelo blanco helado"
    },
    {
-    "e": "⬜",
+    "e": "✅",
     "o": "<code>NucleoFundido</code>",
     "n": "Núcleo fundido",
     "m": "magma_cream",
     "d": "Guardián del Debris · esfera al rojo con grietas"
    },
    {
-    "e": "⬜",
+    "e": "✅",
     "o": "<code>CaparazonCuca</code>",
     "n": "Caparazón de cuca",
     "m": "turtle_scute",
     "d": "la Cuca · placa quitinosa marrón"
    },
    {
-    "e": "⬜",
+    "e": "✅",
     "o": "<code>CuernoUnicornio</code>",
     "n": "Cuerno de Unicornio",
     "m": "goat_horn",
     "d": "el unicornio · cuerno en espiral nacarado"
    },
    {
-    "e": "⬜",
+    "e": "✅",
     "o": "<code>EsquirlaZumbante</code>",
     "n": "Esquirla zumbante",
     "m": "amethyst_shard",
     "d": "ligado a la Torre · esquirla negra que vibra"
    },
    {
-    "e": "⬜",
+    "e": "✅",
     "o": "<code>MacheteBandolero</code>",
     "n": "Machete del cabecilla",
     "m": "iron_sword",
     "d": "El Cabecilla · machete mellado con cinta en el mango"
    },
    {
-    "e": "⬜",
+    "e": "✅",
     "o": "<code>BolsaBandolero</code>",
     "n": "Bolsa del bandolero",
     "m": "leather",
@@ -503,6 +503,310 @@ const G = [
   ]
  },
  {
+  "t": "✅🧺 La LAVANDERÍA (entregados por el usuario el 2026-08-08)",
+  "sub": "Los 6 sprites del minijuego de lavar ropa + la plantilla de cubo de la lavadora. Namespace <code>lavanderia</code> (CMD 10278-10283 en PAPER) y el bloque en <code>maquinas</code>. Doc: <code>.claude/rules/lavanderia.md</code>.",
+  "items": [
+   {
+    "e": "✅",
+    "o": "<code>lavanderia:ropa_sucia_arrugada</code>",
+    "n": "Ropa sucia y arrugada",
+    "m": "paper + 10278",
+    "d": "la lavandería · camiseta con manchas y arrugas"
+   },
+   {
+    "e": "✅",
+    "o": "<code>lavanderia:ropa_sucia_lisa</code>",
+    "n": "Ropa sucia",
+    "m": "paper + 10279",
+    "d": "ídem · camiseta con manchas, sin arrugas"
+   },
+   {
+    "e": "✅",
+    "o": "<code>lavanderia:ropa_limpia_arrugada</code>",
+    "n": "Ropa limpia pero arrugada",
+    "m": "paper + 10280",
+    "d": "ídem · camiseta limpia y arrugada"
+   },
+   {
+    "e": "✅",
+    "o": "<code>lavanderia:ropa_limpia_lisa</code>",
+    "n": "Ropa limpia",
+    "m": "paper + 10281",
+    "d": "ídem · <b>el ítem final</b>, camiseta lisa"
+   },
+   {
+    "e": "✅",
+    "o": "<code>lavanderia:detergente</code>",
+    "n": "Detergente",
+    "m": "paper + 10282",
+    "d": "ídem · bote azul"
+   },
+   {
+    "e": "✅",
+    "o": "<code>lavanderia:suavizante</code>",
+    "n": "Suavizante",
+    "m": "paper + 10283",
+    "d": "ídem · bote morado"
+   },
+   {
+    "e": "✅",
+    "o": "<code>maquinas:lavadora_cubo</code>",
+    "n": "Lavadora",
+    "m": "bloque de IA",
+    "d": "ídem · <b>la máquina</b> (plantilla de cubo 64×48)"
+   }
+  ]
+ },
+ {
+  "t": "⬜🚬 LA CADENA DE LAS DROGAS (SPdrug) — <i>lo pidió el usuario, 2026-08-08</i>",
+  "sub": "Todo el negocio de la maría (Alquimista/Nando) y del tabaco (Yaniko) se juega con **items vanilla pelados**: el cigarro es un PAPEL, la planta seca es una verruga del Nether y el producto final es AZÚCAR. Es de lo que más se manosea del server y de lo que peor se ve. 🔴 <b>El cigarro es la prioridad</b>: es el único que el jugador se lleva a la boca (clic derecho para fumar, con caladas). Los materiales salen de <code>plugins/SPdrug/config.yml</code> → <code>item-materials</code>. 🚫 <b>Las SEMILLAS no van aquí</b>: ya se decidió que no llevan sprite (abajo, en el grupo 🚫) — que parezcan semillas normales es parte del chiste. ⚠️ La rama de la <b>COCA existe en el plugin pero NO se usa en el server</b> (el Alijo solo da cannabis y Yaniko lleva el tabaco) → no se listan sus sprites; si algún día se abre, son los mismos con otro color.",
+  "items": [
+   {
+    "e": "⬜",
+    "o": "<code>cigarette-loaded</code>",
+    "n": "Cigarro",
+    "m": "paper",
+    "d": "⭐ <b>el más importante</b>: se fuma con clic derecho y lleva caladas · pitillo liado, con la brasa encendida"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>cigarette-empty</code>",
+    "n": "Cigarro vacío",
+    "m": "paper",
+    "d": "el mismo sin encender y sin liar del todo · papel de fumar con el filtro"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>materia-cannabis</code>",
+    "n": "Materia de cannabis",
+    "m": "dried_kelp",
+    "d": "recién cosechada · cogollo verde y húmedo"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>hoja-tabaco</code>",
+    "n": "Hoja de tabaco",
+    "m": "dried_kelp",
+    "d": "ídem en la rama de Yaniko · hoja ancha verde"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>cannabis-seco</code>",
+    "n": "Cannabis seco",
+    "m": "nether_wart",
+    "d": "tras el secadero · cogollo curado y marrón"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>tabaco-seco</code>",
+    "n": "Tabaco seco",
+    "m": "nether_wart",
+    "d": "ídem · hoja curada y arrugada"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>droga-cannabis</code>",
+    "n": "Cannabis",
+    "m": "sugar",
+    "d": "el producto final que le vendes a la Alquimista · bolsita con cierre"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>droga-nicotina</code>",
+    "n": "Producto de tabaco",
+    "m": "sugar",
+    "d": "el que le vendes a Yaniko · picadura en papelina"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>growth-watch</code>",
+    "n": "Reloj de crecimiento",
+    "m": "clock",
+    "d": "clic derecho a la planta para ver cómo va · reloj de bolsillo cutre"
+   }
+  ]
+ },
+ {
+  "t": "⬜📄 PAPELES DE MISIÓN de las sagas nuevas",
+  "sub": "Los 13 papeles antiguos ya los texturizó Pan (abajo, en ✅). Estos son los que han ido saliendo después y <b>siguen siendo folios en blanco</b>: el jugador acumula ocho papeles idénticos en la mochila y no distingue uno de otro. Auditados del server el 2026-08-08 (todos <code>paper</code> sin <code>custom_model_data</code>). 💡 Son de los que <b>puedo dibujar yo</b> si hace falta (<code>texturas/gen_sprite.py</code>): un papel con cuatro rayas de texto y un sello cambiando de color ya los diferencia.",
+  "items": [
+   {
+    "e": "⬜",
+    "o": "<code>ElUltimoVerso</code>",
+    "n": "El Último Verso",
+    "m": "paper",
+    "d": "quest del disco de Hypertes · papel pautado con una letra escrita a mano"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>InformeDescenso</code>",
+    "n": "Informe del Descenso",
+    "m": "paper",
+    "d": "saga del Abismo (Pizarrica) · hoja con cuatro cotas anotadas"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>LecturaSismica</code>",
+    "n": "Lectura Sísmica",
+    "m": "paper",
+    "d": "la da el Sismógrafo · tira de papel con una línea temblorosa"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>InformeInstalacion</code>",
+    "n": "Informe de Instalación",
+    "m": "paper",
+    "d": "repetidores de Gordon · parte técnico con dos casillas marcadas"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>InformeCobertura</code>",
+    "n": "Informe de Cobertura",
+    "m": "paper",
+    "d": "ídem, Black Mesa"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>InformeEnlace</code>",
+    "n": "Informe de Enlace",
+    "m": "paper",
+    "d": "ídem"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>InformeInvestigacion</code>",
+    "n": "Informe de la Investigación",
+    "m": "paper",
+    "d": "puntos de investigación (<code>reino_investigar</code>)"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>InformeReconocimiento</code>",
+    "n": "Informe de Reconocimiento",
+    "m": "paper",
+    "d": "saga de Garrapata, el plano del Banco · croquis a mano alzada"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>ActaDelRuido</code>",
+    "n": "Acta del Ruido",
+    "m": "paper",
+    "d": "Garrapata · acta oficial con un sello torcido"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>ActaElevacion</code>",
+    "n": "Acta de Elevación",
+    "m": "paper",
+    "d": "saga de Lolo (la prueba de los saltos)"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>HojaAguante</code>",
+    "n": "Hoja de Aguante",
+    "m": "paper",
+    "d": "Lolo · hoja con muescas de conteo"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>Hoja13</code>",
+    "n": "Hoja 13 · El Desplazamiento",
+    "m": "paper",
+    "d": "Garrapata · hoja arrancada de un manual, con el 13 grande"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>AstillasFundacionales</code>",
+    "n": "Astillas Fundacionales",
+    "m": "paper",
+    "d": "Lolo (el pico roto) · papelito con astillas dentro"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>ReciboEnsayo</code>",
+    "n": "Recibo del Ensayo",
+    "m": "paper",
+    "d": "Garrapata · recibo pequeño y arrugado"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>AsientoIngresos</code>",
+    "n": "Asiento de Ingresos",
+    "m": "paper",
+    "d": "🔒 El Arreglo · hoja de libro de cuentas con columnas"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>LoQueContoLaLola</code>",
+    "n": "Lo Que Contó la Lola",
+    "m": "paper",
+    "d": "🔒 El Arreglo · nota escrita con mala letra"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>LaPuertaQueNoSeCierra</code>",
+    "n": "La Puerta Que No Se Cierra",
+    "m": "paper",
+    "d": "🔒 El Arreglo (final B) · el papel del convento"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>SobreMaterialSensible</code>",
+    "n": "Sobre de Material Sensible",
+    "m": "paper",
+    "d": "saga de Olegario · sobre cerrado con «NO EXPONER A LA LUZ»"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>FirmaAnclaje</code>",
+    "n": "Firma de Anclaje del Reino",
+    "m": "paper",
+    "d": "Red de Anclaje · papel con un sello de cera morado"
+   }
+  ]
+ },
+ {
+  "t": "⬜🎞️ LAS FASES DEL REVELADO (laboratorio de fotos)",
+  "sub": "El <b>carrete</b> ya tiene sprite (el usuario lo hizo el 3-ago), pero **las 5 fases intermedias son papel pelado** — y el jugador las va pasando de máquina en máquina, así que las mira todas. Ver <code>.claude/rules/laboratorio-fotos.md</code>.",
+  "items": [
+   {
+    "e": "⬜",
+    "o": "<code>foto-fase1</code>",
+    "n": "Tiras de negativo",
+    "m": "paper",
+    "d": "tras la mesa de corte · tira de negativos con perforaciones"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>foto-fase2</code>",
+    "n": "Negativo revelado",
+    "m": "paper",
+    "d": "1ª cubeta · la misma tira, ya con imagen en negativo"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>foto-fase3</code>",
+    "n": "Negativo detenido",
+    "m": "paper",
+    "d": "2ª cubeta · igual, goteando"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>foto-fase4</code>",
+    "n": "Negativo fijado",
+    "m": "paper",
+    "d": "3ª cubeta · igual, más contrastada"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>foto-fase5</code>",
+    "n": "Fotos escurriendo",
+    "m": "paper",
+    "d": "tendedero · fotos colgadas de una pinza"
+   }
+  ]
+ },
+ {
   "t": "⬜ Objetos sueltos que cantan",
   "sub": "",
   "items": [
@@ -533,6 +837,62 @@ const G = [
     "n": "Correa del Refugio",
     "m": "lead",
     "d": "abre el menú de mascotas (Nico) · correa de cuero con chapa"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>DienteBarbahueso</code>",
+    "n": "Diente de Barbahueso",
+    "m": "bone",
+    "d": "lo suelta el jefe de la Mina · colmillo partido y amarillento"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>MuestraSculk</code>",
+    "n": "Muestra de Sculk Vivo",
+    "m": "echo_shard (por confirmar)",
+    "d": "la suelta El Último Turno (Cantera) · frasco con algo azulado que late"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>Fusible</code>",
+    "n": "Fusible",
+    "m": "copper_ingot",
+    "d": "quest del Tablón · fusible de cerámica con el hilo dentro"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>FrascoBotica</code>",
+    "n": "Frasco de la Botica",
+    "m": "glass_bottle",
+    "d": "🔒 El Arreglo · frasco de farmacia con etiqueta escrita a mano"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>ElHiloQueSobro</code>",
+    "n": "El Hilo Que Sobró",
+    "m": "string",
+    "d": "🔒 El Arreglo (final A) · ovillo de hilo basto"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>CascabelLola</code>",
+    "n": "Cascabel de la Lola",
+    "m": "bell",
+    "d": "🔒 El Arreglo · cascabel pequeño y abollado"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>FarolTunel</code>",
+    "n": "Farol del Túnel",
+    "m": "lantern",
+    "d": "🔒 El Arreglo · farol de obra con el cristal sucio"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>discos:chavitox</code>",
+    "n": "Escupe Gasolina",
+    "m": "music_disc_pigstep",
+    "d": "el disco que compone <b>Hypertes</b> sobre Chavitox · vinilo con etiqueta casera, escrita a rotulador y torcida — lo grabó él a las cuatro de la mañana. Es un DISCO, así que el sprite es un círculo negro con la etiqueta en el centro"
    }
   ]
  },
@@ -588,6 +948,89 @@ const G = [
     "n": "Barril de fermentación",
     "m": "<i>(apagado)</i>",
     "d": "cocina de Calderón · barrilito de barro sellado con trapo"
+   }
+  ]
+ },
+ {
+  "t": "⬜⛏️ LOS MINERALES DE TIERRA HOSTIL (5 vetas + 5 gemas + el bidón)",
+  "sub": "La isla de los desastres a la que se llega en el barco de Gabardinez. Los minerales son **el motivo para ir**, así que son exclusivos de allí. Diseño completo en <code>.claude/rules/tierra-hostil.md</code>. 🔴 <b>Las VETAS van a 16×16 por cara</b> (son bloques); las gemas y el bidón, 16×16 de item. 🔑 <b>Que se distingan A OSCURAS y de un vistazo</b>: cada uno tiene **un color y una FORMA de inclusión distintos** (tubos / anillos / grietas / motas grasas / motas brillantes), para que no dependa solo del color — en una cueva con antorcha, la silueta se lee antes que el tono. 🟢🟢 <b>YA HAY PLACEHOLDER PUESTO (2026-08-08) — los 10 están dibujados y subidos</b>, y **el juego ya se puede probar**: cada mineral tiene su color y su forma de inclusión, así que se distinguen de un vistazo. Los dibujó <code>mmo-generadores/gen_minerales_tierra_hostil.py</code> (pixel art a mano, dentro del propio script). 🖼️ Míralos todos juntos en <b><code>texturas/_preview_tierra_hostil.png</code></b>. 🔑 <b>Sustituir uno por el bueno = sobrescribir el PNG en la MISMA RUTA</b> y rehacer el pack. Cero cambios de config: mismo id, mismo CMD, mismo generador. Por eso <b>no corre ninguna prisa</b> y se pueden ir dando de uno en uno. Las rutas son <code>ItemsAdder/contents/tierra_hostil/resourcepack/tierra_hostil/textures/{block,item}/ores/</code>. 📌 Los que <b>más ganan</b> con un dibujo de verdad son <b>las 5 gemas y el bidón</b> (las vetas placeholder ya cumplen bastante bien; las gemas son manchas con silueta).",
+  "items": [
+   {
+    "e": "⬜",
+    "o": "<code>fulgurita_ore</code>",
+    "n": "Veta de fulgurita",
+    "m": "<i>(bloque nuevo)</i>",
+    "d": "Tierra Hostil, superficie · <b>arenisca clara</b> con <b>tubos ramificados de vidrio</b> blanco-azulado, angulosos, como una raíz de cristal"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>fulgurita</code>",
+    "n": "Fulgurita",
+    "m": "<i>(item nuevo)</i>",
+    "d": "esquirla de vidrio irregular, <b>translúcida azul muy pálido</b>, con brillo en un borde"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>piedra_sorda_ore</code>",
+    "n": "Veta de piedra sorda",
+    "m": "<i>(bloque nuevo)</i>",
+    "d": "Tierra Hostil, media altura · <b>piedra gris parda</b> con <b>anillos concéntricos</b> más claros, como ondas en el agua"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>piedra_sorda</code>",
+    "n": "Piedra sorda",
+    "m": "<i>(item nuevo)</i>",
+    "d": "canto rodado liso <b>gris verdoso</b> con los anillos marcados. Fea a propósito: la que avisa es la más sosa"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>alabastro_ore</code>",
+    "n": "Veta de alabastro",
+    "m": "<i>(bloque nuevo)</i>",
+    "d": "Tierra Hostil, hondo · <b>roca casi negra</b> con <b>vetas rectas blanco hueso</b>, como grietas rellenas"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>alabastro</code>",
+    "n": "Alabastro",
+    "m": "<i>(item nuevo)</i>",
+    "d": "esquirla <b>blanco hueso</b> de canto recto — que parezca <b>tallada</b>, no natural"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>carbon_graso_ore</code>",
+    "n": "Veta de carbón graso",
+    "m": "<i>(bloque nuevo)</i>",
+    "d": "Tierra Hostil · piedra oscura con <b>motas negras grandes y grasientas</b>, con <b>reflejo aceitoso</b> (toques verde-morado, como un charco de gasolina)"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>carbon_graso</code>",
+    "n": "Carbón graso",
+    "m": "<i>(item nuevo)</i>",
+    "d": "trozo negro <b>brillante</b>, no mate, con el mismo reflejo de charco"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>bidon_gasolina</code>",
+    "n": "Bidón de gasolina",
+    "m": "<i>(item nuevo)</i>",
+    "d": "bidón <b>rojo oxidado</b> con tapón y asa, un <b>chorretón</b> por el costado. Se hace con 4 carbones grasos"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>uranio_ore</code>",
+    "n": "Veta de uranio",
+    "m": "<i>(bloque nuevo)</i>",
+    "d": "Tierra Hostil, hondo · <b>roca gris muy oscura</b> con <b>motas verde ácido</b> que parezcan emitir luz (halo de 1 px más claro)"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>uranio</code>",
+    "n": "Uranio",
+    "m": "<i>(item nuevo)</i>",
+    "d": "<b>NO es una gema</b>: una <b>pastilla cilíndrica</b> verde ácido, tipo pila, con dos aros metálicos. Que se lea \"esto no se toca\""
    }
   ]
  },
@@ -673,10 +1116,10 @@ const G = [
    },
    {
     "e": "🚫",
-    "o": "<code>Foto de Yaniko</code>",
-    "n": "Foto de Yaniko",
+    "o": "las 6 <b>fotos</b>",
+    "n": "Foto de Yaniko · Un pato · Un piloto · Un señor con un chimpancé · Otro mono · Un fontanero",
     "m": "filled_map",
-    "d": "ya <b>es</b> una imagen (ImageFrame)"
+    "d": "ya <b>son</b> imágenes (ImageFrame): el sprite ES la foto"
    },
    {
     "e": "🚫",
@@ -684,6 +1127,13 @@ const G = [
     "n": "Semillas de cannabis",
     "m": "wheat_seeds",
     "d": "las pinta SPdrug; y que parezcan semillas normales es parte del chiste"
+   },
+   {
+    "e": "🚫",
+    "o": "<code>HornoPrestadoLolo</code>",
+    "n": "Horno Prestado de Lolo",
+    "m": "furnace",
+    "d": "es un horno de verdad y se coloca como tal · <b>y un icono con render 3D saldría INVISIBLE</b> (LECCIÓN 86)"
    },
    {
     "e": "🚫",
@@ -695,7 +1145,7 @@ const G = [
   ]
  }
 ];
-const FALTAN = 26, ITEMS = 37;
+const FALTAN = 69, ITEMS = 80;
 
 function TH(){const r=document.documentElement;
   const cur=r.dataset.theme||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');
