@@ -1102,76 +1102,104 @@ const G = [
   ]
  },
  {
-  "t": "✅🌿 LOS 9 ÍTEMS DE SPDRUG (la maría y el tabaco) — puestos el 2026-08-09",
-  "sub": "🔴🔴 <b>Éstos NO se texturizan como los demás, y conviene saber por qué</b>: los fabrica <b>el plugin</b>, y <b>SPdrug no sabe nada de custom-model-data</b> (verificado: 0 referencias en sus 33 clases). No hay casilla en su config donde poner una textura. ✅ <b>Se hace con MythicChanger</b> (ya instalado), con <b><code>fake-changes.set-custom-model-data</code></b>: un cambio <b>VISUAL</b> que va en el paquete al cliente y <b>no toca el ítem del servidor</b>. Eso importa, porque el NBT real es lo que usa SPdrug para saber qué planta es y lo que casan las tiendas y la quest <code>alq_cultivo_3</code>. Comprobado en el jar que <code>fake</code> y <code>real</code> son caminos <b>separados</b> (<code>setFakeChange</code> / <code>setRealChange</code>) → <b>el peor caso posible es que no se vea el sprite</b>. 🔑 <b>Se reconocen por el LORE, no por el material</b>: la materia de cannabis y la hoja de tabaco son las dos <code>DRIED_KELP</code>, y los dos secos son los dos <code>NETHER_WART</code>. Generador: <b><code>mmo-generadores/gen_sprites_drogas.py</code></b> · reglas en <code>MythicChanger/rules/drogas_*.yml</code>. ⬜ <b>SIN PROBAR IN-GAME.</b> Lo que falta por confirmar es si <code>contains-lore</code> casa con el lore ya coloreado (a favor: la tienda de la Alquimista <b>ya</b> casa la maría con `contains-lore: ['id: cannabis']` y funciona) y si el packet-listener aplica el CMD. Revertir = borrar los 9 <code>rules/drogas_*.yml</code> + <code>/mythicchanger reload</code>.",
+  "t": "🟡🌿 LOS ÍTEMS DE SPDRUG (la maría y el tabaco) — 9 puestos, 4 por dibujar",
+  "sub": "🔴🔴 <b>Éstos NO se texturizan como los demás.</b> Los fabrica <b>el plugin</b>, y el SPdrug de fábrica <b>no sabe nada de custom-model-data</b> (0 referencias en sus 33 clases): no había casilla donde poner una textura. ✅ <b>Se le añadió al plugin, en nuestro FORK</b> (<code>spdrug-elreino6</code>, el mismo que quitó la tecla F del minijuego). Ahora cada ítem lee un <code>custom-model-data</code> <b>opcional</b> de la misma sección donde ya viven su <code>name</code> y su <code>lore</code>. Sin esa clave se comporta igual que antes. Generador: <b><code>mmo-generadores/gen_sprites_drogas.py</code></b> · doc completa: <code>.claude/rules/drogas-spdrug.md</code>. 🧨 Se intentó antes con <b>MythicChanger</b> y <b>no aplicaba nada</b> (ni una regla de prueba que solo cambiaba el nombre de la piedra). No volver por ahí. ⚠️ <b>Al recibir un PNG nuevo</b>: fila en <code>ITEMS</code> del generador → <code>--aplicar</code> → y **comprobar que su creador de <code>ItemFactory.java</code> llama a <code>applyModel</code>**; si no, hay que tocar el fork y recompilar (GitHub Actions, ~30 s). 🚫 <b>Y lo que NO se dibuja, decidido</b>: la <b>coca</b> (semilla, materia y seca), las **6 drogas que no se juegan<b> (mefedrona, LSD, cocaína, MDMA, heroína, anfetamina) y los </b>10 componentes químicos**. Existen en el plugin de fábrica, pero en el Reino solo se juegan <b>maría y tabaco</b> — dibujarlos sería trabajo para algo que ningún jugador va a ver. Tampoco los genéricos «Materia vegetal» y «Lote seco»: el código normaliza siempre a un tipo concreto, así que no se llegan a crear.",
   "items": [
    {
     "e": "✅",
-    "o": "Materia de cannabis",
-    "n": "DRIED_KELP",
-    "m": "10320",
-    "d": "«Cannabis fresco»"
+    "o": "<code>herb-raw.cannabis</code>",
+    "n": "Materia de cannabis",
+    "m": "dried_kelp",
+    "d": "CMD 10320"
    },
    {
     "e": "✅",
-    "o": "Hoja de tabaco",
-    "n": "DRIED_KELP",
-    "m": "10321",
-    "d": "«Hoja de tabaco fresca»"
+    "o": "<code>herb-raw.tobacco</code>",
+    "n": "Hoja de tabaco",
+    "m": "dried_kelp",
+    "d": "CMD 10321"
    },
    {
     "e": "✅",
-    "o": "Cannabis seco",
-    "n": "NETHER_WART",
-    "m": "10322",
-    "d": "«Para la rama del cannabis»"
+    "o": "<code>dried.cannabis</code>",
+    "n": "Cannabis seco",
+    "m": "nether_wart",
+    "d": "CMD 10322"
    },
    {
     "e": "✅",
-    "o": "Tabaco seco",
-    "n": "NETHER_WART",
-    "m": "10323",
-    "d": "«Para la rama del tabaco»"
+    "o": "<code>dried.tobacco</code>",
+    "n": "Tabaco seco",
+    "m": "nether_wart",
+    "d": "CMD 10323"
    },
    {
     "e": "✅",
-    "o": "Cannabis (la droga)",
-    "n": "FERN",
-    "m": "10324",
-    "d": "«id: cannabis»"
+    "o": "<code>drugs.cannabis</code>",
+    "n": "Cannabis",
+    "m": "fern",
+    "d": "CMD 10324"
    },
    {
     "e": "✅",
-    "o": "Producto de tabaco",
-    "n": "BROWN_DYE",
-    "m": "10325",
-    "d": "«id: nicotine»"
+    "o": "<code>drugs.nicotine</code>",
+    "n": "Producto de tabaco",
+    "m": "brown_dye",
+    "d": "CMD 10325"
    },
    {
     "e": "✅",
-    "o": "Reloj de crecimiento",
-    "n": "CLOCK",
-    "m": "10326",
-    "d": "«Clic dcho. sobre el helecho crecido»"
+    "o": "<code>growth-watch</code>",
+    "n": "Reloj de crecimiento",
+    "m": "clock",
+    "d": "CMD 10326"
    },
    {
     "e": "✅",
-    "o": "Cigarro vacío",
-    "n": "PAPER",
-    "m": "10327",
-    "d": "«Haz producto de tabaco y combínalos»"
+    "o": "<code>cigarette-empty</code>",
+    "n": "Cigarro vacío",
+    "m": "paper",
+    "d": "CMD 10327"
    },
    {
     "e": "✅",
-    "o": "Cigarro (cargado)",
-    "n": "PAPER",
-    "m": "10328",
-    "d": "«Clic dcho. para fumar»"
+    "o": "<code>cigarette-loaded</code>",
+    "n": "Cigarro",
+    "m": "paper",
+    "d": "CMD 10328"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>farm-placer</code>",
+    "n": "Invernadero (instalador)",
+    "m": "golden_hoe",
+    "d": "lo da el <b>Kit_Invernadero</b> de la Alquimista · una azada de vivero, o un compostador de mano"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>lab-placer</code>",
+    "n": "Laboratorio (instalador)",
+    "m": "blaze_rod",
+    "d": "lo da el <b>Kit_Laboratorio</b> · varilla de laboratorio, a juego con el ahumador"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>special-seed.cannabis</code>",
+    "n": "Semillas de cannabis",
+    "m": "wheat_seeds",
+    "d": "las da <b>Nando</b> · semillas verdes en su bolsita · 🔴 pide tocar la FIRMA de <code>createSpecialSeed</code>, que no recibe la config"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>special-seed.tobacco</code>",
+    "n": "Semillas de tabaco",
+    "m": "wheat_seeds",
+    "d": "las vende <b>El Puma</b> en el Mercado · ídem en marrón · 🔴 ídem"
    }
   ]
  }
 ];
-const FALTAN = 22, ITEMS = 33;
+const FALTAN = 26, ITEMS = 37;
 
 function TH(){const r=document.documentElement;
   const cur=r.dataset.theme||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');
