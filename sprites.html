@@ -238,6 +238,9 @@ thead th{font-size:.74rem; text-transform:uppercase; letter-spacing:.07em; color
   .box code{background:var(--acento-suave);border-radius:5px;padding:1px 5px;font-size:.85em}
 
   h2.sec{font-family:ui-serif,Palatino,serif;font-size:1.35rem;margin:36px 0 2px}
+  h2.sec .cnt{font-family:inherit;font-size:.72rem;font-weight:700;letter-spacing:.04em;
+    text-transform:uppercase;color:var(--tinta-3);border:1px solid var(--linea-2);
+    border-radius:999px;padding:2px 9px;margin-left:.5em;vertical-align:middle}
   .sec-sub{color:var(--tinta-2);font-size:.89rem;margin:0 0 14px;max-width:80ch}
   .tw{overflow-x:auto;background:var(--tarjeta);border:1px solid var(--linea);
     border-radius:14px;box-shadow:var(--sombra)}
@@ -268,6 +271,7 @@ thead th{font-size:.74rem; text-transform:uppercase; letter-spacing:.07em; color
 <span class="sep"></span>
 <span class="grupo-tit">Producir</span>
 <a class="pag" href="https://duleelhorror.github.io/elreino6-guia/sprites.html" aria-current="page"><span>🎨</span> Sprites que faltan</a>
+<a class="pag" href="https://duleelhorror.github.io/elreino6-guia/armas.html"><span>⚔️</span> Sprites de armas</a>
 <a class="pag" href="https://duleelhorror.github.io/elreino6-guia/plantillas.html"><span>🧊</span> Plantillas</a>
 <span class="sep"></span>
 <span class="grupo-tit">Consultar</span>
@@ -312,6 +316,7 @@ thead th{font-size:.74rem; text-transform:uppercase; letter-spacing:.07em; color
       sprite. Falta solo la familia <code>insignia</code>.</p>
   </div>
 
+  <p style="margin:0 0 18px"><button class="boton claro" id="verTodo" onclick="alterna()"></button></p>
   <div id="board"></div>
 
   <footer>
@@ -554,75 +559,6 @@ const G = [
     "n": "Lavadora",
     "m": "bloque de IA",
     "d": "ídem · <b>la máquina</b> (plantilla de cubo 64×48)"
-   }
-  ]
- },
- {
-  "t": "⬜🚬 LA CADENA DE LAS DROGAS (SPdrug) — <i>lo pidió el usuario, 2026-08-08</i>",
-  "sub": "Todo el negocio de la maría (Alquimista/Nando) y del tabaco (Yaniko) se juega con **items vanilla pelados**: el cigarro es un PAPEL, la planta seca es una verruga del Nether y el producto final es AZÚCAR. Es de lo que más se manosea del server y de lo que peor se ve. 🔴 <b>El cigarro es la prioridad</b>: es el único que el jugador se lleva a la boca (clic derecho para fumar, con caladas). Los materiales salen de <code>plugins/SPdrug/config.yml</code> → <code>item-materials</code>. 🚫 <b>Las SEMILLAS no van aquí</b>: ya se decidió que no llevan sprite (abajo, en el grupo 🚫) — que parezcan semillas normales es parte del chiste. ⚠️ La rama de la <b>COCA existe en el plugin pero NO se usa en el server</b> (el Alijo solo da cannabis y Yaniko lleva el tabaco) → no se listan sus sprites; si algún día se abre, son los mismos con otro color.",
-  "items": [
-   {
-    "e": "⬜",
-    "o": "<code>cigarette-loaded</code>",
-    "n": "Cigarro",
-    "m": "paper",
-    "d": "⭐ <b>el más importante</b>: se fuma con clic derecho y lleva caladas · pitillo liado, con la brasa encendida"
-   },
-   {
-    "e": "⬜",
-    "o": "<code>cigarette-empty</code>",
-    "n": "Cigarro vacío",
-    "m": "paper",
-    "d": "el mismo sin encender y sin liar del todo · papel de fumar con el filtro"
-   },
-   {
-    "e": "⬜",
-    "o": "<code>materia-cannabis</code>",
-    "n": "Materia de cannabis",
-    "m": "dried_kelp",
-    "d": "recién cosechada · cogollo verde y húmedo"
-   },
-   {
-    "e": "⬜",
-    "o": "<code>hoja-tabaco</code>",
-    "n": "Hoja de tabaco",
-    "m": "dried_kelp",
-    "d": "ídem en la rama de Yaniko · hoja ancha verde"
-   },
-   {
-    "e": "⬜",
-    "o": "<code>cannabis-seco</code>",
-    "n": "Cannabis seco",
-    "m": "nether_wart",
-    "d": "tras el secadero · cogollo curado y marrón"
-   },
-   {
-    "e": "⬜",
-    "o": "<code>tabaco-seco</code>",
-    "n": "Tabaco seco",
-    "m": "nether_wart",
-    "d": "ídem · hoja curada y arrugada"
-   },
-   {
-    "e": "⬜",
-    "o": "<code>droga-cannabis</code>",
-    "n": "Cannabis",
-    "m": "sugar",
-    "d": "el producto final que le vendes a la Alquimista · bolsita con cierre"
-   },
-   {
-    "e": "⬜",
-    "o": "<code>droga-nicotina</code>",
-    "n": "Producto de tabaco",
-    "m": "sugar",
-    "d": "el que le vendes a Yaniko · picadura en papelina"
-   },
-   {
-    "e": "⬜",
-    "o": "<code>growth-watch</code>",
-    "n": "Reloj de crecimiento",
-    "m": "clock",
-    "d": "clic derecho a la planta para ver cómo va · reloj de bolsillo cutre"
    }
   ]
  },
@@ -1103,7 +1039,7 @@ const G = [
  },
  {
   "t": "🟡🌿 LOS ÍTEMS DE SPDRUG (la maría y el tabaco) — 9 puestos, 4 por dibujar",
-  "sub": "🔴🔴 <b>Éstos NO se texturizan como los demás.</b> Los fabrica <b>el plugin</b>, y el SPdrug de fábrica <b>no sabe nada de custom-model-data</b> (0 referencias en sus 33 clases): no había casilla donde poner una textura. ✅ <b>Se le añadió al plugin, en nuestro FORK</b> (<code>spdrug-elreino6</code>, el mismo que quitó la tecla F del minijuego). Ahora cada ítem lee un <code>custom-model-data</code> <b>opcional</b> de la misma sección donde ya viven su <code>name</code> y su <code>lore</code>. Sin esa clave se comporta igual que antes. Generador: <b><code>mmo-generadores/gen_sprites_drogas.py</code></b> · doc completa: <code>.claude/rules/drogas-spdrug.md</code>. 🧨 Se intentó antes con <b>MythicChanger</b> y <b>no aplicaba nada</b> (ni una regla de prueba que solo cambiaba el nombre de la piedra). No volver por ahí. ⚠️ <b>Al recibir un PNG nuevo</b>: fila en <code>ITEMS</code> del generador → <code>--aplicar</code> → y **comprobar que su creador de <code>ItemFactory.java</code> llama a <code>applyModel</code>**; si no, hay que tocar el fork y recompilar (GitHub Actions, ~30 s). 🚫 <b>Y lo que NO se dibuja, decidido</b>: la <b>coca</b> (semilla, materia y seca), las **6 drogas que no se juegan<b> (mefedrona, LSD, cocaína, MDMA, heroína, anfetamina) y los </b>10 componentes químicos**. Existen en el plugin de fábrica, pero en el Reino solo se juegan <b>maría y tabaco</b> — dibujarlos sería trabajo para algo que ningún jugador va a ver. Tampoco los genéricos «Materia vegetal» y «Lote seco»: el código normaliza siempre a un tipo concreto, así que no se llegan a crear.",
+  "sub": "🔴🔴 <b>Éstos NO se texturizan como los demás.</b> Los fabrica <b>el plugin</b>, y el SPdrug de fábrica <b>no sabe nada de custom-model-data</b> (0 referencias en sus 33 clases): no había casilla donde poner una textura. ✅ <b>Se le añadió al plugin, en nuestro FORK</b> (<code>spdrug-elreino6</code>, el mismo que quitó la tecla F del minijuego). Ahora cada ítem lee un <code>custom-model-data</code> <b>opcional</b> de la misma sección donde ya viven su <code>name</code> y su <code>lore</code>. Sin esa clave se comporta igual que antes. Generador: <b><code>mmo-generadores/gen_sprites_drogas.py</code></b> · doc completa: <code>.claude/rules/drogas-spdrug.md</code>. 🧨 Se intentó antes con <b>MythicChanger</b> y <b>no aplicaba nada</b> (ni una regla de prueba que solo cambiaba el nombre de la piedra). No volver por ahí. ⚠️ <b>Al recibir un PNG nuevo</b>: fila en <code>ITEMS</code> del generador → <code>--aplicar</code> → y **comprobar que su creador de <code>ItemFactory.java</code> llama a <code>applyModel</code>**; si no, hay que tocar el fork y recompilar (GitHub Actions, ~30 s). 🔴🔴 <b>DOS COSAS QUE HAY QUE SABER ANTES DE DIBUJAR ESTOS:</b> 1. <b>Los 10 químicos son TODOS <code>snowball</code>.</b> Como el custom-model-data va <b>por material</b>, los 10 necesitan <b>10 números distintos</b> — al revés que los trofeos, que comparten el 10310 porque cada uno usa un material propio. Y hoy son <b>diez bolas de nieve idénticas</b>: de toda la lista, esto es lo que más se notaría. 2. 🔴 <b><code>createChemicalItem</code> NO llama a <code>applyModel</code></b> (solo lo hacen 6 creadores). Los químicos, y cualquier ítem que no esté en esos 6, <b>piden tocar el fork y recompilar</b> antes de que su sprite sirva de algo. (Las <b>semillas</b> no entran aquí: se decidió que <b>no llevan sprite</b>.) Detalle en <code>.claude/rules/drogas-spdrug.md</code>. 📌 <b>Prioridad, por si hay que elegir</b>: lo de arriba del todo (el invernadero y el laboratorio) se ve <b>todos los días</b> en el juego. La coca, las 6 drogas y los químicos existen en el plugin pero <b>hoy no los juega nadie</b> en el Reino — se apuntan para no perderlos de vista, no porque corran prisa.",
   "items": [
    {
     "e": "✅",
@@ -1184,22 +1120,134 @@ const G = [
    },
    {
     "e": "⬜",
-    "o": "<code>special-seed.cannabis</code>",
-    "n": "Semillas de cannabis",
-    "m": "wheat_seeds",
-    "d": "las da <b>Nando</b> · semillas verdes en su bolsita · 🔴 pide tocar la FIRMA de <code>createSpecialSeed</code>, que no recibe la config"
+    "o": "<code>herb-raw.cocaine</code>",
+    "n": "Materia de coca",
+    "m": "dried_kelp",
+    "d": "hoja de coca fresca"
    },
    {
     "e": "⬜",
-    "o": "<code>special-seed.tobacco</code>",
-    "n": "Semillas de tabaco",
-    "m": "wheat_seeds",
-    "d": "las vende <b>El Puma</b> en el Mercado · ídem en marrón · 🔴 ídem"
+    "o": "<code>dried.cocaine</code>",
+    "n": "Coca seca",
+    "m": "nether_wart",
+    "d": "la misma, ya seca y desmenuzada"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>drugs.meth</code>",
+    "n": "Mefedrona",
+    "m": "quartz",
+    "d": "cristales blancos irregulares en bolsita"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>drugs.lsd</code>",
+    "n": "LSD",
+    "m": "paper",
+    "d": "secante recortado, con un dibujo psicodélico"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>drugs.cocaine</code>",
+    "n": "Cocaína",
+    "m": "white_dye",
+    "d": "raya/montoncito de polvo blanco"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>drugs.mdma</code>",
+    "n": "MDMA",
+    "m": "amethyst_shard",
+    "d": "pastilla de colores con un sello"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>drugs.heroin</code>",
+    "n": "Heroína",
+    "m": "tipped_arrow",
+    "d": "🔴 el material es una FLECHA: mejor cambiarlo en el config a algo plano antes de dibujarlo"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>drugs.amphetamine</code>",
+    "n": "Anfetamina",
+    "m": "light_gray_dye",
+    "d": "polvo gris en un sobrecito de papel"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>chem.h</code>",
+    "n": "Hidrógeno (H)",
+    "m": "snowball",
+    "d": "🧪 los 10 químicos son TODOS <code>snowball</code> → hoy son 10 bolas blancas idénticas. Frasco con etiqueta y el símbolo"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>chem.na</code>",
+    "n": "Sodio (Na)",
+    "m": "snowball",
+    "d": "ídem, otro color de líquido/etiqueta"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>chem.cl</code>",
+    "n": "Cloro (Cl)",
+    "m": "snowball",
+    "d": "ídem, verdoso"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>chem.p</code>",
+    "n": "Fósforo (P)",
+    "m": "snowball",
+    "d": "ídem, amarillo"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>chem.pa</code>",
+    "n": "Ácido Prolamínico (PA)",
+    "m": "snowball",
+    "d": "ídem"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>chem.la</code>",
+    "n": "Ácido Lisérgico (LA)",
+    "m": "snowball",
+    "d": "ídem, morado"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>chem.me</code>",
+    "n": "Base Metálica (Me)",
+    "m": "snowball",
+    "d": "ídem, metálico"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>chem.am</code>",
+    "n": "Base Amínica (Am)",
+    "m": "snowball",
+    "d": "ídem"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>chem.ec</code>",
+    "n": "Núcleo de Éster (Ec)",
+    "m": "snowball",
+    "d": "ídem"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>chem.hc</code>",
+    "n": "Compuesto Pesado (Hc)",
+    "m": "snowball",
+    "d": "ídem, oscuro y denso"
    }
   ]
  }
 ];
-const FALTAN = 26, ITEMS = 37;
+const FALTAN = 33, ITEMS = 44;
 
 function TH(){const r=document.documentElement;
   const cur=r.dataset.theme||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');
@@ -1210,16 +1258,33 @@ document.getElementById('stats').innerHTML =
   `<div class="stat"><div class="n">${FALTAN}</div><div class="l">fichas pendientes</div></div>` +
   `<div class="stat"><div class="n">${G.length}</div><div class="l">grupos</div></div>`;
 
-document.getElementById('board').innerHTML = G.map(g=>`
-  <h2 class="sec">${g.t}</h2>
+// 🔴 POR DEFECTO SOLO SE VE LO QUE FALTA. Esta página se llama «items sin sprite» y salían
+// mezclados los ✅ ya hechos y los 🚫 descartados, así que el que venía a ver qué dibujar tenía
+// que ir descartándolos a ojo. Lo ya hecho se conserva (es la referencia de lo que NO hay que
+// repetir), pero detrás de un interruptor.
+let SOLO_FALTA = true;
+
+function pinta(){
+  document.getElementById('board').innerHTML = G.map(g=>{
+    const filas = SOLO_FALTA ? g.items.filter(i=>i.e==='⬜') : g.items;
+    if(!filas.length) return '';               // un grupo entero hecho no pinta nada
+    const pend = g.items.filter(i=>i.e==='⬜').length;
+    return `
+  <h2 class="sec">${g.t} <span class="cnt">${pend?pend+' por dibujar':'hecho'}</span></h2>
   ${g.sub?`<p class="sec-sub">${g.sub}</p>`:''}
   <div class="tw"><table>
     <thead><tr><th></th><th>Objeto</th><th>Nombre in-game</th><th>Se ve hoy como</th>
       <th>Dónde sale · qué dibujar</th></tr></thead>
-    <tbody>${g.items.map(i=>`<tr>
+    <tbody>${filas.map(i=>`<tr>
       <td class="e">${i.e}</td><td class="o">${i.o}</td><td class="n">${i.n}</td>
       <td class="m">${i.m}</td><td class="d">${i.d}</td></tr>`).join('')}</tbody>
-  </table></div>`).join('');
+  </table></div>`;
+  }).join('');
+  const b = document.getElementById('verTodo');
+  if(b) b.textContent = SOLO_FALTA ? '👁 Ver también lo ya hecho' : '⬜ Ver solo lo que falta';
+}
+function alterna(){ SOLO_FALTA = !SOLO_FALTA; pinta(); }
+pinta();
 </script>
 
 </body>
