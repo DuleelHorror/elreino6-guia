@@ -278,6 +278,7 @@ thead th{font-size:.74rem; text-transform:uppercase; letter-spacing:.07em; color
 <a class="pag" href="https://duleelhorror.github.io/elreino6-guia/mapa.html"><span>🗺️</span> Mapa de misiones</a>
 <a class="pag" href="https://duleelhorror.github.io/elreino6-guia/bestiario.html"><span>🐺</span> Bestiario</a>
 <a class="pag" href="https://duleelhorror.github.io/elreino6-guia/logros.html"><span>🏆</span> Logros</a>
+<a class="pag" href="https://duleelhorror.github.io/elreino6-guia/catalogo.html"><span>🖼️</span> Catálogo de sprites</a>
 </div>
 <div class="der">
 <a class="fuera" href="https://duleelhorror.github.io/elreino6-guia/index.html">🗼 La guía</a>
@@ -4581,6 +4582,9 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
     {id:'tablon', loop:true, label:'🎟️ Tablón de Encargos', npc:'Sistema', faction:'arc', type:'Loop diario · repetible', reward:'Fichas 🎟️', status:'new',
       steps:['4 encargos aleatorios al día','Suben el Pase del Reino','Cada nivel del Pase da Fichas'], desc:'Misiones diarias que dan Fichas. El enganche para volver cada día.'},
     // Secundarias / nuevas (2026-07-11)
+    {id:'rancio', label:'🌀 Rancio el Profeta', npc:'Rancio el Profeta', faction:'folk', type:'Saga · 3 misiones · SOLO clase LOCO', coins:20, reward:'La Cuchara Afilada (arma de la clase LOCO, nivel 1)', status:'new',
+      steps:['1) El Que Oye → ve al pie de la Torre Negra, quédate quieto un rato (mejor de noche) y vuelve con Rancio, en la fuente','2) La Lista de los Que No Están → habla con el REGISTRADOR en el Ayuntamiento y vuelve a contárselo','3) La Cuchara → llévale 1 pedernal y te da su cuchara afilada'],
+      desc:'El primer MAESTRO DE CLASE: los demás enseñan un oficio, Rancio solo te reconoce. Solo la ven los jugadores de clase Loco. ⚠️ Requiere el permiso reino.clase.loco.'},
     {id:'flechazos', label:'🏹 Flechazos', npc:'Semental de la Flecha', faction:'folk', type:'Quest suelta · practicar con el arco', coins:10, reward:'El Arco de Juguete (arma de la clase ABUELO, nivel 1)', status:'new',
       steps:['1) Flechazos (Semental) → mata 12 zombis y 8 esqueletos CON EL ARCO EN LA MANO (si le pegas con otra cosa no cuenta; él te da 64 flechas al aceptar), y vuelve a hablar con él'],
       desc:'La 2ª lección del Semental: dejar de arrearle al bicho con lo primero que pillas. Te premia con su propio arco, que es de juguete y lo dice completamente en serio. ⚠️ El arco es de la clase ABUELO: otras clases no pueden equiparlo.'},
@@ -4701,7 +4705,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
     ['nando','permiso'],['permiso','bolsa'],['bolsa','jobs'],['bolsa','carpincho'],
     ['carpincho','barco'],['barco','tablon_luz'],['tablon_luz','tablon'],
     // secundarias + saga del banco (2026-07-11) + Red de Anclaje (2026-07-15)
-    ['bolsa','pecio'],['semental','flechazos'],['bolsa','caballos'],['bolsa','lolo'],['lolo','lolo_ap'],['permiso','nico'],['nico','yaniko'],['permiso','arreglo'],['bolsa','estaciones'],['estaciones','carpincho'],['carpincho','geologia'],['geologia','mina'],['mina','dungeon_mina'],['mina','abismo'],['abismo','cantera'],['abismo','chavitox'],['cantera','dungeon_cantera'],['cuenta','anclaje'],['anclaje','anclaje_rep'],['anclaje_rep','anclaje_salto'],['anclaje_salto','anclaje_fractal'],['anclaje_fractal','jarvard'],['jarvard','papriko_antena'],['papriko_antena','vostok_p1'],
+    ['bolsa','pecio'],['talentos','rancio'],['semental','flechazos'],['bolsa','caballos'],['bolsa','lolo'],['lolo','lolo_ap'],['permiso','nico'],['nico','yaniko'],['permiso','arreglo'],['bolsa','estaciones'],['estaciones','carpincho'],['carpincho','geologia'],['geologia','mina'],['mina','dungeon_mina'],['mina','abismo'],['abismo','cantera'],['abismo','chavitox'],['cantera','dungeon_cantera'],['cuenta','anclaje'],['anclaje','anclaje_rep'],['anclaje_rep','anclaje_salto'],['anclaje_salto','anclaje_fractal'],['anclaje_fractal','jarvard'],['jarvard','papriko_antena'],['papriko_antena','vostok_p1'],
     ['talentos','mapa_reino'],
     ['tablon_luz','olegario'],
     ['tablon_luz','banco'],['banco','cuenta'],['cuenta','mercado'],

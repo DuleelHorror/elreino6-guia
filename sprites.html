@@ -267,6 +267,7 @@ thead th{font-size:.74rem; text-transform:uppercase; letter-spacing:.07em; color
 <a class="pag" href="https://duleelhorror.github.io/elreino6-guia/mapa.html"><span>🗺️</span> Mapa de misiones</a>
 <a class="pag" href="https://duleelhorror.github.io/elreino6-guia/bestiario.html"><span>🐺</span> Bestiario</a>
 <a class="pag" href="https://duleelhorror.github.io/elreino6-guia/logros.html"><span>🏆</span> Logros</a>
+<a class="pag" href="https://duleelhorror.github.io/elreino6-guia/catalogo.html"><span>🖼️</span> Catálogo de sprites</a>
 </div>
 <div class="der">
 <a class="fuera" href="https://duleelhorror.github.io/elreino6-guia/index.html">🗼 La guía</a>
@@ -404,13 +405,6 @@ const G = [
    },
    {
     "e": "⬜",
-    "o": "<code>BallestaPirata</code>",
-    "n": "Ballesta Pirata",
-    "m": "crossbow",
-    "d": "ídem · ballesta de madera atada con cuerda"
-   },
-   {
-    "e": "⬜",
     "o": "<code>PicoInfectado</code>",
     "n": "Pico Colonizado",
     "m": "iron_pickaxe",
@@ -483,7 +477,7 @@ const G = [
     "o": "<code>insignia</code> ×12",
     "n": "Insignia del Ayuntamiento / Chapa del Funcionario…",
     "m": "name_tag",
-    "d": "ídem · chapa esmaltada con el escudo del Reino · <b>6 rarezas</b>"
+    "d": "🔴 <b>LAS 12 LLEVAN SPRITE PROPIO</b> (decisión del usuario, 2026-08-09): aquí <b>NO</b> se comparte dibujo entre los dos nombres de una misma rareza, como en las otras 9 familias — son <b>12 dibujos, uno por item</b>. Chapa esmaltada con el escudo del Reino; que se note el ascenso de una a otra (latón rayado → esmalte → oro con cinta). ⚠️ Eso obliga a <b>12 CMD distintos</b> en NAME_TAG, no 6: al generarlas hay que ampliar el rango en <code>gen_sprites_accesorios.py</code>"
    },
    {
     "e": "✅",
@@ -811,69 +805,6 @@ const G = [
   "items": [
    {
     "e": "⬜",
-    "o": "<code>Tijeras_Prestadas</code>",
-    "n": "Tijeras Prestadas",
-    "m": "shears",
-    "d": "saga de los Dedos (esquilar) · tijeras de esquilar viejas"
-   },
-   {
-    "e": "⬜",
-    "o": "<code>Abrigo_Reino</code>",
-    "n": "Abrigo del Reino",
-    "m": "leather_chestplate",
-    "d": "kit del primer join, <b>protege del frío</b> · abrigo basto de borrego"
-   },
-   {
-    "e": "⬜",
-    "o": "<code>Backrooms_Entrada</code>",
-    "n": "Pared Blanda",
-    "m": "yellow_terracotta",
-    "d": "entrada a las Backrooms · trozo de pared con el papel pintado amarillo"
-   },
-   {
-    "e": "⬜",
-    "o": "<code>Correa_Refugio</code>",
-    "n": "Correa del Refugio",
-    "m": "lead",
-    "d": "abre el menú de mascotas (Nico) · correa de cuero con chapa"
-   },
-   {
-    "e": "⬜",
-    "o": "<code>DienteBarbahueso</code>",
-    "n": "Diente de Barbahueso",
-    "m": "bone",
-    "d": "lo suelta el jefe de la Mina · colmillo partido y amarillento"
-   },
-   {
-    "e": "⬜",
-    "o": "<code>MuestraSculk</code>",
-    "n": "Muestra de Sculk Vivo",
-    "m": "echo_shard (por confirmar)",
-    "d": "la suelta El Último Turno (Cantera) · frasco con algo azulado que late"
-   },
-   {
-    "e": "⬜",
-    "o": "<code>Fusible</code>",
-    "n": "Fusible",
-    "m": "copper_ingot",
-    "d": "quest del Tablón · fusible de cerámica con el hilo dentro"
-   },
-   {
-    "e": "⬜",
-    "o": "<code>FrascoBotica</code>",
-    "n": "Frasco de la Botica",
-    "m": "glass_bottle",
-    "d": "🔒 El Arreglo · frasco de farmacia con etiqueta escrita a mano"
-   },
-   {
-    "e": "⬜",
-    "o": "<code>ElHiloQueSobro</code>",
-    "n": "El Hilo Que Sobró",
-    "m": "string",
-    "d": "🔒 El Arreglo (final A) · ovillo de hilo basto"
-   },
-   {
-    "e": "⬜",
     "o": "<code>CascabelLola</code>",
     "n": "Cascabel de la Lola",
     "m": "bell",
@@ -881,17 +812,10 @@ const G = [
    },
    {
     "e": "⬜",
-    "o": "<code>FarolTunel</code>",
-    "n": "Farol del Túnel",
-    "m": "lantern",
-    "d": "🔒 El Arreglo · farol de obra con el cristal sucio"
-   },
-   {
-    "e": "⬜",
-    "o": "<code>discos:chavitox</code>",
-    "n": "Escupe Gasolina",
-    "m": "music_disc_pigstep",
-    "d": "el disco que compone <b>Hypertes</b> sobre Chavitox · vinilo con etiqueta casera, escrita a rotulador y torcida — lo grabó él a las cuatro de la mañana. Es un DISCO, así que el sprite es un círculo negro con la etiqueta en el centro"
+    "o": "<b>el disco GENÉRICO</b>",
+    "n": "<i>(vale para TODOS los discos)</i>",
+    "m": "music_disc_*",
+    "d": "🔴 <b>UN solo dibujo para todos los discos custom</b> (Pan, 2026-08-09): el mismo skin salvo que digamos lo contrario para uno concreto. Así añadir un disco no pide dibujo nuevo — y cuando alguno lo merezca, se le hace el suyo y punto. Vinilo negro con etiqueta al centro, <b>la etiqueta en blanco</b> (sin texto), para que sirva para cualquiera"
    }
   ]
  },
@@ -1085,6 +1009,13 @@ const G = [
     "n": "Carné de Trabajador · Repetidor de Señal · Enchufe del Tablón · Cartilla del Banco · Pañuelo de Horse Luis · Chapa VOSTOK · Carrete sin revelar",
     "m": "varios + CMD",
     "d": "CMD 10085, 10258-10263"
+   },
+   {
+    "e": "✅",
+    "o": "<b>Fusible</b>",
+    "n": "Fusible",
+    "m": "copper_ingot + CMD",
+    "d": "quest <code>tablon_luz</code> (las 2 palancas) · CMD <b>10259</b>, <code>objetos:fusible</code>"
    }
   ]
  },
@@ -1144,7 +1075,7 @@ const G = [
   ]
  }
 ];
-const FALTAN = 59, ITEMS = 70;
+const FALTAN = 48, ITEMS = 59;
 
 function TH(){const r=document.documentElement;
   const cur=r.dataset.theme||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');
