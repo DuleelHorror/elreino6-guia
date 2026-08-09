@@ -1,8 +1,3 @@
-<!doctype html>
-<html lang="es">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>El Reino 6 — Items sin sprite</title>
 <style>/* ═══════════════════════════════════════════════════════════════════════════
    TEMA — El Reino 6 · herramientas del servidor
@@ -255,8 +250,6 @@ thead th{font-size:.74rem; text-transform:uppercase; letter-spacing:.07em; color
   footer{margin-top:46px;padding-top:18px;border-top:1px solid var(--linea);color:var(--tinta-3);font-size:.82rem}
   @media(max-width:560px){.hero h1{font-size:1.6rem}}
 </style>
-</head>
-<body>
 
 <nav class="nav">
 <a class="marca" href="https://duleelhorror.github.io/elreino6-guia/inicio.html"><span class="ico">⌂</span> El Reino <b>6</b></a>
@@ -882,81 +875,81 @@ const G = [
   ]
  },
  {
-  "t": "🟡⛏️ LOS MINERALES DE TIERRA HOSTIL (5 vetas + 5 gemas + el bidón)",
-  "sub": "La isla de los desastres a la que se llega en el barco de Gabardinez. Los minerales son **el motivo para ir**, así que son exclusivos de allí. Diseño completo en <code>.claude/rules/tierra-hostil.md</code>. 🔴 <b>Las VETAS van a 16×16 por cara</b> (son bloques); las gemas y el bidón, 16×16 de item. 🔑 <b>Que se distingan A OSCURAS y de un vistazo</b>: cada uno tiene **un color y una FORMA de inclusión distintos** (tubos / anillos / grietas / motas grasas / motas brillantes), para que no dependa solo del color — en una cueva con antorcha, la silueta se lee antes que el tono. 🟢🟢 <b>YA HAY PLACEHOLDER PUESTO (2026-08-08) — los 10 están dibujados y subidos</b>, y **el juego ya se puede probar**: cada mineral tiene su color y su forma de inclusión, así que se distinguen de un vistazo. Los dibujó <code>mmo-generadores/gen_minerales_tierra_hostil.py</code> (pixel art a mano, dentro del propio script). 🖼️ Míralos todos juntos en <b><code>texturas/_preview_tierra_hostil.png</code></b>. 🔑 <b>Sustituir uno por el bueno = sobrescribir el PNG en la MISMA RUTA</b> y rehacer el pack. Cero cambios de config: mismo id, mismo CMD, mismo generador. Por eso <b>no corre ninguna prisa</b> y se pueden ir dando de uno en uno. Las rutas son <code>ItemsAdder/contents/tierra_hostil/resourcepack/tierra_hostil/textures/{block,item}/ores/</code>. 📌 Los que <b>más ganan</b> con un dibujo de verdad son <b>las 5 gemas y el bidón</b> (las vetas placeholder ya cumplen bastante bien; las gemas son manchas con silueta).",
+  "t": "✅⛏️ LOS MINERALES DE TIERRA HOSTIL (5 vetas + 5 gemas + el bidón)",
+  "sub": "La isla de los desastres a la que se llega en el barco de Gabardinez. Los minerales son **el motivo para ir**, así que son exclusivos de allí. Diseño completo en <code>.claude/rules/tierra-hostil.md</code>. 🔴 <b>Las VETAS van a 16×16 por cara</b> (son bloques); las gemas y el bidón, 16×16 de item. 🔑 <b>Que se distingan A OSCURAS y de un vistazo</b>: cada uno tiene **un color y una FORMA de inclusión distintos** (tubos / anillos / grietas / motas grasas / motas brillantes), para que no dependa solo del color — en una cueva con antorcha, la silueta se lee antes que el tono. ✅✅ <b>LOS 10 DEFINITIVOS, PUESTOS (2026-08-09)</b> — los entregó el usuario y se colocaron con <code>texturas/poner_minerales_th.py</code>. 🔴 <b>Ojo si llegan más: los nombres vienen AL REVÉS</b> — su <code>X_bloque.png</code> (64×48, plantilla de cubo) es <b>la VETA</b> y va a <code>block/ores/X_ore.png</code>; su <code>X_ore.png</code> (16×16) es <b>la GEMA</b> y va a <code>item/ores/X.png</code>. Copiando por nombre, la gema acaba empotrada en la pared y la roca en la mano, sin un solo error en el log. Las 6 caras del cubo eran idénticas, así que se recorta una (el script avisa si alguna vez no lo son). (histórico) Hubo placeholder desde el 2026-08-08 — los 10 están dibujados y subidos<b>, y </b>el juego ya se puede probar**: cada mineral tiene su color y su forma de inclusión, así que se distinguen de un vistazo. Los dibujó <code>mmo-generadores/gen_minerales_tierra_hostil.py</code> (pixel art a mano, dentro del propio script). 🖼️ Míralos todos juntos en <b><code>texturas/_preview_tierra_hostil.png</code></b>. 🔑 <b>Sustituir uno por el bueno = sobrescribir el PNG en la MISMA RUTA</b> y rehacer el pack. Cero cambios de config: mismo id, mismo CMD, mismo generador. Por eso <b>no corre ninguna prisa</b> y se pueden ir dando de uno en uno. Las rutas son <code>ItemsAdder/contents/tierra_hostil/resourcepack/tierra_hostil/textures/{block,item}/ores/</code>. 📌 Los que <b>más ganan</b> con un dibujo de verdad son <b>las 5 gemas y el bidón</b> (las vetas placeholder ya cumplen bastante bien; las gemas son manchas con silueta).",
   "items": [
    {
-    "e": "🟡",
+    "e": "✅",
     "o": "<code>fulgurita_ore</code>",
     "n": "Veta de fulgurita",
     "m": "<i>(bloque nuevo)</i>",
     "d": "Tierra Hostil, superficie · <b>arenisca clara</b> con <b>tubos ramificados de vidrio</b> blanco-azulado, angulosos, como una raíz de cristal"
    },
    {
-    "e": "🟡",
+    "e": "✅",
     "o": "<code>fulgurita</code>",
     "n": "Fulgurita",
     "m": "<i>(item nuevo)</i>",
     "d": "esquirla de vidrio irregular, <b>translúcida azul muy pálido</b>, con brillo en un borde"
    },
    {
-    "e": "🟡",
+    "e": "✅",
     "o": "<code>piedra_sorda_ore</code>",
     "n": "Veta de piedra sorda",
     "m": "<i>(bloque nuevo)</i>",
     "d": "Tierra Hostil, media altura · <b>piedra gris parda</b> con <b>anillos concéntricos</b> más claros, como ondas en el agua"
    },
    {
-    "e": "🟡",
+    "e": "✅",
     "o": "<code>piedra_sorda</code>",
     "n": "Piedra sorda",
     "m": "<i>(item nuevo)</i>",
     "d": "canto rodado liso <b>gris verdoso</b> con los anillos marcados. Fea a propósito: la que avisa es la más sosa"
    },
    {
-    "e": "🟡",
+    "e": "✅",
     "o": "<code>alabastro_ore</code>",
     "n": "Veta de alabastro",
     "m": "<i>(bloque nuevo)</i>",
     "d": "Tierra Hostil, hondo · <b>roca casi negra</b> con <b>vetas rectas blanco hueso</b>, como grietas rellenas"
    },
    {
-    "e": "🟡",
+    "e": "✅",
     "o": "<code>alabastro</code>",
     "n": "Alabastro",
     "m": "<i>(item nuevo)</i>",
     "d": "esquirla <b>blanco hueso</b> de canto recto — que parezca <b>tallada</b>, no natural"
    },
    {
-    "e": "🟡",
+    "e": "✅",
     "o": "<code>carbon_graso_ore</code>",
     "n": "Veta de carbón graso",
     "m": "<i>(bloque nuevo)</i>",
     "d": "Tierra Hostil · piedra oscura con <b>motas negras grandes y grasientas</b>, con <b>reflejo aceitoso</b> (toques verde-morado, como un charco de gasolina)"
    },
    {
-    "e": "🟡",
+    "e": "✅",
     "o": "<code>carbon_graso</code>",
     "n": "Carbón graso",
     "m": "<i>(item nuevo)</i>",
     "d": "trozo negro <b>brillante</b>, no mate, con el mismo reflejo de charco"
    },
    {
-    "e": "⬜",
+    "e": "🟡",
     "o": "<code>bidon_gasolina</code>",
     "n": "Bidón de gasolina",
     "m": "<i>(item nuevo)</i>",
-    "d": "bidón <b>rojo oxidado</b> con tapón y asa, un <b>chorretón</b> por el costado. Se hace con 4 carbones grasos"
+    "d": "🎨 <b>EL SPRITE YA ESTÁ</b> (entregado 2026-08-09, guardado en <code>texturas/sprites/bidon_gasolina.png</code>) — pero <b>el ÍTEM no existe todavía</b>, así que no se puede colocar. Lo que falta NO es dibujo: es decidir cómo se impide colocarlo en el suelo, porque para arder 80 en el horno tiene que ser <code>COAL_BLOCK</code> y eso lo hace colocable (ItemsAdder no tiene ninguna clave para evitarlo — verificado). La salida buena: hacerlo también ExecutableItem con <code>cancelEvent: true</code>, el truco de la <code>Cabeza_Grageas</code> (LECCIÓN 54). Ver <code>tierra-hostil.md</code> §3"
    },
    {
-    "e": "🟡",
+    "e": "✅",
     "o": "<code>uranio_ore</code>",
     "n": "Veta de uranio",
     "m": "<i>(bloque nuevo)</i>",
     "d": "Tierra Hostil, hondo · <b>roca gris muy oscura</b> con <b>motas verde ácido</b> que parezcan emitir luz (halo de 1 px más claro)"
    },
    {
-    "e": "🟡",
+    "e": "✅",
     "o": "<code>uranio</code>",
     "n": "Uranio",
     "m": "<i>(item nuevo)</i>",
@@ -1109,7 +1102,7 @@ const G = [
   ]
  }
 ];
-const FALTAN = 32, ITEMS = 43;
+const FALTAN = 31, ITEMS = 42;
 
 function TH(){const r=document.documentElement;
   const cur=r.dataset.theme||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');
@@ -1131,6 +1124,3 @@ document.getElementById('board').innerHTML = G.map(g=>`
       <td class="m">${i.m}</td><td class="d">${i.d}</td></tr>`).join('')}</tbody>
   </table></div>`).join('');
 </script>
-
-</body>
-</html>
