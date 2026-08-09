@@ -1,3 +1,8 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>El Reino 6 — Mapa de Misiones</title>
 <style>/* ═══════════════════════════════════════════════════════════════════════════
    TEMA — El Reino 6 · herramientas del servidor
@@ -261,6 +266,8 @@ thead th{font-size:.74rem; text-transform:uppercase; letter-spacing:.07em; color
   .panel .who{font-size:.85rem;color:var(--tinta-3);margin:-6px 0 12px}
   @media(max-width:560px){.panel{width:100%;max-width:100%;height:62%;top:auto;bottom:0;border-left:0;border-top:1px solid var(--linea-2);transform:translateY(102%)}.panel.on{transform:none}}
 </style>
+</head>
+<body>
 
 <nav class="nav">
 <a class="marca" href="https://duleelhorror.github.io/elreino6-guia/index.html"><span class="ico">🗼</span> El Reino <b>6</b></a>
@@ -4577,8 +4584,8 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
       steps:['1) Un Caballo para el Reino (Toni) → acepta la quest y ve al establo (brújula) a hablar con Horse Luis','2) Horse Luis I → escucha su primer cuento (~2 min). ¡No puedes salir del establo hasta que acabe!','3) Horse Luis II → segundo cuento (~4 min)','4) Horse Luis III → el gran final (~7 min); al acabar se abre el cofre-tienda del establo'], desc:'A un caballo le cayó un rayo y se volvió consciente; ahora, acomplejado, cuida el establo y te narra novelas rosas entre caballos cada vez más largas. Aguanta las tres (sin poder salir del establo) y podrás comprar caballos, sillas y cuerdas.'},
     {id:'lolo', label:'🔨 La Fragua del Fundacional', npc:'Toni → Lolo el Fundacional', faction:'folk', type:'Saga · 11 misiones · tutorial de accesorios', coins:22, reward:'un set de accesorios del MMO (Equipo del Reino)', status:'new', unlocks:'Equipar accesorios en el Equipo del Reino',
       steps:['1) La Fragua del Fundacional (Toni) → ve a la herrería a hablar con Lolo','2-10) Fórjate cada joya: llévale materiales a Lolo y te forja anillo, guantes, cinturón, amuleto, capa, brazalete, pendiente, dije e insignia (COMMON, nivel 1) — te enseña el GUI "Equipo del Reino", equipar, niveles, tiers y stats','11) La Obra Maestra → la Reliquia del Aprendiz (COMMON, equipable ya) de broche final'], desc:'Lolo, herrero SIMPLE con delirios de grandeza (se cree GRAN MAESTRO FUNDACIONAL por leer la palabra en una revista), te enseña el sistema de accesorios: forja una joya por misión a cambio de materiales y te explica cómo equiparlas en el Equipo del Reino.'},
-    {id:'lolo_ap', label:'⚒️ El Aprendiz al Revés', npc:'Lolo el Fundacional', faction:'folk', type:'Saga · 3 pruebas · DESBLOQUEA la fragua', coins:17, reward:'reparar tu equipo con Lolo por Cacahuates', status:'new', unlocks:'La fragua de Lolo: reparar tu equipo (20 Cacahuates por pieza)',
-      steps:['1) La Prueba del Calor → Lolo sostiene que un maestro COMPRUEBA: abre un horno 40 veces (vale cualquiera del mundo; él te presta uno). Entrégale la Hoja de Aguante','2) La Prueba de la Elevación → salta delante de él las veces que haga falta (él dice que el martillo sube y baja, y tú también). Entrégale el Acta de Elevación','3) La Prueba del Sacrificio → te da un pico de madera malo (lo hizo él): rómpelo del todo y llévale las Astillas Fundacionales → al acabar te abre el yunque para siempre'], desc:'Lolo se convence de que vienes a que ÉL te enseñe, y te hace pasar las tres pruebas fundacionales que se acaba de inventar, apuntándolo todo en una libreta y sacando conclusiones equivocadas. El veredicto: lo has hecho TODO MAL... exactamente igual que él en su día, así que bienvenido al oficio. Desde entonces te repara el equipo por Cacahuates, que buena falta hace: cada muerte te desgasta las piezas un 20%.'},
+    {id:'lolo_ap', label:'⚒️ El Aprendiz al Revés', npc:'Lolo el Fundacional', faction:'folk', type:'Saga · 4 pruebas · DESBLOQUEA la fragua', coins:32, reward:'reparar tu equipo con Lolo por Cacahuates', status:'new', unlocks:'La fragua de Lolo: reparar tu equipo (20 Cacahuates por pieza)',
+      steps:['1) La Prueba del Calor → Lolo sostiene que un maestro COMPRUEBA: abre un horno 40 veces (vale cualquiera del mundo; él te presta uno). Entrégale la Hoja de Aguante','2) La Prueba de la Elevación → salta delante de él las veces que haga falta (él dice que el martillo sube y baja, y tú también). Entrégale el Acta de Elevación','3) La Prueba del Sacrificio → te da un pico de madera malo (lo hizo él): rómpelo del todo y llévale las Astillas Fundacionales → al acabar te abre el yunque para siempre','4) La Prueba de la Fundición → funde 100 lingotes de hierro en cualquier horno y vuelve con Lolo: te lee el tono de las manos (no hay que entregarle nada)'], desc:'Lolo se convence de que vienes a que ÉL te enseñe, y te hace pasar las tres pruebas fundacionales que se acaba de inventar, apuntándolo todo en una libreta y sacando conclusiones equivocadas. El veredicto: lo has hecho TODO MAL... exactamente igual que él en su día, así que bienvenido al oficio. Desde entonces te repara el equipo por Cacahuates, que buena falta hace: cada muerte te desgasta las piezas un 20%.'},
     {id:'nico', label:'🐾 El Refugio de Nico', npc:'Toni → Nico', faction:'gold', type:'Saga · el refugio (en construcción)', coins:14, reward:'al final, adoptar mascotas de EcoPets (de pago) en el mostrador del refugio', status:'new', unlocks:'Adoptar mascotas (EcoPets) en el mostrador del refugio',
       steps:['1) El Refugio de Nico (Toni) → acepta y ve al establo (brújula) a hablar con Nico','2) Una Manita pal Refugio (Nico) → entrégale 1 bala de heno + 3 de lana','3) Mantas pal Refugio (Nico) → entrégale 4 alfombras blancas + 3 marrones; Nico te presenta a Yaniko','4) (tras la saga de Yaniko) Una Emergencia Delicada (Nico) → se ha cagado de la emoción, tráele 16 papeles → al acabar, Nico te DEJA ADOPTAR mascotas (de pago, "cargos") en el mostrador del refugio'], desc:'Nico regenta lo que llama "tienda de animales", pero es un REFUGIO: recoge bichos que nadie quiere y se emociona con nada (un cielo, muy sensible). Toni te deriva a echarle una mano. Al pedirle mantas te presenta a Yaniko, la gata fumada que se le ha instalado.'},
     {id:'yaniko', label:'🚬 La Gata del Rincón (Yaniko)', npc:'Yaniko / Nico', faction:'gold', type:'Saga · tabaco (SPdrug) + venta recurrente', coins:25, reward:'venta repetible de tabaco a Yaniko (dinero recurrente)', status:'new', unlocks:'Cultivar y refinar tabaco (SPdrug) + venderlo a Yaniko (ingreso recurrente)',
@@ -4817,3 +4824,6 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
   };
 })();
 </script>
+
+</body>
+</html>
