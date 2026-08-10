@@ -4729,6 +4729,12 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
       desc:'Sombreros, partículas, mascotas, emotes y monturas. No dan poder: puro estilo (por Cacahuates, misión, pase o cofre).'},
     {id:'pesca', label:'🎣 Torneos de Pesca', npc:'⬜ Bacalao Gabardinez', faction:'future', type:'Pesca · torneos (en camino)', status:'future',
       desc:'Peces raros que coleccionar y torneos con premios, de la mano del pez disfrazado de humano, en el Puerto.'},
+    // ⬜ la insertó mapa_auto.py: nombre, NPC, pasos y de quién cuelga salen del
+    //    juego y son exactos. Falta darle una `desc` con voz propia, comprobar la FACCIÓN (nadie más da este NPC, así que va adivinada)
+    //    y, si toca, `unlocks`.
+    {id:'fuego', clase:'parrillero', label:'🔥 El Fuego de Verdad', npc:'Chef Calderón', faction:'folk', type:'Saga · 5 misiones · SOLO clase PARRILLERO', coins:48, reward:'El Mechero Barato (báculo de la clase Parrillero)', status:'new',
+      steps:['1) El Bautismo → préndete fuego y aguanta 8 segundos SEGUIDOS. Si te apagas, la cuenta vuelve a cero','2) El Punto → ardiendo, espera la señal y agáchate en segundo y medio. Antes: crudo. Después: carbonizado. Tres seguidas','3) El Baño de María → muérete DENTRO de la lava. Sí, ese es el objetivo. Te da un cubo por si no la encuentras','4) El Género → la Alquimista te explica de qué van los REAGENTES que gastan tus hechizos, y Calderón te cobra 12 Cacahuates por el material','5) El Mechero → mata 6 bichos mientras TÚ ardes. Las muertes con el fuego apagado no cuentan'],
+      desc:'El maestro de clase del PARRILLERO. Calderón es cocinero de verdad y para él tú no eres un mago: eres un tío que prende cosas, las deja negras y encima presume. Así que no te enseña magia, te enseña FUEGO — y su método es el de una cocina: que te quemes. Cada lección es una barbaridad dicha como un trámite de personal. De fondo, la mesa de billar sin bolas que el Ayuntamiento le plantó donde iba el pasaplatos.'},
   ];
   // ===== CONEXIONES (aristas): source -> target =====
   const E = [
@@ -4747,6 +4753,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
     // en camino (2026-07-16), colgadas del nodo más lógico
     ['nando','dedos'],['dedos','gremio','future'],['gremio','caza','future'],['mercado','lonja','future'],
     ['banco','bodas','future'],['tablon','cosmeticos','future'],['pecio','pesca','future'],
+    ['talentos','fuego'],   // ← lo puso mapa_auto.py
   ];
 
   /* 🎓 Las 5 clases del MMO: nombre y color. El color NO está inventado — es el mismo que
