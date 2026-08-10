@@ -244,6 +244,9 @@ thead th{font-size:.74rem; text-transform:uppercase; letter-spacing:.07em; color
     clip-path:polygon(25% 0,75% 0,100% 50%,75% 100%,25% 100%,0 50%)}
   .sw.tri{border:none;border-radius:0;clip-path:polygon(50% 0,100% 100%,0 100%);
     background:linear-gradient(90deg,#2e7d32,#e53935,#ef6c00,#fbc02d,#d81b60)}
+  /* 🌙 luna: un círculo al que otro le muerde un lado */
+  .sw.noche{border:none;border-radius:50%;background:#8ea2ff;
+    box-shadow:inset -4px 0 0 0 var(--tarjeta)}
   .tb-r{margin-left:auto;display:flex;gap:8px;align-items:center}
   .btn{background:var(--tarjeta);border:1px solid var(--linea);color:var(--tinta-2);
     border-radius:9px;padding:7px 12px;font-weight:700;font-size:.82rem;cursor:pointer;text-decoration:none;white-space:nowrap}
@@ -296,6 +299,7 @@ thead th{font-size:.74rem; text-transform:uppercase; letter-spacing:.07em; color
   .chip.new{color:#fff;background:var(--aviso);border-color:transparent}
   .chip.future{color:var(--tinta-3)}
   .chip.key{color:#3a2600;background:var(--llave);border-color:transparent}
+  .chip.noche{color:#8ea2ff;border-color:#8ea2ff}
   .chip.secret{color:#3a2600;background:var(--llave);border-color:transparent}
   .panel .desc{color:var(--tinta-2);font-size:.94rem;line-height:1.55;margin:0 0 14px}
   .panel .rw{font-weight:700;color:var(--aviso);font-size:.92rem;margin:0 0 12px}
@@ -333,6 +337,7 @@ thead th{font-size:.74rem; text-transform:uppercase; letter-spacing:.07em; color
     <span class="lg"><span class="sw circ"></span>Se repite</span>
     <span class="lg"><span class="sw hex"></span>Dungeon</span>
     <span class="lg"><span class="sw tri"></span><b>Solo una clase</b></span>
+    <span class="lg"><span class="sw noche"></span><b>Solo de noche</b></span>
     <span class="lg"><span class="sw key"></span>Desbloquea algo</span>
   </div>
   <div class="tb-r">
@@ -4639,9 +4644,9 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
     {id:'tablon', loop:true, label:'🎟️ Tablón de Encargos', npc:'Sistema', faction:'arc', type:'Loop diario · repetible', reward:'Fichas 🎟️', status:'new',
       steps:['4 encargos aleatorios al día','Suben el Pase del Reino','Cada nivel del Pase da Fichas'], desc:'Misiones diarias que dan Fichas. El enganche para volver cada día.'},
     // Secundarias / nuevas (2026-07-11)
-    {id:'rancio', clase:'loco', label:'🌀 Rancio el Profeta', npc:'Rancio el Profeta', faction:'folk', type:'Saga · 5 misiones · SOLO clase LOCO · 🌙 solo de noche', coins:35, reward:'La Cuchara Afilada (arma de la clase LOCO, nivel 1)', status:'new',
+    {id:'rancio', clase:'loco', noche:true, label:'🌀 Rancio el Profeta', npc:'Rancio el Profeta', faction:'folk', type:'Saga · 5 misiones · SOLO clase LOCO · 🌙 de noche', coins:35, reward:'La Cuchara Afilada (arma de la clase LOCO, nivel 1)', status:'new',
       steps:['1) El Que Oye → al pie de la Torre Negra, DE NOCHE, quédate quieto 40 segundos (si andas, vuelve a cero). Oirás algo. Vuelve con Rancio, en la fuente','2) La Voz → te da 3 papelitos: clic derecho a cada uno para leerlo EN VOZ ALTA. Lo que digas lo lee TODO EL SERVIDOR, con tu nombre delante. Luego vuelve con él','3) La Lista de los Que No Están → habla con el REGISTRADOR en el Ayuntamiento y vuelve a contárselo','4) El Recado → tráele 1 huevo, 3 carnes podridas, 9 semillas de trigo, 1 diente de león y 1 par de botas de cuero (cada cosa por un motivo suyo)','5) La Cuchara → llévale 1 pedernal y, de última prueba, corre 60 segundos SIN PARAR (si paras, de cero). Entonces te da su cuchara'],
-      desc:'El maestro de clase del LOCO: los demás enseñan un oficio, Rancio solo te reconoce. Solo la ven los jugadores de clase Loco, y 🌙 solo existe DE NOCHE. Te hace escuchar a la Torre quieto en la oscuridad, soltar tres barbaridades en el chat público, y correr un minuto sin parar. ⚠️ Requiere el permiso reino.clase.loco.'},
+      desc:'El maestro de clase del LOCO: los demás enseñan un oficio, Rancio solo te reconoce. Solo la ven los jugadores de clase Loco. 🌙 De día está en la fuente pero no atiende: te dice que está demasiado borracho y que vuelvas de noche. Te hace escuchar a la Torre quieto en la oscuridad, soltar tres barbaridades en el chat público, y correr un minuto sin parar. ⚠️ Requiere el permiso reino.clase.loco.'},
     {id:'abuelo', clase:'abuelo', label:'🏹 El Abuelo Cebolleta', npc:'Semental de la Flecha', faction:'folk', type:'Saga · 5 misiones · SOLO clase ABUELO', coins:46, reward:'La Cerbatana (arco de la clase ABUELO)', status:'new',
       steps:['1) Flechazos → mata 12 zombis y 8 esqueletos CON EL ARCO EN LA MANO (si le pegas con otra cosa no cuenta; él te da 64 flechas). Premio: El Arco de Juguete','2) A Cincuenta Pasos → mata 3 bichos desde 50 bloques o más, y que los mate LA FLECHA: si te acercas a rematar, no cuenta','3) Doce Flechas → mata 8 bichos gastando 12 flechas como mucho. Si disparas la trece, la cuenta se pone a cero. Llevas el marcador abajo','4) Me Las Hacía Yo → fabrica 32 flechas (pedernal + palo + pluma) y vuelve a hablar con él','5) El Ojo → te da una diana: colócala, aléjate 30 bloques y dale EN EL CENTRO exacto. Te da La Cerbatana'],
       desc:'El maestro de clase del ABUELO. El chiste: el Semental es joven, bruto y salido, y le toca enseñarte a ser un VIEJO — sabe disparar, pero no sabe esperar, ni no gastar, ni quedarse lejos. Cada tontería que se inventa resulta ser justo lo que hace un francotirador, y al final admite que él no podría serlo. ⚠️ Requiere el permiso reino.clase.abuelo.'},
@@ -4703,10 +4708,10 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
     {id:'sabio', label:'📚 El Sabio', npc:'⬜ NPC por crear', faction:'future', type:'Enciclopedia de clases (futuro)', status:'future',
       desc:'Una enciclopedia con patas: le preguntas por una clase y te explica su rol y sus 4 hechizos.'},
     // En camino (2026-07-16): mecánicas ya elegidas, cada una con su saga por montar
-    {id:'arreglo', label:'🟡 El Arreglo', npc:'Payasito Tristo · La Lola', faction:'secret', type:'Saga SECRETA · 8 misiones + 3 finales', coins:1, status:'new',
+    {id:'arreglo', noche:true, label:'🟡 El Arreglo', npc:'Payasito Tristo · La Lola', faction:'secret', type:'Saga SECRETA · 8 misiones + 3 finales', coins:1, status:'new',
       steps:['1) El Hilo Que Aguanta → tráele 3 cuerdas al payaso del altillo del establo','2) Un Recado Para Arriba → súbele un recado a La Lola, al túnel del camino de ronda. 🔴 SOLO está de NOCHE','3) Lo Que Costaba → baja a la Botica, habla con la Alquimista y llévale el frasco','4) El Otro Zapato → te la da ELLA (de noche): busca su zapato en el Puerto y devuélveselo','5) La Cuenta → al Ayuntamiento, pídele al Registrador el asiento de aquellos años','6) Cuenta Hasta Cien → quédate QUIETO con ella 55 segundos mientras te cuenta lo único que recuerda entero. Si te alejas, se corta. Luego bajas a contárselo a él','7) Lo Que Hay Puesto → sube a arreglarle el farol del túnel, y mira bien qué más hay puesto ahí','8) El Que Vino Una Vez → pregunta al Padre Elías qué se le había perdido a él en ese altillo','FINAL → hay tres maneras de acabar esto y solo puedes elegir una. Una de ellas es no volver'],
       desc:'No sale en el Directorio, no lleva brújula y no te la ofrece nadie: se encuentra andando. Él vive escondido en un altillo y dice que la está arreglando; ella está en un túnel del camino y solo sale de noche. Cada cosa que él te manda buscar encaja un poco peor con lo que cuenta. 🔴 Aviso: es lo más oscuro del server, sin una sola broma.'},
-    {id:'fatima', label:'🟡 Un Pan pa Toítos', npc:'La Fátima', faction:'secret', type:'Misión SECRETA · narrativa (1 misión)', coins:4, status:'new',
+    {id:'fatima', noche:true, label:'🟡 Un Pan pa Toítos', npc:'La Fátima', faction:'secret', type:'Misión SECRETA · narrativa (1 misión)', coins:4, status:'new',
       steps:['1) Un Pan pa Toítos → siéntate a escucharla (es casi toda charla) y tráele 1 PAN. 🔴 SOLO está de NOCHE, en el camino del noreste del Reino'],
       desc:'No te la ofrece nadie, no sale en el Directorio y no lleva brújula: te la encuentras de noche en el camino. Te para, te sienta en una piedra y te cuenta con un salero considerable la casa que lleva dentro y el papeleo que le debe el Ayuntamiento por ello. No te pide nada más que un pan.'},
     {id:'dedos', label:'🕵️ Los Dedos Largos', npc:'Edelmiro Garrapata', faction:'folk', type:'Saga · 9 misiones (rama del hampa)', coins:45, status:'new', unlocks:'La entrada al Gremio de los Dedos Largos (carta de recomendación)',
@@ -4768,6 +4773,10 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
     // label sería dos sitios que decir lo mismo, y el día que se renombre una clase se quedaría
     // uno viejo. Aquí, añadir `clase:'loco'` ya lo dice todo: forma, color y nombre.
     if(d.clase&&CLASE[d.clase]) d.label=d.label+'\n🎓 Solo: '+CLASE[d.clase][0];
+    // 🌙 Igual que la clase: se pone `noche:true` y la luna se escribe sola. Va DELANTE del
+    // nombre porque es lo primero que hay que saber — una misión nocturna a la que vas de día
+    // es un jugador dando vueltas sin entender por qué no está el NPC.
+    if(d.noche) d.label='🌙 '+d.label;
     elements.push({data:d});
   });
   E.forEach(e=>elements.push({data:{id:e[0]+'>'+e[1], source:e[0], target:e[1], kind:e[2]||'main'}}));
@@ -4907,6 +4916,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
     h+='<div class="chips">';
     h+='<span class="chip '+d.faction+'">'+FAC[d.faction]+'</span>';
     if(d.clase&&CLASE[d.clase]) h+='<span class="chip" style="border-color:'+CLASE[d.clase][1]+';color:'+CLASE[d.clase][1]+'">🎓 Solo '+CLASE[d.clase][0]+'</span>';
+    if(d.noche) h+='<span class="chip noche">🌙 Solo de noche</span>';
     if(d.type) h+='<span class="chip">'+esc(d.type)+'</span>';
     if(ST[d.status]) h+='<span class="chip '+d.status+'">'+ST[d.status]+'</span>';
     if(d.unlocks) h+='<span class="chip key">🔓 Desbloquea</span>';
@@ -4944,6 +4954,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
       ['⬡  Dungeon',       cuenta(n=>n.dungeon),             v('--alerta')],
       ['▲  Solo una clase',cuenta(n=>n.clase),               v('--acento')],
       ['🟡 Secreta',       cuenta(n=>n.faction==='secret'),  v('--llave')],
+      ['🌙 Solo de noche',  cuenta(n=>n.noche),               '#8ea2ff'],
       ['🔓 Desbloquea algo',cuenta(n=>n.unlocks),            v('--llave')],
     ];
     const estado=[
