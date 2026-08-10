@@ -213,14 +213,36 @@ thead th{font-size:.74rem; text-transform:uppercase; letter-spacing:.07em; color
     display:flex;flex-direction:column;overflow:hidden}
   .serif{font-family:ui-serif,Palatino,Georgia,serif}
 
-  .topbar{display:flex;align-items:center;gap:14px;flex-wrap:wrap;
-    padding:10px 16px;border-bottom:1px solid var(--linea);
+  /* La barra de HERRAMIENTAS del mapa (leyenda + buscador + datos). 🔴 No se llama `topbar` a
+     propósito: esa era la barra de navegación vieja de cada página, la sustituyó el marco común
+     (<nav class="nav">
+<a class="marca" href="https://duleelhorror.github.io/elreino6-guia/index.html"><span class="ico">🗼</span> El Reino <b>6</b></a>
+<div class="nav-links">
+<span class="grupo-tit">Consultar</span>
+<a class="pag" href="https://duleelhorror.github.io/elreino6-guia/mapa.html" aria-current="page"><span>🗺️</span> Mapa de misiones</a>
+<a class="pag" href="https://duleelhorror.github.io/elreino6-guia/bestiario.html"><span>🐺</span> Bestiario</a>
+<a class="pag" href="https://duleelhorror.github.io/elreino6-guia/logros.html"><span>🏆</span> Logros</a>
+<a class="pag" href="https://duleelhorror.github.io/elreino6-guia/catalogo.html"><span>🖼️</span> Catálogo de sprites</a>
+</div>
+<div class="der">
+<a class="fuera" href="https://duleelhorror.github.io/elreino6-guia/inicio.html">⌂ Herramientas</a>
+<button class="tema" onclick="TEMA()" title="Cambiar tema">◐</button>
+</div></nav>
+<script>function TEMA(){var r=document.documentElement;r.dataset.theme=r.dataset.theme==='dark'?'light':'dark';try{localStorage.setItem('er6tema',r.dataset.theme)}catch(e){}}try{var t=localStorage.getItem('er6tema');if(t)document.documentElement.dataset.theme=t}catch(e){}</script>) y `build_web.py --auditar` la prohíbe por su nombre. Esto es otra cosa: no
+     navega a ningún sitio, son los mandos del grafo. */
+  .barra-mapa{display:flex;align-items:center;gap:14px;flex-wrap:wrap;
+    padding:9px 16px;border-bottom:1px solid var(--linea);
     background:color-mix(in srgb,var(--lienzo) 90%,transparent);z-index:5}
-  .brand{font-family:ui-serif,Palatino,Georgia,serif;font-size:1.05rem;display:flex;align-items:center;gap:.4em;white-space:nowrap}
-  .brand .t{color:var(--acento)}
   .legend{display:flex;flex-wrap:wrap;gap:6px 12px;font-size:.76rem;color:var(--tinta-2);align-items:center;margin-left:6px}
   .lg{display:inline-flex;align-items:center;gap:.4em}
-  .sw{width:11px;height:11px;border-radius:4px;border:2px solid var(--linea)}
+  .sw{width:13px;height:13px;border-radius:4px;border:2px solid var(--linea-2)}
+  /* La leyenda va por FORMA, no por color: el color ya significa otra cosa (la facción).
+     Cada figurita es la misma que se dibuja en el grafo. */
+  .sw.circ{border-radius:50%;border-style:double;border-width:3px}
+  .sw.hex{border:none;background:var(--alerta);border-radius:0;
+    clip-path:polygon(25% 0,75% 0,100% 50%,75% 100%,25% 100%,0 50%)}
+  .sw.tri{border:none;border-radius:0;clip-path:polygon(50% 0,100% 100%,0 100%);
+    background:linear-gradient(90deg,#2e7d32,#e53935,#ef6c00,#fbc02d,#d81b60)}
   .tb-r{margin-left:auto;display:flex;gap:8px;align-items:center}
   .btn{background:var(--tarjeta);border:1px solid var(--linea);color:var(--tinta-2);
     border-radius:9px;padding:7px 12px;font-weight:700;font-size:.82rem;cursor:pointer;text-decoration:none;white-space:nowrap}
@@ -239,6 +261,27 @@ thead th{font-size:.74rem; text-transform:uppercase; letter-spacing:.07em; color
     background:var(--tarjeta);border:1px solid var(--linea);border-radius:999px;
     padding:6px 14px;font-size:.76rem;color:var(--tinta-3);box-shadow:var(--sombra);pointer-events:none}
 
+  /* 📊 La pantalla de datos. Flotante y apagada por defecto: es para consultar, no para
+     estorbar. Todos sus números se calculan solos (ver datos()). */
+  .stats{position:fixed;left:14px;top:104px;z-index:6;width:274px;
+    max-height:calc(100% - 130px);overflow-y:auto;display:none;
+    background:var(--tarjeta);border:1px solid var(--linea-2);border-radius:14px;
+    box-shadow:var(--sombra);padding:14px 16px 14px;font-size:.82rem}
+  .stats.on{display:block}
+  .stats h3{margin:.1em 0 .7em;font-family:ui-serif,Palatino,serif;font-size:1.02rem}
+  .stats .big{display:flex;gap:8px;margin:0 0 8px}
+  .stats .big>div{flex:1;background:var(--acento-suave);border-radius:10px;padding:7px 8px;text-align:center}
+  .stats .big b{display:block;font-size:1.3rem;line-height:1.15;color:var(--acento);font-variant-numeric:tabular-nums}
+  .stats .big span{font-size:.68rem;color:var(--tinta-3)}
+  .stats .t{font-size:.67rem;text-transform:uppercase;letter-spacing:.09em;color:var(--tinta-3);
+    font-weight:800;margin:14px 0 6px}
+  .stats .r{display:flex;align-items:center;gap:7px;margin:4px 0}
+  .stats .r i{font-style:normal;flex:1;color:var(--tinta-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .stats .r b{font-variant-numeric:tabular-nums;min-width:1.6em;text-align:right}
+  .stats .bar{height:6px;border-radius:3px;background:var(--acento);opacity:.6;flex:none}
+  .stats .nota{margin:12px 0 0;font-size:.7rem;color:var(--tinta-3);line-height:1.4}
+  @media(max-width:560px){.stats{width:calc(100% - 28px)}}
+
   .panel{position:fixed;top:0;right:0;height:100%;width:340px;max-width:88vw;z-index:8;
     background:var(--tarjeta);border-left:1px solid var(--linea-2);box-shadow:var(--sombra);
     transform:translateX(102%);transition:transform .28s ease;overflow-y:auto;padding:22px 22px 40px}
@@ -251,7 +294,6 @@ thead th{font-size:.74rem; text-transform:uppercase; letter-spacing:.07em; color
   .chip.sci{color:var(--info)} .chip.folk{color:var(--ok)} .chip.gold{color:var(--aviso)} .chip.arc{color:var(--acento)}
   .chip.new{color:#fff;background:var(--aviso);border-color:transparent}
   .chip.future{color:var(--tinta-3)}
-  .chip.suggest{color:#fff;background:var(--sugerencia);border-color:transparent}
   .chip.key{color:#3a2600;background:var(--llave);border-color:transparent}
   .chip.secret{color:#3a2600;background:var(--llave);border-color:transparent}
   .panel .desc{color:var(--tinta-2);font-size:.94rem;line-height:1.55;margin:0 0 14px}
@@ -284,8 +326,25 @@ thead th{font-size:.74rem; text-transform:uppercase; letter-spacing:.07em; color
 </div></nav>
 <script>function TEMA(){var r=document.documentElement;r.dataset.theme=r.dataset.theme==='dark'?'light':'dark';try{localStorage.setItem('er6tema',r.dataset.theme)}catch(e){}}try{var t=localStorage.getItem('er6tema');if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
 
+<div class="barra-mapa">
+  <div class="legend">
+    <span class="lg"><span class="sw"></span>Misión</span>
+    <span class="lg"><span class="sw circ"></span>Se repite</span>
+    <span class="lg"><span class="sw hex"></span>Dungeon</span>
+    <span class="lg"><span class="sw tri"></span><b>Solo una clase</b></span>
+    <span class="lg"><span class="sw key"></span>Desbloquea algo</span>
+  </div>
+  <div class="tb-r">
+    <input class="btn find" id="buscar" placeholder="Buscar misión o NPC…" autocomplete="off"
+      oninput="ER6.find(this.value)" onkeydown="if(event.key==='Enter')ER6.find(this.value,true)">
+    <button class="btn" id="statsBtn" onclick="ER6.stats()">📊 Datos</button>
+    <button class="btn" onclick="ER6.fit()">Centrar</button>
+  </div>
+</div>
+
 <div id="cy"></div>
-<div class="hint">Arrastra para mover · rueda para zoom · clic en un nodo para el detalle · «Ver propuesta» añade las misiones que faltan (en magenta)</div>
+<aside class="stats" id="stats"></aside>
+<div class="hint">Arrastra para mover · rueda para zoom · clic en un nodo para ver sus pasos</div>
 
 <aside class="panel" id="panel">
   <button class="x" onclick="ER6.close()">✕</button>
@@ -4541,7 +4600,6 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
 
 <script>
 (function(){
-  let proposalOn=false;
   // ===== DATOS DE LAS MISIONES (nodos) =====
   // faction: sci|folk|gold|arc|future · status: live|new|future
   const N = [
@@ -4580,10 +4638,10 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
     {id:'tablon', loop:true, label:'🎟️ Tablón de Encargos', npc:'Sistema', faction:'arc', type:'Loop diario · repetible', reward:'Fichas 🎟️', status:'new',
       steps:['4 encargos aleatorios al día','Suben el Pase del Reino','Cada nivel del Pase da Fichas'], desc:'Misiones diarias que dan Fichas. El enganche para volver cada día.'},
     // Secundarias / nuevas (2026-07-11)
-    {id:'rancio', label:'🌀 Rancio el Profeta', npc:'Rancio el Profeta', faction:'folk', type:'Saga · 3 misiones · SOLO clase LOCO', coins:20, reward:'La Cuchara Afilada (arma de la clase LOCO, nivel 1)', status:'new',
+    {id:'rancio', clase:'loco', label:'🌀 Rancio el Profeta', npc:'Rancio el Profeta', faction:'folk', type:'Saga · 3 misiones · SOLO clase LOCO', coins:20, reward:'La Cuchara Afilada (arma de la clase LOCO, nivel 1)', status:'new',
       steps:['1) El Que Oye → ve al pie de la Torre Negra, quédate quieto un rato (mejor de noche) y vuelve con Rancio, en la fuente','2) La Lista de los Que No Están → habla con el REGISTRADOR en el Ayuntamiento y vuelve a contárselo','3) La Cuchara → llévale 1 pedernal y te da su cuchara afilada'],
       desc:'El primer MAESTRO DE CLASE: los demás enseñan un oficio, Rancio solo te reconoce. Solo la ven los jugadores de clase Loco. ⚠️ Requiere el permiso reino.clase.loco.'},
-    {id:'flechazos', label:'🏹 Flechazos', npc:'Semental de la Flecha', faction:'folk', type:'Quest suelta · practicar con el arco', coins:10, reward:'El Arco de Juguete (arma de la clase ABUELO, nivel 1)', status:'new',
+    {id:'flechazos', clase:'abuelo', label:'🏹 Flechazos', npc:'Semental de la Flecha', faction:'folk', type:'Quest suelta · practicar con el arco', coins:10, reward:'El Arco de Juguete (arma de la clase ABUELO, nivel 1)', status:'new',
       steps:['1) Flechazos (Semental) → mata 12 zombis y 8 esqueletos CON EL ARCO EN LA MANO (si le pegas con otra cosa no cuenta; él te da 64 flechas al aceptar), y vuelve a hablar con él'],
       desc:'La 2ª lección del Semental: dejar de arrearle al bicho con lo primero que pillas. Te premia con su propio arco, que es de juguete y lo dice completamente en serio. ⚠️ El arco es de la clase ABUELO: otras clases no pueden equiparlo.'},
     {id:'pecio', label:'⚓ El Guardián del Pecio', npc:'Semental de la Flecha', faction:'folk', type:'Secundaria · pesca un bicho raro', reward:'Plano de la Espada Pirata', status:'new',
@@ -4685,59 +4743,38 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
     ['banco','bodas','future'],['tablon','cosmeticos','future'],['pecio','pesca','future'],
   ];
 
-  // ===== PROPUESTA: misiones sugeridas (ocultas hasta pulsar «Ver propuesta») =====
-  const SN = [
-    // ARCO DE LA TORRE (la espina que falta, Actos 2-4)
-    {id:'s_jefe', label:'🔬 El Jefe se Acojona', npc:'Científico Jefe (⬜ NPC nuevo)', faction:'sci', type:'Acto 2 · arranca «la Torre despierta»', status:'suggest', desc:'Tras las señales de VOSTOK y la antena, la Torre PULSA por primera vez. El científico jefe entra en pánico y empieza a hablar de abrir la puerta sellada. Es el NPC que HOY falta para arrancar el Acto 2.', steps:['Nuevo NPC: el científico jefe','Dispara la 1ª invasión (tutorial)','Abre la investigación de la Torre']},
-    {id:'s_invasion_t', label:'⚔️ Primer Despertar', npc:'Científico Jefe', faction:'sci', type:'Quest-tutorial del evento de invasión', status:'suggest', desc:'Convierte el evento de invasión (ya autorado) en una QUEST: el jefe te enseña a defender la Plaza en la primera oleada. Engancha con el nodo «El Despertar de la Torre».'},
-    {id:'s_vera', label:'⛏️ La Puerta Imposible', npc:'Vera Pedregal', faction:'sci', type:'Saga · picar la puerta sellada', status:'suggest', desc:'Vera lleva toda la partida obsesionada con la puerta de la base de la Torre: es el gran gancho del clímax. Hoy solo sale de refilón en Operación Carpincho; merece saga propia.'},
-    {id:'s_marcas', label:'🗿 Las Marcas de la Torre', npc:'Dr. Papriko', faction:'sci', type:'Saga · descifrar los símbolos', status:'suggest', desc:'Papriko intenta descifrar los símbolos grabados en la Torre. Continúa su arco (Jarvard → antena → VOSTOK) directo hacia el misterio central.'},
-    {id:'s_elias', label:'⛪ La Fe de la Torre', npc:'Padre Elías (⬜ sin saga)', faction:'folk', type:'Saga · el pacto del cura', status:'suggest', desc:'El cura antiquísimo pactó con una entidad ligada a la Torre y fundó una secta de reglas absurdas. Cose el pueblo con el arco principal. Elías está en el roster sin ninguna misión.'},
-    {id:'s_reunir', label:'🪄 Magia y Ciencia', npc:'Torre del Mago', faction:'arc', type:'Convergencia · unir las dos facciones', status:'suggest', desc:'El punto donde científicos y pueblo (magia) tienen que colaborar para entender la Torre. Aquí confluyen Vera, Papriko, Elías y Rancio antes del final.'},
-    {id:'s_puerta', label:'🚪 Abrir la Puerta — FIN T1', npc:'Clímax de Temporada', faction:'arc', type:'Clímax · abrir la puerta y ENTRAR', status:'suggest', desc:'El final de la Temporada 1: abrir la puerta sellada de la base de la Torre y entrar (cliffhanger de la T2, dentro de la Torre). El pago de toda la siembra.'},
-    // SAGAS DEL PUEBLO (breadth · NPCs sin saga)
-    {id:'s_convento', label:'⛪ Secretos del Convento', npc:'Sor Eufrasia y Sor Bete', faction:'folk', type:'Saga · madre e hija, la campana', status:'suggest', desc:'Sor Eufrasia (mandona) y su hija Sor Bete (emparedada junto a las campanas). Un misterio doméstico, oscuro y cómico, que enlaza con la fe de Elías.'},
-    {id:'s_calderon', label:'🍳 Cocina de Combate', npc:'Chef Calderón', faction:'folk', type:'Saga · recupera la cocina', status:'suggest', desc:'El chef furioso cocina esquivando una mesa de billar que le plantó el Ayuntamiento. Ya es soplón en Carpincho; darle saga propia (recetas, recuperar su cocina).'},
-    {id:'s_garrapata', label:'📦 Ruta Clandestina', npc:'Edelmiro Garrapata', faction:'folk', type:'Saga · contrabando (economía gris)', status:'suggest', desc:'El pillager con Tourette monta contrabando a la vista de todos. Puerta al hampa: alimenta el futuro Gremio de los Dedos Largos.'},
-    {id:'s_aniceto', label:'🧫 Muestras Pedregométricas', npc:'Aniceto Morcillo (⬜ sin saga)', faction:'sci', type:'Saga · jerga inventada', status:'suggest', desc:'El científico de palabros («oscilación pedregométrica de fase inversa») te manda recoger muestras. Extiende la rama de geología con humor.'},
-    {id:'s_rancio', label:'🌀 Los Delirios de Rancio', npc:'Rancio el Profeta', faction:'arc', type:'Saga · verdades del multiverso', status:'suggest', desc:'El «loco» del pueblo (en secreto, un jugador caído del Reino 1) suelta verdades deformadas del multiverso. Sus delirios cobran sentido en el clímax de la Torre. Hoy no tiene quest.'},
-    {id:'s_payaso', label:'🤡 El Payasito Tristo', npc:'Payasito Tristo', faction:'folk', type:'Saga · humor negro (co-diseño)', status:'suggest', desc:'NPC ya colocado junto al establo, todavía sin lore. Encaja un arco de humor negro. ⚠️ Hay que definir su lore contigo antes de montarlo.'},
-    // PUERTO / PESCA · BANCO
-    {id:'s_bacalao', label:'🎣 El Bacalao de la Gabardina', npc:'Bacalao Gabardinez', faction:'folk', type:'Saga · pesca y transporte', status:'suggest', desc:'El pez disfrazado de humano del Puerto. Convierte el nodo «Torneos de Pesca» en una saga con NPC: pesca, transporte en barco y su leyenda.'},
-    {id:'s_avraham', label:'💰 El Préstamo con Trampa', npc:'Avraham Rosenberg', faction:'gold', type:'Saga · préstamo chanchullero', status:'suggest', desc:'El dueño del banco te ofrece un préstamo lleno de comisiones y letra pequeña. SUMIDERO económico + humor. Avraham está en el roster sin quest.'},
-    // DUNGEONS
-    {id:'s_vostok_lab', label:'🏢 Dungeon: Lab VOSTOK', npc:'Dungeon (grupo)', faction:'arc', type:'Dungeon · explorar el laboratorio', status:'suggest', desc:'El Cárabo te manda a un laboratorio de VOSTOK: explorar salas, PMCs, documentos. 2ª dungeon (mundo Multiverse tipo Black Mesa). Cierra la Parte 1 de la saga VOSTOK.'},
-    // VOSTOK (continuación de la saga)
-    {id:'s_vostok2', label:'🕳️ Rastro Frío', npc:'Dr. Papriko', faction:'sci', type:'VOSTOK · el dossier revela la corpo', status:'suggest', desc:'Sigues el GPS de la carga hasta una cueva y encuentras el dossier que destapa GRUPO VOSTOK, sus PMCs y las fuerzas de élite Bogatir. Parte 2 de la saga (ya en roadmap).'},
-    {id:'s_cebo', label:'🎯 Cebo', npc:'Dr. Papriko', faction:'sci', type:'VOSTOK · trampa con PMCs armados', status:'suggest', desc:'Hueles la trampa y vas igual: PMCs de VOSTOK que disparan DE VERDAD (Sentinel + arma real). Sueltan chapas que llevas a Papriko. Primer combate contra la corpo.'},
-    {id:'s_carabo', label:'🦉 Peaje de Información', npc:'El Cárabo (⬜ NPC nuevo)', faction:'sci', type:'VOSTOK · el trader que cobra por hablar', status:'suggest', desc:'Nuevo NPC: un corredor de información estilo trader de Tarkov que no suelta lo gordo sin un buen pellizco. Sumidero + gancho (posible desertor de VOSTOK).'},
-    // EXTRAS
-    {id:'s_reino2', label:'❄️ Ramales Criogénicos', npc:'Evento · Reino 2', faction:'arc', type:'Evento · activar la Torre-Eco', status:'suggest', desc:'El sistema criogénico del Reino 2 (ya autorado) hecho saga/evento: activar los 4 ramales para encender la Torre-Eco. Otra filtración del multiverso que alimenta el arco de la Torre.'},
-    {id:'s_labo', label:'🧪 El Laboratorio del Reino', npc:'Dr. Papriko / La Alquimista', faction:'sci', type:'Química estilo Education (aparcado)', status:'suggest', desc:'El set de química (Mesa de Laboratorio, elementos, compuestos) que hablamos: se recrea con ItemsAdder SIN diseñar texturas. En stand-by hasta decidir quién la da.'},
-  ];
-  const SE = [
-    ['vostok_p1','s_jefe','suggest'],['s_jefe','s_invasion_t','suggest'],['s_invasion_t','invasion','suggest'],
-    ['s_jefe','s_vera','suggest'],['papriko_antena','s_marcas','suggest'],['s_jefe','s_elias','suggest'],
-    ['s_vera','s_reunir','suggest'],['s_marcas','s_reunir','suggest'],['s_elias','s_reunir','suggest'],['s_reunir','s_puerta','suggest'],
-    ['bolsa','s_convento','suggest'],['s_convento','s_elias','suggest'],
-    ['carpincho','s_calderon','suggest'],['bolsa','s_garrapata','suggest'],['s_garrapata','gremio','suggest'],
-    ['geologia','s_aniceto','suggest'],
-    ['carpincho','s_rancio','suggest'],['s_rancio','s_reunir','suggest'],['caballos','s_payaso','suggest'],
-    ['pecio','s_bacalao','suggest'],['s_bacalao','pesca','suggest'],['cuenta','s_avraham','suggest'],
-    ['s_carabo','s_vostok_lab','suggest'],
-    ['vostok_p1','s_vostok2','suggest'],['s_vostok2','s_cebo','suggest'],['s_cebo','s_carabo','suggest'],
-    ['anclaje_fractal','s_reino2','suggest'],['s_reino2','s_reunir','suggest'],['s_marcas','s_labo','suggest'],
-  ];
+  /* 🎓 Las 5 clases del MMO: nombre y color. El color NO está inventado — es el mismo que
+     tiene la clase DENTRO del juego (el código & de su display name en MMOCore/classes/*.yml),
+     para que el mapa y la pantalla de clase digan lo mismo.
+     🔴 Va AQUÍ ARRIBA a propósito: lo usa style(), que se ejecuta al crear el grafo. Declarado
+     más abajo con const, style() lo pillaría en zona muerta → ReferenceError → mapa EN BLANCO. */
+  const CLASE={funcionario:['El Funcionario','#2e7d32'],loco:['El Loco','#e53935'],
+    parrillero:['El Parrillero','#ef6c00'],abuelo:['El Abuelo Cebolleta','#fbc02d'],
+    yogur:['El Yogur de Fresa','#d81b60']};
 
-  const LAY={name:'dagre', rankDir:'TB', nodeSep:26, rankSep:64, edgeSep:14, ranker:'network-simplex'};
+  /* Reparto del espacio. Generoso a propósito: el hueco entre filas es por donde se van a
+     encaminar las flechas (ver colocar()), así que apretarlo es lo que hace que se crucen. */
+  const REPARTO={rankdir:'TB', nodesep:38, edgesep:24, ranksep:110, marginx:40, marginy:40,
+    ranker:'network-simplex'};
+  // el mismo reparto, en el formato del plugin — es el PLAN B si dagre suelto fallara
+  const LAY={name:'dagre', rankDir:'TB', nodeSep:REPARTO.nodesep, rankSep:REPARTO.ranksep,
+    edgeSep:REPARTO.edgesep, ranker:REPARTO.ranker};
+
   const elements = [];
-  N.forEach(n=>elements.push({data:Object.assign({}, n)}));
+  N.forEach(n=>{
+    const d=Object.assign({}, n);
+    // 🎓 La clase se ESCRIBE SOLA en la etiqueta a partir del campo `clase`. Ponerla a mano en el
+    // label sería dos sitios que decir lo mismo, y el día que se renombre una clase se quedaría
+    // uno viejo. Aquí, añadir `clase:'loco'` ya lo dice todo: forma, color y nombre.
+    if(d.clase&&CLASE[d.clase]) d.label=d.label+'\n🎓 Solo: '+CLASE[d.clase][0];
+    elements.push({data:d});
+  });
   E.forEach(e=>elements.push({data:{id:e[0]+'>'+e[1], source:e[0], target:e[1], kind:e[2]||'main'}}));
 
   function v(name){return getComputedStyle(document.documentElement).getPropertyValue(name).trim();}
   function style(){
     const surface=v('--tarjeta'),ink=v('--tinta'),inkSoft=v('--tinta-2'),line=v('--linea'),chip=v('--acento-suave'),
-      sci=v('--info'),folk=v('--ok'),gold=v('--aviso'),arc=v('--acento'),faint=v('--tinta-3'),sug=v('--sugerencia'),key=v('--llave'),dng=v('--alerta');
+      sci=v('--info'),folk=v('--ok'),gold=v('--aviso'),arc=v('--acento'),faint=v('--tinta-3'),key=v('--llave'),dng=v('--alerta');
     return [
       {selector:'node',style:{'background-color':surface,'border-width':2,'border-color':line,
         'label':'data(label)','color':ink,'font-size':'12px','font-weight':600,'text-wrap':'wrap','text-max-width':'155px',
@@ -4751,6 +4788,27 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
       {selector:'node[status="new"]',style:{'border-width':3,'border-color':gold}},
       {selector:'node[status="future"]',style:{'border-color':faint,'border-style':'dashed','background-opacity':.55,'color':inkSoft}},
       {selector:'node[unlocks]',style:{'border-width':4,'border-style':'double','underlay-color':key,'underlay-opacity':.32,'underlay-padding':11}},
+      /* 🔺 MISIÓN DE CLASE = TRIÁNGULO (2026-08-10, petición del usuario: «las misiones de clases
+         que tengan forma de triángulo y salga para qué clase es»). Son las únicas misiones que un
+         jugador puede no ver NUNCA, así que se distinguen por la FORMA, que se lee de lejos y no
+         depende del color — el color ya lo gasta la facción.
+         🔴 La etiqueta va DEBAJO del triángulo, no dentro: en un triángulo el ancho útil a media
+         altura es la MITAD del ancho total, así que un texto de dos líneas se sale por los lados
+         sí o sí (está medido, no es una impresión). Debajo cabe y se lee, y no descuadra el
+         reparto porque colocar() mide cada nodo CON su etiqueta.
+         🔴 Y este bloque va DESPUÉS de [status="new"] y de [unlocks] a propósito: los dos pintan
+         el borde y, puestos detrás, le robaban el color a la clase — que es lo que estaba pasando
+         (rancio y flechazos son `new`, así que salían con el borde dorado, no con el suyo). */
+      {selector:'node[clase]',style:{'shape':'triangle','height':34,'padding':'15px',
+        'background-opacity':.22,'border-width':4,
+        'text-valign':'bottom','text-margin-y':6,'text-max-width':'155px',
+        'text-background-color':surface,'text-background-opacity':.88,
+        'text-background-padding':'4px','text-background-shape':'roundrectangle'}},
+      {selector:'node[clase="funcionario"]',style:{'border-color':CLASE.funcionario[1],'background-color':CLASE.funcionario[1]}},
+      {selector:'node[clase="loco"]',      style:{'border-color':CLASE.loco[1],       'background-color':CLASE.loco[1]}},
+      {selector:'node[clase="parrillero"]',style:{'border-color':CLASE.parrillero[1],'background-color':CLASE.parrillero[1]}},
+      {selector:'node[clase="abuelo"]',    style:{'border-color':CLASE.abuelo[1],    'background-color':CLASE.abuelo[1]}},
+      {selector:'node[clase="yogur"]',     style:{'border-color':CLASE.yogur[1],     'background-color':CLASE.yogur[1]}},
       /* 🔁 LOOP = REDONDA. Peticion del usuario (2026-08-04): "las quest que son loops
          diarios ponlas como una redonda, asi se entienden mas". Antes solo se distinguian
          por el COLOR, que ademas ya significa otra cosa (la faccion), asi que el Tablon
@@ -4761,11 +4819,18 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
       /* El hexagono de dungeon va DESPUES: si algo fuera loop Y dungeon, manda dungeon. */
       {selector:'node[dungeon]',style:{'shape':'hexagon','border-color':dng,'border-width':4,'background-color':dng,'background-opacity':.18,'color':ink,'font-weight':700,'padding':'18px','underlay-color':dng,'underlay-opacity':.22,'underlay-padding':7}},
       {selector:'node:selected',style:{'border-width':4,'border-color':arc,'background-color':chip}},
+      /* 📐 LAS FLECHAS SON QUEBRADAS, NO CURVAS (2026-08-10). Una bezier va en línea recta de un
+         nodo a otro, así que en cuanto una misión depende de otra que está tres filas más arriba,
+         la línea atraviesa todo lo que haya en medio. Con `segments` podemos dictar POR DÓNDE
+         pasa cada flecha, y quien dicta es dagre: colocar() le pide los codos que él mismo dejó
+         libres al repartir. Las esquinas van redondeadas para que se siga con la vista.
+         🔴 `edge-distances: node-position` no es cosmético: hace que los codos se midan desde el
+         CENTRO de los nodos, que es como los calcula colocar(). Con el valor por defecto
+         ('intersection') se miden desde el borde y las flechas salen descolocadas. */
       {selector:'edge',style:{'width':2.5,'line-color':line,'target-arrow-color':line,'target-arrow-shape':'triangle',
-        'curve-style':'bezier','arrow-scale':1.1}},
+        'curve-style':'segments','edge-distances':'node-position','segment-weights':.5,'segment-distances':0,
+        'segment-radius':10,'radius-type':'arc-radius','arrow-scale':1.1}},
       {selector:'edge[kind="future"]',style:{'line-style':'dashed','line-color':faint,'target-arrow-color':faint,'width':2}},
-      {selector:'node[status="suggest"]',style:{'border-color':sug,'border-width':4,'color':ink,'font-weight':700}},
-      {selector:'edge[kind="suggest"]',style:{'line-style':'dashed','line-color':sug,'target-arrow-color':sug,'width':3}},
       {selector:'.faded',style:{'opacity':.16}},
       {selector:'.hl',style:{'border-color':arc,'line-color':arc,'target-arrow-color':arc,'width':3.5}},
     ];
@@ -4774,20 +4839,73 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
   cytoscape.use(window.cytoscapeDagre);
   const cy = cytoscape({
     container:document.getElementById('cy'), elements, style:style(),
-    layout:LAY,
+    layout:LAY,   // <- PLAN B: si colocar() petara, el mapa ya queda repartido igualmente
     wheelSensitivity:.28, minZoom:.25, maxZoom:2.4
   });
-  cy.ready(()=>cy.fit(undefined,50));
+
+  /* ===== EL ORGANIGRAMA (2026-08-10) =====
+     Se ejecuta dagre A MANO, no por el plugin, por UNA razón: el plugin le pide a dagre las
+     POSICIONES de los nodos y tira lo demás — y lo demás es justo lo que hacía falta. Para
+     colocar una flecha larga, dagre se inventa nodos-fantasma en cada fila intermedia y les
+     RESERVA hueco; el camino que pasa por esos fantasmas (`points`) es un pasillo por el que se
+     sabe que no hay ninguna misión. Aquí se le piden esos puntos y la flecha se dibuja por ahí.
+     🔑 Lo importante: esto NO es una colocación a mano que haya que retocar. Se recalcula en cada
+     carga a partir de N y E, así que añadir una misión recoloca el árbol entero solo.
+     ⚠️ Honestamente: dagre MINIMIZA los cruces entre flechas, no los elimina — dos ramas que se
+     cruzan de verdad tienen que cruzarse en alguna parte. Lo que sí se acaba es que una flecha
+     pase por ENCIMA de una misión, que era lo que hacía ilegible el mapa. */
+  function colocar(){
+    const dagre=window.dagre;
+    const g=new dagre.graphlib.Graph({multigraph:true});
+    g.setGraph(Object.assign({},REPARTO));
+    g.setDefaultEdgeLabel(()=>({}));
+    cy.nodes().forEach(n=>{
+      // 🔴 boundingBox() y NO width()/height(): mide el nodo CON su etiqueta. Es lo que hace que
+      // el texto que va debajo de los triángulos de clase tenga su hueco reservado y no se le
+      // eche encima la fila siguiente.
+      const bb=n.boundingBox();
+      g.setNode(n.id(),{width:bb.w+16, height:bb.h+16});
+    });
+    cy.edges().forEach(e=>g.setEdge(e.source().id(), e.target().id(), {}, e.id()));
+    dagre.layout(g);
+
+    cy.batch(()=>{
+      cy.nodes().forEach(n=>{const d=g.node(n.id()); if(d) n.position({x:d.x, y:d.y});});
+      cy.edges().forEach(e=>{
+        const d=g.edge(e.source().id(), e.target().id(), e.id());
+        const S=e.source().position(), T=e.target().position();
+        const vx=T.x-S.x, vy=T.y-S.y, L=Math.hypot(vx,vy)||1;
+        const ws=[], ds=[];
+        (((d&&d.points)||[]).slice(1,-1)).forEach(P=>{
+          // de punto absoluto a como lo describe cytoscape: cuánto avanza por la recta
+          // origen→destino (w) y cuánto se separa de ella (s, con signo)
+          const ax=P.x-S.x, ay=P.y-S.y;
+          const w=(ax*vx+ay*vy)/(L*L), s=(ay*vx-ax*vy)/L;
+          if(w>0.02&&w<0.98&&Math.abs(s)>1){ ws.push(w.toFixed(4)); ds.push(Math.round(s)); }
+        });
+        // sin codos = recta (el estilo `segments` EXIGE al menos un punto)
+        e.style({'segment-weights': ws.length?ws.join(' '):'0.5',
+                 'segment-distances': ds.length?ds.join(' '):'0'});
+      });
+    });
+  }
+
+  cy.ready(()=>{
+    try{ colocar(); }
+    catch(err){ console.warn('[mapa] no se pudo encaminar las flechas, se deja el reparto simple', err); }
+    cy.fit(undefined,50);
+  });
 
   const panel=document.getElementById('panel'), body=document.getElementById('panelBody');
   const FAC={sci:'Forasteros',folk:'Pueblo',gold:'Sistema',arc:'Loop diario',future:'Futuro',secret:'🟡 Secreta'};
-  const ST={live:'',new:'NUEVO',future:'FUTURO',suggest:'PROPUESTA'};
+  const ST={live:'',new:'NUEVO',future:'FUTURO'};
   function esc(s){return (s||'').replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));}
   function show(d){
     let h='<h2 class="serif">'+esc(d.label)+'</h2>';
     h+='<div class="who">'+esc(d.npc||'')+'</div>';
     h+='<div class="chips">';
     h+='<span class="chip '+d.faction+'">'+FAC[d.faction]+'</span>';
+    if(d.clase&&CLASE[d.clase]) h+='<span class="chip" style="border-color:'+CLASE[d.clase][1]+';color:'+CLASE[d.clase][1]+'">🎓 Solo '+CLASE[d.clase][0]+'</span>';
     if(d.type) h+='<span class="chip">'+esc(d.type)+'</span>';
     if(ST[d.status]) h+='<span class="chip '+d.status+'">'+ST[d.status]+'</span>';
     if(d.unlocks) h+='<span class="chip key">🔓 Desbloquea</span>';
@@ -4806,6 +4924,55 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
   }
   cy.on('tap','node',e=>{show(e.target.data()); focus(e.target);});
   cy.on('tap',e=>{if(e.target===cy) close();});
+
+  /* ===== 📊 LA PANTALLA DE DATOS (2026-08-10, petición del usuario) =====
+     TODO se cuenta a partir de N y E al abrir la página: aquí no hay ni un número escrito a mano,
+     así que añadir una misión actualiza el recuento sin que nadie tenga que acordarse. Si algún
+     día un número canta, el fallo está en los datos del mapa, no en este panel.
+     ⚠️ «Subtareas» son los `steps` de cada nodo, que es como el mapa parte las sagas: el nodo es
+     la saga y cada paso, una misión de dentro. No tiene por qué cuadrar al dedillo con el total
+     de quests del juego (hay nodos que resumen y nodos que no son quest, como las dungeons). */
+  function datos(){
+    const c=document.getElementById('stats'); if(!c) return;
+    const cuenta=f=>N.filter(f).length;
+    const suma=f=>N.reduce((a,n)=>a+(f(n)||0),0);
+
+    const forma=[
+      ['▭  Misión o saga', cuenta(n=>!n.loop&&!n.dungeon&&!n.clase&&n.faction!=='secret'), v('--info')],
+      ['◯  Se repite',     cuenta(n=>n.loop),                v('--aviso')],
+      ['⬡  Dungeon',       cuenta(n=>n.dungeon),             v('--alerta')],
+      ['▲  Solo una clase',cuenta(n=>n.clase),               v('--acento')],
+      ['🟡 Secreta',       cuenta(n=>n.faction==='secret'),  v('--llave')],
+      ['🔓 Desbloquea algo',cuenta(n=>n.unlocks),            v('--llave')],
+    ];
+    const estado=[
+      ['Jugable ya',        cuenta(n=>n.status==='live'),   v('--ok')],
+      ['Nueva (sin probar)',cuenta(n=>n.status==='new'),    v('--aviso')],
+      ['Por hacer',         cuenta(n=>n.status==='future'), v('--tinta-3')],
+    ];
+    const fac=Object.keys(FAC).map(k=>[FAC[k], cuenta(n=>n.faction===k), null]);
+    // 🎓 Salen LAS CINCO clases aunque estén a cero: el hueco es el dato — dice de un vistazo
+    // qué clases siguen sin una sola misión propia.
+    const cla=Object.keys(CLASE).map(k=>[CLASE[k][0], cuenta(n=>n.clase===k), CLASE[k][1]]);
+
+    const bloque=(tit,filas)=>{
+      const max=Math.max(1,...filas.map(f=>f[1]));
+      return '<div class="t">'+tit+'</div>'+filas.map(f=>
+        '<div class="r"><i>'+f[0]+'</i><span class="bar" style="width:'
+        + Math.round(3+f[1]/max*62)+'px'+(f[2]?';background:'+f[2]+';opacity:.75':'')
+        + '"></span><b>'+f[1]+'</b></div>').join('');
+    };
+    const caja=(n,t)=>'<div><b>'+n+'</b><span>'+t+'</span></div>';
+
+    c.innerHTML='<h3>📊 El árbol en números</h3>'
+      + '<div class="big">'+caja(N.length,'en el árbol')+caja(suma(n=>(n.steps||[]).length),'subtareas')+'</div>'
+      + '<div class="big">'+caja(E.length,'conexiones')+caja(suma(n=>n.coins),'🥜 repartidos')+'</div>'
+      + bloque('Por forma', forma)
+      + bloque('Estado', estado)
+      + bloque('Quién la da', fac)
+      + bloque('Misiones de clase', cla)
+      + '<p class="nota">Se recuenta solo cada vez que abres el mapa.</p>';
+  }
 
   window.ER6={
     fit:()=>cy.fit(undefined,50),
@@ -4833,10 +5000,11 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
       cy.elements().addClass('faded'); hit.removeClass('faded').addClass('hl');
       if(centrar){ cy.animate({center:{eles:hit[0]}, zoom:1.1}, {duration:320}); }
     },
-    proposal:function(){proposalOn=!proposalOn; const b=document.getElementById('propBtn');
-      if(proposalOn){const add=[]; SN.forEach(n=>add.push({data:Object.assign({},n)})); SE.forEach(e=>add.push({data:{id:e[0]+'>'+e[1],source:e[0],target:e[1],kind:e[2]||'main'}})); cy.add(add); if(b){b.classList.add('arc'); b.textContent='✨ Ocultar propuesta';}}
-      else{cy.remove(cy.nodes('[status="suggest"]')); if(b){b.classList.remove('arc'); b.textContent='✨ Ver propuesta';}}
-      cy.layout(LAY).run(); cy.fit(undefined,50);},
+    stats:function(){
+      const c=document.getElementById('stats'), b=document.getElementById('statsBtn');
+      const on=c.classList.toggle('on');
+      if(b) b.classList.toggle('arc', on);
+    },
     close:close,
     theme:function(){
       const r=document.documentElement;
@@ -4845,6 +5013,11 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
       cy.style(style());
     }
   };
+
+  // 🔴 AQUÍ ABAJO, no dentro de cy.ready(): ese callback puede dispararse en el mismo momento de
+  // crear el grafo, y entonces FAC todavía no existe (const, zona muerta) → la página se queda EN
+  // BLANCO. Al final del todo está todo declarado y no hay nada que adivinar.
+  datos();
 })();
 </script>
 
