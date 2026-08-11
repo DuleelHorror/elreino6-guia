@@ -253,6 +253,17 @@ thead th{font-size:.74rem; text-transform:uppercase; letter-spacing:.07em; color
   .btn:hover{color:var(--tinta);border-color:var(--linea-2)}
   .btn.arc{background:var(--acento);color:#fff;border-color:transparent}
   /* buscador: con 71 nodos, encontrar uno concreto a ojo no es viable */
+  /* 🌾 Pestañas del mapa (2026-08-11): el Reino real vs la simulación de cultivos */
+  .tabs{display:flex;gap:0;margin-right:4px}
+  .tabs .tab{border-radius:0}
+  .tabs .tab:first-child{border-radius:8px 0 0 8px}
+  .tabs .tab:last-child{border-radius:0 8px 8px 0;border-left:0}
+  .tabs .tab.on{background:var(--acento);color:#fff;border-color:transparent}
+  /* Banda de aviso: mientras se mira la simulación tiene que quedar CLARO que no existe */
+  .sim-aviso{display:none}
+  body.sim .sim-aviso{display:block;position:fixed;left:50%;top:64px;transform:translateX(-50%);
+    z-index:5;background:#8a5a00;color:#fff;border:1px solid #b98200;border-radius:8px;
+    padding:6px 14px;font-size:12.5px;font-weight:700;box-shadow:0 4px 14px rgba(0,0,0,.28)}
   .btn.find{width:190px;font-weight:600;color:var(--tinta)}
   .btn.find::placeholder{color:var(--tinta-3);font-weight:600}
   .btn.find:focus{outline:none;border-color:var(--acento);box-shadow:0 0 0 3px var(--brillo)}
@@ -341,6 +352,10 @@ thead th{font-size:.74rem; text-transform:uppercase; letter-spacing:.07em; color
     <span class="lg"><span class="sw key"></span>Desbloquea algo</span>
   </div>
   <div class="tb-r">
+    <span class="tabs">
+      <button class="btn tab on" id="tab-reino"    onclick="ER6.tab('reino')">🗺️ El Reino</button>
+      <button class="btn tab"    id="tab-cultivos" onclick="ER6.tab('cultivos')">🌾 Rama de Cultivos</button>
+    </span>
     <input class="btn find" id="buscar" placeholder="Buscar misión o NPC…" autocomplete="off"
       oninput="ER6.find(this.value)" onkeydown="if(event.key==='Enter')ER6.find(this.value,true)">
     <button class="btn" id="statsBtn" onclick="ER6.stats()">📊 Datos</button>
@@ -348,6 +363,7 @@ thead th{font-size:.74rem; text-transform:uppercase; letter-spacing:.07em; color
   </div>
 </div>
 
+<div class="sim-aviso">⚠ SIMULACIÓN — nada de esto existe todavía en el server. Es una propuesta para ver hasta dónde da de sí la rama de cultivos.</div>
 <div id="cy"></div>
 <aside class="stats" id="stats"></aside>
 <div class="hint">Arrastra para mover · rueda para zoom · clic en un nodo para ver sus pasos</div>
@@ -4741,6 +4757,17 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
     {id:'fuego', clase:'parrillero', label:'🔥 El Fuego de Verdad', npc:'Chef Calderón', faction:'folk', type:'Saga · 5 misiones · SOLO clase PARRILLERO', coins:48, reward:'El Mechero Barato (báculo de la clase Parrillero)', status:'new',
       steps:['1) El Bautismo → préndete fuego y aguanta 8 segundos SEGUIDOS. Si te apagas, la cuenta vuelve a cero','2) El Punto → ardiendo, espera la señal y agáchate en segundo y medio. Antes: crudo. Después: carbonizado. Tres seguidas','3) El Baño de María → muérete DENTRO de la lava. Sí, ese es el objetivo. Te da un cubo por si no la encuentras','4) El Género → la Alquimista te explica de qué van los REAGENTES que gastan tus hechizos, y Calderón te cobra 12 Cacahuates por el material','5) El Mechero → mata 6 bichos mientras TÚ ardes. Las muertes con el fuego apagado no cuentan'],
       desc:'El maestro de clase del PARRILLERO. Calderón es cocinero de verdad y para él tú no eres un mago: eres un tío que prende cosas, las deja negras y encima presume. Así que no te enseña magia, te enseña FUEGO — y su método es el de una cocina: que te quemes. Cada lección es una barbaridad dicha como un trámite de personal. De fondo, la mesa de billar sin bolas que el Ayuntamiento le plantó donde iba el pasaplatos.'},
+    // ⬜ La insertó mapa_auto.py (nombre, NPC, pasos y de quién cuelga salen del juego).
+    //    Facción CONFIRMADA: el guardia es del Ayuntamiento, igual que el nodo `permiso` → sci.
+    //    Queda el toque editorial: el `label` es el de la 1ª misión, no un nombre de saga.
+    {id:'guardia', label:'🧱 Al Pie del Cañón', npc:'Guardia de Seguridad', faction:'sci', type:'Saga · 5 misiones · SOLO clase FUNCIONARIO', clase:'funcionario', coins:54, status:'new', reward:'El Clip Gigante (martillo de la clase Funcionario)',
+      steps:['1) 🧱 Al Pie del Cañón (Guardia de Seguridad) → Entrega El Parte del Turno x1 a Guardia de Seguridad','2) 🧱 Aguantar el Chaparrón (Guardia de Seguridad) → Entrega El Parte de Incidencias x1 a Guardia de Seguridad','3) 🧱 Vuelva Usted Mañana (Guardia de Seguridad) → Habla con Sellos · Espera 2 min · Entrega La Acreditación Renovada x1 a Guardia de Seguridad','4) 🧱 Cada Palo que Aguante su Vela (Guardia de Seguridad) → Entrega El Parte de Lesiones x1 a Guardia de Seguridad','5) 🧱 Sin Novedad (Guardia de Seguridad) → Ve a Esquina 1 de la ronda, Esquina 2 de la ronda, Esquina 3 de la ronda, Esquina 4 de la ronda · Habla con Guardia de Seguridad'], desc:'Guardia: ¿Tú sabes lo que es un turno, gorrión? Ahora lo vas a saber.'},
+    // ⬜ La insertó mapa_auto.py (nombre, NPC, pasos y de quién cuelga salen del juego).
+    //    🔴 Facción CORREGIDA a mano: entró como `sci` y Sor Eufrasia es AUTÓCTONA
+    //    (biblia-narrativa: 🪄 id17, el convento es del pueblo), como los otros 3 maestros.
+    //    Queda el toque editorial: el `label` es el de la 1ª misión, no un nombre de saga.
+    {id:'yogur', label:'🍓 La Ordeñadora', npc:'Sor Eufrasia', faction:'folk', type:'Saga · 6 misiones · SOLO clase YOGUR DE FRESA', clase:'yogur', coins:66, status:'new', reward:'El Removedor de Batidos (varita de la clase Yogur de Fresa)',
+      steps:['1) 🍓 La Ordeñadora (Sor Eufrasia) → Ordeñar · Habla con Sor Eufrasia','2) 🍓 El Fermento (Sor Eufrasia) → Entrega El Tarro Fermentado x1 a Sor Eufrasia','3) 🍓 La Cucharada (Sor Eufrasia) → Entrega La Hoja de Enfermería x1 a Sor Eufrasia','4) 🍓 La Tarrina Familiar (Sor Eufrasia) → Entrega Tarrina para el de la Fuente x1, Tarrina para el Caballo Viejo x1, Tarrina para el del Establo x1 a Rancio el Profeta · Habla con Sor Eufrasia','5) 🍓 La Campanera (Sor Eufrasia) → Entrega La Última Tarrina x1 a Sor Bete · Habla con Sor Eufrasia','6) 🍓 El Herbario (Sor Eufrasia) → Entrega dientes de león x1, amapolas x1, blue orchid x1, allium x1, azure bluet x1, red tulip x1, orange tulip x1, white tulip x1, pink tulip x1, oxeye daisy x1, cornflower x1, lily of the valley x1 a Sor Eufrasia'], desc:'Sor Eufrasia: ¿Tú eres el del yogur? Ya. Seis vacas, criatura.'},
   ];
   // ===== CONEXIONES (aristas): source -> target =====
   const E = [
@@ -4760,6 +4787,334 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
     ['nando','dedos'],['dedos','gremio','future'],['gremio','caza','future'],['mercado','lonja','future'],
     ['banco','bodas','future'],['tablon','cosmeticos','future'],['pecio','pesca','future'],
     ['talentos','fuego'],   // ← lo puso mapa_auto.py
+    ['talentos','guardia'],   // ← lo puso mapa_auto.py
+    ['talentos','yogur'],   // ← lo puso mapa_auto.py
+  ];
+
+  /* ==========================================================================================
+     🌾 PESTAÑA "RAMA DE CULTIVOS" — encargo del usuario (2026-08-11)
+     ------------------------------------------------------------------------------------------
+     🔴🔴 ESTO NO ES CONTENIDO DEL SERVER: es una SIMULACIÓN para ver hasta dónde da de sí el
+     tema de los cultivos. Va en arrays APARTE (NC/EC) y en su propia pestaña justo por eso —
+     el mapa de verdad tiene la regla de "solo lo que se JUEGA" (`mapa-misiones.md` regla 3) y
+     mezclarlo sería romperla. `mapa_auto.py` solo mira `N`, así que no se entera de esto.
+
+     El `status` aquí NO significa "hecho": significa CUÁNTO CUESTA MONTARLO.
+       live   = la mecánica YA existe y funciona hoy (solo falta escribir la quest)
+       new    = se apoya en algo recién instalado (iacrops / Garden) — falta probarlo
+       future = hay que construir mecánica nueva
+     ========================================================================================== */
+  const NC = [
+    // ---------- A · LA PARCELA (la entrada) ----------
+    {id:'c_parcela', label:'🌱 Un Palmo de Tierra', npc:'Ramiro el de la Vega (NPC nuevo)', faction:'folk', type:'Recado · entrada de la rama', status:'future', unlocks:'Tu parcela en la vega',
+      steps:['Hablar con Ramiro','Limpiar la parcela (romper 40 hierbajos)','Cercarla con 20 vallas'], desc:'Nadie cultiva desde que llegaron los de bata. Ramiro te cede la parcela de al lado porque, dice, prefiere un vecino malo a un solar.'},
+    {id:'c_estiercol', label:'💩 Lo que Deja el Caballo', npc:'Horse Luis', faction:'folk', type:'Recoger · Cultivar', status:'live', coins:6,
+      steps:['Recoger 16 de estiércol del establo','Compostar','Entregar 8 de compost a Ramiro'], desc:'Horse Luis lleva años produciendo algo que nadie le pide. Se lo toma como un reconocimiento tardío.'},
+    {id:'c_agua', label:'🪣 El Pozo Comunal', npc:'Interventor → Ramiro', faction:'gold', type:'Burocracia · Entregar', status:'live', coins:-20,
+      steps:['Solicitar el enganche al pozo','Pagar la tasa de agua (20🥜)','Traer 4 cubos'], desc:'El agua es del pueblo. El enganche al agua del pueblo, no.'},
+    {id:'c_azada', label:'🪓 La Azada de Tu Abuelo', npc:'Lolo el Fundacional', faction:'folk', type:'Elaborar · Reparar', status:'live', unlocks:'Azada que no se rompe cada dos por tres',
+      steps:['Llevar el hierro a Lolo','Aguantar su discurso','Recoger la azada'], desc:'Lolo insiste en que una azada es un arma agrícola y que por tanto es competencia de la herrería. Nadie se lo discute.'},
+
+    // ---------- B · LAS CUATRO ESTACIONES (el corazón) ----------
+    {id:'c_almanaque', label:'📖 El Almanaque del Hortelano', npc:'Ramiro', faction:'folk', type:'Investigar · ImageFrame', status:'future', unlocks:'Saber qué se siembra en cada estación',
+      steps:['Recuperar las 4 hojas del almanaque','Colgarlo en la caseta'], desc:'Un cuaderno con cuatro láminas dibujadas: qué se siembra en cada estación. La de invierno está en blanco y Ramiro no quiere hablar de eso.'},
+    {id:'c_prim', label:'🌷 Siembra de Primavera', npc:'Ramiro', faction:'folk', type:'Cultivar · SOLO EN PRIMAVERA', status:'new', coins:14,
+      steps:['Sembrar 12 semillas en primavera','Esperar a que broten','Entregar la primera cosecha'], desc:'Lo que se siembra fuera de tiempo sale, pero sale mal. Y Ramiro lo nota al morderlo.'},
+    {id:'c_ver', label:'☀️ La Canícula', npc:'Ramiro', faction:'folk', type:'Cultivar · SOLO EN VERANO · riego', status:'new', coins:16,
+      steps:['Regar la parcela 3 días seguidos','No dejar que se seque ni una mata','Cosechar 24 tomates'], desc:'En verano el agua se evapora antes de llegar al surco. Aquí se aprende que cultivar es sobre todo cargar cubos.'},
+    {id:'c_oto', label:'🍂 Recogida de Otoño', npc:'Ramiro', faction:'folk', type:'Cultivar · SOLO EN OTOÑO', status:'new', coins:18,
+      steps:['Cosechar 40 unidades antes de la primera helada','Guardarlas en la despensa'], desc:'Se recoge todo, y se recoge ya. Lo que quede fuera cuando cambie la estación, se queda fuera.'},
+    {id:'c_inv', label:'❄️ El Invernadero', npc:'Dr. Papriko → Ramiro', faction:'sci', type:'Construir · SOLO EN INVIERNO', status:'future', unlocks:'Cultivar en invierno bajo cristal',
+      steps:['Fabricar 32 cristales','Levantar el invernadero','Cultivar algo en enero'], desc:'Papriko explica que el cristal atrapa la radiación solar. Ramiro dice que eso ya lo sabía su madre y que se llama "tapar las plantas".'},
+    {id:'c_ciclo', label:'🔄 El Año Completo', npc:'Ramiro', faction:'folk', type:'Hito · las 4 estaciones', status:'future', coins:60, unlocks:'Título: Hortelano de Año Completo',
+      steps:['Haber cultivado en las 4 estaciones','Entregar una cesta con producto de cada una'], desc:'Un año entero de verdad. Ramiro no te felicita: te dice que ya sabes lo que hay, que es su forma de felicitar.'},
+
+    // ---------- C · LOS ÁRBOLES (Garden) ----------
+    {id:'c_vivero', label:'🌳 El Vivero', npc:'Ramiro', faction:'folk', type:'Buscar semillas · Garden', status:'new', unlocks:'Plantar árboles frutales',
+      steps:['Buscar semillas en la hierba alta','Plantar 3 en tierra distinta','Ver cuál agarra'], desc:'Las semillas de árbol no se compran: aparecen entre la hierba, y hay que saber mirar.'},
+    {id:'c_tijeras', label:'✂️ Se Corta, No se Arranca', npc:'Ramiro', faction:'folk', type:'Tutorial · Garden', status:'new',
+      steps:['Conseguir tijeras','Cosechar 10 frutos sin dañar el árbol'], desc:'El que arranca la fruta a mano se lleva la fruta y la rama. Y el año que viene, ni fruta ni rama.'},
+    {id:'c_manzano', label:'🍎 El Manzano que Tarda un Día', npc:'Ramiro', faction:'folk', type:'ESPERA REAL · 1 día', status:'new', coins:22,
+      steps:['Plantar el manzano','Volver al día siguiente','Cosechar 12 manzanas'], desc:'Un día entero, del de verdad. Ramiro te manda a tu casa: dice que el árbol no crece si lo miras.'},
+    {id:'c_citricos', label:'🍋 Los Cítricos de Papriko', npc:'Dr. Papriko', faction:'sci', type:'Cultivar · Entregar', status:'new', coins:20,
+      steps:['Plantar limonero, limero y naranjo','Entregar 6 de cada'], desc:'Papriko dice que necesita cítricos por el escorbuto. En la excavación no hay escorbuto. Papriko insiste.'},
+    {id:'c_injerto', label:'🔬 El Injerto Imposible', npc:'Dr. Papriko', faction:'sci', type:'Elaborar · Minijuego', status:'future',
+      steps:['Traer esqueje de dos árboles distintos','Injertarlos en la mesa de Papriko','Plantarlo y rezar'], desc:'En Jarvard, dice, esto lo hacían con dos ramas y un trapo. Aquí también, pero con un trapo mejor.'},
+    {id:'c_centenario', label:'🌲 El Árbol del Abuelo', npc:'Ramiro', faction:'secret', type:'Secreta · Investigar', status:'future',
+      steps:['Encontrar el tocón viejo','Descubrir de quién era','No contárselo a nadie'], desc:'Hay un tocón en el borde de la vega que Ramiro no deja tocar. Dice que ahí había un árbol. No dice más.'},
+
+    // ---------- D · LA VID Y EL LAGAR (BreweryX) ----------
+    {id:'c_cepas', label:'🍇 Cepas Viejas', npc:'Señor Trapo', faction:'folk', type:'Cultivar · Garden', status:'new',
+      steps:['Plantar 8 vides','Entutorarlas con 8 vallas'], desc:'Trapo quiere vino porque, dice, un barco necesita bodega. El bar no es un barco. Trapo sigue.'},
+    {id:'c_vendimia', label:'🍇 La Vendimia', npc:'Señor Trapo', faction:'folk', type:'Cosechar · en OTOÑO', status:'new', coins:24,
+      steps:['Cosechar 64 uvas en otoño','Llevarlas al bar antes de que anochezca'], desc:'La uva se recoge en tres días o se pasa. Los tres días son de verdad.'},
+    {id:'c_lagar', label:'🦶 El Lagar', npc:'Señor Trapo', faction:'folk', type:'Minijuego · pisar la uva', status:'future', unlocks:'Mosto',
+      steps:['Meterte en el lagar','Pisar sin salirte (aguantar en la zona)','Llenar 4 cubas'], desc:'Se pisa descalzo. Trapo lo comprueba. Nadie sabe por qué lo comprueba.'},
+    {id:'c_anada', label:'🛢️ La Añada', npc:'Señor Trapo', faction:'folk', type:'ESPERA REAL · BreweryX', status:'live', coins:30,
+      steps:['Fermentar el mosto','Añejar en barrica de roble','Volver cuando esté'], desc:'El vino no se hace: se espera. Trapo aprovecha para contarte otra vez lo del barco.'},
+    {id:'c_cata', label:'🍷 La Cata a Ciegas', npc:'Señor Trapo', faction:'folk', type:'Minijuego · adivinar', status:'future', coins:25,
+      steps:['Probar 5 vinos con los ojos vendados','Acertar 3 añadas'], desc:'Trapo jura que distingue la añada por el olor. Trapo no distingue el vino del vinagre, pero lo jura igual.'},
+    {id:'c_sidra', label:'🍏 Sidra de la Casa', npc:'Señor Trapo', faction:'folk', type:'Elaborar · BreweryX', status:'live', coins:18,
+      steps:['Traer 40 manzanas','Prensarlas','Fermentar 2 días'], desc:'Se escancia en alto porque sí. La mitad acaba en el suelo y eso, dice Trapo, forma parte del proceso.'},
+
+    // ---------- E · CONSERVAS Y DESPENSA (EmakiCooking) ----------
+    {id:'c_frascos', label:'🫙 Los Frascos de la Abuela', npc:'Sor Eufrasia', faction:'folk', type:'Recoger · Entregar', status:'live', unlocks:'Poder hacer conservas',
+      steps:['Recuperar 12 frascos del convento','Hervirlos','Entregar 6 a Ramiro'], desc:'Sor Eufrasia tiene una despensa con frascos de hace treinta años. Alguno todavía se mueve.'},
+    {id:'c_mermelada', label:'🍓 Mermelada', npc:'Chef Calderón', faction:'folk', type:'Elaborar · EmakiCooking', status:'new', coins:16,
+      steps:['20 fresas + azúcar','Cocer en el wok','Envasar en 4 frascos'], desc:'Calderón sostiene que la mermelada es una salsa que se rindió. La hace igual.'},
+    {id:'c_encurtido', label:'🥒 Encurtidos', npc:'Chef Calderón', faction:'folk', type:'Elaborar · ESPERA REAL', status:'new', coins:14,
+      steps:['Meter 16 pepinos en salmuera','Esperar 3 días','Catarlos'], desc:'Tres días en un bote. Calderón dice que si los abres antes se enteran.'},
+    {id:'c_secadero', label:'🍅 El Secadero', npc:'Ramiro', faction:'folk', type:'Cultivar · SOLO EN VERANO', status:'future',
+      steps:['Tender 32 tomates al sol','Que no llueva encima','Recogerlos secos'], desc:'Si llueve, se pierden. Ramiro mira al cielo todo el rato y no disimula.'},
+    {id:'c_despensa', label:'🏚️ La Despensa de Invierno', npc:'Ramiro', faction:'folk', type:'Entregar · hito', status:'future', coins:40,
+      steps:['Llenar la despensa con 10 conservas distintas','Cerrarla antes del primer día de invierno'], desc:'Aquí es donde se ve si has entendido el año o solo has estado plantando cosas.'},
+    {id:'c_rancho', label:'🍲 El Rancho de la Excavación', npc:'Obrero Olegario', faction:'sci', type:'Entregar · repetible', status:'live', coins:12,
+      steps:['Entregar 8 conservas a la semana'], desc:'Olegario firmó la casilla de VÍVERES. Esta vez a propósito, dice. Nadie le cree.'},
+
+    // ---------- F · PLAGAS, BICHOS Y CLIMA ----------
+    {id:'c_plaga', label:'🐛 Algo se Come las Coles', npc:'Ramiro', faction:'folk', type:'Matar · MythicMobs', status:'future',
+      steps:['Vigilar la parcela de noche','Matar 12 orugas','Traer una entera'], desc:'Se las come algo. Ramiro dice que conejos. Las marcas no son de conejo.'},
+    {id:'c_espanta', label:'🎃 El Espantapájaros', npc:'Ramiro', faction:'folk', type:'Elaborar · Colocar', status:'new', unlocks:'Menos pérdidas por bichos',
+      steps:['Montar el espantapájaros','Colocarlo mirando al este'], desc:'Tiene que mirar al este. Ramiro no sabe por qué, pero su padre lo ponía así y a su padre no le comían las coles.'},
+    {id:'c_helada', label:'🥶 La Helada Negra', npc:'Ramiro', faction:'folk', type:'Evento · SOLO EN INVIERNO', status:'future',
+      steps:['Cubrir la parcela antes del amanecer','Salvar al menos la mitad'], desc:'Una noche al año hiela de verdad. No avisa, pero se nota en el aire, y para cuando lo notas ya vas tarde.'},
+    {id:'c_sequia', label:'🔥 La Sequía', npc:'Ramiro', faction:'folk', type:'Evento · Deadly Disasters', status:'future',
+      steps:['Racionar el agua','Salvar la cosecha con 12 cubos'], desc:'El pozo baja. El Interventor sube la tasa. Las dos cosas pasan el mismo día y nadie las relaciona.'},
+    {id:'c_topos', label:'🕳️ Los Topos del Ayuntamiento', npc:'Registrador', faction:'gold', type:'Burocracia · Matar', status:'future',
+      steps:['Presentar la denuncia por topos','Que la desestimen','Resolverlo tú a paladas'], desc:'El Ayuntamiento responde que los topos no constan como fauna, sino como movimiento de tierras no autorizado, y que el expediente es contra ti.'},
+    {id:'c_conejo', label:'🐇 El Conejo de Nico', npc:'Nico', faction:'folk', type:'Dilema · Entregar', status:'live',
+      steps:['Cazar al conejo que arrasa la vega','...o llevárselo vivo a Nico'], desc:'Ramiro lo quiere en una cazuela. Nico lo quiere en una jaula. El conejo no opina.'},
+
+    // ---------- G · EL MERCADO ----------
+    {id:'c_puesto', label:'🏪 El Puesto del Mercadillo', npc:'Gordi Mamón', faction:'sci', type:'Desbloqueo · UltimateShop', status:'future', unlocks:'Vender tu cosecha (con tope diario)',
+      steps:['Pagar el alta del puesto','Montar el tenderete','Vender 10 unidades'], desc:'El Gordi Mamón siempre dice que el que vende barato vende dos veces, y que él lo sabe por motivos que no vienen al caso.'},
+    {id:'c_precio', label:'💰 Precio de Coste', npc:'Yael Goldstein', faction:'folk', type:'Economía · Investigar', status:'live',
+      steps:['Calcular lo que cuesta producir','Descubrir que pierdes dinero','Renegociar'], desc:'Yael te enseña, encantada, que llevas tres semanas trabajando gratis.'},
+    {id:'c_denominacion', label:'📜 Denominación de Origen', npc:'El Ministro', faction:'gold', type:'Burocracia · larga', status:'future', coins:-50,
+      steps:['Solicitar la denominación','Cinco ventanillas','Pagar la tasa','Recibirla con el nombre mal escrito'], desc:'«Tomate de la Vega del Reino». En el sello pone «Tomate de la Bega». El Ministro dice que ya está impreso.'},
+    {id:'c_exportar', label:'🚢 Exportar por el Puerto', npc:'Bacalao Gabardinez', faction:'folk', type:'Transporte · Entregar', status:'future', coins:35,
+      steps:['Cargar 3 cajones','Que lleguen sin pudrirse'], desc:'Gabardinez acepta el encargo y pregunta, sin mirarte, si va algo de pescado en las cajas.'},
+    {id:'c_cliente', label:'😤 El Cliente Difícil', npc:'Chef Calderón', faction:'folk', type:'Entregar · calidad', status:'future',
+      steps:['Entregar 20 tomates que pasen su examen','Sin uno solo tocado'], desc:'Calderón devuelve la caja tres veces. A la cuarta la acepta sin decir nada, que en Calderón es una ovación.'},
+
+    // ---------- H · LA COCINA (Calderón) ----------
+    {id:'c_wok', label:'🍳 De la Huerta al Wok', npc:'Chef Calderón', faction:'folk', type:'Elaborar · EmakiCooking', status:'live', unlocks:'Recetas con producto propio',
+      steps:['Cortar en la tabla','Saltear en el wok','Servir'], desc:'Calderón acepta por fin que la verdura venga de fuera de una caja. Le cuesta.'},
+    {id:'c_menu', label:'📋 El Menú del Día', npc:'Chef Calderón', faction:'folk', type:'Repetible · diaria', status:'future', coins:15,
+      steps:['Traer los 3 ingredientes que pida hoy','Cocinar el plato'], desc:'Cambia cada día y depende de la estación. En invierno el menú es sopa, y Calderón lo anuncia como si fuera una decisión artística.'},
+    {id:'c_gazpacho', label:'🥣 Gazpacho para la Excavación', npc:'Chef Calderón', faction:'sci', type:'Entregar · SOLO EN VERANO', status:'new', coins:20,
+      steps:['30 tomates','Cocinarlo','Llevar 12 raciones a la Torre'], desc:'A cuarenta grados picando piedra, esto no es comida: es un rescate.'},
+    {id:'c_tarta', label:'🥧 La Tarta de Fresa', npc:'Sor Bete', faction:'folk', type:'Elaborar · Entregar', status:'new',
+      steps:['Hacer la tarta','Subirla al campanario'], desc:'Sor Bete no baja. La tarta sube.'},
+
+    // ---------- I · LA FERIA DE LA COSECHA (evento anual) ----------
+    {id:'c_feria', label:'🎪 La Feria de la Cosecha', npc:'Ayuntamiento', faction:'gold', type:'Evento anual · SOLO EN OTOÑO', status:'future', unlocks:'La feria (evento de temporada)',
+      steps:['Inscribirte','Presentar tu mejor pieza'], desc:'Una vez al año el Ayuntamiento organiza una feria y cobra por participar, por mirar y por aparcar.'},
+    {id:'c_calabaza', label:'🎃 La Calabaza Más Grande', npc:'Ramiro', faction:'folk', type:'Competición · ESPERA REAL', status:'future', coins:50,
+      steps:['Cuidar la calabaza toda la estación','Que nadie la toque','Pesarla en la feria'], desc:'Ramiro lleva nueve años segundo. No dice contra quién.'},
+    {id:'c_jurado', label:'⚖️ El Jurado', npc:'El Ministro', faction:'gold', type:'Burocracia · decisión', status:'future',
+      steps:['Descubrir quién puntúa','Decidir si le llevas un detalle'], desc:'El jurado es imparcial. El Ministro lo repite dos veces, que es una más de las necesarias.'},
+    {id:'c_sabotaje', label:'🔪 Sabotaje en la Feria', npc:'???', faction:'secret', type:'SECRETA · Investigar', status:'future',
+      steps:['Encontrar quién pinchó la calabaza','Decidir qué haces con eso'], desc:'Alguien entró de noche. Hay una huella, y no es de bota de campo.'},
+
+    // ---------- J · LO QUE YA SE CULTIVA HOY (enganches con lo existente) ----------
+    {id:'c_maria', label:'🌿 Cultivo Clandestino', npc:'La Alquimista', faction:'folk', type:'YA EXISTE · saga viva', status:'live', coins:26,
+      steps:['(saga real: La Huerta → El Secadero → El Laboratorio)'], desc:'El primer cultivo del server, y el que enseñó que esperar cuatro horas por una planta funciona. Todo esto sale de ahí.'},
+    {id:'c_tabaco', label:'🚬 La Rama del Tabaco', npc:'Yaniko', faction:'folk', type:'YA EXISTE · saga viva', status:'live',
+      steps:['(saga real: yaniko_00 → yaniko_04)'], desc:'La otra planta que ya se cultiva y se vende, con su tope diario y todo.'},
+    {id:'c_setas', label:'🍄 Setas del Sótano', npc:'La Alquimista', faction:'folk', type:'Cultivar · a oscuras', status:'future',
+      steps:['Preparar un sótano sin luz','Sembrar el micelio','Cosechar sin abrir la puerta'], desc:'Crecen en lo oscuro y con humedad. La Alquimista se ofrece a probarlas todas, que es justo lo que se teme.'},
+
+    // ---------- K · SECRETAS Y RARAS ----------
+    {id:'c_ender', label:'👁️ La Planta que No Es de Aquí', npc:'???', faction:'secret', type:'SECRETA · Cultivar', status:'new',
+      steps:['Conseguir la semilla rara','Plantarla en piedra del End','No mirarla mientras crece'], desc:'Hay una semilla que no prende en tierra. Prende en piedra del End, que nadie tiene motivo para traer a una huerta.'},
+    {id:'c_luna', label:'🌙 Sembrar en Luna Nueva', npc:'Rancio el Profeta', faction:'secret', type:'SECRETA · SOLO DE NOCHE', noche:true, status:'future',
+      steps:['Sembrar de madrugada','Con luna nueva','Volver a los tres días'], desc:'Rancio dice que lo sembrado en luna nueva sale distinto. Sale distinto. Nadie ha querido investigar por qué.'},
+    {id:'c_convento', label:'⛪ El Huerto del Convento', npc:'Sor Eufrasia', faction:'folk', type:'Cultivar · cerrado', status:'future',
+      steps:['Pedir permiso para entrar','Trabajar el huerto una semana','Aguantar el horario'], desc:'Se entra a las seis. Sor Eufrasia no considera que eso sea temprano ni que sea negociable.'},
+    {id:'c_semilla', label:'🎁 La Semilla del Fondo del Saco', npc:'Ramiro', faction:'secret', type:'SECRETA · azar', status:'future',
+      steps:['Comprar sacos hasta que salga','Plantarla','Ver qué sale'], desc:'Uno de cada muchos sacos trae una semilla que no es de las que vende. Ramiro dice que se cuelan solas.'},
+    // ---------- L · EL CORRAL (animales) ----------
+    {id:'c_corral', label:'🚜 El Corral Vacío', npc:'Doña Perpetua (NPC nuevo)', faction:'folk', type:'Reparar · entrada de zona', status:'future', unlocks:'La zona del corral',
+      steps:['Reparar 3 tramos de valla','Limpiar el abrevadero'], desc:'Doña Perpetua tuvo cuarenta gallinas. Ahora tiene una valla rota y una opinión muy formada sobre los jóvenes.'},
+    {id:'c_gallinas', label:'🐔 Las Gallinas de Doña Perpetua', npc:'Doña Perpetua', faction:'folk', type:'Criar · Entregar', status:'live', coins:12,
+      steps:['Recuperar 6 gallinas sueltas','Devolverlas al corral'], desc:'Las gallinas se le escaparon en marzo. Ella dice que se fueron, con ese tono.'},
+    {id:'c_huevos', label:'🥚 Docena Diaria', npc:'Doña Perpetua', faction:'folk', type:'REPETIBLE · diaria', status:'future', coins:10,
+      steps:['Recoger 12 huevos','Entregarlos antes del mediodía'], desc:'Doce huevos al día. Ni once ni trece: Doña Perpetua los cuenta delante de ti y no habla mientras cuenta.'},
+    {id:'c_vaca', label:'🐄 La Vaca Preñada', npc:'Doña Perpetua', faction:'folk', type:'Criar · ESPERA REAL', status:'live',
+      steps:['Buscar la vaca perdida','Traerla al corral','Esperar a que para'], desc:'La vaca se llama Rosario y, según Doña Perpetua, entiende castellano y algo de aritmética.'},
+    {id:'c_leche', label:'🥛 El Ordeño de las Cinco', npc:'Doña Perpetua', faction:'folk', type:'REPETIBLE · a una hora fija', status:'new', coins:8,
+      steps:['Ordeñar 6 vacas','A primera hora, no a media mañana'], desc:'A las cinco. Doña Perpetua no negocia la hora y la vaca tampoco.'},
+    {id:'c_veterinario', label:'💉 El Veterinario', npc:'Veterinario (NPC nuevo)', faction:'sci', type:'Recado · Entregar', status:'future',
+      steps:['Ir a buscarlo al Bar Co','Convencerlo de que venga','Traer las hierbas que pide'], desc:'Estudió tres cursos y medio. El medio, dice, fue el importante.'},
+    {id:'c_cerdo', label:'🐖 El Cerdo que No Se Come', npc:'Nico', faction:'folk', type:'Dilema · mascota', status:'live',
+      steps:['Criar al cerdo','Decidir su destino'], desc:'Nico le ha puesto nombre. Doña Perpetua avisa de que eso es exactamente lo que no hay que hacer.'},
+    {id:'c_perro', label:'🐕 Un Perro para la Finca', npc:'Nico', faction:'folk', type:'Desbloqueo · EcoPets', status:'future', unlocks:'Perro guardián (mascota con función)',
+      steps:['Adoptar el perro del refugio','Enseñarle la finca'], desc:'El perro no cuida nada, pero ladra cuando alguien entra, que es el 90% del trabajo.'},
+
+    // ---------- M · LA QUESERÍA ----------
+    {id:'c_queseria', label:'🧀 La Quesería Cerrada', npc:'El Quesero (NPC nuevo)', faction:'folk', type:'Reparar · entrada de zona', status:'future', unlocks:'La quesería',
+      steps:['Limpiar la cava','Reparar la prensa'], desc:'Cerró cuando se murió el anterior quesero. Nadie ha vuelto a abrirla porque el olor, dicen, sigue trabajando.'},
+    {id:'c_cuajo', label:'🥛 El Cuajo', npc:'El Quesero', faction:'folk', type:'Buscar · Elaborar', status:'future',
+      steps:['Conseguir cuajo','Cuajar 8 litros'], desc:'El quesero explica de dónde sale el cuajo. Es mejor no preguntar dos veces.'},
+    {id:'c_curacion', label:'🕰️ La Cava de Curación', npc:'El Quesero', faction:'folk', type:'ESPERA REAL · días', status:'future', coins:28,
+      steps:['Meter 4 quesos en la cava','Voltearlos cada día','Sacarlos a los 5 días'], desc:'Hay que darles la vuelta a diario. Si un día no vas, se nota en la corteza y el quesero lo ve al momento.'},
+    {id:'c_queso_feria', label:'🏆 El Queso de Concurso', npc:'El Quesero', faction:'folk', type:'Competición', status:'future',
+      steps:['Curar un queso 10 días','Presentarlo en la feria'], desc:'El quesero lleva sin presentarse desde el año del incidente. No cuenta cuál fue el incidente.'},
+
+    // ---------- N · EL COLMENAR ----------
+    {id:'c_colmenar', label:'🐝 El Colmenar Abandonado', npc:'El Apicultor (NPC nuevo)', faction:'folk', type:'Reparar · entrada de zona', status:'future', unlocks:'El colmenar',
+      steps:['Recuperar 5 colmenas','Colocarlas mirando al sur'], desc:'El apicultor no lleva protección. Dice que las abejas notan el miedo y que él ya no le tiene miedo a casi nada.'},
+    {id:'c_enjambre', label:'🐝 Cazar un Enjambre', npc:'El Apicultor', faction:'folk', type:'Buscar · Minijuego', status:'future',
+      steps:['Encontrar el enjambre en el bosque','Traerlo sin que se disperse'], desc:'Se traslada de noche y sin correr. Correr es lo peor que puedes hacer, y es lo único que te va a apetecer.'},
+    {id:'c_miel', label:'🍯 La Primera Miel', npc:'El Apicultor', faction:'folk', type:'Cosechar · Entregar', status:'live', coins:18,
+      steps:['Recoger 6 panales','Envasar la miel'], desc:'La primera miel del año se reparte, no se vende. El apicultor es muy serio con esto.'},
+    {id:'c_polinizar', label:'🌼 Polinizar la Vega', npc:'El Apicultor', faction:'folk', type:'Hito · sube la cosecha', status:'future', unlocks:'+ rendimiento en toda la vega',
+      steps:['Colocar 3 colmenas junto a las parcelas','Plantar flores alrededor'], desc:'Nadie del pueblo entiende por qué desde que hay abejas la vega da más. El apicultor lo ha explicado cuatro veces.'},
+    {id:'c_hidromiel', label:'🍺 Hidromiel', npc:'Señor Trapo', faction:'folk', type:'Elaborar · BreweryX', status:'live', coins:20,
+      steps:['16 de miel','Fermentar','Añejar'], desc:'Trapo lo llama "la bebida de los antiguos". Es miel con agua, pero suena mejor así.'},
+
+    // ---------- O · EL MOLINO ----------
+    {id:'c_molino', label:'🌬️ El Molino Parado', npc:'El Molinero (NPC nuevo)', faction:'folk', type:'Reparar · entrada de zona', status:'future', unlocks:'El molino',
+      steps:['Subir a las aspas','Cambiar el eje'], desc:'Lleva parado nueve años. El molinero sigue yendo cada mañana a la misma hora.'},
+    {id:'c_aspas', label:'🪵 Las Aspas Rotas', npc:'El Molinero', faction:'folk', type:'Elaborar · Entregar', status:'live',
+      steps:['32 tablones','4 velas de lona'], desc:'La lona la cosió su mujer. El molinero no deja que la toque nadie más y por eso lleva nueve años parado.'},
+    {id:'c_trigo', label:'🌾 Trigo del Bancal', npc:'El Molinero', faction:'folk', type:'Cultivar · SOLO EN VERANO', status:'live', coins:16,
+      steps:['Sembrar el bancal alto','Segar 64 de trigo'], desc:'El bancal de arriba solo sirve para trigo. Lo demás se hiela.'},
+    {id:'c_harina', label:'⚙️ Moler la Harina', npc:'El Molinero', faction:'folk', type:'Minijuego · el molino', status:'future',
+      steps:['Cargar el trigo','Ajustar la muela','Sacar 16 de harina'], desc:'Si aprietas la muela, la harina sale quemada. Si la aflojas, sale gorda. El punto está en algún sitio.'},
+    {id:'c_pan', label:'🍞 El Pan de Cada Día', npc:'Chef Calderón', faction:'folk', type:'REPETIBLE · EmakiCooking', status:'new', coins:12,
+      steps:['Amasar','Hornear 8 hogazas','Repartirlas'], desc:'Calderón acepta harina del molino. Le costó, pero acepta.'},
+
+    // ---------- P · LAS ACEQUIAS (el agua) ----------
+    {id:'c_acequia', label:'💧 Las Acequias Secas', npc:'Ramiro', faction:'folk', type:'Construir', status:'future', unlocks:'Riego por acequia (menos cubos)',
+      steps:['Cavar 60 bloques de acequia','Conectarla al pozo'], desc:'Antes el agua llegaba sola. Se dejó de limpiar la acequia y en dos años el agua ya no sabía el camino.'},
+    {id:'c_regante', label:'🚰 El Regante', npc:'El Regante (NPC nuevo)', faction:'folk', type:'Negociar · pagar', status:'future',
+      steps:['Hablar con el Regante','Aceptar tu turno','Pagarle "la voluntad"'], desc:'Él decide quién riega y cuándo. No tiene ningún cargo. Nadie recuerda cómo empezó esto.'},
+    {id:'c_turno', label:'🕓 Tu Turno de Agua', npc:'El Regante', faction:'folk', type:'REPETIBLE · a una hora fija', status:'future',
+      steps:['Abrir tu compuerta en tu turno','Cerrarla al acabar'], desc:'Te ha tocado el turno de las cuatro de la mañana. Al Regante le ha tocado el de las once, por casualidad.'},
+    {id:'c_robo_agua', label:'🌑 Alguien Abre la Compuerta', npc:'???', faction:'secret', type:'SECRETA · vigilar de noche', noche:true, status:'future',
+      steps:['Vigilar la acequia de noche','Ver quién es','Decidir si lo cuentas'], desc:'Tres noches seguidas amanece tu parcela seca y la de al lado encharcada.'},
+    {id:'c_noria', label:'🎡 La Noria', npc:'Dr. Papriko', faction:'sci', type:'Construir · Papriko', status:'future', unlocks:'Riego automático',
+      steps:['Montar la noria','Que el río la mueva'], desc:'Papriko la llama "bomba hidráulica de tracción fluvial". Ramiro la llama noria. Es una noria.'},
+
+    // ---------- Q · LA ERA Y EL SILO ----------
+    {id:'c_era', label:'🟡 La Era', npc:'Ramiro', faction:'folk', type:'Construir', status:'future',
+      steps:['Allanar la era','Empedrarla'], desc:'Un círculo de piedra donde se trilla. Lleva ahí desde antes que el pueblo, y eso a nadie le llama la atención.'},
+    {id:'c_trilla', label:'🐴 La Trilla', npc:'Horse Luis', faction:'folk', type:'Minijuego · dar vueltas', status:'future', coins:14,
+      steps:['Enganchar a Horse Luis','Dar 20 vueltas a la era','Aventar el grano'], desc:'Horse Luis lo hace encantado. Dice que es lo único que le recuerda a cuando servía para algo, y lo dice sin pena.'},
+    {id:'c_silo', label:'🏗️ El Silo', npc:'Ramiro', faction:'folk', type:'Construir · almacenar', status:'future', unlocks:'Guardar cosecha sin que se pudra',
+      steps:['Levantar el silo','Llenarlo con 5 sacos'], desc:'Lo que no cabe en el silo se pudre. Y en el silo cabe justo lo que cabe.'},
+    {id:'c_ratas', label:'🐀 Ratas en el Silo', npc:'Ramiro', faction:'folk', type:'Matar · MythicMobs', status:'live',
+      steps:['Bajar al silo de noche','Matar 20 ratas','Tapar el agujero'], desc:'Hay un agujero por el que entran. Lo tapas, y a la semana hay otro agujero, en otro sitio, del mismo tamaño.'},
+
+    // ---------- R · SEMILLAS, CRUCES Y VARIEDADES ----------
+    {id:'c_semillera', label:'🌰 La Semillera', npc:'La Semillera (NPC nuevo)', faction:'folk', type:'Comerciar · desbloqueo', status:'future', unlocks:'Comprar semillas raras',
+      steps:['Encontrar su carro','Comprarle el primer sobre'], desc:'Va de pueblo en pueblo con un carro lleno de sobres sin etiquetar. Sabe lo que hay en cada uno.'},
+    {id:'c_banco_semillas', label:'🏛️ El Banco de Semillas', npc:'La Semillera', faction:'folk', type:'Coleccionar', status:'future', unlocks:'Guardar variedades',
+      steps:['Depositar una semilla de cada cultivo','Etiquetarlas'], desc:'Un armario con cajones numerados. Ella dice que es por si un año sale mal. No dice cómo de mal.'},
+    {id:'c_cruce', label:'🧬 El Cruce', npc:'Dr. Papriko + La Semillera', faction:'sci', type:'Elaborar · Minijuego', status:'future',
+      steps:['Cruzar dos variedades','Sembrar las 4 semillas resultantes','Ver cuál sale'], desc:'Papriko aporta el método. La Semillera aporta el criterio. Discuten todo el rato y sale bien.'},
+    {id:'c_variedad', label:'✍️ Tu Propia Variedad', npc:'La Semillera', faction:'folk', type:'Hito · le pones NOMBRE', status:'future', unlocks:'Una variedad con tu nombre en el banco',
+      steps:['Estabilizar el cruce 3 generaciones','Registrarla'], desc:'Se registra con el nombre que tú digas. Va a quedarse ahí para siempre, así que piénsalo.'},
+    {id:'c_extinta', label:'🕯️ La Variedad Perdida', npc:'???', faction:'secret', type:'SECRETA · Investigar', status:'future',
+      steps:['Encontrar el cajón vacío','Averiguar qué había','Buscar si queda alguna'], desc:'En el banco de semillas hay un cajón con etiqueta y sin semillas. La etiqueta está escrita con otra letra.'},
+
+    // ---------- S · EL SINDICATO DE HORTELANOS ----------
+    {id:'c_sindicato', label:'🤝 El Sindicato de Hortelanos', npc:'Ramiro → Registrador', faction:'gold', type:'Burocracia · alta', status:'future', unlocks:'Encargos del sindicato',
+      steps:['Darte de alta','Aportar dos avales','Pagar la cuota'], desc:'Son once y se reúnen en el Bar Co. Diez van por la cerveza.'},
+    {id:'c_cuota', label:'💸 La Cuota', npc:'Interventor', faction:'gold', type:'REPETIBLE · sumidero', status:'future', coins:-15,
+      steps:['Pagar la cuota mensual'], desc:'La cuota cubre gastos de representación. La representación es una cena al año.'},
+    {id:'c_huelga', label:'✊ La Huelga del Tomate', npc:'Sindicato', faction:'folk', type:'Decisión · evento', status:'future',
+      steps:['Decidir si te sumas','Aguantar la semana sin vender','O romper la huelga'], desc:'El Ayuntamiento ha bajado el precio del tomate. El sindicato propone no vender ni uno. Alguien va a vender.'},
+    {id:'c_asamblea', label:'🚩 La Asamblea', npc:'Liu Qingdao (Gremio del Puerto)', faction:'folk', type:'Escuchar · larga', status:'future',
+      steps:['Asistir a la asamblea','Aguantar hasta el final','Votar'], desc:'Los del puerto se ofrecen a asesorar al sindicato en materia de organización. Duran cuatro horas y lo llaman punto primero.'},
+
+    // ---------- T · ROBOS Y VIGILANCIA ----------
+    {id:'c_guarda', label:'🎖️ El Guarda Rural', npc:'El Guarda (NPC nuevo)', faction:'folk', type:'Recado · presentación', status:'future',
+      steps:['Presentarte al guarda','Que te apunte en su libreta'], desc:'Tiene una libreta con todos los nombres del pueblo y una anotación al lado de cada uno. No enseña la libreta.'},
+    {id:'c_ronda', label:'🔦 La Ronda de Noche', npc:'El Guarda', faction:'folk', type:'REPETIBLE · SOLO DE NOCHE', noche:true, status:'future', coins:14,
+      steps:['Recorrer los 6 puntos de la vega','Antes del amanecer'], desc:'Seis puntos, en orden, sin saltarse ninguno. El guarda lo sabe si te saltas uno.'},
+    {id:'c_ladron', label:'🍐 El que Roba la Fruta', npc:'Edelmiro Garrapata', faction:'folk', type:'Investigar · Sigilo', status:'future',
+      steps:['Seguir el rastro','Descubrir que es Garrapata','Escuchar su explicación'], desc:'Garrapata no roba fruta por hambre: la roba porque es lo único que puede robar sin hacer ruido, y necesitaba probarlo.'},
+    {id:'c_trampa', label:'🪤 Trampas para el Ladrón', npc:'El Guarda', faction:'folk', type:'Colocar · Minijuego', status:'future',
+      steps:['Colocar 8 trampas','Sin que caiga ningún vecino'], desc:'Las trampas son legales. Que caiga un vecino, no. El guarda insiste mucho en esa distinción.'},
+
+    // ---------- U · CRUCES CON OTROS MUNDOS Y SECRETOS ----------
+    {id:'c_espantavivo', label:'👻 El Espantapájaros se Movió', npc:'???', faction:'secret', type:'SECRETA · terror', noche:true, status:'future',
+      steps:['Comprobar dónde lo dejaste','Volver de noche','No mirarlo dos veces'], desc:'Lo pusiste mirando al este. Está mirando a la casa. Ramiro dice que lo habrás movido tú.'},
+    {id:'c_pozo_fondo', label:'🕳️ El Fondo del Pozo', npc:'???', faction:'secret', type:'SECRETA · Explorar', status:'future',
+      steps:['Bajar al pozo','Encontrar lo que hay','Volver a subir'], desc:'El pozo tiene más profundidad de la que necesita un pozo.'},
+    {id:'c_hostil', label:'⛏️ Semillas en Tierra Hostil', npc:'Bacalao Gabardinez', faction:'folk', type:'Cultivar · OTRO MUNDO', status:'future',
+      steps:['Llevar semillas en el barco','Plantarlas en la isla','Volver antes de que zarpe'], desc:'Nadie ha intentado cultivar en una isla que se cae a cachos. Ramiro dice que por algo será.'},
+    {id:'c_abismo', label:'🌑 El Musgo del Abismo', npc:'Dra. Pizarrica', faction:'sci', type:'Buscar · OTRO MUNDO', status:'future',
+      steps:['Bajar al Abismo','Recoger 8 de musgo','Intentar cultivarlo arriba'], desc:'Crece a mil bloques de profundidad y sin luz. Pizarrica quiere saber si crece aquí. Ramiro no quiere eso en su vega.'},
+    {id:'c_backrooms', label:'🚪 La Planta del Pasillo', npc:'???', faction:'secret', type:'SECRETA · muy rara', status:'future',
+      steps:['(no consta cómo se consigue)'], desc:'Alguien trajo un esqueje de un sitio donde no hay sol. Sigue vivo. No debería.'},
+
+    {id:'c_oficio', label:'🏅 Maestro Hortelano', npc:'Ramiro', faction:'folk', type:'FINAL DE RAMA · oficio', status:'future', coins:100, unlocks:'Oficio de Hortelano: encargos diarios y tu propia finca',
+      steps:['Cerrar el año completo','Tener la despensa llena','Ganar algo en la feria','Que Calderón te acepte una caja a la primera','Tener las cuatro zonas en marcha'], desc:'Ramiro te da la azada buena, la que no enseña a nadie, y se sienta. Es lo más parecido a un discurso que va a hacer.'},
+  ];
+
+  const EC = [
+    // A: la parcela
+    ['c_parcela','c_estiercol'],['c_parcela','c_agua'],['c_parcela','c_azada'],
+    // B: las estaciones
+    ['c_estiercol','c_almanaque'],['c_agua','c_almanaque'],
+    ['c_almanaque','c_prim'],['c_prim','c_ver'],['c_ver','c_oto'],['c_oto','c_inv'],['c_inv','c_ciclo'],
+    // C: los árboles
+    ['c_prim','c_vivero'],['c_vivero','c_tijeras'],['c_tijeras','c_manzano'],['c_manzano','c_citricos'],
+    ['c_citricos','c_injerto'],['c_injerto','c_centenario','future'],
+    // D: la vid
+    ['c_vivero','c_cepas'],['c_cepas','c_vendimia'],['c_vendimia','c_lagar'],['c_lagar','c_anada'],
+    ['c_anada','c_cata'],['c_manzano','c_sidra'],
+    // E: conservas
+    ['c_oto','c_frascos'],['c_frascos','c_mermelada'],['c_mermelada','c_encurtido'],
+    ['c_ver','c_secadero'],['c_encurtido','c_despensa'],['c_secadero','c_despensa'],['c_despensa','c_rancho'],
+    // F: plagas
+    ['c_prim','c_plaga'],['c_plaga','c_espanta'],['c_inv','c_helada'],['c_ver','c_sequia'],
+    ['c_espanta','c_topos'],['c_plaga','c_conejo'],
+    // G: mercado
+    ['c_oto','c_puesto'],['c_puesto','c_precio'],['c_precio','c_denominacion'],
+    ['c_denominacion','c_exportar'],['c_puesto','c_cliente'],
+    // H: cocina
+    ['c_mermelada','c_wok'],['c_wok','c_menu'],['c_ver','c_gazpacho'],['c_mermelada','c_tarta'],
+    // I: la feria
+    ['c_oto','c_feria'],['c_feria','c_calabaza'],['c_feria','c_jurado'],['c_calabaza','c_sabotaje','future'],
+    // J: lo que ya existe
+    ['c_almanaque','c_maria'],['c_maria','c_tabaco'],['c_maria','c_setas'],
+    // K: secretas
+    ['c_vivero','c_ender','future'],['c_ciclo','c_luna','future'],['c_frascos','c_convento'],
+    ['c_puesto','c_semilla','future'],
+    // L: el corral
+    ['c_estiercol','c_corral'],['c_corral','c_gallinas'],['c_gallinas','c_huevos'],
+    ['c_corral','c_vaca'],['c_vaca','c_leche'],['c_vaca','c_veterinario'],
+    ['c_gallinas','c_cerdo'],['c_corral','c_perro'],
+    // M: la quesería
+    ['c_leche','c_queseria'],['c_queseria','c_cuajo'],['c_cuajo','c_curacion'],['c_curacion','c_queso_feria'],
+    // N: el colmenar
+    ['c_prim','c_colmenar'],['c_colmenar','c_enjambre'],['c_enjambre','c_miel'],
+    ['c_miel','c_polinizar'],['c_miel','c_hidromiel'],
+    // O: el molino
+    ['c_era','c_molino'],['c_molino','c_aspas'],['c_aspas','c_trigo'],['c_trigo','c_harina'],['c_harina','c_pan'],
+    // P: las acequias
+    ['c_agua','c_acequia'],['c_acequia','c_regante'],['c_regante','c_turno'],
+    ['c_turno','c_robo_agua','future'],['c_acequia','c_noria'],
+    // Q: la era y el silo
+    ['c_oto','c_era'],['c_era','c_trilla'],['c_trilla','c_silo'],['c_silo','c_ratas'],
+    // R: semillas y cruces
+    ['c_almanaque','c_semillera'],['c_semillera','c_banco_semillas'],['c_banco_semillas','c_cruce'],
+    ['c_cruce','c_variedad'],['c_banco_semillas','c_extinta','future'],
+    // S: el sindicato
+    ['c_puesto','c_sindicato'],['c_sindicato','c_cuota'],['c_sindicato','c_huelga'],['c_sindicato','c_asamblea'],
+    // T: robos y vigilancia
+    ['c_espanta','c_guarda'],['c_guarda','c_ronda'],['c_ronda','c_ladron'],['c_ladron','c_trampa'],
+    // U: cruces con otros mundos y secretos
+    ['c_espanta','c_espantavivo','future'],['c_agua','c_pozo_fondo','future'],
+    ['c_exportar','c_hostil','future'],['c_ender','c_abismo','future'],['c_abismo','c_backrooms','future'],
+    // el final
+    ['c_ciclo','c_oficio'],['c_despensa','c_oficio'],['c_calabaza','c_oficio'],['c_cliente','c_oficio'],
+    ['c_variedad','c_oficio'],['c_polinizar','c_oficio'],['c_silo','c_oficio'],['c_curacion','c_oficio'],
   ];
 
   /* 🎓 Las 5 clases del MMO: nombre y color. El color NO está inventado — es el mismo que
@@ -4779,20 +5134,30 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
   const LAY={name:'dagre', rankDir:'TB', nodeSep:REPARTO.nodesep, rankSep:REPARTO.ranksep,
     edgeSep:REPARTO.edgesep, ranker:REPARTO.ranker};
 
-  const elements = [];
-  N.forEach(n=>{
-    const d=Object.assign({}, n);
-    // 🎓 La clase se ESCRIBE SOLA en la etiqueta a partir del campo `clase`. Ponerla a mano en el
-    // label sería dos sitios que decir lo mismo, y el día que se renombre una clase se quedaría
-    // uno viejo. Aquí, añadir `clase:'loco'` ya lo dice todo: forma, color y nombre.
-    if(d.clase&&CLASE[d.clase]) d.label=d.label+'\n🎓 Solo: '+CLASE[d.clase][0];
-    // 🌙 Igual que la clase: se pone `noche:true` y la luna se escribe sola. Va DELANTE del
-    // nombre porque es lo primero que hay que saber — una misión nocturna a la que vas de día
-    // es un jugador dando vueltas sin entender por qué no está el NPC.
-    if(d.noche) d.label='🌙 '+d.label;
-    elements.push({data:d});
-  });
-  E.forEach(e=>elements.push({data:{id:e[0]+'>'+e[1], source:e[0], target:e[1], kind:e[2]||'main'}}));
+  /* Construye los elementos de Cytoscape a partir de un par (nodos, aristas).
+     🔴 Es una FUNCIÓN y no código suelto porque hay DOS datasets: el mapa real (N/E) y la
+     pestaña simulada de cultivos (NC/EC). Antes esto estaba en línea; al meter la pestaña se
+     extrajo tal cual, sin tocar la lógica. */
+  function construir(nodos, aristas){
+    const els=[];
+    nodos.forEach(n=>{
+      const d=Object.assign({}, n);
+      // 🎓 La clase se ESCRIBE SOLA en la etiqueta a partir del campo `clase`. Ponerla a mano en el
+      // label sería dos sitios que decir lo mismo, y el día que se renombre una clase se quedaría
+      // uno viejo. Aquí, añadir `clase:'loco'` ya lo dice todo: forma, color y nombre.
+      if(d.clase&&CLASE[d.clase]) d.label=d.label+'\n🎓 Solo: '+CLASE[d.clase][0];
+      // 🌙 Igual que la clase: se pone `noche:true` y la luna se escribe sola. Va DELANTE del
+      // nombre porque es lo primero que hay que saber — una misión nocturna a la que vas de día
+      // es un jugador dando vueltas sin entender por qué no está el NPC.
+      if(d.noche) d.label='🌙 '+d.label;
+      els.push({data:d});
+    });
+    aristas.forEach(e=>els.push({data:{id:e[0]+'>'+e[1], source:e[0], target:e[1], kind:e[2]||'main'}}));
+    return els;
+  }
+  const VISTAS = {reino:{n:N, e:E}, cultivos:{n:NC, e:EC}};
+  let VISTA = 'reino';
+  const elements = construir(N, E);
 
   function v(name){return getComputedStyle(document.documentElement).getPropertyValue(name).trim();}
   function style(){
@@ -5001,6 +5366,23 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
 
   window.ER6={
     fit:()=>cy.fit(undefined,50),
+    /* 🌾 PESTAÑAS (2026-08-11). Cambia el dataset entero y vuelve a repartir el organigrama.
+       🔴 La de cultivos es una SIMULACIÓN, no contenido del server (ver el comentario de NC).
+       Va en pestaña aparte justo para no romper la regla de "el mapa solo enseña lo que se
+       juega": quien abre el mapa sigue viendo el Reino de verdad y nada más. */
+    tab:function(k){
+      if(!VISTAS[k] || k===VISTA) return;
+      VISTA=k;
+      document.getElementById('tab-reino').classList.toggle('on', k==='reino');
+      document.getElementById('tab-cultivos').classList.toggle('on', k==='cultivos');
+      document.body.classList.toggle('sim', k==='cultivos');
+      this.close(); document.getElementById('stats').classList.remove('on');
+      const b=document.getElementById('buscar'); if(b) b.value='';
+      cy.elements().remove();
+      cy.add(construir(VISTAS[k].n, VISTAS[k].e));
+      try{ colocar(); }catch(e){ cy.layout(LAY).run(); }
+      cy.fit(undefined,50);
+    },
     /* Buscar por nombre de misión o de NPC. Nace de un fallo real (2026-08-05): el
        usuario dio por hecho que la misión de La Fátima "no estaba en el mapa" — sí
        estaba, pero entre 71 nodos no hay forma humana de dar con una concreta.
