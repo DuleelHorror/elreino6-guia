@@ -259,6 +259,36 @@ thead th{font-size:.74rem; text-transform:uppercase; letter-spacing:.07em; color
   .tabs .tab:first-child{border-radius:8px 0 0 8px}
   .tabs .tab:last-child{border-radius:0 8px 8px 0;border-left:0}
   .tabs .tab.on{background:var(--acento);color:#fff;border-color:transparent}
+  /* 🌱 El botón de los cultivos solo pinta en su pestaña: en el mapa del Reino no viene a cuento */
+  .solo-cultivos{display:none}
+  body.sim .solo-cultivos{display:inline-block}
+  /* El modal de la tabla de cultivos */
+  .modal{display:none;position:fixed;inset:0;z-index:20;background:rgba(10,6,20,.62);
+    backdrop-filter:blur(3px);padding:28px 16px;overflow:auto}
+  .modal.on{display:block}
+  .modal-caja{max-width:1080px;margin:0 auto;background:var(--tarjeta);border:1px solid var(--linea-2);
+    border-radius:16px;padding:24px 24px 18px;box-shadow:var(--sombra-alta);position:relative}
+  .modal-caja h2{font-size:1.5rem;margin:0 44px .4em 0}
+  .modal-caja .x{position:absolute;top:16px;right:16px;border:none;background:var(--acento-suave);
+    color:var(--tinta-2);width:32px;height:32px;border-radius:9px;cursor:pointer;font-size:1rem}
+  .modal-sub{color:var(--tinta-2);font-size:.92rem;margin:0 0 14px;max-width:76ch}
+  .modal-filtros{display:flex;gap:10px;align-items:center;margin-bottom:12px}
+  .modal-filtros input{font:inherit;font-size:.86rem;padding:7px 11px;border-radius:9px;
+    border:1px solid var(--linea-2);background:var(--lienzo);color:var(--tinta);min-width:220px}
+  .modal-filtros span{font-size:.8rem;color:var(--tinta-3)}
+  .modal-scroll{overflow-x:auto;border:1px solid var(--linea);border-radius:12px}
+  table.tcultivos{border-collapse:collapse;width:100%;font-size:.83rem;min-width:900px}
+  table.tcultivos th,table.tcultivos td{text-align:left;padding:9px 11px;
+    border-bottom:1px solid var(--linea);vertical-align:top}
+  table.tcultivos thead th{position:sticky;top:0;background:var(--hundido);font-size:.7rem;
+    text-transform:uppercase;letter-spacing:.06em;color:var(--tinta-3);z-index:2;white-space:nowrap}
+  table.tcultivos tbody tr:hover{background:var(--hundido)}
+  table.tcultivos .nm{font-weight:700;color:var(--tinta);white-space:nowrap}
+  table.tcultivos .fu{font-size:.68rem;display:block;color:var(--tinta-3);font-weight:600;
+    text-transform:uppercase;letter-spacing:.05em}
+  table.tcultivos .cab{color:var(--llave);font-weight:700}
+  table.tcultivos td.usos{color:var(--tinta-2);max-width:30ch}
+  table.tcultivos td.como{color:var(--tinta-2);max-width:34ch;font-size:.8rem}
   /* Banda de aviso: mientras se mira la simulación tiene que quedar CLARO que no existe */
   .sim-aviso{display:none}
   body.sim .sim-aviso{display:block;position:fixed;left:50%;top:64px;transform:translateX(-50%);
@@ -313,6 +343,11 @@ thead th{font-size:.74rem; text-transform:uppercase; letter-spacing:.07em; color
   .chip.noche{color:#8ea2ff;border-color:#8ea2ff}
   .chip.secret{color:#3a2600;background:var(--llave);border-color:transparent}
   .panel .desc{color:var(--tinta-2);font-size:.94rem;line-height:1.55;margin:0 0 14px}
+  /* 🔧 "Cómo se hace": la mecánica real de cada misión propuesta. Va en caja aparte y en
+     monoespaciada suave porque NO es lore — es la nota técnica de si se puede o no. */
+  .panel .como{background:var(--hundido);border:1px solid var(--linea);border-left:3px solid var(--acento);
+    border-radius:0 10px 10px 0;padding:10px 12px;margin:0 0 14px;font-size:.86rem;line-height:1.5;
+    color:var(--tinta-2)}
   .panel .rw{font-weight:700;color:var(--aviso);font-size:.92rem;margin:0 0 12px}
   .panel .unlock{display:flex;gap:.5em;align-items:flex-start;margin:0 0 14px;padding:10px 12px;border-radius:11px;
     font-weight:700;font-size:.9rem;color:var(--tinta);
@@ -356,6 +391,7 @@ thead th{font-size:.74rem; text-transform:uppercase; letter-spacing:.07em; color
       <button class="btn tab on" id="tab-reino"    onclick="ER6.tab('reino')">🗺️ El Reino</button>
       <button class="btn tab"    id="tab-cultivos" onclick="ER6.tab('cultivos')">🌾 Rama de Cultivos</button>
     </span>
+    <button class="btn solo-cultivos" id="btnCultivos" onclick="ER6.cultivos()">🌱 Los 30 cultivos</button>
     <input class="btn find" id="buscar" placeholder="Buscar misión o NPC…" autocomplete="off"
       oninput="ER6.find(this.value)" onkeydown="if(event.key==='Enter')ER6.find(this.value,true)">
     <button class="btn" id="statsBtn" onclick="ER6.stats()">📊 Datos</button>
@@ -364,6 +400,22 @@ thead th{font-size:.74rem; text-transform:uppercase; letter-spacing:.07em; color
 </div>
 
 <div class="sim-aviso">⚠ SIMULACIÓN — nada de esto existe todavía en el server. Es una propuesta para ver hasta dónde da de sí la rama de cultivos.</div>
+
+<!-- 🌱 La tabla de los 30 cultivos. Se GENERA de los packs con web/gen_tabla_cultivos.py -->
+<div class="modal" id="modalCultivos" onclick="if(event.target===this)ER6.cerrarCultivos()">
+  <div class="modal-caja">
+    <button class="x" onclick="ER6.cerrarCultivos()">✕</button>
+    <h2 class="serif">🌱 Todo lo que se puede cultivar</h2>
+    <p class="modal-sub">Los <b>30 cultivos</b> que hay hoy en el servidor, con dónde se plantan,
+       cuánto tardan, qué sueltan y para qué sirve lo que sueltan. <b>Esta tabla se lee de los
+       propios packs</b>, así que no puede quedarse vieja.</p>
+    <div class="modal-filtros">
+      <input type="search" id="cFiltro" placeholder="Buscar cultivo…" oninput="ER6.filtrarCultivos()">
+      <span id="cCuenta"></span>
+    </div>
+    <div class="modal-scroll"><table class="tcultivos" id="tCultivos"></table></div>
+  </div>
+</div>
 <div id="cy"></div>
 <aside class="stats" id="stats"></aside>
 <div class="hint">Arrastra para mover · rueda para zoom · clic en un nodo para ver sus pasos</div>
@@ -4660,17 +4712,11 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
     {id:'tablon', loop:true, label:'🎟️ Tablón de Encargos', npc:'Sistema', faction:'arc', type:'Loop diario · repetible', reward:'Fichas 🎟️', status:'new',
       steps:['4 encargos aleatorios al día','Suben el Pase del Reino','Cada nivel del Pase da Fichas'], desc:'Misiones diarias que dan Fichas. El enganche para volver cada día.'},
     // Secundarias / nuevas (2026-07-11)
-    {id:'yogur', clase:'yogur', label:'🍓 Sor Eufrasia', npc:'Sor Eufrasia', faction:'folk', type:'Saga · 6 misiones · SOLO clase YOGUR DE FRESA', coins:66, reward:'El Removedor de Batidos (arma de la clase YOGUR, nivel 1)', status:'new',
-      steps:['1) La Ordeñadora → ordeña 6 vacas (te presta los cubos) y vuelve a la iglesia a decírselo','2) El Fermento → te da un tarro de leche: espera 5 MINUTOS REALES a que fermente (no se puede acelerar; corre aunque te desconectes) y llévaselo','3) La Cucharada → baja a 3 corazones o menos y luego vuelve a la vida llena, en ese orden; entrégale la hoja','4) La Tarrina Familiar → reparte una tarrina a cada uno: Rancio (la fuente), Horse Luis (el establo) y El Pipas (el establo); luego vuelve','5) La Campanera → sube al campanario y dale la última tarrina a Sor Bete; baja y vuelve con Sor Eufrasia','6) El Herbario → tráele UNA de cada una de las 12 flores pequeñas (una de cada, no doce iguales); el Diario te las lista', ],
-      desc:'La maestra de clase del YOGUR DE FRESA, que es el sanador. El convento es la enfermería del pueblo, así que curar es su oficio de verdad: ella no le ve la gracia al yogur rosa en ningún momento, y ahí está el chiste. 🗣️ Seca y mandona, te llama «criatura». ⚠️ Requiere el permiso reino.clase.yogur.'},
-    {id:'guardia', clase:'funcionario', label:'🧱 El Guardia de Seguridad', npc:'Guardia de Seguridad', faction:'gold', type:'Saga · 5 misiones · SOLO clase FUNCIONARIO', coins:54, reward:'El Clip Gigante (arma de la clase FUNCIONARIO, nivel 1)', status:'new',
-      steps:['1) Al Pie del Cañón → ponte en su puesto (la puerta del Ayuntamiento) y aguanta 90 segundos SIN MOVERTE; si te sales, vuelta a empezar','2) Aguantar el Chaparrón → te presta un escudo: bloquea 15 corazones de daño CON EL ESCUDO (clic derecho para cubrirte)','3) Vuelva Usted Mañana → habla con SELLOS en el Ayuntamiento y ESPERA de verdad (2 minutos); luego llévale la acreditación','4) Cada Palo que Aguante su Vela → encaja 20 corazones SIN morirte (si te matan, el contador vuelve a cero)','5) Sin Novedad → da SU ronda: pasa por las 4 esquinas de la planta del Ayuntamiento y vuelve a hablar con él'],
-      desc:'El maestro de clase del FUNCIONARIO, que es el tanque. Sus cinco pruebas son sus cuatro mañas: estar, bloquear, hacer esperar y encajar. 🗣️ Habla solo con frases hechas y te llama «gorrión». 🚶 Y PATRULLA: cuando acabes una prueba hay que buscarlo dando la ronda por la planta. ⚠️ Requiere el permiso reino.clase.funcionario.'},
     {id:'rancio', clase:'loco', noche:true, label:'🌀 Rancio el Profeta', npc:'Rancio el Profeta', faction:'folk', type:'Saga · 5 misiones · SOLO clase LOCO · 🌙 de noche', coins:35, reward:'La Cuchara Afilada (arma de la clase LOCO, nivel 1)', status:'new',
       steps:['1) El Que Oye → al pie de la Torre Negra, DE NOCHE, quédate quieto 40 segundos (si andas, vuelve a cero). Oirás algo. Vuelve con Rancio, en la fuente','2) La Voz → te da 3 papelitos: clic derecho a cada uno para leerlo EN VOZ ALTA. Lo que digas lo lee TODO EL SERVIDOR, con tu nombre delante. Luego vuelve con él','3) La Lista de los Que No Están → habla con el REGISTRADOR en el Ayuntamiento y vuelve a contárselo','4) El Recado → tráele 1 huevo, 3 carnes podridas, 9 semillas de trigo, 1 diente de león y 1 par de botas de cuero (cada cosa por un motivo suyo)','5) La Cuchara → llévale 1 pedernal y, de última prueba, corre 60 segundos SIN PARAR (si paras, de cero). Entonces te da su cuchara'],
       desc:'El maestro de clase del LOCO: los demás enseñan un oficio, Rancio solo te reconoce. Solo la ven los jugadores de clase Loco. 🌙 De día está en la fuente pero no atiende: te dice que está demasiado borracho y que vuelvas de noche. Te hace escuchar a la Torre quieto en la oscuridad, soltar tres barbaridades en el chat público, y correr un minuto sin parar. ⚠️ Requiere el permiso reino.clase.loco.'},
     {id:'abuelo', clase:'abuelo', label:'🏹 El Abuelo Cebolleta', npc:'Semental de la Flecha', faction:'folk', type:'Saga · 5 misiones · SOLO clase ABUELO', coins:46, reward:'La Cerbatana (arco de la clase ABUELO)', status:'new',
-      steps:['1) Flechazos → mata 12 zombis y 8 esqueletos CON EL ARCO EN LA MANO (si le pegas con otra cosa no cuenta; él te da 64 flechas). Premio: El Arco de Juguete','2) A Treinta Pasos → mata 3 bichos desde 30 bloques o más, y que los mate LA FLECHA: si te acercas a rematar, no cuenta','3) Doce Flechas → mata 4 bichos gastando 12 flechas como mucho. Si disparas la trece, la cuenta se pone a cero. Llevas el marcador abajo','4) Me Las Hacía Yo → fabrica 32 flechas (pedernal + palo + pluma) y vuelve a hablar con él','5) El Ojo → aléjate 30 pasos y clava una flecha en cualquiera de las dos dianas de la arquería (no hace falta el centro); si no te caben los 30, te da una diana de repuesto para plantarla donde quieras. Te da La Cerbatana'],
+      steps:['1) Flechazos → mata 12 zombis y 8 esqueletos CON EL ARCO EN LA MANO (si le pegas con otra cosa no cuenta; él te da 64 flechas). Premio: El Arco de Juguete','2) A Cincuenta Pasos → mata 3 bichos desde 50 bloques o más, y que los mate LA FLECHA: si te acercas a rematar, no cuenta','3) Doce Flechas → mata 8 bichos gastando 12 flechas como mucho. Si disparas la trece, la cuenta se pone a cero. Llevas el marcador abajo','4) Me Las Hacía Yo → fabrica 32 flechas (pedernal + palo + pluma) y vuelve a hablar con él','5) El Ojo → te da una diana: colócala, aléjate 30 bloques y dale EN EL CENTRO exacto. Te da La Cerbatana'],
       desc:'El maestro de clase del ABUELO. El chiste: el Semental es joven, bruto y salido, y le toca enseñarte a ser un VIEJO — sabe disparar, pero no sabe esperar, ni no gastar, ni quedarse lejos. Cada tontería que se inventa resulta ser justo lo que hace un francotirador, y al final admite que él no podría serlo. ⚠️ Requiere el permiso reino.clase.abuelo.'},
     {id:'pecio', label:'⚓ El Guardián del Pecio', npc:'Semental de la Flecha', faction:'folk', type:'Secundaria · pesca un bicho raro', reward:'Plano de la Espada Pirata', status:'new',
       steps:['Ir al pecio hundido','Coger el cofre (aparece el Pescaíto Lerele)','Traer el plano al Semental'], desc:'Un barco hundido esconde el plano de una espada pirata… y un bicho que lo guarda. Secundaria del Semental.'},
@@ -4776,7 +4822,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
     ['nando','permiso'],['permiso','bolsa'],['bolsa','jobs'],['bolsa','carpincho'],
     ['carpincho','barco'],['barco','tablon_luz'],['tablon_luz','tablon'],
     // secundarias + saga del banco (2026-07-11) + Red de Anclaje (2026-07-15)
-    ['bolsa','pecio'],['talentos','rancio'],['talentos','guardia'],['talentos','yogur'],['semental','abuelo'],['bolsa','caballos'],['bolsa','lolo'],['lolo','lolo_ap'],['permiso','nico'],['nico','yaniko'],['permiso','arreglo'],['bolsa','estaciones'],['estaciones','carpincho'],['carpincho','geologia'],['geologia','mina'],['mina','dungeon_mina'],['mina','abismo'],['abismo','cantera'],['abismo','chavitox'],['cantera','dungeon_cantera'],['cuenta','anclaje'],['anclaje','anclaje_rep'],['anclaje_rep','anclaje_salto'],['anclaje_salto','anclaje_fractal'],['anclaje_fractal','jarvard'],['jarvard','papriko_antena'],['papriko_antena','vostok_p1'],
+    ['bolsa','pecio'],['talentos','rancio'],['semental','abuelo'],['bolsa','caballos'],['bolsa','lolo'],['lolo','lolo_ap'],['permiso','nico'],['nico','yaniko'],['permiso','arreglo'],['bolsa','estaciones'],['estaciones','carpincho'],['carpincho','geologia'],['geologia','mina'],['mina','dungeon_mina'],['mina','abismo'],['abismo','cantera'],['abismo','chavitox'],['cantera','dungeon_cantera'],['cuenta','anclaje'],['anclaje','anclaje_rep'],['anclaje_rep','anclaje_salto'],['anclaje_salto','anclaje_fractal'],['anclaje_fractal','jarvard'],['jarvard','papriko_antena'],['papriko_antena','vostok_p1'],
     ['talentos','mapa_reino'],
     ['tablon_luz','olegario'],
     ['olegario','colada'],['colada','lavanderia'],
@@ -4804,256 +4850,260 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
        new    = se apoya en algo recién instalado (iacrops / Garden) — falta probarlo
        future = hay que construir mecánica nueva
      ========================================================================================== */
+  /*CULTIVOS:INICIO*/
+  const CULTIVOS = [{"id": "apple", "nombre": "Apple", "fuente": "Garden (árbol)", "donde": "hierba", "fases": 5, "tiempo": "1 DÍA REAL", "suelta": "apple", "comose": "Semilla que sale de la **hierba alta**; se planta en hierba. El árbol crece por fases (son estructuras de verdad) y el fruto aparece colgando debajo. **Se corta con TIJERAS.**", "usos": "Sidra (BreweryX) · tarta · comer. El árbol tarda un día real."}, {"id": "blueberry", "nombre": "Blueberry", "fuente": "Garden (árbol)", "donde": "hierba", "fases": 2, "tiempo": "5 min", "suelta": "blueberry 🗿 (es una CABEZA)", "comose": "Semilla que sale de la **hierba alta**; se planta en hierba. El árbol crece por fases (son estructuras de verdad) y el fruto aparece encima. **Se corta con TIJERAS.**", "usos": "Tortitas de arándano (ya existe) · mermelada · vino de baya."}, {"id": "cherry", "nombre": "Cherry", "fuente": "Garden (árbol)", "donde": "hierba", "fases": 5, "tiempo": "15 min", "suelta": "cherry 🗿 (es una CABEZA)", "comose": "Semilla que sale de la **hierba alta**; se planta en hierba. El árbol crece por fases (son estructuras de verdad) y el fruto aparece pegado al tronco. **Se corta con TIJERAS.**", "usos": "Licor de cereza · mermelada · repostería."}, {"id": "cranberry", "nombre": "Cranberry", "fuente": "Garden (árbol)", "donde": "hierba", "fases": 2, "tiempo": "5 min", "suelta": "cranberry", "comose": "Semilla que sale de la **hierba alta**; se planta en hierba. El árbol crece por fases (son estructuras de verdad) y el fruto aparece pegado al tronco. **Se corta con TIJERAS.**", "usos": "Mermelada agria · salsa para carne."}, {"id": "grape", "nombre": "Grape", "fuente": "Garden (árbol)", "donde": "hierba", "fases": 3, "tiempo": "7 min", "suelta": "grape 🗿 (es una CABEZA)", "comose": "Semilla que sale de la **hierba alta**; se planta en hierba. El árbol crece por fases (son estructuras de verdad) y el fruto aparece pegado al tronco. **Se corta con TIJERAS.**", "usos": "🍷 VINO: vendimia → lagar → barrica. La cadena más larga y la más rentable."}, {"id": "lemon", "nombre": "Lemon", "fuente": "Garden (árbol)", "donde": "hierba", "fases": 4, "tiempo": "15 min", "suelta": "lemon 🗿 (es una CABEZA)", "comose": "Semilla que sale de la **hierba alta**; se planta en hierba. El árbol crece por fases (son estructuras de verdad) y el fruto aparece pegado al tronco. **Se corta con TIJERAS.**", "usos": "Limonada · conservante para encurtidos · repostería."}, {"id": "lime", "nombre": "Lime", "fuente": "Garden (árbol)", "donde": "hierba", "fases": 4, "tiempo": "15 min", "suelta": "lime 🗿 (es una CABEZA)", "comose": "Semilla que sale de la **hierba alta**; se planta en hierba. El árbol crece por fases (son estructuras de verdad) y el fruto aparece pegado al tronco. **Se corta con TIJERAS.**", "usos": "Refrescos y cócteles (BreweryX)."}, {"id": "orange", "nombre": "Orange", "fuente": "Garden (árbol)", "donde": "hierba", "fases": 5, "tiempo": "1 DÍA REAL", "suelta": "orange 🗿 (es una CABEZA)", "comose": "Semilla que sale de la **hierba alta**; se planta en hierba. El árbol crece por fases (son estructuras de verdad) y el fruto aparece pegado al tronco. **Se corta con TIJERAS.**", "usos": "Zumo · mermelada · licor."}, {"id": "peach", "nombre": "Peach", "fuente": "Garden (árbol)", "donde": "hierba", "fases": 5, "tiempo": "1 DÍA REAL", "suelta": "peach 🗿 (es una CABEZA)", "comose": "Semilla que sale de la **hierba alta**; se planta en hierba. El árbol crece por fases (son estructuras de verdad) y el fruto aparece pegado al tronco. **Se corta con TIJERAS.**", "usos": "Mermelada · licor · en almíbar (conserva)."}, {"id": "raspberry", "nombre": "Raspberry", "fuente": "Garden (árbol)", "donde": "hierba", "fases": 2, "tiempo": "5 min", "suelta": "raspberry 🗿 (es una CABEZA)", "comose": "Semilla que sale de la **hierba alta**; se planta en hierba. El árbol crece por fases (son estructuras de verdad) y el fruto aparece encima. **Se corta con TIJERAS.**", "usos": "Mermelada · licor · repostería."}, {"id": "strawberry", "nombre": "Strawberry", "fuente": "Garden (árbol)", "donde": "hierba", "fases": 2, "tiempo": "5 min", "suelta": "strawberry 🗿 (es una CABEZA)", "comose": "Semilla que sale de la **hierba alta**; se planta en hierba. El árbol crece por fases (son estructuras de verdad) y el fruto aparece encima. **Se corta con TIJERAS.**", "usos": "Tarta de fresa y batido (ya existen) · mermelada (EmakiCooking) · licor (BreweryX)."}, {"id": "blueberry", "nombre": "Blueberry", "fuente": "iacrops", "donde": "hierba", "fases": 4, "tiempo": "27 min", "suelta": "blueberry (hasta 3)", "comose": "Semilla en hierba. Crece en 4 fases. Se recoge a CLIC DERECHO y **vuelve a crecer sin replantar**.", "usos": "Tortitas de arándano (ya existe) · mermelada · vino de baya."}, {"id": "cabbage", "nombre": "Cabbage", "fuente": "iacrops", "donde": "tierra labrada", "fases": 4, "tiempo": "16 min", "suelta": "cabbage (hasta 1)", "comose": "Semilla en tierra labrada. Crece en 4 fases. Se recoge a CLIC DERECHO y **vuelve a crecer sin replantar**.", "usos": "Ensalada de jardín (ya existe) · encurtido · sopa de invierno."}, {"id": "corn", "nombre": "Corn", "fuente": "iacrops", "donde": "tierra labrada", "fases": 5, "tiempo": "20 min", "suelta": "corn (hasta 5)", "comose": "Semilla en tierra labrada. Crece en 5 fases. Se recoge a CLIC DERECHO y **vuelve a crecer sin replantar**.", "usos": "Palomitas (ya existe) · harina de maíz · pienso para el corral."}, {"id": "crimson_cane", "nombre": "Crimson Cane", "fuente": "iacrops", "donde": "arena de almas", "fases": 2, "tiempo": "17 min", "suelta": "crimson cane (hasta 1)", "comose": "Semilla en arena de almas. Crece en 2 fases. Se recoge a CLIC DERECHO y **vuelve a crecer sin replantar**.", "usos": "Del Nether: azúcar rara, licores fuertes, tinte."}, {"id": "cucumber", "nombre": "Cucumber", "fuente": "iacrops", "donde": "tierra labrada", "fases": 4, "tiempo": "32 min", "suelta": "cucumber (hasta 4)", "comose": "Semilla en tierra labrada. Crece en 4 fases. Se recoge a CLIC DERECHO y **vuelve a crecer sin replantar**.", "usos": "Ensalada · ENCURTIDOS (el uso estrella: tarro + espera real)."}, {"id": "ender", "nombre": "Ender", "fuente": "iacrops", "donde": "piedra del End", "fases": 5, "tiempo": "40 min", "suelta": "ender pearl (hasta 2)", "comose": "Semilla en piedra del End. Crece en 5 fases. Se recoge a CLIC DERECHO y **vuelve a crecer sin replantar**.", "usos": "El cultivo raro. Sin uso decidido: es material de saga, no de cocina."}, {"id": "pineapple", "nombre": "Pineapple", "fuente": "iacrops", "donde": "tierra labrada", "fases": 4, "tiempo": "16 min", "suelta": "pineapple (hasta 1)", "comose": "Semilla en tierra labrada. Crece en 4 fases. Se recoge a CLIC DERECHO y **vuelve a crecer sin replantar**.", "usos": "Ensalada de frutas (ya existe) · zumo · licor."}, {"id": "red_cabbage", "nombre": "Red Cabbage", "fuente": "iacrops", "donde": "tierra labrada", "fases": 4, "tiempo": "16 min", "suelta": "red_cabbage (hasta 1)", "comose": "Semilla en tierra labrada. Crece en 4 fases. Se recoge a CLIC DERECHO y **vuelve a crecer sin replantar**.", "usos": "Ensalada · encurtido. Es la que aguanta el frío."}, {"id": "red_onion", "nombre": "Red Onion", "fuente": "iacrops", "donde": "tierra labrada", "fases": 3, "tiempo": "12 min", "suelta": "red_onion (hasta 5)", "comose": "Semilla en tierra labrada. Crece en 3 fases. Se recoge a CLIC DERECHO y **vuelve a crecer sin replantar**.", "usos": "Ensaladas y encurtidos."}, {"id": "strawberry", "nombre": "Strawberry", "fuente": "iacrops", "donde": "tierra labrada", "fases": 4, "tiempo": "24 min", "suelta": "strawberry (hasta 5)", "comose": "Semilla en tierra labrada. Crece en 4 fases. Se recoge a CLIC DERECHO y **vuelve a crecer sin replantar**.", "usos": "Tarta de fresa y batido (ya existen) · mermelada (EmakiCooking) · licor (BreweryX)."}, {"id": "tomato", "nombre": "Tomato", "fuente": "iacrops", "donde": "tierra labrada", "fases": 4, "tiempo": "47 min", "suelta": "tomato (hasta 3)", "comose": "Semilla en tierra labrada. Crece en 4 fases. Se recoge a CLIC DERECHO y **vuelve a crecer sin replantar**.", "usos": "Sopa de tomate · gazpacho · salsa. Ya hay receta de sopa en el pack."}, {"id": "warped_cane", "nombre": "Warped Cane", "fuente": "iacrops", "donde": "arena de almas", "fases": 2, "tiempo": "17 min", "suelta": "warped cane (hasta 1)", "comose": "Semilla en arena de almas. Crece en 2 fases. Se recoge a CLIC DERECHO y **vuelve a crecer sin replantar**.", "usos": "Ídem, la versión azul."}, {"id": "white_onion", "nombre": "White Onion", "fuente": "iacrops", "donde": "tierra labrada", "fases": 3, "tiempo": "12 min", "suelta": "white_onion (hasta 5)", "comose": "Semilla en tierra labrada. Crece en 3 fases. Se recoge a CLIC DERECHO y **vuelve a crecer sin replantar**.", "usos": "Base de casi todo lo salado: sopas, salteados, taco."}, {"id": "chili_pepper", "nombre": "Chili Pepper", "fuente": "iasurvival", "donde": "tierra labrada", "fases": 0, "tiempo": "como remolacha", "suelta": "chili_pepper (hasta 2)", "comose": "Semilla en tierra labrada. **Crece igual que remolacha vanilla** (no tiene fases propias): se rompe cuando está madura.", "usos": "Picante: salsas, y encaja con la cocina de Calderón."}, {"id": "garlic", "nombre": "Garlic", "fuente": "iasurvival", "donde": "tierra labrada", "fases": 0, "tiempo": "como zanahoria", "suelta": "garlic (hasta 2)", "comose": "Semilla en tierra labrada. **Crece igual que zanahoria vanilla** (no tiene fases propias): se rompe cuando está madura.", "usos": "Ajo: condimento de todo lo salado y, en el Reino, reagente de alquimia."}, {"id": "lettuce", "nombre": "Lettuce", "fuente": "iasurvival", "donde": "tierra labrada", "fases": 0, "tiempo": "como patata", "suelta": "lettuce (hasta 2)", "comose": "Semilla en tierra labrada. **Crece igual que patata vanilla** (no tiene fases propias): se rompe cuando está madura.", "usos": "Ensaladas y hamburguesa (la hamburguesa ya existe en el pack)."}, {"id": "rice", "nombre": "Rice", "fuente": "iasurvival", "donde": "tierra labrada", "fases": 0, "tiempo": "como trigo", "suelta": "rice (hasta 2)", "comose": "Semilla en tierra labrada. **Crece igual que trigo vanilla** (no tiene fases propias): se rompe cuando está madura.", "usos": "Base de platos de cuchara. ⚠️ Cuidado: crece como TRIGO (ver aviso)."}, {"id": "tobacco", "nombre": "Tobacco", "fuente": "iasurvival", "donde": "tierra labrada", "fases": 0, "tiempo": "como trigo", "suelta": "tobacco (hasta 1)", "comose": "Semilla en tierra labrada. **Crece igual que trigo vanilla** (no tiene fases propias): se rompe cuando está madura.", "usos": "⚠️ Ya hay tabaco en el server (Yaniko + SPdrug, con venta y tope diario). Este es un DUPLICADO: hay que elegir uno."}, {"id": "tomato", "nombre": "Tomato", "fuente": "iasurvival", "donde": "tierra labrada", "fases": 0, "tiempo": "como arbusto de bayas", "suelta": "tomato (hasta 2)", "comose": "Semilla en tierra labrada. **Crece igual que arbusto de bayas vanilla** (no tiene fases propias): se rompe cuando está madura.", "usos": "Sopa de tomate · gazpacho · salsa. Ya hay receta de sopa en el pack."}];
+  /*CULTIVOS:FIN*/
+
   const NC = [
     // ---------- A · LA PARCELA (la entrada) ----------
     {id:'c_parcela', label:'🌱 Un Palmo de Tierra', npc:'Ramiro el de la Vega (NPC nuevo)', faction:'folk', type:'Recado · entrada de la rama', status:'future', unlocks:'Tu parcela en la vega',
-      steps:['Hablar con Ramiro','Limpiar la parcela (romper 40 hierbajos)','Cercarla con 20 vallas'], desc:'Nadie cultiva desde que llegaron los de bata. Ramiro te cede la parcela de al lado porque, dice, prefiere un vecino malo a un solar.'},
+      steps:['Hablar con Ramiro','Limpiar la parcela (romper 40 hierbajos)','Cercarla con 20 vallas'], desc:'Nadie cultiva desde que llegaron los de bata. Ramiro te cede la parcela de al lado porque, dice, prefiere un vecino malo a un solar.', como:'Objetivo `break-block` (40 hierbajos) + `place-block` (20 vallas). Los dos son nativos de PikaMug: es escribir YAML. La parcela en sí es una región de WorldGuard que se define a mano una vez.'},
     {id:'c_estiercol', label:'💩 Lo que Deja el Caballo', npc:'Horse Luis', faction:'folk', type:'Recoger · Cultivar', status:'live', coins:6,
-      steps:['Recoger 16 de estiércol del establo','Compostar','Entregar 8 de compost a Ramiro'], desc:'Horse Luis lleva años produciendo algo que nadie le pide. Se lo toma como un reconocimiento tardío.'},
+      steps:['Recoger 16 de estiércol del establo','Compostar','Entregar 8 de compost a Ramiro'], desc:'Horse Luis lleva años produciendo algo que nadie le pide. Se lo toma como un reconocimiento tardío.', como:'El estiércol NO existe en Minecraft: sería el compostador vanilla. Recoges materia vegetal, la metes en un compostador y sale abono (hueso en polvo). Objetivo `use-block-names: [COMPOSTER]`, que ya usamos en la saga de Lolo con los hornos.'},
     {id:'c_agua', label:'🪣 El Pozo Comunal', npc:'Interventor → Ramiro', faction:'gold', type:'Burocracia · Entregar', status:'live', coins:-20,
-      steps:['Solicitar el enganche al pozo','Pagar la tasa de agua (20🥜)','Traer 4 cubos'], desc:'El agua es del pueblo. El enganche al agua del pueblo, no.'},
+      steps:['Solicitar el enganche al pozo','Pagar la tasa de agua (20🥜)','Traer 4 cubos'], desc:'El agua es del pueblo. El enganche al agua del pueblo, no.', como:'Puro trámite: hablar con el Interventor + `items-to-deliver` de 20 Cacahuates (entregar dinero como objeto ya se hace en el Banco y en Op. Carpincho).'},
     {id:'c_azada', label:'🪓 La Azada de Tu Abuelo', npc:'Lolo el Fundacional', faction:'folk', type:'Elaborar · Reparar', status:'live', unlocks:'Azada que no se rompe cada dos por tres',
-      steps:['Llevar el hierro a Lolo','Aguantar su discurso','Recoger la azada'], desc:'Lolo insiste en que una azada es un arma agrícola y que por tanto es competencia de la herrería. Nadie se lo discute.'},
+      steps:['Llevar el hierro a Lolo','Aguantar su discurso','Recoger la azada'], desc:'Lolo insiste en que una azada es un arma agrícola y que por tanto es competencia de la herrería. Nadie se lo discute.', como:'Entregar hierro y recibir una azada. Si se quiere que sea *tu* azada y no se rompa, es un ExecutableItem con `unbreakable`, como el Sismógrafo.'},
 
     // ---------- B · LAS CUATRO ESTACIONES (el corazón) ----------
     {id:'c_almanaque', label:'📖 El Almanaque del Hortelano', npc:'Ramiro', faction:'folk', type:'Investigar · ImageFrame', status:'future', unlocks:'Saber qué se siembra en cada estación',
-      steps:['Recuperar las 4 hojas del almanaque','Colgarlo en la caseta'], desc:'Un cuaderno con cuatro láminas dibujadas: qué se siembra en cada estación. La de invierno está en blanco y Ramiro no quiere hablar de eso.'},
+      steps:['Recuperar las 4 hojas del almanaque','Colgarlo en la caseta'], desc:'Un cuaderno con cuatro láminas dibujadas: qué se siembra en cada estación. La de invierno está en blanco y Ramiro no quiere hablar de eso.', como:'Las 4 láminas son imágenes de verdad con **ImageFrame** (el mismo plugin del laboratorio de fotos): se cuelgan en marcos y se leen. Buscarlas = 4 objetivos `items-to-deliver`.'},
     {id:'c_prim', label:'🌷 Siembra de Primavera', npc:'Ramiro', faction:'folk', type:'Cultivar · SOLO EN PRIMAVERA', status:'new', coins:14,
-      steps:['Sembrar 12 semillas en primavera','Esperar a que broten','Entregar la primera cosecha'], desc:'Lo que se siembra fuera de tiempo sale, pero sale mal. Y Ramiro lo nota al morderlo.'},
+      steps:['Sembrar 12 semillas en primavera','Esperar a que broten','Entregar la primera cosecha'], desc:'Lo que se siembra fuera de tiempo sale, pero sale mal. Y Ramiro lo nota al morderlo.', como:'🟢 **Esto ya funciona**: lo hace el plugin `CultivosEstacion` que acabamos de montar — fuera de temporada no te deja plantar. El objetivo de la quest es entregar la cosecha; la estación la fuerza el plugin.'},
     {id:'c_ver', label:'☀️ La Canícula', npc:'Ramiro', faction:'folk', type:'Cultivar · SOLO EN VERANO · riego', status:'new', coins:16,
-      steps:['Regar la parcela 3 días seguidos','No dejar que se seque ni una mata','Cosechar 24 tomates'], desc:'En verano el agua se evapora antes de llegar al surco. Aquí se aprende que cultivar es sobre todo cargar cubos.'},
+      steps:['Regar la parcela 3 días seguidos','No dejar que se seque ni una mata','Cosechar 24 tomates'], desc:'En verano el agua se evapora antes de llegar al surco. Aquí se aprende que cultivar es sobre todo cargar cubos.', como:'Regar = poner agua a ≤4 bloques de la tierra labrada, que es **vanilla puro** (el farmland se hidrata solo y crece más rápido). Que \'no se seque\' se comprueba con un datapack que mire el estado `moisture` del bloque.'},
     {id:'c_oto', label:'🍂 Recogida de Otoño', npc:'Ramiro', faction:'folk', type:'Cultivar · SOLO EN OTOÑO', status:'new', coins:18,
-      steps:['Cosechar 40 unidades antes de la primera helada','Guardarlas en la despensa'], desc:'Se recoge todo, y se recoge ya. Lo que quede fuera cuando cambie la estación, se queda fuera.'},
+      steps:['Cosechar 40 unidades antes de la primera helada','Guardarlas en la despensa'], desc:'Se recoge todo, y se recoge ya. Lo que quede fuera cuando cambie la estación, se queda fuera.', como:'`items-to-deliver` de 40 unidades, con el plugin de estaciones cerrando la ventana. «Antes de la helada» = el propio cambio de estación de RealisticSeasons.'},
     {id:'c_inv', label:'❄️ El Invernadero', npc:'Dr. Papriko → Ramiro', faction:'sci', type:'Construir · SOLO EN INVIERNO', status:'future', unlocks:'Cultivar en invierno bajo cristal',
-      steps:['Fabricar 32 cristales','Levantar el invernadero','Cultivar algo en enero'], desc:'Papriko explica que el cristal atrapa la radiación solar. Ramiro dice que eso ya lo sabía su madre y que se llama "tapar las plantas".'},
+      steps:['Fabricar 32 cristales','Levantar el invernadero','Cultivar algo en enero'], desc:'Papriko explica que el cristal atrapa la radiación solar. Ramiro dice que eso ya lo sabía su madre y que se llama "tapar las plantas".', como:'Construir = objetivo `place-block` de 32 cristales dentro de una región. ⚠️ Que el invernadero *sirva* para cultivar en invierno **hay que programarlo**: el plugin de estaciones tendría que mirar si hay cristal encima. Es media hora más de código.'},
     {id:'c_ciclo', label:'🔄 El Año Completo', npc:'Ramiro', faction:'folk', type:'Hito · las 4 estaciones', status:'future', coins:60, unlocks:'Título: Hortelano de Año Completo',
-      steps:['Haber cultivado en las 4 estaciones','Entregar una cesta con producto de cada una'], desc:'Un año entero de verdad. Ramiro no te felicita: te dice que ya sabes lo que hay, que es su forma de felicitar.'},
+      steps:['Haber cultivado en las 4 estaciones','Entregar una cesta con producto de cada una'], desc:'Un año entero de verdad. Ramiro no te felicita: te dice que ya sabes lo que hay, que es su forma de felicitar.', como:'Un contador por jugador en scoreboard: una marca por estación en la que hayas cosechado. Patrón idéntico al de los 4 sondeos del Abismo.'},
 
     // ---------- C · LOS ÁRBOLES (Garden) ----------
     {id:'c_vivero', label:'🌳 El Vivero', npc:'Ramiro', faction:'folk', type:'Buscar semillas · Garden', status:'new', unlocks:'Plantar árboles frutales',
-      steps:['Buscar semillas en la hierba alta','Plantar 3 en tierra distinta','Ver cuál agarra'], desc:'Las semillas de árbol no se compran: aparecen entre la hierba, y hay que saber mirar.'},
+      steps:['Buscar semillas en la hierba alta','Plantar 3 en tierra distinta','Ver cuál agarra'], desc:'Las semillas de árbol no se compran: aparecen entre la hierba, y hay que saber mirar.', como:'🟢 Nativo de Garden: las semillas de árbol aparecen al romper hierba alta. La quest solo tiene que pedir que entregues 3.'},
     {id:'c_tijeras', label:'✂️ Se Corta, No se Arranca', npc:'Ramiro', faction:'folk', type:'Tutorial · Garden', status:'new',
-      steps:['Conseguir tijeras','Cosechar 10 frutos sin dañar el árbol'], desc:'El que arranca la fruta a mano se lleva la fruta y la rama. Y el año que viene, ni fruta ni rama.'},
+      steps:['Conseguir tijeras','Cosechar 10 frutos sin dañar el árbol'], desc:'El que arranca la fruta a mano se lleva la fruta y la rama. Y el año que viene, ni fruta ni rama.', como:'🟢 Nativo de Garden: el fruto se corta con tijeras. La quest pide entregar 10 frutos.'},
     {id:'c_manzano', label:'🍎 El Manzano que Tarda un Día', npc:'Ramiro', faction:'folk', type:'ESPERA REAL · 1 día', status:'new', coins:22,
-      steps:['Plantar el manzano','Volver al día siguiente','Cosechar 12 manzanas'], desc:'Un día entero, del de verdad. Ramiro te manda a tu casa: dice que el árbol no crece si lo miras.'},
+      steps:['Plantar el manzano','Volver al día siguiente','Cosechar 12 manzanas'], desc:'Un día entero, del de verdad. Ramiro te manda a tu casa: dice que el árbol no crece si lo miras.', como:'🟢 Nativo: el manzano de Garden tarda **1 día real** de fábrica. La espera ES la misión; no hay que programar nada.'},
     {id:'c_citricos', label:'🍋 Los Cítricos de Papriko', npc:'Dr. Papriko', faction:'sci', type:'Cultivar · Entregar', status:'new', coins:20,
-      steps:['Plantar limonero, limero y naranjo','Entregar 6 de cada'], desc:'Papriko dice que necesita cítricos por el escorbuto. En la excavación no hay escorbuto. Papriko insiste.'},
+      steps:['Plantar limonero, limero y naranjo','Entregar 6 de cada'], desc:'Papriko dice que necesita cítricos por el escorbuto. En la excavación no hay escorbuto. Papriko insiste.', como:'Plantar los 3 árboles + `items-to-deliver` de 6 frutos de cada. Todo nativo.'},
     {id:'c_injerto', label:'🔬 El Injerto Imposible', npc:'Dr. Papriko', faction:'sci', type:'Elaborar · Minijuego', status:'future',
-      steps:['Traer esqueje de dos árboles distintos','Injertarlos en la mesa de Papriko','Plantarlo y rezar'], desc:'En Jarvard, dice, esto lo hacían con dos ramas y un trapo. Aquí también, pero con un trapo mejor.'},
+      steps:['Traer esqueje de dos árboles distintos','Injertarlos en la mesa de Papriko','Plantarlo y rezar'], desc:'En Jarvard, dice, esto lo hacían con dos ramas y un trapo. Aquí también, pero con un trapo mejor.', como:'⚠️ El injerto NO existe. Lo más parecido: una **máquina** (bloque con ExecutableBlock) a la que llevas 2 esquejes y te devuelve una semilla, como la cadena del laboratorio de fotos. El \'injerto\' es narrativo.'},
     {id:'c_centenario', label:'🌲 El Árbol del Abuelo', npc:'Ramiro', faction:'secret', type:'Secreta · Investigar', status:'future',
-      steps:['Encontrar el tocón viejo','Descubrir de quién era','No contárselo a nadie'], desc:'Hay un tocón en el borde de la vega que Ramiro no deja tocar. Dice que ahí había un árbol. No dice más.'},
+      steps:['Encontrar el tocón viejo','Descubrir de quién era','No contárselo a nadie'], desc:'Hay un tocón en el borde de la vega que Ramiro no deja tocar. Dice que ahí había un árbol. No dice más.', como:'Investigar un punto del mapa: datapack `reino_investigar`, que ya existe y solo hay que darle una escena nueva.'},
 
     // ---------- D · LA VID Y EL LAGAR (BreweryX) ----------
     {id:'c_cepas', label:'🍇 Cepas Viejas', npc:'Señor Trapo', faction:'folk', type:'Cultivar · Garden', status:'new',
-      steps:['Plantar 8 vides','Entutorarlas con 8 vallas'], desc:'Trapo quiere vino porque, dice, un barco necesita bodega. El bar no es un barco. Trapo sigue.'},
+      steps:['Plantar 8 vides','Entutorarlas con 8 vallas'], desc:'Trapo quiere vino porque, dice, un barco necesita bodega. El bar no es un barco. Trapo sigue.', como:'Plantar 8 vides de Garden + `place-block` de 8 vallas para entutorarlas.'},
     {id:'c_vendimia', label:'🍇 La Vendimia', npc:'Señor Trapo', faction:'folk', type:'Cosechar · en OTOÑO', status:'new', coins:24,
-      steps:['Cosechar 64 uvas en otoño','Llevarlas al bar antes de que anochezca'], desc:'La uva se recoge en tres días o se pasa. Los tres días son de verdad.'},
+      steps:['Cosechar 64 uvas en otoño','Llevarlas al bar antes de que anochezca'], desc:'La uva se recoge en tres días o se pasa. Los tres días son de verdad.', como:'`items-to-deliver` de 64 uvas, con ventana de otoño. «Antes de que anochezca» = un datapack que mire la hora, como el confinamiento de los cuentos de Horse Luis.'},
     {id:'c_lagar', label:'🦶 El Lagar', npc:'Señor Trapo', faction:'folk', type:'Minijuego · pisar la uva', status:'future', unlocks:'Mosto',
-      steps:['Meterte en el lagar','Pisar sin salirte (aguantar en la zona)','Llenar 4 cubas'], desc:'Se pisa descalzo. Trapo lo comprueba. Nadie sabe por qué lo comprueba.'},
+      steps:['Meterte en el lagar','Pisar sin salirte (aguantar en la zona)','Llenar 4 cubas'], desc:'Se pisa descalzo. Trapo lo comprueba. Nadie sabe por qué lo comprueba.', como:'Aguantar dentro de una zona pisando: es **exactamente** la mecánica de los repetidores de Gordon (barra de progreso mientras te mantienes en el sitio). Datapack, y el patrón está escrito.'},
     {id:'c_anada', label:'🛢️ La Añada', npc:'Señor Trapo', faction:'folk', type:'ESPERA REAL · BreweryX', status:'live', coins:30,
-      steps:['Fermentar el mosto','Añejar en barrica de roble','Volver cuando esté'], desc:'El vino no se hace: se espera. Trapo aprovecha para contarte otra vez lo del barco.'},
+      steps:['Fermentar el mosto','Añejar en barrica de roble','Volver cuando esté'], desc:'El vino no se hace: se espera. Trapo aprovecha para contarte otra vez lo del barco.', como:'🟢 **BreweryX ya lo hace**: fermentar en caldero, destilar y añejar en barrica de roble. Es el mismo sistema del Bar Co, con una receta nueva de vino.'},
     {id:'c_cata', label:'🍷 La Cata a Ciegas', npc:'Señor Trapo', faction:'folk', type:'Minijuego · adivinar', status:'future', coins:25,
-      steps:['Probar 5 vinos con los ojos vendados','Acertar 3 añadas'], desc:'Trapo jura que distingue la añada por el olor. Trapo no distingue el vino del vinagre, pero lo jura igual.'},
+      steps:['Probar 5 vinos con los ojos vendados','Acertar 3 añadas'], desc:'Trapo jura que distingue la añada por el olor. Trapo no distingue el vino del vinagre, pero lo jura igual.', como:'Objetivo `password-phrases` (adivinar) o botones en un diálogo. ⚠️ Vendar los ojos de verdad = efecto `blindness`, que ya usamos en el vuelo del helicóptero.'},
     {id:'c_sidra', label:'🍏 Sidra de la Casa', npc:'Señor Trapo', faction:'folk', type:'Elaborar · BreweryX', status:'live', coins:18,
-      steps:['Traer 40 manzanas','Prensarlas','Fermentar 2 días'], desc:'Se escancia en alto porque sí. La mitad acaba en el suelo y eso, dice Trapo, forma parte del proceso.'},
+      steps:['Traer 40 manzanas','Prensarlas','Fermentar 2 días'], desc:'Se escancia en alto porque sí. La mitad acaba en el suelo y eso, dice Trapo, forma parte del proceso.', como:'🟢 BreweryX, receta de manzana. Cero código.'},
 
     // ---------- E · CONSERVAS Y DESPENSA (EmakiCooking) ----------
     {id:'c_frascos', label:'🫙 Los Frascos de la Abuela', npc:'Sor Eufrasia', faction:'folk', type:'Recoger · Entregar', status:'live', unlocks:'Poder hacer conservas',
-      steps:['Recuperar 12 frascos del convento','Hervirlos','Entregar 6 a Ramiro'], desc:'Sor Eufrasia tiene una despensa con frascos de hace treinta años. Alguno todavía se mueve.'},
+      steps:['Recuperar 12 frascos del convento','Hervirlos','Entregar 6 a Ramiro'], desc:'Sor Eufrasia tiene una despensa con frascos de hace treinta años. Alguno todavía se mueve.', como:'`items-to-deliver` normal. Los frascos serían un ítem de ItemsAdder (hay tarros en el catálogo: `iasurvival:jar`).'},
     {id:'c_mermelada', label:'🍓 Mermelada', npc:'Chef Calderón', faction:'folk', type:'Elaborar · EmakiCooking', status:'new', coins:16,
-      steps:['20 fresas + azúcar','Cocer en el wok','Envasar en 4 frascos'], desc:'Calderón sostiene que la mermelada es una salsa que se rindió. La hace igual.'},
+      steps:['20 fresas + azúcar','Cocer en el wok','Envasar en 4 frascos'], desc:'Calderón sostiene que la mermelada es una salsa que se rindió. La hace igual.', como:'🟢 **EmakiCooking ya montado**: es una receta nueva en el wok. La cocina está instalada y cerrada con el permiso `reino.cocina`.'},
     {id:'c_encurtido', label:'🥒 Encurtidos', npc:'Chef Calderón', faction:'folk', type:'Elaborar · ESPERA REAL', status:'new', coins:14,
-      steps:['Meter 16 pepinos en salmuera','Esperar 3 días','Catarlos'], desc:'Tres días en un bote. Calderón dice que si los abres antes se enteran.'},
+      steps:['Meter 16 pepinos en salmuera','Esperar 3 días','Catarlos'], desc:'Tres días en un bote. Calderón dice que si los abres antes se enteran.', como:'EmakiCooking + espera real: la marca de tiempo se guarda al meter los pepinos y se resta al sacarlos (patrón del secado de fotos, que sobrevive a desconectarse).'},
     {id:'c_secadero', label:'🍅 El Secadero', npc:'Ramiro', faction:'folk', type:'Cultivar · SOLO EN VERANO', status:'future',
-      steps:['Tender 32 tomates al sol','Que no llueva encima','Recogerlos secos'], desc:'Si llueve, se pierden. Ramiro mira al cielo todo el rato y no disimula.'},
+      steps:['Tender 32 tomates al sol','Que no llueva encima','Recogerlos secos'], desc:'Si llueve, se pierden. Ramiro mira al cielo todo el rato y no disimula.', como:'⚠️ «Que no llueva» sí se puede (un datapack mira `weather`), pero **perder la cosecha si llueve es cruel** con el clima aleatorio. Mejor: si llueve, el secado se pausa. Un dato: la lluvia la controla RealisticSeasons por estación.'},
     {id:'c_despensa', label:'🏚️ La Despensa de Invierno', npc:'Ramiro', faction:'folk', type:'Entregar · hito', status:'future', coins:40,
-      steps:['Llenar la despensa con 10 conservas distintas','Cerrarla antes del primer día de invierno'], desc:'Aquí es donde se ve si has entendido el año o solo has estado plantando cosas.'},
+      steps:['Llenar la despensa con 10 conservas distintas','Cerrarla antes del primer día de invierno'], desc:'Aquí es donde se ve si has entendido el año o solo has estado plantando cosas.', como:'Un cofre con ExecutableBlock que cuenta qué tipos distintos has metido. Parecido al Cofre de Entrenamiento de Garrapata, que ya decide según lo que llevas.'},
     {id:'c_rancho', label:'🍲 El Rancho de la Excavación', npc:'Obrero Olegario', faction:'sci', type:'Entregar · repetible', status:'live', coins:12,
-      steps:['Entregar 8 conservas a la semana'], desc:'Olegario firmó la casilla de VÍVERES. Esta vez a propósito, dice. Nadie le cree.'},
+      steps:['Entregar 8 conservas a la semana'], desc:'Olegario firmó la casilla de VÍVERES. Esta vez a propósito, dice. Nadie le cree.', como:'Repetible con `redo-delay` semanal. Nativo de PikaMug.'},
 
     // ---------- F · PLAGAS, BICHOS Y CLIMA ----------
     {id:'c_plaga', label:'🐛 Algo se Come las Coles', npc:'Ramiro', faction:'folk', type:'Matar · MythicMobs', status:'future',
-      steps:['Vigilar la parcela de noche','Matar 12 orugas','Traer una entera'], desc:'Se las come algo. Ramiro dice que conejos. Las marcas no son de conejo.'},
+      steps:['Vigilar la parcela de noche','Matar 12 orugas','Traer una entera'], desc:'Se las come algo. Ramiro dice que conejos. Las marcas no son de conejo.', como:'🔴 **Aquí está la duda que planteaste, y es justa.** Las orugas no existen en Minecraft: sería un **MythicMob** (un pez de plata reskinado) que aparece de noche cerca de la parcela por `randomspawns` con condición de coordenadas — el bestiario ya funciona así. Matarlos es `mobs-to-kill`, nativo. ⚠️ Pero que **se coman las coles de verdad** (que rompan el cultivo) **hay que programarlo**: un datapack que cada X segundos, si hay una oruga cerca de un cultivo, le quite una fase. Es factible, pero es la parte cara.'},
     {id:'c_espanta', label:'🎃 El Espantapájaros', npc:'Ramiro', faction:'folk', type:'Elaborar · Colocar', status:'new', unlocks:'Menos pérdidas por bichos',
-      steps:['Montar el espantapájaros','Colocarlo mirando al este'], desc:'Tiene que mirar al este. Ramiro no sabe por qué, pero su padre lo ponía así y a su padre no le comían las coles.'},
+      steps:['Montar el espantapájaros','Colocarlo mirando al este'], desc:'Tiene que mirar al este. Ramiro no sabe por qué, pero su padre lo ponía así y a su padre no le comían las coles.', como:'🟢 El espantapájaros **ya existe** como mueble en `iacrops`: se coloca y ya está. ⚠️ Que *funcione* (que aleje bichos) hay que programarlo: el mismo datapack de arriba mira si hay un espantapájaros en 16 bloques y no deja aparecer la plaga.'},
     {id:'c_helada', label:'🥶 La Helada Negra', npc:'Ramiro', faction:'folk', type:'Evento · SOLO EN INVIERNO', status:'future',
-      steps:['Cubrir la parcela antes del amanecer','Salvar al menos la mitad'], desc:'Una noche al año hiela de verdad. No avisa, pero se nota en el aire, y para cuando lo notas ya vas tarde.'},
+      steps:['Cubrir la parcela antes del amanecer','Salvar al menos la mitad'], desc:'Una noche al año hiela de verdad. No avisa, pero se nota en el aire, y para cuando lo notas ya vas tarde.', como:'🟢 Sin programar nada: RealisticSeasons ya hiela cultivos en invierno (su `crops.yml` pone el crecimiento a 0). «Cubrir la parcela» sería el invernadero.'},
     {id:'c_sequia', label:'🔥 La Sequía', npc:'Ramiro', faction:'folk', type:'Evento · Deadly Disasters', status:'future',
-      steps:['Racionar el agua','Salvar la cosecha con 12 cubos'], desc:'El pozo baja. El Interventor sube la tasa. Las dos cosas pasan el mismo día y nadie las relaciona.'},
+      steps:['Racionar el agua','Salvar la cosecha con 12 cubos'], desc:'El pozo baja. El Interventor sube la tasa. Las dos cosas pasan el mismo día y nadie las relaciona.', como:'🟢 **Deadly Disasters PRO ya está comprado y subido** y trae sequía. Hoy está dormido en todos los mundos; encenderlo aquí es una línea de config.'},
     {id:'c_topos', label:'🕳️ Los Topos del Ayuntamiento', npc:'Registrador', faction:'gold', type:'Burocracia · Matar', status:'future',
-      steps:['Presentar la denuncia por topos','Que la desestimen','Resolverlo tú a paladas'], desc:'El Ayuntamiento responde que los topos no constan como fauna, sino como movimiento de tierras no autorizado, y que el expediente es contra ti.'},
+      steps:['Presentar la denuncia por topos','Que la desestimen','Resolverlo tú a paladas'], desc:'El Ayuntamiento responde que los topos no constan como fauna, sino como movimiento de tierras no autorizado, y que el expediente es contra ti.', como:'El circo burocrático es lo de siempre (ventanillas + `delay`). Los topos, si se quieren de verdad, son otro MythicMob subterráneo.'},
     {id:'c_conejo', label:'🐇 El Conejo de Nico', npc:'Nico', faction:'folk', type:'Dilema · Entregar', status:'live',
-      steps:['Cazar al conejo que arrasa la vega','...o llevárselo vivo a Nico'], desc:'Ramiro lo quiere en una cazuela. Nico lo quiere en una jaula. El conejo no opina.'},
+      steps:['Cazar al conejo que arrasa la vega','...o llevárselo vivo a Nico'], desc:'Ramiro lo quiere en una cazuela. Nico lo quiere en una jaula. El conejo no opina.', como:'Los conejos son vanilla: `mobs-to-kill` de RABBIT. La rama alternativa (llevárselo vivo a Nico) sería atraparlo con una correa — objetivo `items-to-deliver` de un conejo con lazo… ⚠️ eso no existe: más simple es que Nico te pida otra cosa.'},
 
     // ---------- G · EL MERCADO ----------
     {id:'c_puesto', label:'🏪 El Puesto del Mercadillo', npc:'Gordi Mamón', faction:'sci', type:'Desbloqueo · UltimateShop', status:'future', unlocks:'Vender tu cosecha (con tope diario)',
-      steps:['Pagar el alta del puesto','Montar el tenderete','Vender 10 unidades'], desc:'El Gordi Mamón siempre dice que el que vende barato vende dos veces, y que él lo sabe por motivos que no vienen al caso.'},
+      steps:['Pagar el alta del puesto','Montar el tenderete','Vender 10 unidades'], desc:'El Gordi Mamón siempre dice que el que vende barato vende dos veces, y que él lo sabe por motivos que no vienen al caso.', como:'🟢 **UltimateShop**, que ya usamos en 8 tiendas. El puesto es un cofre con ExecutableBlock que abre el menú, y el tope diario es `sell-limits` + reset a medianoche, exactamente como la maría (24/día) y la lavandería (14/día).'},
     {id:'c_precio', label:'💰 Precio de Coste', npc:'Yael Goldstein', faction:'folk', type:'Economía · Investigar', status:'live',
-      steps:['Calcular lo que cuesta producir','Descubrir que pierdes dinero','Renegociar'], desc:'Yael te enseña, encantada, que llevas tres semanas trabajando gratis.'},
+      steps:['Calcular lo que cuesta producir','Descubrir que pierdes dinero','Renegociar'], desc:'Yael te enseña, encantada, que llevas tres semanas trabajando gratis.', como:'Sin mecánica: es un diálogo con Yael y un par de entregas. La \'lección de economía\' es narrativa.'},
     {id:'c_denominacion', label:'📜 Denominación de Origen', npc:'El Ministro', faction:'gold', type:'Burocracia · larga', status:'future', coins:-50,
-      steps:['Solicitar la denominación','Cinco ventanillas','Pagar la tasa','Recibirla con el nombre mal escrito'], desc:'«Tomate de la Vega del Reino». En el sello pone «Tomate de la Bega». El Ministro dice que ya está impreso.'},
+      steps:['Solicitar la denominación','Cinco ventanillas','Pagar la tasa','Recibirla con el nombre mal escrito'], desc:'«Tomate de la Vega del Reino». En el sello pone «Tomate de la Bega». El Ministro dice que ya está impreso.', como:'Vía crucis de ventanillas: el patrón del Permiso de Obra, que ya está escrito y funciona. `delay` entre ventanilla y ventanilla.'},
     {id:'c_exportar', label:'🚢 Exportar por el Puerto', npc:'Bacalao Gabardinez', faction:'folk', type:'Transporte · Entregar', status:'future', coins:35,
-      steps:['Cargar 3 cajones','Que lleguen sin pudrirse'], desc:'Gabardinez acepta el encargo y pregunta, sin mirarte, si va algo de pescado en las cajas.'},
+      steps:['Cargar 3 cajones','Que lleguen sin pudrirse'], desc:'Gabardinez acepta el encargo y pregunta, sin mirarte, si va algo de pescado en las cajas.', como:'Llevar cajones a un punto (`locations-to-reach`) + entregarlos. «Sin que se pudran» = un límite de tiempo con datapack.'},
     {id:'c_cliente', label:'😤 El Cliente Difícil', npc:'Chef Calderón', faction:'folk', type:'Entregar · calidad', status:'future',
-      steps:['Entregar 20 tomates que pasen su examen','Sin uno solo tocado'], desc:'Calderón devuelve la caja tres veces. A la cuarta la acepta sin decir nada, que en Calderón es una ovación.'},
+      steps:['Entregar 20 tomates que pasen su examen','Sin uno solo tocado'], desc:'Calderón devuelve la caja tres veces. A la cuarta la acepta sin decir nada, que en Calderón es una ovación.', como:'⚠️ «Calidad» no existe hoy. La versión honesta: Calderón pide 20 unidades de un cultivo concreto y las rechaza si le llevas otra cosa — eso es `items-to-deliver` normal. La calidad de verdad solo la da CustomCrops (que descartamos).'},
 
     // ---------- H · LA COCINA (Calderón) ----------
     {id:'c_wok', label:'🍳 De la Huerta al Wok', npc:'Chef Calderón', faction:'folk', type:'Elaborar · EmakiCooking', status:'live', unlocks:'Recetas con producto propio',
-      steps:['Cortar en la tabla','Saltear en el wok','Servir'], desc:'Calderón acepta por fin que la verdura venga de fuera de una caja. Le cuesta.'},
+      steps:['Cortar en la tabla','Saltear en el wok','Servir'], desc:'Calderón acepta por fin que la verdura venga de fuera de una caja. Le cuesta.', como:'🟢 EmakiCooking, ya montado: cortar en la tabla → saltear en el wok. Solo falta escribir la receta y que la saga de Calderón reparta el permiso.'},
     {id:'c_menu', label:'📋 El Menú del Día', npc:'Chef Calderón', faction:'folk', type:'Repetible · diaria', status:'future', coins:15,
-      steps:['Traer los 3 ingredientes que pida hoy','Cocinar el plato'], desc:'Cambia cada día y depende de la estación. En invierno el menú es sopa, y Calderón lo anuncia como si fuera una decisión artística.'},
+      steps:['Traer los 3 ingredientes que pida hoy','Cocinar el plato'], desc:'Cambia cada día y depende de la estación. En invierno el menú es sopa, y Calderón lo anuncia como si fuera una decisión artística.', como:'Repetible diaria. ⚠️ Que los 3 ingredientes **cambien cada día** hay que programarlo, o se hace con el **Tablón de Encargos** (BattlePass), que ya sortea tareas diarias de un pool y está montado.'},
     {id:'c_gazpacho', label:'🥣 Gazpacho para la Excavación', npc:'Chef Calderón', faction:'sci', type:'Entregar · SOLO EN VERANO', status:'new', coins:20,
-      steps:['30 tomates','Cocinarlo','Llevar 12 raciones a la Torre'], desc:'A cuarenta grados picando piedra, esto no es comida: es un rescate.'},
+      steps:['30 tomates','Cocinarlo','Llevar 12 raciones a la Torre'], desc:'A cuarenta grados picando piedra, esto no es comida: es un rescate.', como:'EmakiCooking + entregar 12 raciones. La ventana de verano la pone el plugin de estaciones.'},
     {id:'c_tarta', label:'🥧 La Tarta de Fresa', npc:'Sor Bete', faction:'folk', type:'Elaborar · Entregar', status:'new',
-      steps:['Hacer la tarta','Subirla al campanario'], desc:'Sor Bete no baja. La tarta sube.'},
+      steps:['Hacer la tarta','Subirla al campanario'], desc:'Sor Bete no baja. La tarta sube.', como:'🟢 La tarta de fresa **ya existe** en `iacrops` (tiene su modelo y sus porciones). Es entregársela a Sor Bete en el campanario.'},
 
     // ---------- I · LA FERIA DE LA COSECHA (evento anual) ----------
     {id:'c_feria', label:'🎪 La Feria de la Cosecha', npc:'Ayuntamiento', faction:'gold', type:'Evento anual · SOLO EN OTOÑO', status:'future', unlocks:'La feria (evento de temporada)',
-      steps:['Inscribirte','Presentar tu mejor pieza'], desc:'Una vez al año el Ayuntamiento organiza una feria y cobra por participar, por mirar y por aparcar.'},
+      steps:['Inscribirte','Presentar tu mejor pieza'], desc:'Una vez al año el Ayuntamiento organiza una feria y cobra por participar, por mirar y por aparcar.', como:'⚠️ Un evento anual **no se puede programar solo** con lo que hay: lo lanzaría el admin, como la invasión de la Torre (la Sirena). Inscribirse es una quest normal.'},
     {id:'c_calabaza', label:'🎃 La Calabaza Más Grande', npc:'Ramiro', faction:'folk', type:'Competición · ESPERA REAL', status:'future', coins:50,
-      steps:['Cuidar la calabaza toda la estación','Que nadie la toque','Pesarla en la feria'], desc:'Ramiro lleva nueve años segundo. No dice contra quién.'},
+      steps:['Cuidar la calabaza toda la estación','Que nadie la toque','Pesarla en la feria'], desc:'Ramiro lleva nueve años segundo. No dice contra quién.', como:'⚠️ «La más grande» necesita medir algo. Lo honesto: cuidar la calabaza = regarla N días seguidos (datapack con marca de tiempo), y el tamaño final depende de cuántos días no fallaste. Comparar entre jugadores ya es un ranking = scoreboard.'},
     {id:'c_jurado', label:'⚖️ El Jurado', npc:'El Ministro', faction:'gold', type:'Burocracia · decisión', status:'future',
-      steps:['Descubrir quién puntúa','Decidir si le llevas un detalle'], desc:'El jurado es imparcial. El Ministro lo repite dos veces, que es una más de las necesarias.'},
+      steps:['Descubrir quién puntúa','Decidir si le llevas un detalle'], desc:'El jurado es imparcial. El Ministro lo repite dos veces, que es una más de las necesarias.', como:'Diálogo con decisión. ⚠️ Las decisiones con consecuencia hoy se hacen con quests que se excluyen (`quest-blocks`), como los dos finales de El Arreglo.'},
     {id:'c_sabotaje', label:'🔪 Sabotaje en la Feria', npc:'???', faction:'secret', type:'SECRETA · Investigar', status:'future',
-      steps:['Encontrar quién pinchó la calabaza','Decidir qué haces con eso'], desc:'Alguien entró de noche. Hay una huella, y no es de bota de campo.'},
+      steps:['Encontrar quién pinchó la calabaza','Decidir qué haces con eso'], desc:'Alguien entró de noche. Hay una huella, y no es de bota de campo.', como:'Investigar una escena: datapack `reino_investigar`, que ya existe.'},
 
     // ---------- J · LO QUE YA SE CULTIVA HOY (enganches con lo existente) ----------
     {id:'c_maria', label:'🌿 Cultivo Clandestino', npc:'La Alquimista', faction:'folk', type:'YA EXISTE · saga viva', status:'live', coins:26,
-      steps:['(saga real: La Huerta → El Secadero → El Laboratorio)'], desc:'El primer cultivo del server, y el que enseñó que esperar cuatro horas por una planta funciona. Todo esto sale de ahí.'},
+      steps:['(saga real: La Huerta → El Secadero → El Laboratorio)'], desc:'El primer cultivo del server, y el que enseñó que esperar cuatro horas por una planta funciona. Todo esto sale de ahí.', como:'🟢 **Ya está en el juego.** SPdrug: plantar, secar en el compostador (minijuego) y cocer en el laboratorio. Es el precedente de todo esto.'},
     {id:'c_tabaco', label:'🚬 La Rama del Tabaco', npc:'Yaniko', faction:'folk', type:'YA EXISTE · saga viva', status:'live',
-      steps:['(saga real: yaniko_00 → yaniko_04)'], desc:'La otra planta que ya se cultiva y se vende, con su tope diario y todo.'},
+      steps:['(saga real: yaniko_00 → yaniko_04)'], desc:'La otra planta que ya se cultiva y se vende, con su tope diario y todo.', como:'🟢 **Ya está en el juego.** Misma mecánica de SPdrug, con Yaniko y su venta con tope diario.'},
     {id:'c_setas', label:'🍄 Setas del Sótano', npc:'La Alquimista', faction:'folk', type:'Cultivar · a oscuras', status:'future',
-      steps:['Preparar un sótano sin luz','Sembrar el micelio','Cosechar sin abrir la puerta'], desc:'Crecen en lo oscuro y con humedad. La Alquimista se ofrece a probarlas todas, que es justo lo que se teme.'},
+      steps:['Preparar un sótano sin luz','Sembrar el micelio','Cosechar sin abrir la puerta'], desc:'Crecen en lo oscuro y con humedad. La Alquimista se ofrece a probarlas todas, que es justo lo que se teme.', como:'Los champiñones son vanilla y crecen en oscuridad. «Sin abrir la puerta» sería un datapack que mire el nivel de luz, como el cuarto oscuro del laboratorio de fotos.'},
 
     // ---------- K · SECRETAS Y RARAS ----------
     {id:'c_ender', label:'👁️ La Planta que No Es de Aquí', npc:'???', faction:'secret', type:'SECRETA · Cultivar', status:'new',
-      steps:['Conseguir la semilla rara','Plantarla en piedra del End','No mirarla mientras crece'], desc:'Hay una semilla que no prende en tierra. Prende en piedra del End, que nadie tiene motivo para traer a una huerta.'},
+      steps:['Conseguir la semilla rara','Plantarla en piedra del End','No mirarla mientras crece'], desc:'Hay una semilla que no prende en tierra. Prende en piedra del End, que nadie tiene motivo para traer a una huerta.', como:'🟢 El cultivo ender **ya existe** en `iacrops` y se planta en piedra del End. «No mirarla» sería el patrón del ángel llorón de las Backrooms (mirar/no mirar ya está resuelto ahí).'},
     {id:'c_luna', label:'🌙 Sembrar en Luna Nueva', npc:'Rancio el Profeta', faction:'secret', type:'SECRETA · SOLO DE NOCHE', noche:true, status:'future',
-      steps:['Sembrar de madrugada','Con luna nueva','Volver a los tres días'], desc:'Rancio dice que lo sembrado en luna nueva sale distinto. Sale distinto. Nadie ha querido investigar por qué.'},
+      steps:['Sembrar de madrugada','Con luna nueva','Volver a los tres días'], desc:'Rancio dice que lo sembrado en luna nueva sale distinto. Sale distinto. Nadie ha querido investigar por qué.', como:'⚠️ La luna nueva se puede leer (`time query` + fase lunar es vanilla). Que lo sembrado salga distinto hay que programarlo: un datapack marca la planta y al cosechar da otro drop.'},
     {id:'c_convento', label:'⛪ El Huerto del Convento', npc:'Sor Eufrasia', faction:'folk', type:'Cultivar · cerrado', status:'future',
-      steps:['Pedir permiso para entrar','Trabajar el huerto una semana','Aguantar el horario'], desc:'Se entra a las seis. Sor Eufrasia no considera que eso sea temprano ni que sea negociable.'},
+      steps:['Pedir permiso para entrar','Trabajar el huerto una semana','Aguantar el horario'], desc:'Se entra a las seis. Sor Eufrasia no considera que eso sea temprano ni que sea negociable.', como:'Entrar en una región con horario: el patrón del barco de Tierra Hostil (un ExecutableBlock con condición `ifWorldTime`, que SCore ya trae).'},
     {id:'c_semilla', label:'🎁 La Semilla del Fondo del Saco', npc:'Ramiro', faction:'secret', type:'SECRETA · azar', status:'future',
-      steps:['Comprar sacos hasta que salga','Plantarla','Ver qué sale'], desc:'Uno de cada muchos sacos trae una semilla que no es de las que vende. Ramiro dice que se cuelan solas.'},
+      steps:['Comprar sacos hasta que salga','Plantarla','Ver qué sale'], desc:'Uno de cada muchos sacos trae una semilla que no es de las que vende. Ramiro dice que se cuelan solas.', como:'Azar puro: el sistema `RANDOM_RUN` de ExecutableItems, el mismo de la Gragea de Todos los Sabores. Un saco que a veces da algo raro.'},
     // ---------- L · EL CORRAL (animales) ----------
     {id:'c_corral', label:'🚜 El Corral Vacío', npc:'Doña Perpetua (NPC nuevo)', faction:'folk', type:'Reparar · entrada de zona', status:'future', unlocks:'La zona del corral',
-      steps:['Reparar 3 tramos de valla','Limpiar el abrevadero'], desc:'Doña Perpetua tuvo cuarenta gallinas. Ahora tiene una valla rota y una opinión muy formada sobre los jóvenes.'},
+      steps:['Reparar 3 tramos de valla','Limpiar el abrevadero'], desc:'Doña Perpetua tuvo cuarenta gallinas. Ahora tiene una valla rota y una opinión muy formada sobre los jóvenes.', como:'`place-block` de vallas. Nativo.'},
     {id:'c_gallinas', label:'🐔 Las Gallinas de Doña Perpetua', npc:'Doña Perpetua', faction:'folk', type:'Criar · Entregar', status:'live', coins:12,
-      steps:['Recuperar 6 gallinas sueltas','Devolverlas al corral'], desc:'Las gallinas se le escaparon en marzo. Ella dice que se fueron, con ese tono.'},
+      steps:['Recuperar 6 gallinas sueltas','Devolverlas al corral'], desc:'Las gallinas se le escaparon en marzo. Ella dice que se fueron, con ese tono.', como:'Vanilla: las gallinas se guían con semillas en la mano. Objetivo = llevarlas a una zona (`locations-to-reach` no vale para mobs) → ⚠️ lo honesto es entregar 6 huevos o usar `mobs-to-tame`.'},
     {id:'c_huevos', label:'🥚 Docena Diaria', npc:'Doña Perpetua', faction:'folk', type:'REPETIBLE · diaria', status:'future', coins:10,
-      steps:['Recoger 12 huevos','Entregarlos antes del mediodía'], desc:'Doce huevos al día. Ni once ni trece: Doña Perpetua los cuenta delante de ti y no habla mientras cuenta.'},
+      steps:['Recoger 12 huevos','Entregarlos antes del mediodía'], desc:'Doce huevos al día. Ni once ni trece: Doña Perpetua los cuenta delante de ti y no habla mientras cuenta.', como:'🟢 `items-to-deliver` de 12 huevos, repetible con `redo-delay` de 24 h. Nativo.'},
     {id:'c_vaca', label:'🐄 La Vaca Preñada', npc:'Doña Perpetua', faction:'folk', type:'Criar · ESPERA REAL', status:'live',
-      steps:['Buscar la vaca perdida','Traerla al corral','Esperar a que para'], desc:'La vaca se llama Rosario y, según Doña Perpetua, entiende castellano y algo de aritmética.'},
+      steps:['Buscar la vaca perdida','Traerla al corral','Esperar a que para'], desc:'La vaca se llama Rosario y, según Doña Perpetua, entiende castellano y algo de aritmética.', como:'🟢 Objetivo **`breed`** de PikaMug (criar animales), que existe y no hemos usado nunca. La espera es la del propio bebé vanilla.'},
     {id:'c_leche', label:'🥛 El Ordeño de las Cinco', npc:'Doña Perpetua', faction:'folk', type:'REPETIBLE · a una hora fija', status:'new', coins:8,
-      steps:['Ordeñar 6 vacas','A primera hora, no a media mañana'], desc:'A las cinco. Doña Perpetua no negocia la hora y la vaca tampoco.'},
+      steps:['Ordeñar 6 vacas','A primera hora, no a media mañana'], desc:'A las cinco. Doña Perpetua no negocia la hora y la vaca tampoco.', como:'🟢 Objetivo **`cows-to-milk`**, nativo y estrenado justo ahora en la saga de Sor Eufrasia. «A las cinco» = condición de hora con datapack.'},
     {id:'c_veterinario', label:'💉 El Veterinario', npc:'Veterinario (NPC nuevo)', faction:'sci', type:'Recado · Entregar', status:'future',
-      steps:['Ir a buscarlo al Bar Co','Convencerlo de que venga','Traer las hierbas que pide'], desc:'Estudió tres cursos y medio. El medio, dice, fue el importante.'},
+      steps:['Ir a buscarlo al Bar Co','Convencerlo de que venga','Traer las hierbas que pide'], desc:'Estudió tres cursos y medio. El medio, dice, fue el importante.', como:'Hablar + entregar. Nativo.'},
     {id:'c_cerdo', label:'🐖 El Cerdo que No Se Come', npc:'Nico', faction:'folk', type:'Dilema · mascota', status:'live',
-      steps:['Criar al cerdo','Decidir su destino'], desc:'Nico le ha puesto nombre. Doña Perpetua avisa de que eso es exactamente lo que no hay que hacer.'},
+      steps:['Criar al cerdo','Decidir su destino'], desc:'Nico le ha puesto nombre. Doña Perpetua avisa de que eso es exactamente lo que no hay que hacer.', como:'Decisión con dos finales excluyentes (`quest-blocks`), como El Arreglo.'},
     {id:'c_perro', label:'🐕 Un Perro para la Finca', npc:'Nico', faction:'folk', type:'Desbloqueo · EcoPets', status:'future', unlocks:'Perro guardián (mascota con función)',
-      steps:['Adoptar el perro del refugio','Enseñarle la finca'], desc:'El perro no cuida nada, pero ladra cuando alguien entra, que es el 90% del trabajo.'},
+      steps:['Adoptar el perro del refugio','Enseñarle la finca'], desc:'El perro no cuida nada, pero ladra cuando alguien entra, que es el 90% del trabajo.', como:'🟢 **EcoPets** ya está comprado, configurado y con 15 mascotas. Adoptar es abrir la tienda de Nico, que ya existe.'},
 
     // ---------- M · LA QUESERÍA ----------
     {id:'c_queseria', label:'🧀 La Quesería Cerrada', npc:'El Quesero (NPC nuevo)', faction:'folk', type:'Reparar · entrada de zona', status:'future', unlocks:'La quesería',
-      steps:['Limpiar la cava','Reparar la prensa'], desc:'Cerró cuando se murió el anterior quesero. Nadie ha vuelto a abrirla porque el olor, dicen, sigue trabajando.'},
+      steps:['Limpiar la cava','Reparar la prensa'], desc:'Cerró cuando se murió el anterior quesero. Nadie ha vuelto a abrirla porque el olor, dicen, sigue trabajando.', como:'Reparar = `place-block`. La prensa sería un bloque con ExecutableBlock.'},
     {id:'c_cuajo', label:'🥛 El Cuajo', npc:'El Quesero', faction:'folk', type:'Buscar · Elaborar', status:'future',
-      steps:['Conseguir cuajo','Cuajar 8 litros'], desc:'El quesero explica de dónde sale el cuajo. Es mejor no preguntar dos veces.'},
+      steps:['Conseguir cuajo','Cuajar 8 litros'], desc:'El quesero explica de dónde sale el cuajo. Es mejor no preguntar dos veces.', como:'Entregar. Nativo.'},
     {id:'c_curacion', label:'🕰️ La Cava de Curación', npc:'El Quesero', faction:'folk', type:'ESPERA REAL · días', status:'future', coins:28,
-      steps:['Meter 4 quesos en la cava','Voltearlos cada día','Sacarlos a los 5 días'], desc:'Hay que darles la vuelta a diario. Si un día no vas, se nota en la corteza y el quesero lo ve al momento.'},
+      steps:['Meter 4 quesos en la cava','Voltearlos cada día','Sacarlos a los 5 días'], desc:'Hay que darles la vuelta a diario. Si un día no vas, se nota en la corteza y el quesero lo ve al momento.', como:'Espera real con marca de tiempo. ⚠️ «Voltearlos cada día» exige que el jugador vuelva: un datapack cuenta las visitas y penaliza los días saltados. Es la parte que hay que programar, pero el patrón (marca de tiempo) ya está.'},
     {id:'c_queso_feria', label:'🏆 El Queso de Concurso', npc:'El Quesero', faction:'folk', type:'Competición', status:'future',
-      steps:['Curar un queso 10 días','Presentarlo en la feria'], desc:'El quesero lleva sin presentarse desde el año del incidente. No cuenta cuál fue el incidente.'},
+      steps:['Curar un queso 10 días','Presentarlo en la feria'], desc:'El quesero lleva sin presentarse desde el año del incidente. No cuenta cuál fue el incidente.', como:'Igual que la calabaza: depende de cuántos días no fallaste.'},
 
     // ---------- N · EL COLMENAR ----------
     {id:'c_colmenar', label:'🐝 El Colmenar Abandonado', npc:'El Apicultor (NPC nuevo)', faction:'folk', type:'Reparar · entrada de zona', status:'future', unlocks:'El colmenar',
-      steps:['Recuperar 5 colmenas','Colocarlas mirando al sur'], desc:'El apicultor no lleva protección. Dice que las abejas notan el miedo y que él ya no le tiene miedo a casi nada.'},
+      steps:['Recuperar 5 colmenas','Colocarlas mirando al sur'], desc:'El apicultor no lleva protección. Dice que las abejas notan el miedo y que él ya no le tiene miedo a casi nada.', como:'🟢 Las colmenas son **vanilla** (beehive). Colocarlas es `place-block`.'},
     {id:'c_enjambre', label:'🐝 Cazar un Enjambre', npc:'El Apicultor', faction:'folk', type:'Buscar · Minijuego', status:'future',
-      steps:['Encontrar el enjambre en el bosque','Traerlo sin que se disperse'], desc:'Se traslada de noche y sin correr. Correr es lo peor que puedes hacer, y es lo único que te va a apetecer.'},
+      steps:['Encontrar el enjambre en el bosque','Traerlo sin que se disperse'], desc:'Se traslada de noche y sin correr. Correr es lo peor que puedes hacer, y es lo único que te va a apetecer.', como:'Encontrar un nido de abejas en el mundo y traerlo: se recoge con toque de seda. `items-to-deliver` de un nido.'},
     {id:'c_miel', label:'🍯 La Primera Miel', npc:'El Apicultor', faction:'folk', type:'Cosechar · Entregar', status:'live', coins:18,
-      steps:['Recoger 6 panales','Envasar la miel'], desc:'La primera miel del año se reparte, no se vende. El apicultor es muy serio con esto.'},
+      steps:['Recoger 6 panales','Envasar la miel'], desc:'La primera miel del año se reparte, no se vende. El apicultor es muy serio con esto.', como:'🟢 Vanilla puro: panales con tijeras, miel con botella.'},
     {id:'c_polinizar', label:'🌼 Polinizar la Vega', npc:'El Apicultor', faction:'folk', type:'Hito · sube la cosecha', status:'future', unlocks:'+ rendimiento en toda la vega',
-      steps:['Colocar 3 colmenas junto a las parcelas','Plantar flores alrededor'], desc:'Nadie del pueblo entiende por qué desde que hay abejas la vega da más. El apicultor lo ha explicado cuatro veces.'},
+      steps:['Colocar 3 colmenas junto a las parcelas','Plantar flores alrededor'], desc:'Nadie del pueblo entiende por qué desde que hay abejas la vega da más. El apicultor lo ha explicado cuatro veces.', como:'🟢 **Vanilla y gratis**: las abejas de Minecraft ya polinizan y aceleran el crecimiento de los cultivos cercanos. No hay que programar NADA: solo contarlo.'},
     {id:'c_hidromiel', label:'🍺 Hidromiel', npc:'Señor Trapo', faction:'folk', type:'Elaborar · BreweryX', status:'live', coins:20,
-      steps:['16 de miel','Fermentar','Añejar'], desc:'Trapo lo llama "la bebida de los antiguos". Es miel con agua, pero suena mejor así.'},
+      steps:['16 de miel','Fermentar','Añejar'], desc:'Trapo lo llama "la bebida de los antiguos". Es miel con agua, pero suena mejor así.', como:'🟢 BreweryX, receta con miel.'},
 
     // ---------- O · EL MOLINO ----------
     {id:'c_molino', label:'🌬️ El Molino Parado', npc:'El Molinero (NPC nuevo)', faction:'folk', type:'Reparar · entrada de zona', status:'future', unlocks:'El molino',
-      steps:['Subir a las aspas','Cambiar el eje'], desc:'Lleva parado nueve años. El molinero sigue yendo cada mañana a la misma hora.'},
+      steps:['Subir a las aspas','Cambiar el eje'], desc:'Lleva parado nueve años. El molinero sigue yendo cada mañana a la misma hora.', como:'El molino es una construcción; repararlo es `place-block` + entregar materiales.'},
     {id:'c_aspas', label:'🪵 Las Aspas Rotas', npc:'El Molinero', faction:'folk', type:'Elaborar · Entregar', status:'live',
-      steps:['32 tablones','4 velas de lona'], desc:'La lona la cosió su mujer. El molinero no deja que la toque nadie más y por eso lleva nueve años parado.'},
+      steps:['32 tablones','4 velas de lona'], desc:'La lona la cosió su mujer. El molinero no deja que la toque nadie más y por eso lleva nueve años parado.', como:'Entregar 32 tablones y 4 de lona. Nativo.'},
     {id:'c_trigo', label:'🌾 Trigo del Bancal', npc:'El Molinero', faction:'folk', type:'Cultivar · SOLO EN VERANO', status:'live', coins:16,
-      steps:['Sembrar el bancal alto','Segar 64 de trigo'], desc:'El bancal de arriba solo sirve para trigo. Lo demás se hiela.'},
+      steps:['Sembrar el bancal alto','Segar 64 de trigo'], desc:'El bancal de arriba solo sirve para trigo. Lo demás se hiela.', como:'🔴 **OJO, aquí hay una trampa nuestra**: el trigo está **exento** en la config de estaciones **por la maría** (SPdrug usa semillas de trigo). Una misión de trigo hay que pensarla con eso delante o se toca lo que sostiene la economía.'},
     {id:'c_harina', label:'⚙️ Moler la Harina', npc:'El Molinero', faction:'folk', type:'Minijuego · el molino', status:'future',
-      steps:['Cargar el trigo','Ajustar la muela','Sacar 16 de harina'], desc:'Si aprietas la muela, la harina sale quemada. Si la aflojas, sale gorda. El punto está en algún sitio.'},
+      steps:['Cargar el trigo','Ajustar la muela','Sacar 16 de harina'], desc:'Si aprietas la muela, la harina sale quemada. Si la aflojas, sale gorda. El punto está en algún sitio.', como:'«Ajustar la muela» = un minijuego de aguantar en un punto o de secuencia. El patrón es el de la lavandería (elegir el producto correcto en el orden correcto).'},
     {id:'c_pan', label:'🍞 El Pan de Cada Día', npc:'Chef Calderón', faction:'folk', type:'REPETIBLE · EmakiCooking', status:'new', coins:12,
-      steps:['Amasar','Hornear 8 hogazas','Repartirlas'], desc:'Calderón acepta harina del molino. Le costó, pero acepta.'},
+      steps:['Amasar','Hornear 8 hogazas','Repartirlas'], desc:'Calderón acepta harina del molino. Le costó, pero acepta.', como:'🟢 EmakiCooking ya tiene masa y hogaza montadas: es una entrega repetible.'},
 
     // ---------- P · LAS ACEQUIAS (el agua) ----------
     {id:'c_acequia', label:'💧 Las Acequias Secas', npc:'Ramiro', faction:'folk', type:'Construir', status:'future', unlocks:'Riego por acequia (menos cubos)',
-      steps:['Cavar 60 bloques de acequia','Conectarla al pozo'], desc:'Antes el agua llegaba sola. Se dejó de limpiar la acequia y en dos años el agua ya no sabía el camino.'},
+      steps:['Cavar 60 bloques de acequia','Conectarla al pozo'], desc:'Antes el agua llegaba sola. Se dejó de limpiar la acequia y en dos años el agua ya no sabía el camino.', como:'🟢 **Esta es la otra que preguntabas, y tiene mecánica REAL y vanilla.** «Conectar el cultivo al pozo» no es un cable: es **cavar un canal y llevar agua** hasta la parcela. En Minecraft, la tierra labrada a **4 bloques o menos de agua se hidrata sola** y el cultivo crece más rápido — es una regla vanilla de toda la vida. Así que la misión es literal: cavas 60 bloques de canal, echas agua, y tus cultivos empiezan a ir mejor. El objetivo se mide con `break-block` (cavar) y `place-block` (el cubo de agua).'},
     {id:'c_regante', label:'🚰 El Regante', npc:'El Regante (NPC nuevo)', faction:'folk', type:'Negociar · pagar', status:'future',
-      steps:['Hablar con el Regante','Aceptar tu turno','Pagarle "la voluntad"'], desc:'Él decide quién riega y cuándo. No tiene ningún cargo. Nadie recuerda cómo empezó esto.'},
+      steps:['Hablar con el Regante','Aceptar tu turno','Pagarle "la voluntad"'], desc:'Él decide quién riega y cuándo. No tiene ningún cargo. Nadie recuerda cómo empezó esto.', como:'Pagar y hablar. Nativo. El personaje hace el trabajo.'},
     {id:'c_turno', label:'🕓 Tu Turno de Agua', npc:'El Regante', faction:'folk', type:'REPETIBLE · a una hora fija', status:'future',
-      steps:['Abrir tu compuerta en tu turno','Cerrarla al acabar'], desc:'Te ha tocado el turno de las cuatro de la mañana. Al Regante le ha tocado el de las once, por casualidad.'},
+      steps:['Abrir tu compuerta en tu turno','Cerrarla al acabar'], desc:'Te ha tocado el turno de las cuatro de la mañana. Al Regante le ha tocado el de las once, por casualidad.', como:'Abrir tu compuerta a tu hora: `use-block-names` de una palanca + condición de hora por datapack. Las dos piezas existen.'},
     {id:'c_robo_agua', label:'🌑 Alguien Abre la Compuerta', npc:'???', faction:'secret', type:'SECRETA · vigilar de noche', noche:true, status:'future',
-      steps:['Vigilar la acequia de noche','Ver quién es','Decidir si lo cuentas'], desc:'Tres noches seguidas amanece tu parcela seca y la de al lado encharcada.'},
+      steps:['Vigilar la acequia de noche','Ver quién es','Decidir si lo cuentas'], desc:'Tres noches seguidas amanece tu parcela seca y la de al lado encharcada.', como:'Vigilar de noche: el patrón de la ronda (estar en una zona en un rango de horas).'},
     {id:'c_noria', label:'🎡 La Noria', npc:'Dr. Papriko', faction:'sci', type:'Construir · Papriko', status:'future', unlocks:'Riego automático',
-      steps:['Montar la noria','Que el río la mueva'], desc:'Papriko la llama "bomba hidráulica de tracción fluvial". Ramiro la llama noria. Es una noria.'},
+      steps:['Montar la noria','Que el río la mueva'], desc:'Papriko la llama "bomba hidráulica de tracción fluvial". Ramiro la llama noria. Es una noria.', como:'⚠️ La noria es decorativa: el riego automático de verdad son **bloques de agua bien puestos** (ver la acequia). La noria sería el adorno que lo explica.'},
 
     // ---------- Q · LA ERA Y EL SILO ----------
     {id:'c_era', label:'🟡 La Era', npc:'Ramiro', faction:'folk', type:'Construir', status:'future',
-      steps:['Allanar la era','Empedrarla'], desc:'Un círculo de piedra donde se trilla. Lleva ahí desde antes que el pueblo, y eso a nadie le llama la atención.'},
+      steps:['Allanar la era','Empedrarla'], desc:'Un círculo de piedra donde se trilla. Lleva ahí desde antes que el pueblo, y eso a nadie le llama la atención.', como:'Construir: `place-block`.'},
     {id:'c_trilla', label:'🐴 La Trilla', npc:'Horse Luis', faction:'folk', type:'Minijuego · dar vueltas', status:'future', coins:14,
-      steps:['Enganchar a Horse Luis','Dar 20 vueltas a la era','Aventar el grano'], desc:'Horse Luis lo hace encantado. Dice que es lo único que le recuerda a cuando servía para algo, y lo dice sin pena.'},
+      steps:['Enganchar a Horse Luis','Dar 20 vueltas a la era','Aventar el grano'], desc:'Horse Luis lo hace encantado. Dice que es lo único que le recuerda a cuando servía para algo, y lo dice sin pena.', como:'⚠️ «Dar vueltas con el caballo» necesita medir distancia recorrida: se hace con la estadística vanilla de bloques andados, que ya usamos en las Backrooms y en la saga de Garrapata. Que el caballo te siga es un tema aparte.'},
     {id:'c_silo', label:'🏗️ El Silo', npc:'Ramiro', faction:'folk', type:'Construir · almacenar', status:'future', unlocks:'Guardar cosecha sin que se pudra',
-      steps:['Levantar el silo','Llenarlo con 5 sacos'], desc:'Lo que no cabe en el silo se pudre. Y en el silo cabe justo lo que cabe.'},
+      steps:['Levantar el silo','Llenarlo con 5 sacos'], desc:'Lo que no cabe en el silo se pudre. Y en el silo cabe justo lo que cabe.', como:'Construir + un cofre que cuenta lo guardado (ExecutableBlock).'},
     {id:'c_ratas', label:'🐀 Ratas en el Silo', npc:'Ramiro', faction:'folk', type:'Matar · MythicMobs', status:'live',
-      steps:['Bajar al silo de noche','Matar 20 ratas','Tapar el agujero'], desc:'Hay un agujero por el que entran. Lo tapas, y a la semana hay otro agujero, en otro sitio, del mismo tamaño.'},
+      steps:['Bajar al silo de noche','Matar 20 ratas','Tapar el agujero'], desc:'Hay un agujero por el que entran. Lo tapas, y a la semana hay otro agujero, en otro sitio, del mismo tamaño.', como:'🟢 Las ratas **ya existen** en el bestiario (las invoca El Ratero). Es `mobs-to-kill` con un MythicMob que ya está hecho.'},
 
     // ---------- R · SEMILLAS, CRUCES Y VARIEDADES ----------
     {id:'c_semillera', label:'🌰 La Semillera', npc:'La Semillera (NPC nuevo)', faction:'folk', type:'Comerciar · desbloqueo', status:'future', unlocks:'Comprar semillas raras',
-      steps:['Encontrar su carro','Comprarle el primer sobre'], desc:'Va de pueblo en pueblo con un carro lleno de sobres sin etiquetar. Sabe lo que hay en cada uno.'},
+      steps:['Encontrar su carro','Comprarle el primer sobre'], desc:'Va de pueblo en pueblo con un carro lleno de sobres sin etiquetar. Sabe lo que hay en cada uno.', como:'Un NPC con una tienda de UltimateShop. Nativo.'},
     {id:'c_banco_semillas', label:'🏛️ El Banco de Semillas', npc:'La Semillera', faction:'folk', type:'Coleccionar', status:'future', unlocks:'Guardar variedades',
-      steps:['Depositar una semilla de cada cultivo','Etiquetarlas'], desc:'Un armario con cajones numerados. Ella dice que es por si un año sale mal. No dice cómo de mal.'},
+      steps:['Depositar una semilla de cada cultivo','Etiquetarlas'], desc:'Un armario con cajones numerados. Ella dice que es por si un año sale mal. No dice cómo de mal.', como:'Un cofre que registra qué has depositado: ExecutableBlock + permisos por cultivo, como hace el Directorio del Reino.'},
     {id:'c_cruce', label:'🧬 El Cruce', npc:'Dr. Papriko + La Semillera', faction:'sci', type:'Elaborar · Minijuego', status:'future',
-      steps:['Cruzar dos variedades','Sembrar las 4 semillas resultantes','Ver cuál sale'], desc:'Papriko aporta el método. La Semillera aporta el criterio. Discuten todo el rato y sale bien.'},
+      steps:['Cruzar dos variedades','Sembrar las 4 semillas resultantes','Ver cuál sale'], desc:'Papriko aporta el método. La Semillera aporta el criterio. Discuten todo el rato y sale bien.', como:'⚠️ Cruzar variedades **no existe**: sería una máquina (bloque + datapack) a la que metes 2 semillas y te da una tercera, decidida por una tabla. Es la cadena del laboratorio de fotos aplicada a semillas.'},
     {id:'c_variedad', label:'✍️ Tu Propia Variedad', npc:'La Semillera', faction:'folk', type:'Hito · le pones NOMBRE', status:'future', unlocks:'Una variedad con tu nombre en el banco',
-      steps:['Estabilizar el cruce 3 generaciones','Registrarla'], desc:'Se registra con el nombre que tú digas. Va a quedarse ahí para siempre, así que piénsalo.'},
+      steps:['Estabilizar el cruce 3 generaciones','Registrarla'], desc:'Se registra con el nombre que tú digas. Va a quedarse ahí para siempre, así que piénsalo.', como:'🔴 **Ponerle TU nombre a una variedad no se puede hacer bien hoy**: exigiría crear un ítem nuevo en caliente, y ItemsAdder necesita reconstruir el pack para eso. La versión posible: un ítem genérico «Variedad Registrada» con tu nombre en el lore.'},
     {id:'c_extinta', label:'🕯️ La Variedad Perdida', npc:'???', faction:'secret', type:'SECRETA · Investigar', status:'future',
-      steps:['Encontrar el cajón vacío','Averiguar qué había','Buscar si queda alguna'], desc:'En el banco de semillas hay un cajón con etiqueta y sin semillas. La etiqueta está escrita con otra letra.'},
+      steps:['Encontrar el cajón vacío','Averiguar qué había','Buscar si queda alguna'], desc:'En el banco de semillas hay un cajón con etiqueta y sin semillas. La etiqueta está escrita con otra letra.', como:'Investigar una escena + entregar. Nativo.'},
 
     // ---------- S · EL SINDICATO DE HORTELANOS ----------
     {id:'c_sindicato', label:'🤝 El Sindicato de Hortelanos', npc:'Ramiro → Registrador', faction:'gold', type:'Burocracia · alta', status:'future', unlocks:'Encargos del sindicato',
-      steps:['Darte de alta','Aportar dos avales','Pagar la cuota'], desc:'Son once y se reúnen en el Bar Co. Diez van por la cerveza.'},
+      steps:['Darte de alta','Aportar dos avales','Pagar la cuota'], desc:'Son once y se reúnen en el Bar Co. Diez van por la cerveza.', como:'Trámite + un permiso que abre encargos. El patrón del Gremio de Oficios.'},
     {id:'c_cuota', label:'💸 La Cuota', npc:'Interventor', faction:'gold', type:'REPETIBLE · sumidero', status:'future', coins:-15,
-      steps:['Pagar la cuota mensual'], desc:'La cuota cubre gastos de representación. La representación es una cena al año.'},
+      steps:['Pagar la cuota mensual'], desc:'La cuota cubre gastos de representación. La representación es una cena al año.', como:'Entregar Cacahuates, repetible. Es un sumidero, como la fragua de Lolo.'},
     {id:'c_huelga', label:'✊ La Huelga del Tomate', npc:'Sindicato', faction:'folk', type:'Decisión · evento', status:'future',
-      steps:['Decidir si te sumas','Aguantar la semana sin vender','O romper la huelga'], desc:'El Ayuntamiento ha bajado el precio del tomate. El sindicato propone no vender ni uno. Alguien va a vender.'},
+      steps:['Decidir si te sumas','Aguantar la semana sin vender','O romper la huelga'], desc:'El Ayuntamiento ha bajado el precio del tomate. El sindicato propone no vender ni uno. Alguien va a vender.', como:'⚠️ «No vender durante una semana» exige vigilar que NO hagas algo, y eso es raro de medir. Lo honesto: la tienda se cierra sola durante la huelga si te sumas, y se abre si la rompes. Dos permisos.'},
     {id:'c_asamblea', label:'🚩 La Asamblea', npc:'Liu Qingdao (Gremio del Puerto)', faction:'folk', type:'Escuchar · larga', status:'future',
-      steps:['Asistir a la asamblea','Aguantar hasta el final','Votar'], desc:'Los del puerto se ofrecen a asesorar al sindicato en materia de organización. Duran cuatro horas y lo llaman punto primero.'},
+      steps:['Asistir a la asamblea','Aguantar hasta el final','Votar'], desc:'Los del puerto se ofrecen a asesorar al sindicato en materia de organización. Duran cuatro horas y lo llaman punto primero.', como:'Escuchar: el patrón de los cuentos de Horse Luis (te quedas en la sala y un temporizador va soltando el diálogo).'},
 
     // ---------- T · ROBOS Y VIGILANCIA ----------
     {id:'c_guarda', label:'🎖️ El Guarda Rural', npc:'El Guarda (NPC nuevo)', faction:'folk', type:'Recado · presentación', status:'future',
-      steps:['Presentarte al guarda','Que te apunte en su libreta'], desc:'Tiene una libreta con todos los nombres del pueblo y una anotación al lado de cada uno. No enseña la libreta.'},
+      steps:['Presentarte al guarda','Que te apunte en su libreta'], desc:'Tiene una libreta con todos los nombres del pueblo y una anotación al lado de cada uno. No enseña la libreta.', como:'Hablar. Nativo.'},
     {id:'c_ronda', label:'🔦 La Ronda de Noche', npc:'El Guarda', faction:'folk', type:'REPETIBLE · SOLO DE NOCHE', noche:true, status:'future', coins:14,
-      steps:['Recorrer los 6 puntos de la vega','Antes del amanecer'], desc:'Seis puntos, en orden, sin saltarse ninguno. El guarda lo sabe si te saltas uno.'},
+      steps:['Recorrer los 6 puntos de la vega','Antes del amanecer'], desc:'Seis puntos, en orden, sin saltarse ninguno. El guarda lo sabe si te saltas uno.', como:'Recorrer 6 puntos en orden y de noche: `locations-to-reach` múltiple + condición de hora. Las dos cosas existen (la ronda de la Mina hace algo parecido).'},
     {id:'c_ladron', label:'🍐 El que Roba la Fruta', npc:'Edelmiro Garrapata', faction:'folk', type:'Investigar · Sigilo', status:'future',
-      steps:['Seguir el rastro','Descubrir que es Garrapata','Escuchar su explicación'], desc:'Garrapata no roba fruta por hambre: la roba porque es lo único que puede robar sin hacer ruido, y necesitaba probarlo.'},
+      steps:['Seguir el rastro','Descubrir que es Garrapata','Escuchar su explicación'], desc:'Garrapata no roba fruta por hambre: la roba porque es lo único que puede robar sin hacer ruido, y necesitaba probarlo.', como:'Seguir un rastro = puntos de investigación (`reino_investigar`, ya montado).'},
     {id:'c_trampa', label:'🪤 Trampas para el Ladrón', npc:'El Guarda', faction:'folk', type:'Colocar · Minijuego', status:'future',
-      steps:['Colocar 8 trampas','Sin que caiga ningún vecino'], desc:'Las trampas son legales. Que caiga un vecino, no. El guarda insiste mucho en esa distinción.'},
+      steps:['Colocar 8 trampas','Sin que caiga ningún vecino'], desc:'Las trampas son legales. Que caiga un vecino, no. El guarda insiste mucho en esa distinción.', como:'Colocar trampas: `place-block` de placas de presión. «Que no caiga un vecino» es narrativo, no se mide.'},
 
     // ---------- U · CRUCES CON OTROS MUNDOS Y SECRETOS ----------
     {id:'c_espantavivo', label:'👻 El Espantapájaros se Movió', npc:'???', faction:'secret', type:'SECRETA · terror', noche:true, status:'future',
-      steps:['Comprobar dónde lo dejaste','Volver de noche','No mirarlo dos veces'], desc:'Lo pusiste mirando al este. Está mirando a la casa. Ramiro dice que lo habrás movido tú.'},
+      steps:['Comprobar dónde lo dejaste','Volver de noche','No mirarlo dos veces'], desc:'Lo pusiste mirando al este. Está mirando a la casa. Ramiro dice que lo habrás movido tú.', como:'Terror sin mecánica cara: el espantapájaros se **mueve** con un `setblock` programado cuando el jugador no mira. Barato y muy efectivo.'},
     {id:'c_pozo_fondo', label:'🕳️ El Fondo del Pozo', npc:'???', faction:'secret', type:'SECRETA · Explorar', status:'future',
-      steps:['Bajar al pozo','Encontrar lo que hay','Volver a subir'], desc:'El pozo tiene más profundidad de la que necesita un pozo.'},
+      steps:['Bajar al pozo','Encontrar lo que hay','Volver a subir'], desc:'El pozo tiene más profundidad de la que necesita un pozo.', como:'Bajar y encontrar: `locations-to-reach` a una coordenada honda.'},
     {id:'c_hostil', label:'⛏️ Semillas en Tierra Hostil', npc:'Bacalao Gabardinez', faction:'folk', type:'Cultivar · OTRO MUNDO', status:'future',
-      steps:['Llevar semillas en el barco','Plantarlas en la isla','Volver antes de que zarpe'], desc:'Nadie ha intentado cultivar en una isla que se cae a cachos. Ramiro dice que por algo será.'},
+      steps:['Llevar semillas en el barco','Plantarlas en la isla','Volver antes de que zarpe'], desc:'Nadie ha intentado cultivar en una isla que se cae a cachos. Ramiro dice que por algo será.', como:'🟢 Tierra Hostil **ya existe** y ya tiene barco con horario. Plantar allí es plantar normal; lo difícil (el mundo, los desastres) ya está montado.'},
     {id:'c_abismo', label:'🌑 El Musgo del Abismo', npc:'Dra. Pizarrica', faction:'sci', type:'Buscar · OTRO MUNDO', status:'future',
-      steps:['Bajar al Abismo','Recoger 8 de musgo','Intentar cultivarlo arriba'], desc:'Crece a mil bloques de profundidad y sin luz. Pizarrica quiere saber si crece aquí. Ramiro no quiere eso en su vega.'},
+      steps:['Bajar al Abismo','Recoger 8 de musgo','Intentar cultivarlo arriba'], desc:'Crece a mil bloques de profundidad y sin luz. Pizarrica quiere saber si crece aquí. Ramiro no quiere eso en su vega.', como:'🟢 El Abismo ya existe y se llega en helicóptero. Recoger musgo es `break-block`. ⚠️ «Cultivarlo arriba» sería un cultivo nuevo, que cuesta IDs de bloque (quedan 50).'},
     {id:'c_backrooms', label:'🚪 La Planta del Pasillo', npc:'???', faction:'secret', type:'SECRETA · muy rara', status:'future',
-      steps:['(no consta cómo se consigue)'], desc:'Alguien trajo un esqueje de un sitio donde no hay sol. Sigue vivo. No debería.'},
+      steps:['(no consta cómo se consigue)'], desc:'Alguien trajo un esqueje de un sitio donde no hay sol. Sigue vivo. No debería.', como:'🔴 Sin mecánica definida a propósito: es un gancho de lore, no una misión. Si algún día se monta, primero hay que decidir qué es esa planta.'},
 
     {id:'c_oficio', label:'🏅 Maestro Hortelano', npc:'Ramiro', faction:'folk', type:'FINAL DE RAMA · oficio', status:'future', coins:100, unlocks:'Oficio de Hortelano: encargos diarios y tu propia finca',
-      steps:['Cerrar el año completo','Tener la despensa llena','Ganar algo en la feria','Que Calderón te acepte una caja a la primera','Tener las cuatro zonas en marcha'], desc:'Ramiro te da la azada buena, la que no enseña a nadie, y se sienta. Es lo más parecido a un discurso que va a hacer.'},
+      steps:['Cerrar el año completo','Tener la despensa llena','Ganar algo en la feria','Que Calderón te acepte una caja a la primera','Tener las cuatro zonas en marcha'], desc:'Ramiro te da la azada buena, la que no enseña a nadie, y se sienta. Es lo más parecido a un discurso que va a hacer.', como:'Comprobar 4 permisos (`reino.hecho.*`) y conceder el del oficio. El Directorio del Reino ya funciona exactamente así.'},
   ];
 
   const EC = [
@@ -5304,6 +5354,12 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
     let rw=[]; if(d.coins) rw.push('🥜 '+d.coins+' Cacahuates'); if(d.reward) rw.push(esc(d.reward));
     if(rw.length) h+='<p class="rw">Recompensa: '+rw.join(' · ')+'</p>';
     if(d.steps&&d.steps.length){h+='<div class="lbl">Pasos</div><ol>';d.steps.forEach(s=>h+='<li>'+esc(s)+'</li>');h+='</ol>';}
+    /* 🔧 CÓMO SE HACE — solo en la rama de cultivos (2026-08-11). Nace de que el usuario leyó
+       "proteger los cultivos de las orugas" y preguntó, con razón, cómo demonios funciona eso.
+       Una propuesta sin mecánica no se puede valorar: parece contenido y es un deseo.
+       🔴 El texto dice la verdad aunque quede feo — las que HOY no se pueden hacer bien
+       empiezan por 🔴, y las que tienen truco por ⚠️. Sale de `web/como_cultivos.py`. */
+    if(d.como) h+='<div class="lbl">Cómo se hace</div><p class="como">'+esc(d.como)+'</p>';
     body.innerHTML=h; panel.classList.add('on');
   }
   function close(){panel.classList.remove('on'); cy.elements().removeClass('faded hl'); cy.$(':selected').unselect();}
@@ -5370,6 +5426,40 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
        🔴 La de cultivos es una SIMULACIÓN, no contenido del server (ver el comentario de NC).
        Va en pestaña aparte justo para no romper la regla de "el mapa solo enseña lo que se
        juega": quien abre el mapa sigue viendo el Reino de verdad y nada más. */
+    /* 🌱 La tabla de los 30 cultivos (2026-08-11). El usuario la pidió porque la rama de
+       cultivos no se puede valorar sin saber qué hay: qué se planta, dónde, cuánto tarda,
+       qué suelta y para qué sirve. Los datos los genera `web/gen_tabla_cultivos.py` LEYENDO
+       los packs, así que la tabla no puede contradecir al servidor. */
+    cultivos:function(){
+      const t=document.getElementById('tCultivos');
+      if(!t.dataset.hecho){
+        let h='<thead><tr><th>Cultivo</th><th>Dónde se planta</th><th>Tarda</th>'
+             +'<th>Cómo se cultiva</th><th>Suelta</th><th>Para qué sirve</th></tr></thead><tbody>';
+        CULTIVOS.forEach(c=>{
+          // el **negrita** de los textos generados se pinta aquí; el resto va escapado
+          const md=s=>esc(s).replace(/\*\*(.+?)\*\*/g,'<b>$1</b>');
+          h+='<tr data-b="'+esc((c.nombre+' '+c.fuente+' '+c.usos+' '+c.donde).toLowerCase())+'">'
+            +'<td class="nm">'+esc(c.nombre)+'<span class="fu">'+esc(c.fuente)+'</span></td>'
+            +'<td>'+esc(c.donde)+'</td><td>'+esc(c.tiempo)+'</td>'
+            +'<td class="como">'+md(c.comose)+'</td>'
+            +'<td'+(c.suelta.indexOf('CABEZA')>=0?' class="cab"':'')+'>'+esc(c.suelta)+'</td>'
+            +'<td class="usos">'+md(c.usos)+'</td></tr>';
+        });
+        t.innerHTML=h+'</tbody>'; t.dataset.hecho='1';
+      }
+      document.getElementById('modalCultivos').classList.add('on');
+      this.filtrarCultivos();
+    },
+    cerrarCultivos:()=>document.getElementById('modalCultivos').classList.remove('on'),
+    filtrarCultivos:function(){
+      const q=(document.getElementById('cFiltro').value||'').trim().toLowerCase();
+      let n=0;
+      document.querySelectorAll('#tCultivos tbody tr').forEach(tr=>{
+        const ok=!q||tr.dataset.b.indexOf(q)>=0;
+        tr.style.display=ok?'':'none'; if(ok)n++;
+      });
+      document.getElementById('cCuenta').textContent=n+' de '+CULTIVOS.length+' cultivos';
+    },
     tab:function(k){
       if(!VISTAS[k] || k===VISTA) return;
       VISTA=k;
