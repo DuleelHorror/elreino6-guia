@@ -819,6 +819,19 @@ const G = [
   ]
  },
  {
+  "t": "⬜⚒️ EL YUNQUE DE LA FORJA (bloque de la herrería de Lolo)",
+  "sub": "Decisión del usuario (2026-08-11): la fragua va a ser <b>un yunque custom dentro de la herrería</b>, no un bloque vanilla reciclado. Se monta como la lavandería —<b><code>item_display</code> + BARRIER con EB</b>, la regla de <code>bloques-maquina.md</code>— así que el dibujo se coloca y se gira con <b>Axiom</b> y el bloque invisible de debajo recibe el clic y abre la fragua. 🔑 <b>Por eso da igual qué materiales estén pillados</b>: <code>ANVIL</code> ya es el <code>Yunque_Lolo</code> de reparar y <code>BLAST_FURNACE</code> lo toca EmakiCooking — el barrier no es ninguno de los dos. 🔴 Se pinta sobre <b>la plantilla de cubo</b> (se descarga desde EL TALLER, o <code>texturas/plantilla_cubo/</code>) y se deja en <code>texturas/cubos/forja_yunque.png</code>. Luego <code>python mmo-generadores/gen_bloques_cubo.py</code>.",
+  "items": [
+   {
+    "e": "⬜",
+    "o": "<code>forja_yunque</code>",
+    "n": "Yunque de forja",
+    "m": "<i>(sin montar)</i>",
+    "d": "herrería de Lolo · yunque de hierro ennegrecido, con la cara golpeada y brasas debajo"
+   }
+  ]
+ },
+ {
   "t": "✅⛏️ LOS MINERALES DE TIERRA HOSTIL (5 vetas + 5 gemas + el bidón)",
   "sub": "La isla de los desastres a la que se llega en el barco de Gabardinez. Los minerales son **el motivo para ir**, así que son exclusivos de allí. Diseño completo en <code>.claude/rules/tierra-hostil.md</code>. 🔴 <b>Las VETAS van a 16×16 por cara</b> (son bloques); las gemas y el bidón, 16×16 de item. 🔑 <b>Que se distingan A OSCURAS y de un vistazo</b>: cada uno tiene **un color y una FORMA de inclusión distintos** (tubos / anillos / grietas / motas grasas / motas brillantes), para que no dependa solo del color — en una cueva con antorcha, la silueta se lee antes que el tono. ✅✅ <b>LOS 10 DEFINITIVOS, PUESTOS (2026-08-09)</b> — los entregó el usuario y se colocaron con <code>texturas/poner_minerales_th.py</code>. 🔴 <b>Ojo si llegan más: los nombres vienen AL REVÉS</b> — su <code>X_bloque.png</code> (64×48, plantilla de cubo) es <b>la VETA</b> y va a <code>block/ores/X_ore.png</code>; su <code>X_ore.png</code> (16×16) es <b>la GEMA</b> y va a <code>item/ores/X.png</code>. Copiando por nombre, la gema acaba empotrada en la pared y la roca en la mano, sin un solo error en el log. Las 6 caras del cubo eran idénticas, así que se recorta una (el script avisa si alguna vez no lo son). (histórico) Hubo placeholder desde el 2026-08-08 — los 10 están dibujados y subidos<b>, y </b>el juego ya se puede probar**: cada mineral tiene su color y su forma de inclusión, así que se distinguen de un vistazo. Los dibujó <code>mmo-generadores/gen_minerales_tierra_hostil.py</code> (pixel art a mano, dentro del propio script). 🖼️ Míralos todos juntos en <b><code>texturas/_preview_tierra_hostil.png</code></b>. 🔑 <b>Sustituir uno por el bueno = sobrescribir el PNG en la MISMA RUTA</b> y rehacer el pack. Cero cambios de config: mismo id, mismo CMD, mismo generador. Por eso <b>no corre ninguna prisa</b> y se pueden ir dando de uno en uno. Las rutas son <code>ItemsAdder/contents/tierra_hostil/resourcepack/tierra_hostil/textures/{block,item}/ores/</code>. 📌 Los que <b>más ganan</b> con un dibujo de verdad son <b>las 5 gemas y el bidón</b> (las vetas placeholder ya cumplen bastante bien; las gemas son manchas con silueta).",
   "items": [
@@ -1248,7 +1261,7 @@ const G = [
   ]
  }
 ];
-const FALTAN = 33, ITEMS = 44;
+const FALTAN = 34, ITEMS = 45;
 
 function TH(){const r=document.documentElement;
   const cur=r.dataset.theme||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');
