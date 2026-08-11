@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>El Reino 6 — Herramientas del servidor</title>
+<title>Features — El Reino 6</title>
 <style>
 /* ═══════════════════════════════════════════════════════════════════════════
    TEMA — El Reino 6 · herramientas del servidor
@@ -205,42 +205,65 @@ thead th{font-size:.74rem; text-transform:uppercase; letter-spacing:.07em; color
 }
 
 
-/* ── lo propio de la portada ── */
-.portada{padding:86px 0 52px; max-width:840px}
-.portada h1{font-size:clamp(2.6rem,7vw,4.5rem); letter-spacing:-.032em}
-.portada h1 .fino{display:block; color:var(--tinta-3); font-weight:520}
-.portada .bajada{font-size:1.28rem; color:var(--tinta-2); margin:22px 0 0; line-height:1.5;
-  max-width:60ch}
-@media(max-width:640px){ .portada{padding:44px 0 30px} }
+.hoja{max-width:1000px;margin:0 auto;padding:34px 22px 90px}
+.cab{display:flex;flex-direction:column;gap:12px;margin-bottom:30px}
+.ceja{font-size:.7rem;font-weight:700;letter-spacing:.11em;text-transform:uppercase;color:var(--tinta-3)}
+.entradilla{font-size:1.1rem;color:var(--tinta-2);max-width:64ch;margin:0}
+.entradilla strong{color:var(--tinta);font-weight:620}
 
-.grupo{margin-top:52px}
-.grupo-cab{display:flex; align-items:baseline; gap:14px; margin-bottom:18px; flex-wrap:wrap}
-.grupo-cab h2{margin:0}
-.grupo-cab span{color:var(--tinta-3); font-size:.98rem}
+/* Una propuesta = una tarjeta grande. Son pocas y cada una es una rama entera, así que
+   se les da sitio en vez de apretarlas en una rejilla de fichas pequeñas. */
+.props{display:flex;flex-direction:column;gap:18px}
+.prop{background:var(--tarjeta);border:1px solid var(--linea);border-radius:var(--radio);
+  box-shadow:var(--sombra);overflow:hidden;display:grid;grid-template-columns:minmax(0,1fr) 280px}
+.prop .cuerpo{padding:24px 26px}
+.prop .lado{background:var(--hundido);border-left:1px solid var(--linea);padding:24px 22px;
+  display:flex;flex-direction:column;gap:14px;justify-content:center}
+@media(max-width:780px){ .prop{grid-template-columns:1fr} .prop .lado{border-left:none;border-top:1px solid var(--linea)} }
 
-/* la tarjeta de la portada: la cifra manda, el texto acompaña */
-a.tarjeta .arriba{display:flex; align-items:flex-start; justify-content:space-between; gap:14px}
-a.tarjeta .flecha{color:var(--tinta-3); font-size:1.15rem; transition:transform .22s, color .22s}
-a.tarjeta:hover .flecha{transform:translateX(3px); color:var(--acento)}
-a.tarjeta h3{margin:2px 0 0}
+.prop h2{display:flex;align-items:center;gap:.5em;margin-bottom:8px}
+.prop .rama{font-size:.68rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--sugerencia);margin-bottom:10px}
+.prop p{margin:0 0 12px;color:var(--tinta-2);font-size:.97rem}
+.prop p:last-of-type{margin-bottom:0}
+.prop strong{color:var(--tinta);font-weight:620}
 
-.franja{margin-top:60px; background:var(--tarjeta); border:1px solid var(--linea);
-  border-radius:var(--radio); padding:26px 28px; box-shadow:var(--sombra);
-  display:flex; gap:28px; align-items:center; flex-wrap:wrap}
-.franja .txt{flex:1 1 320px; min-width:0}
-.franja h3{margin:0 0 6px}
-.franja p{margin:0; color:var(--tinta-2); font-size:.95rem}
+.cifras{display:flex;gap:22px;flex-wrap:wrap;margin:16px 0 4px}
+.cifras div{display:flex;flex-direction:column}
+.cifras b{font-size:1.7rem;font-weight:680;letter-spacing:-.028em;color:var(--acento);
+  line-height:1;font-variant-numeric:tabular-nums}
+.cifras span{font-size:.73rem;font-weight:600;letter-spacing:.05em;text-transform:uppercase;
+  color:var(--tinta-3);margin-top:5px}
+
+.ir{display:inline-flex;align-items:center;justify-content:center;gap:.5em;
+  background:var(--acento);color:#fff;border-radius:var(--radio-s);padding:13px 18px;
+  font-weight:640;font-size:.97rem;text-decoration:none;transition:background .16s,transform .16s}
+.ir:hover{background:var(--acento-2);text-decoration:none;transform:translateY(-1px)}
+.coste{font-size:.84rem;color:var(--tinta-2);line-height:1.5}
+.coste b{display:block;font-size:.68rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--tinta-3);margin-bottom:5px}
+.barra{display:flex;height:8px;border-radius:99px;overflow:hidden;background:var(--linea);margin-bottom:7px}
+.barra i{display:block}
+.leyenda-c{display:flex;flex-direction:column;gap:4px;font-size:.8rem;color:var(--tinta-2)}
+.leyenda-c span{display:flex;align-items:center;gap:7px}
+.pt{width:9px;height:9px;border-radius:50%;flex:0 0 auto}
+
+.nota{margin-top:34px;background:var(--acento-suave);border-radius:var(--radio);padding:18px 22px;
+  color:var(--tinta-2);font-size:.93rem}
+.nota strong{color:var(--tinta)}
+.nota p{margin:0 0 .6em}
+.nota p:last-child{margin-bottom:0}
 </style>
 </head>
 <body>
 
 <nav class="nav">
-<a class="marca" href="https://duleelhorror.github.io/elreino6-guia/inicio.html" aria-current="page"><span class="ico">⌂</span> El Reino <b>6</b></a>
+<a class="marca" href="https://duleelhorror.github.io/elreino6-guia/inicio.html"><span class="ico">⌂</span> El Reino <b>6</b></a>
 <div class="nav-links">
 <span class="grupo-tit">Decidir</span>
 <a class="pag" href="https://duleelhorror.github.io/elreino6-guia/misiones.html"><span>📊</span> Misiones</a>
 <a class="pag" href="https://duleelhorror.github.io/elreino6-guia/taller.html"><span>🛠️</span> El Taller</a>
-<a class="pag" href="https://duleelhorror.github.io/elreino6-guia/features.html"><span>✨</span> Features</a>
+<a class="pag" href="https://duleelhorror.github.io/elreino6-guia/features.html" aria-current="page"><span>✨</span> Features</a>
 <span class="sep"></span>
 <span class="grupo-tit">Producir</span>
 <a class="pag" href="https://duleelhorror.github.io/elreino6-guia/sprites.html"><span>🎨</span> Sprites que faltan</a>
@@ -261,46 +284,95 @@ a.tarjeta h3{margin:2px 0 0}
 
 <div class="hoja">
 
-  <header class="portada">
-    <p class="sobre">El Reino 6</p>
-    <h1>Herramientas<span class="fino">del servidor</span></h1>
-    <p class="bajada">Todo lo que hace falta para decidir qué se construye a continuación:
-      qué hay montado, qué está desequilibrado y qué falta por dibujar.</p>
+  <header class="cab">
+    <div class="ceja">El Reino 6 · propuestas</div>
+    <h1>Features</h1>
+    <p class="entradilla">Ramas enteras que se han <strong>dibujado completas</strong> y todavía no
+      existen. Cada una se abre en el mapa, en su propia pestaña, con todas sus misiones y —en cada
+      una— <strong>cómo se montaría la mecánica</strong>: si se puede hacer hoy o si habría que
+      construirla.</p>
   </header>
 
-  <section class="grupo">
-<div class="grupo-cab"><h2>Decidir</h2><span>qué toca hacer ahora</span></div>
-<div class="rejilla">
-<a class="tarjeta" href="https://duleelhorror.github.io/elreino6-guia/misiones.html"><div class="arriba"><span class="ico">📊</span><span class="flecha">&rsaquo;</span></div><h3>Misiones</h3><p>El equilibrio: qué objetivo se repite, cuánto dura cada misión y qué falta por estrenar.</p><div class="cifra">22,7 h<small>de juego</small></div></a>
-<a class="tarjeta" href="https://duleelhorror.github.io/elreino6-guia/taller.html"><div class="arriba"><span class="ico">🛠️</span><span class="flecha">&rsaquo;</span></div><h3>El Taller</h3><p>Lo que existe o podría existir y hoy ningún jugador se va a encontrar.</p><div class="cifra">55<small>cosas apuntadas</small></div></a>
-<a class="tarjeta" href="https://duleelhorror.github.io/elreino6-guia/features.html"><div class="arriba"><span class="ico">✨</span><span class="flecha">&rsaquo;</span></div><h3>Features</h3><p>Las ramas grandes que se han dibujado enteras y todavía no existen: qué misiones tendrían y cómo se montaría cada mecánica.</p><div class="cifra">148<small>misiones propuestas</small></div></a>
-</div></section>
-<section class="grupo">
-<div class="grupo-cab"><h2>Producir</h2><span>lo que hay que dibujar o montar</span></div>
-<div class="rejilla">
-<a class="tarjeta" href="https://duleelhorror.github.io/elreino6-guia/sprites.html"><div class="arriba"><span class="ico">🎨</span><span class="flecha">&rsaquo;</span></div><h3>Sprites que faltan</h3><p>Los objetos del Reino que todavía se ven como un ítem de Minecraft.</p><div class="cifra">59<small>por dibujar</small></div></a>
-<a class="tarjeta" href="https://duleelhorror.github.io/elreino6-guia/armas.html"><div class="arriba"><span class="ico">⚔️</span><span class="flecha">&rsaquo;</span></div><h3>Sprites de armas</h3><p>Las ~900 armas del MMO agrupadas por tipo y rareza: un dibujo por fila las cubre todas.</p><div class="cifra">109<small>por dibujar</small></div></a>
-<a class="tarjeta" href="https://duleelhorror.github.io/elreino6-guia/plantillas.html"><div class="arriba"><span class="ico">🧊</span><span class="flecha">&rsaquo;</span></div><h3>Plantillas</h3><p>Las plantillas en blanco para dibujar cosas nuevas y que yo las convierta.</p><div class="cifra">1<small>plantilla</small></div></a>
-</div></section>
-<section class="grupo">
-<div class="grupo-cab"><h2>Consultar</h2><span>qué hay montado ya</span></div>
-<div class="rejilla">
-<a class="tarjeta" href="https://duleelhorror.github.io/elreino6-guia/mapa.html"><div class="arriba"><span class="ico">🗺️</span><span class="flecha">&rsaquo;</span></div><h3>Mapa de misiones</h3><p>El árbol de sagas y en qué orden se juegan.</p><div class="cifra">137<small>misiones</small></div></a>
-<a class="tarjeta" href="https://duleelhorror.github.io/elreino6-guia/bestiario.html"><div class="arriba"><span class="ico">🐺</span><span class="flecha">&rsaquo;</span></div><h3>Bestiario</h3><p>Los bichos del mundo: dónde salen, qué sueltan y cómo pelean.</p><div class="cifra">21<small>criaturas</small></div></a>
-<a class="tarjeta" href="https://duleelhorror.github.io/elreino6-guia/logros.html"><div class="arriba"><span class="ico">🏆</span><span class="flecha">&rsaquo;</span></div><h3>Logros</h3><p>Los logros del server y qué hace falta para cada uno.</p><div class="cifra">94<small>logros</small></div></a>
-<a class="tarjeta" href="https://duleelhorror.github.io/elreino6-guia/catalogo.html"><div class="arriba"><span class="ico">🖼️</span><span class="flecha">&rsaquo;</span></div><h3>Catálogo de sprites</h3><p>Todos los sprites propios del servidor, con su dibujo de verdad y qué ítem lo lleva. Para repasarlos sin entrar al juego.</p></a>
-</div></section>
+  <div class="props">
 
-  <section class="franja">
-    <div class="txt">
-      <h3>🗼 ¿Buscas la guía del servidor?</h3>
-      <p>La guía, el mapa de misiones, el bestiario y los logros son <b>la cara pública</b>: lo
-         que se le enseña a alguien de fuera. Esto de aquí es la trastienda.</p>
-    </div>
-    <a class="boton" href="https://duleelhorror.github.io/elreino6-guia/">Ir a la guía</a>
-  </section>
+    <article class="prop">
+      <div class="cuerpo">
+        <div class="rama">Propuesta · sin empezar</div>
+        <h2>🌾 La rama de cultivos</h2>
+        <p>Todo lo que puede salir de plantar cosas: la parcela, las estaciones, los frutales, la vid y
+          el vino, las conservas, las plagas, el mercado, la feria, el corral, la quesería, el colmenar,
+          el molino, las acequias y hasta un sindicato agrario.</p>
+        <p>Buena parte se apoya en algo que <strong>ya está en el server y nadie usa</strong>: los 30
+          cultivos, las tres calidades y las variedades.</p>
+        <div class="cifras">
+          <div><b>112</b><span>misiones</span></div>
+          <div><b>126</b><span>conexiones</span></div>
+          <div><b>38</b><span>personajes</span></div>
+        </div>
+      </div>
+      <div class="lado">
+        <a class="ir" href="https://duleelhorror.github.io/elreino6-guia/mapa.html#cultivos">Ver la rama en el mapa →</a>
+        <div class="coste">
+          <b>Cuánto costaría</b>
+          <div class="barra">
+            <i style="background:var(--ok);width:17.9%"></i>
+            <i style="background:var(--aviso);width:15.2%"></i>
+            <i style="background:var(--alerta);width:67.0%"></i>
+          </div>
+          <div class="leyenda-c">
+            <span><i class="pt" style="background:var(--ok)"></i> 20 ya se pueden hacer hoy</span>
+            <span><i class="pt" style="background:var(--aviso)"></i> 17 con lo recién instalado</span>
+            <span><i class="pt" style="background:var(--alerta)"></i> 75 hay que construirlas</span>
+          </div>
+        </div>
+      </div>
+    </article>
 
-  <footer class="pie"><span>El Reino 6 · Inicio</span><span>Se genera de <code>web/inicio-fuente.html</code></span></footer>
+    <article class="prop">
+      <div class="cuerpo">
+        <div class="rama">Propuesta · sin empezar</div>
+        <h2>🎣 La rama de pesca</h2>
+        <p>El puerto como oficio entero: el carné, el Códice, los cebos —que funcionan como
+          <strong>llaves</strong>: sin el cebo, esa especie no se puede pescar—, la lonja, los encargos,
+          las mejoras de caña, los torneos, fauna que solo pica en invierno o en el fondo del Abismo, y
+          una ballena blanca al final.</p>
+        <p>Y sobre todo le da oficio a <strong>Bacalao Gabardinez</strong>: un pez disfrazado de humano
+          que se dedica a pescar peces y jura que solo pesca «peces que se lo merecen». Lleva desde el
+          primer día con lore y <strong>sin una sola misión</strong>.</p>
+        <div class="cifras">
+          <div><b>36</b><span>misiones</span></div>
+          <div><b>37</b><span>conexiones</span></div>
+          <div><b>15</b><span>personajes</span></div>
+        </div>
+      </div>
+      <div class="lado">
+        <a class="ir" href="https://duleelhorror.github.io/elreino6-guia/mapa.html#pesca">Ver la rama en el mapa →</a>
+        <div class="coste">
+          <b>Cuánto costaría</b>
+          <div class="barra">
+            <i style="background:var(--ok);width:11.1%"></i>
+            <i style="background:var(--aviso);width:47.2%"></i>
+            <i style="background:var(--alerta);width:41.7%"></i>
+          </div>
+          <div class="leyenda-c">
+            <span><i class="pt" style="background:var(--ok)"></i> 4 ya se pueden hacer hoy</span>
+            <span><i class="pt" style="background:var(--aviso)"></i> 17 con el plugin de pesca</span>
+            <span><i class="pt" style="background:var(--alerta)"></i> 15 hay que construirlas</span>
+          </div>
+        </div>
+      </div>
+    </article>
+
+  </div>
+
+  <div class="nota">
+    <p><strong>Ninguna de estas misiones está escrita.</strong> Son propuestas para ver hasta dónde da
+      de sí cada tema y decidir con algo delante, no un guion cerrado: cuando se monte una rama, las
+      misiones se deciden <strong>una a una</strong>, como todas las del server.</p>
+    <p>Por eso viven en pestañas aparte del mapa: <strong>el mapa de verdad solo enseña lo que se
+      juega</strong>, y mezclarlas rompería eso. Al abrir una rama sale una banda naranja que lo avisa.</p>
+  </div>
+
 </div>
 
 </body>
