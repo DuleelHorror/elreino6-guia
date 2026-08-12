@@ -239,6 +239,11 @@ thead th{font-size:.74rem; text-transform:uppercase; letter-spacing:.07em; color
   background:var(--acento);color:#fff;border-radius:var(--radio-s);padding:13px 18px;
   font-weight:640;font-size:.97rem;text-decoration:none;transition:background .16s,transform .16s}
 .ir:hover{background:var(--acento-2);text-decoration:none;transform:translateY(-1px)}
+/* Segundo enlace de una propuesta (hoy solo cultivos, que además de las misiones tiene la
+   lista de obra). En hueco para que no compita con el principal: el que manda sigue siendo
+   «ver la rama en el mapa». */
+.ir.sec{background:transparent;color:var(--acento);border:1px solid var(--linea-2);font-weight:600}
+.ir.sec:hover{background:var(--hundido);color:var(--acento-2)}
 .coste{font-size:.84rem;color:var(--tinta-2);line-height:1.5}
 .coste b{display:block;font-size:.68rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
   color:var(--tinta-3);margin-bottom:5px}
@@ -267,13 +272,13 @@ thead th{font-size:.74rem; text-transform:uppercase; letter-spacing:.07em; color
 <span class="sep"></span>
 <span class="grupo-tit">Producir</span>
 <a class="pag" href="https://duleelhorror.github.io/elreino6-guia/sprites.html"><span>🎨</span> Sprites que faltan</a>
-<a class="pag" href="https://duleelhorror.github.io/elreino6-guia/armas.html"><span>⚔️</span> Sprites de armas</a>
 <a class="pag" href="https://duleelhorror.github.io/elreino6-guia/plantillas.html"><span>🧊</span> Plantillas</a>
 <span class="sep"></span>
 <span class="grupo-tit">Consultar</span>
 <a class="pag" href="https://duleelhorror.github.io/elreino6-guia/mapa.html"><span>🗺️</span> Mapa de misiones</a>
 <a class="pag" href="https://duleelhorror.github.io/elreino6-guia/bestiario.html"><span>🐺</span> Bestiario</a>
 <a class="pag" href="https://duleelhorror.github.io/elreino6-guia/logros.html"><span>🏆</span> Logros</a>
+<a class="pag" href="https://duleelhorror.github.io/elreino6-guia/armas.html"><span>⚔️</span> Armas del MMO</a>
 <a class="pag" href="https://duleelhorror.github.io/elreino6-guia/catalogo.html"><span>🖼️</span> Catálogo de sprites</a>
 </div>
 <div class="der">
@@ -304,6 +309,10 @@ thead th{font-size:.74rem; text-transform:uppercase; letter-spacing:.07em; color
           el molino, las acequias y hasta un sindicato agrario.</p>
         <p>Buena parte se apoya en algo que <strong>ya está en el server y nadie usa</strong>: los 30
           cultivos, las tres calidades y las variedades.</p>
+        <p>Y lo que le falta a todo eso <strong>no es código: es obra</strong>. Va en la granja del
+          norte, y tiene su propia <strong>lista de edificaciones</strong> — el núcleo con el que el
+          oficio ya se juega, los once edificios de zona y las cuevas y bodegas, con las reglas de
+          construcción que no se pueden saltar.</p>
         <div class="cifras">
           <div><b>112</b><span>misiones</span></div>
           <div><b>126</b><span>conexiones</span></div>
@@ -312,6 +321,7 @@ thead th{font-size:.74rem; text-transform:uppercase; letter-spacing:.07em; color
       </div>
       <div class="lado">
         <a class="ir" href="https://duleelhorror.github.io/elreino6-guia/mapa.html#cultivos">Ver la rama en el mapa →</a>
+        <a class="ir sec" href="https://duleelhorror.github.io/elreino6-guia/mapa.html#cultivos-obra">🏗️ Las edificaciones</a>
         <div class="coste">
           <b>Cuánto costaría</b>
           <div class="barra">
@@ -379,8 +389,8 @@ thead th{font-size:.74rem; text-transform:uppercase; letter-spacing:.07em; color
         <p>Se la queda <strong>Lolo el Fundacional</strong>, que tiene yunque, delantal y una fragua que no
           ha encendido nunca. Y al final, por fin, alguien le pregunta qué significa «fundacional».</p>
         <div class="cifras">
-          <div><b>25</b><span>misiones</span></div>
-          <div><b>29</b><span>conexiones</span></div>
+          <div><b>24</b><span>misiones</span></div>
+          <div><b>28</b><span>conexiones</span></div>
           <div><b>9</b><span>personajes</span></div>
         </div>
       </div>
@@ -389,14 +399,14 @@ thead th{font-size:.74rem; text-transform:uppercase; letter-spacing:.07em; color
         <div class="coste">
           <b>Cuánto costaría</b>
           <div class="barra">
-            <i style="background:var(--ok);width:8.0%"></i>
-            <i style="background:var(--aviso);width:28.0%"></i>
-            <i style="background:var(--alerta);width:64.0%"></i>
+            <i style="background:var(--ok);width:33.3%"></i>
+            <i style="background:var(--aviso);width:8.3%"></i>
+            <i style="background:var(--alerta);width:58.3%"></i>
           </div>
           <div class="leyenda-c">
-            <span><i class="pt" style="background:var(--ok)"></i> 2 ya se pueden hacer hoy</span>
-            <span><i class="pt" style="background:var(--aviso)"></i> 7 con el plugin que ya está</span>
-            <span><i class="pt" style="background:var(--alerta)"></i> 16 hay que construirlas</span>
+            <span><i class="pt" style="background:var(--ok)"></i> 8 ya se pueden hacer hoy</span>
+            <span><i class="pt" style="background:var(--aviso)"></i> 2 con el plugin que ya está</span>
+            <span><i class="pt" style="background:var(--alerta)"></i> 14 hay que construirlas</span>
           </div>
         </div>
       </div>

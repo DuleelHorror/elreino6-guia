@@ -330,6 +330,19 @@ thead th{font-size:.74rem; text-transform:uppercase; letter-spacing:.07em; color
 <script>
 const G = [
  {
+  "t": "⬜ Cabezas de terminal (no son sprites de ItemsAdder: son <b>texturas de cabeza</b>)",
+  "sub": "&gt; 🗿 Van por base64, no por el pack: se sacan con <code>/hdb</code> → coger la cabeza → `/data get entity @s &gt; SelectedItem<code> → copiar el </code>value`. Cambiarlas es <b>una línea</b> en su generador.",
+  "items": [
+   {
+    "e": "⬜",
+    "o": "cabeza de <b>cuaderno</b>",
+    "n": "El Cuaderno del Fundacional",
+    "m": "cabeza de terminal (la de las consolas)",
+    "d": "La <b>herrería de Lolo</b>. El usuario eligió piel de cuaderno/tablón: un libro abierto de tapa de cuero, o una tablilla de madera con papeles clavados. 🔑 La terminal del spawn es del Ayuntamiento y es una consola; ésta es de un herrero y debería parecer <b>lo que él usa para apuntar</b>. Se pone en <code>SISTEMAS</code> de <code>mmo-generadores/gen_manual.py</code>, campo <code>cabeza</code>"
+   }
+  ]
+ },
+ {
   "t": "✅ Trofeos de bicho — <b>HECHOS</b> (el usuario entregó los 9 el 2026-08-09)",
   "sub": "Lo que sueltan los bichos y el jugador guarda: la prueba de haber matado algo. 🔑 <b>Montados así</b>: namespace <b><code>trofeos</code></b> de ItemsAdder + <b>CMD 10310</b> en los 9 (el CMD es por MATERIAL, y cada trofeo usa uno distinto, así que pueden repetir número sin pisarse) + <code>Options.Model</code> en cada MythicItem de <code>items/reino_loot.yml</code>. Generador: <b><code>mmo-generadores/gen_trofeos_sprites.py</code></b>. 🔴 <b>Un cambio</b>: <code>PelloDeYeti</code> era <b>WHITE_WOOL</b>, un BLOQUE que Minecraft dibuja como cubo → pasó a <b>RABBIT_HIDE</b> (plano, y pega más con «pellejo»). Seguro: el botín se suelta por ID, no por material.",
   "items": [
@@ -1455,7 +1468,7 @@ const G = [
   ]
  }
 ];
-const FALTAN = 60, ITEMS = 74;
+const FALTAN = 61, ITEMS = 75;
 
 function TH(){const r=document.documentElement;
   const cur=r.dataset.theme||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');

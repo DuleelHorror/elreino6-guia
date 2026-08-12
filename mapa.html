@@ -291,6 +291,22 @@ thead th{font-size:.74rem; text-transform:uppercase; letter-spacing:.07em; color
     text-transform:uppercase;letter-spacing:.05em}
   table.tcultivos .cab{color:var(--llave);font-weight:700}
   table.tcultivos td.usos{color:var(--tinta-2);max-width:30ch}
+  /* 🏗️ La lista de EDIFICACIONES de la vega. Reutiliza la tabla de los cultivos (mismos
+     bordes, misma cabecera pegajosa) y solo cambia el ancho mínimo: aquí hay 3 columnas,
+     no 8, y con 900px de min-width salía scroll horizontal sin necesitarlo. */
+  table.tcultivos.tobra{min-width:560px}
+  table.tcultivos td.nmis{text-align:right;font-variant-numeric:tabular-nums;
+    white-space:nowrap;font-weight:800;color:var(--acento)}
+  .obra-h{font-size:.72rem;text-transform:uppercase;letter-spacing:.08em;color:var(--acento);
+    font-weight:800;margin:22px 0 8px}
+  .obra-n{background:var(--acento-suave);border-left:3px solid var(--acento);
+    border-radius:0 8px 8px 0;padding:11px 15px;margin:0 0 16px;font-size:.87rem;
+    color:var(--tinta-2);max-width:80ch}
+  .obra-n b{color:var(--tinta)}
+  .obra-n + .obra-n{margin-top:-8px}
+  .obra-reglas{margin:16px 0 0;padding-left:20px;font-size:.87rem;color:var(--tinta-2);max-width:80ch}
+  .obra-reglas li{margin-bottom:8px}
+  .obra-reglas b{color:var(--tinta)}
   table.tcultivos td.como{color:var(--tinta-2);max-width:34ch;font-size:.8rem}
   /* la TEMPORADA se colorea: es lo que decide si hoy puedes plantarlo o no */
   table.tcultivos td.est{white-space:nowrap;font-weight:700;font-size:.75rem}
@@ -314,13 +330,24 @@ thead th{font-size:.74rem; text-transform:uppercase; letter-spacing:.07em; color
   .c-sel{border-left-color:#3f8f4a}        .c-sel b{color:#3f8f4a}
   .c-pri{border-left-color:var(--llave)}   .c-pri b{color:var(--llave)}
   /* Banda de aviso: mientras se mira la simulación tiene que quedar CLARO que no existe */
-  /* 🔴 Se muestra por la clase `.on` que pone tab(), NO por `body.sim`: hay DOS bandas
-     (cultivos y pesca) y con `body.sim .sim-aviso` se enseñarían las dos a la vez. */
+  /* 🔴 Se muestra por la clase `.on` que pone tab(), NO por `body.sim`: hay TRES bandas
+     (cultivos, pesca y forja) y con `body.sim .sim-aviso` se enseñarían todas a la vez.
+     🔴🔴 Y va EN EL FLUJO, no `position:fixed`. Estuvo flotando a `top:64px` hasta el
+     2026-08-12 y **tapaba los botones de la barra** en cuanto ésta hacía wrap (pantalla
+     estrecha o zoom): el usuario no podía ni cambiar de pestaña. Como el body es
+     `flex-direction:column` y `#cy` es `flex:1`, ponerla en el flujo empuja el mapa y no
+     puede tapar nada nunca. Y ahora SE CIERRA (ver cerrarAviso). */
   .sim-aviso{display:none}
-  .sim-aviso.on{display:block;position:fixed;left:50%;top:64px;transform:translateX(-50%);
-    z-index:5;background:#8a5a00;color:#fff;border:1px solid #b98200;border-radius:8px;
-    padding:6px 14px;font-size:12.5px;font-weight:700;box-shadow:0 4px 14px rgba(0,0,0,.28);
-    max-width:min(92vw,860px)}
+  .sim-aviso.on{display:flex;gap:12px;align-items:flex-start;
+    padding:8px 12px 8px 16px;font-size:12.5px;font-weight:600;line-height:1.45;
+    background:#8a5a00;color:#fff;border-bottom:1px solid #b98200}
+  .sim-aviso .t{flex:1;min-width:0}
+  .sim-aviso b{font-weight:800}
+  .sim-aviso .x{flex:0 0 auto;border:1px solid rgba(255,255,255,.45);background:transparent;
+    color:#fff;border-radius:7px;width:25px;height:25px;line-height:1;cursor:pointer;
+    font-size:13px;font-weight:700;padding:0}
+  .sim-aviso .x:hover{background:rgba(255,255,255,.18)}
+  .sim-aviso .x:focus-visible{outline:2px solid #fff;outline-offset:2px}
   .btn.find{width:190px;font-weight:600;color:var(--tinta)}
   .btn.find::placeholder{color:var(--tinta-3);font-weight:600}
   .btn.find:focus{outline:none;border-color:var(--acento);box-shadow:0 0 0 3px var(--brillo)}
@@ -423,6 +450,7 @@ thead th{font-size:.74rem; text-transform:uppercase; letter-spacing:.07em; color
       <button class="btn tab"    id="tab-forja"    onclick="ER6.tab('forja')">⚒️ Rama de la Forja</button>
     </span>
     <button class="btn solo-cultivos" id="btnCultivos" onclick="ER6.cultivos()">🌱 Los 30 cultivos</button>
+    <button class="btn solo-cultivos" id="btnObra" onclick="ER6.obra()">🏗️ Las edificaciones</button>
     <input class="btn find" id="buscar" placeholder="Buscar misión o NPC…" autocomplete="off"
       oninput="ER6.find(this.value)" onkeydown="if(event.key==='Enter')ER6.find(this.value,true)">
     <button class="btn" id="statsBtn" onclick="ER6.stats()">📊 Datos</button>
@@ -430,15 +458,23 @@ thead th{font-size:.74rem; text-transform:uppercase; letter-spacing:.07em; color
   </div>
 </div>
 
-<div class="sim-aviso" id="aviso-cultivos">⚠ SIMULACIÓN — <b>ninguna de estas misiones está escrita</b>. Es una propuesta para ver
+<div class="sim-aviso" id="aviso-cultivos"><span class="t">⚠ SIMULACIÓN — <b>ninguna de estas misiones está escrita</b>. Es una propuesta para ver
   hasta dónde da de sí la rama de cultivos. Lo que sí existe ya en el server son <b>las piezas</b>: los 30
   cultivos, las estaciones, las <b>tres calidades</b> y las <b>variedades</b>. En cada misión, el recuadro
-  «Cómo se hace» dice si su mecánica se puede montar hoy (🟢) o si habría que inventarla (🔴).</div>
+  «Cómo se hace» dice si su mecánica se puede montar hoy (🟢) o si habría que inventarla (🔴).</span>
+  <button class="x" onclick="ER6.cerrarAviso('cultivos')" title="Cerrar el aviso" aria-label="Cerrar el aviso">✕</button></div>
 
-<div class="sim-aviso" id="aviso-pesca">⚠ SIMULACIÓN — <b>ninguna de estas misiones está escrita</b>. Es una propuesta
+<div class="sim-aviso" id="aviso-pesca"><span class="t">⚠ SIMULACIÓN — <b>ninguna de estas misiones está escrita</b>. Es una propuesta
   para ver qué da de sí la pesca, y para que <b>Bacalao Gabardinez</b> deje de ser el único NPC con lore y sin
   una sola misión. Casi todo se apoya en un <b>plugin de pesca que aún no está puesto</b>. En cada misión, el
-  recuadro «Cómo se hace» dice si se puede montar hoy (🟢) o si habría que construirlo (🔴).</div>
+  recuadro «Cómo se hace» dice si se puede montar hoy (🟢) o si habría que construirlo (🔴).</span>
+  <button class="x" onclick="ER6.cerrarAviso('pesca')" title="Cerrar el aviso" aria-label="Cerrar el aviso">✕</button></div>
+
+<div class="sim-aviso" id="aviso-forja"><span class="t">⚠ SIMULACIÓN — <b>ninguna de estas misiones está escrita</b>. Pero ojo:
+  el plugin de forja <b>ya está instalado en el server desde hace meses y nadie lo ha usado</b>, así que aquí
+  hay más misiones que se podrían hacer YA que en las otras dos ramas. El recuadro «Cómo se hace» de cada una
+  dice si se puede montar hoy (🟢) o si habría que construirlo (🔴).</span>
+  <button class="x" onclick="ER6.cerrarAviso('forja')" title="Cerrar el aviso" aria-label="Cerrar el aviso">✕</button></div>
 
 <!-- 🌱 La tabla de los 30 cultivos. Se GENERA de los packs con web/gen_tabla_cultivos.py -->
 <div class="modal" id="modalCultivos" onclick="if(event.target===this)ER6.cerrarCultivos()">
@@ -474,10 +510,92 @@ thead th{font-size:.74rem; text-transform:uppercase; letter-spacing:.07em; color
     <div class="modal-scroll"><table class="tcultivos" id="tCultivos"></table></div>
   </div>
 </div>
-<div class="sim-aviso" id="aviso-forja">⚠ SIMULACIÓN — <b>ninguna de estas misiones está escrita</b>. Pero ojo:
-  el plugin de forja <b>ya está instalado en el server desde hace meses y nadie lo ha usado</b>, así que aquí
-  hay más misiones que se podrían hacer YA que en las otras dos ramas. El recuadro «Cómo se hace» de cada una
-  dice si se puede montar hoy (🟢) o si habría que construirlo (🔴).</div>
+<!-- 🏗️ LAS EDIFICACIONES DE LA VEGA. Es la lista que se le pasa al constructor: qué levantar,
+     en qué orden y qué misiones abre cada cosa. 🔴 Va a mano (no se genera): es contenido de
+     diseño, no sale de ningún pack. La versión larga vive en `.claude/rules/cultivos.md` §18. -->
+<div class="modal" id="modalObra" onclick="if(event.target===this)ER6.cerrarObra()">
+  <div class="modal-caja">
+    <button class="x" onclick="ER6.cerrarObra()">✕</button>
+    <h2 class="serif">🏗️ Las edificaciones de la vega</h2>
+    <p class="modal-sub">Todo lo que debería tener el pueblo de los cultivos, en orden de
+      prioridad. Al lado de cada edificio, <b>cuántas misiones de la rama abre</b>. Va en la
+      granja del norte (<b>x −9248 · −9201 / z −5472 · −5345</b>), en llanura con cerezos y río.</p>
+
+    <p class="obra-n"><b>Estas cuatro no abren misiones futuras: encienden lo que ya está
+      programado y hoy no se puede jugar.</b> La <b>acequia</b> (el riego ya sube la calidad de la
+      cosecha: +25 % de valor, sin una línea de código), los <b>bancales</b>, el <b>mostrador</b>
+      (sin él las tres calidades son un adorno) y el <b>almacén de suministros</b> (hoy el huerto
+      no tiene dónde gastar dinero).</p>
+    <p class="obra-n"><b>Y la idea que ordena el resto: la vega es un sitio donde SE ESTÁ.</b> Los
+      cultivos solo crecen mientras hay alguien cerca, así que el huerto avanza mientras trabajas
+      en él. El molino, el corral o la quesería no son decorado: son <b>lo que haces mientras crece
+      el tomate</b>. Por eso hacen falta casa, cobertizo, taller y sombra, no solo surcos.</p>
+
+    <p class="obra-h">Tanda 1 · el núcleo — con esto el oficio ya se juega</p>
+    <div class="modal-scroll"><table class="tcultivos tobra">
+      <thead><tr><th>Edificación</th><th>Notas para el constructor</th></tr></thead>
+      <tbody>
+        <tr><td class="nm">La parcela cercada</td><td>Bancales con calle entre ellos. La primera misión es arrancar 40 hierbajos y poner 20 vallas: que se note que llevaba años sin tocarse.</td></tr>
+        <tr><td class="nm">La acequia</td><td>Canal desde el río hasta los bancales, con compuertas (palancas) para el turno de riego.</td></tr>
+        <tr><td class="nm">El pozo comunal</td><td>Brocal a la vista — y <b>con fondo de más</b>: hay una misión secreta que dice que <i>el pozo tiene más profundidad de la que necesita un pozo</i>.</td></tr>
+        <tr><td class="nm">La casa del hortelano</td><td>Modesta, con porche donde se le pueda hablar. Es quien da la rama entera.</td></tr>
+        <tr><td class="nm">El cobertizo</td><td>Donde meterse de noche o cuando llueve. Al extremo <b>suroeste</b>, que es la parte tranquila.</td></tr>
+        <tr><td class="nm">El mostrador</td><td>Un puesto a cubierto. Es el que paga distinto según las estrellas de la cosecha.</td></tr>
+        <tr><td class="nm">El almacén</td><td>Semillas y abono, con un <b>palé fuera</b> donde caen los pedidos.</td></tr>
+        <tr><td class="nm">La caseta del almanaque</td><td>Una pared con <b>cuatro marcos</b>: llevarán las láminas de las cuatro estaciones.</td></tr>
+        <tr><td class="nm">El claro del esqueje</td><td>A la entrada. <b>Todo el que llegue por el atajo aparecerá siempre ahí</b>, así que la vista desde ese punto es la postal de la vega.</td></tr>
+      </tbody>
+    </table></div>
+
+    <p class="obra-h">Tanda 2 · los edificios de zona — aquí crece la rama</p>
+    <div class="modal-scroll"><table class="tcultivos tobra">
+      <thead><tr><th>Edificación</th><th>Notas para el constructor</th><th>Misiones</th></tr></thead>
+      <tbody>
+        <tr><td class="nm">El colmenar</td><td>El más barato de todos y de los que más se notan: las abejas <b>ya aceleran los cultivos de al lado</b> sin programar nada. Colmenas y flores alrededor.</td><td class="nmis">5</td></tr>
+        <tr><td class="nm">El corral</td><td>Vallas, abrevadero, gallinero y cuadra. <b>La zona con más misiones de las veinte.</b></td><td class="nmis">8</td></tr>
+        <tr><td class="nm">El lagar y la bodega</td><td>Viña con cepas entutoradas, <b>lagar pisable</b> (una poza donde quepa el jugador) y bodega de barricas. El vino sale del mismo sistema que la cerveza del Bar Co.</td><td class="nmis">6</td></tr>
+        <tr><td class="nm">La quesería</td><td>Con <b>cava subterránea</b> y prensa. Cerró al morir el quesero anterior: que se note que lleva años parada.</td><td class="nmis">4</td></tr>
+        <tr><td class="nm">El molino</td><td>Aspas con lona, eje y muela. Lleva parado nueve años. Pide además un <b>bancal alto de trigo</b> aparte.</td><td class="nmis">5</td></tr>
+        <tr><td class="nm">El invernadero</td><td>Con techo <b>y luz de verdad dentro</b>: en invierno es lo único que deja crecer a los cultivos normales. No es decoración.</td><td class="nmis">6</td></tr>
+        <tr><td class="nm">Secadero y despensa</td><td>Secadero al sol con tendederos; despensa a la sombra con estanterías. Si llueve, se pierde la cosecha.</td><td class="nmis">6</td></tr>
+        <tr><td class="nm">La era y el silo</td><td>La era, un círculo de piedra empedrado para trillar, ahí desde antes que el pueblo. El silo al lado, con su agujero de ratas.</td><td class="nmis">4</td></tr>
+        <tr><td class="nm">El vivero de frutales</td><td>Los árboles crecen como estructuras de verdad: <b>separación y cielo abierto</b>.</td><td class="nmis">6</td></tr>
+        <tr><td class="nm">El banco de semillas</td><td>Un armario de cajones numerados, «por si un año sale mal». Puede ir dentro del almacén.</td><td class="nmis">5</td></tr>
+        <tr><td class="nm">La caseta del guarda</td><td>Un chamizo y <b>seis puntos de ronda</b> repartidos: un poste, un mojón, algo reconocible en cada uno.</td><td class="nmis">4</td></tr>
+      </tbody>
+    </table></div>
+
+    <p class="obra-h">Tanda 3 · cuevas, bodegas y rincones — las cinco tienen misión escrita</p>
+    <div class="modal-scroll"><table class="tcultivos tobra">
+      <thead><tr><th>Edificación</th><th>Para qué</th></tr></thead>
+      <tbody>
+        <tr><td class="nm">La cava de la quesería</td><td>Los quesos se voltean a diario durante semanas. Fresca, húmeda, con estantes.</td></tr>
+        <tr><td class="nm">El sótano de setas</td><td>Crecen a oscuras, así que tiene que estar <b>de verdad sin luz</b>. La Alquimista se ofrece a probarlas, que es mala señal.</td></tr>
+        <tr><td class="nm">La bodega de barricas</td><td>Bajo el lagar. El vino no se hace: se espera.</td></tr>
+        <tr><td class="nm">El fondo del pozo</td><td>El secreto de la vega. Que baje más de lo razonable y haya algo abajo.</td></tr>
+        <tr><td class="nm">El tocón centenario</td><td>Un árbol viejo cortado en el borde que el hortelano no deja tocar.</td></tr>
+        <tr><td class="nm">Y si sobran ganas</td><td>El <b>huerto cerrado del convento</b> (se entra a las seis y no es negociable) y <b>la noria del río</b> — puro adorno, pero es el adorno que explica la mecánica de un vistazo.</td></tr>
+      </tbody>
+    </table></div>
+
+    <p class="obra-h">Las reglas que no se pueden saltar</p>
+    <p class="obra-n"><b>La finca cruza la frontera entre dos niveles de peligro.</b> La punta
+      <b>noreste</b> entra en la zona dura (élites de noche, y de higos a brevas un cabecilla con
+      barra de vida) y el resto es tranquilo. Es diseño regalado: <b>lo seguro al suroeste</b>
+      (casa, cobertizo, mostrador, esqueje) y <b>el lindero malo al noreste</b>. De propina, dos de
+      los bichos que ya salen ahí son la Bicha del Granero y los bandoleros.</p>
+    <ol class="obra-reglas">
+      <li><b>Bancales de nueve de ancho como mucho, con la acequia por el centro.</b> El agua moja cuatro bloques a cada lado; lo que quede más lejos se seca y pierde el bonus de calidad. Es el detalle más rentable de toda la vega.</li>
+      <li><b>Nada de roble, abedul ni roble oscuro dando sombra sobre un bancal:</b> en otoño sueltan hojarasca que puede cargarse lo que hay debajo. Los cerezos son seguros, y la zona ya tiene.</li>
+      <li><b>Ni bloques de nota ni cables trampa sueltos por la zona</b> — son los bloques que usa por debajo el sistema de objetos personalizados, y se pisan.</li>
+      <li><b>Antes de empezar, confirmar que los colores de estación están desactivados</b> (<code>/toggleseasoncolors</code>). Se puede pintar bioma con normalidad; lo único que no hay que hacer es elegir a mano un bioma que empiece por <code>realisticseasons:</code>. Se insiste porque la obra cae <b>exactamente sobre los chunks donde se cayó el server</b> aquella vez, y <b>después de cada sesión hay que pasar el auditor de biomas</b>.</li>
+      <li><b>Las máquinas, en hueco, no cerradas</b> (prensa, muela, mesa de injertos, mostradores): dejar el sitio y la referencia visual, que las montamos encima. Y que no queden donde un pistón pueda moverlas.</li>
+      <li><b>El invernadero, con techo y luz dentro</b> (antorchas, linternas).</li>
+      <li><b>Las trampas de fuego o explosivos no funcionan</b> en este mundo. Sí: caídas, agua, cactus, dispensadores y placas de presión.</li>
+      <li><b>Se llega a caballo</b> — el establo de Horse Luis está a 983 bloques casi en línea recta. El esqueje es la comodidad que llega después, así que <b>la entrada a pie tiene que funcionar igual de bien</b>.</li>
+    </ol>
+  </div>
+</div>
 
 <div id="cy"></div>
 <aside class="stats" id="stats"></aside>
@@ -4880,7 +4998,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
     // ⬜ la insertó mapa_auto.py: nombre, NPC, pasos y de quién cuelga salen del
     //    juego y son exactos. Falta darle una `desc` con voz propia y, si toca, `unlocks`.
     {id:'forja', label:'⚒ La Forja', npc:'Lolo el Fundacional (+ Ayuntamiento)', faction:'folk', type:'Burocracia · Forjar', status:'new',
-      coins:-580, unlocks:'la fragua: forjar piezas con tiempo real',
+      coins:-480, unlocks:'la fragua, el BANCO y la receta de tu arma (7 misiones)',
       steps:[
         '── ⚒ Socio Fundacional ──',
         '1) Lolo te propone SOCIEDAD y te da la Instancia. El Ayuntamiento no inscribe una sociedad si los dos socios no son maestros… y el título lo tienes que sacar tú',
@@ -4891,11 +5009,24 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
         '6) Registrador → te expide el TÍTULO DE MAESTRO HERRERO Y SOCIO FUNDACIONAL (escrito a mano, con lacre gordo)',
         '7) Bájaselo a Lolo a la herrería → lo cuelga encima del fuelle y te abre la fragua',
         '── 🔨 La Primera Pieza ──',
-        '8) Lolo te regala 2 lingotes y un cubo de lava y te enseña la fragua: la lava enciende el fuego, eliges receta, y ESPERAS de verdad (2 min)',
+        '8) Lolo te regala 2 lingotes, un cubo de lava y UN carbón graso («de la casa, que para eso somos socios… Uno. Que no me sobran») y te enseña la fragua: la lava enciende, el carbón va DENTRO del hierro, eliges receta y ESPERAS de verdad (2 min)',
         '9) Forja 4 Clavos Fundacionales (Aprendizaje) y tráeselos',
-        '10) Le salen BLANDOS — y ahí te cuenta por qué: la lava enciende pero no da temperatura. Hace falta CARBÓN GRASO, y solo hay en una isla al otro lado del agua',
-        '(→ siguiente: ir a por el carbón graso a Tierra Hostil, con el pez de la gabardina)'],
-      desc:'Lolo lleva tres noches dándole vueltas y te lo suelta del tirón: quiere que entréis a medias. El problema es que el Ayuntamiento no reconoce sociedades entre gente sin título, y sacarse el de maestro herrero cuesta 600 Cacahuates de tasas. 🔑 Es la ENTRADA a la rama de la forja: al recibir el título, Lolo te cuenta lo que llevaba guardado — que hay piezas que solo sirven para UNA clase, que eso se aprende receta a receta, y que si echas horas suficientes acabarás forjando para las cinco… y cobrándoselo a la gente. Luego te enseña la fragua con la pieza más tonta que hay (clavos) y el clavo sale blando: el fuego del Reino no da temperatura.'},
+        '10) Se doblan con dos dedos igual — y ahí te cuenta por qué: te dio UN carbón para cuatro clavos. Lleva cuatro años racionando y llamándole a eso «la técnica fundacional»',
+        '── 🔧 El Carbón que No se Quema ── (pide además haber cruzado a Tierra Hostil)',
+        '11) Lolo cae en que el carbón no solo se quema. Te manda a por 3 carbones grasos a la isla, en el barco de Gabardinez',
+        '12) Al volver NO los echa al fuego: coge uno y lo TALLA. Detrás aparece el BANCO DEL FUNDACIONAL, que llevaba años tapado de polvo',
+        '13) Al volver NO los echa al fuego: coge uno y lo TALLA. Detrás aparece el BANCO DEL FUNDACIONAL, que llevaba años tapado de polvo',
+        '── 🌋 Esto Come ──',
+        '14) Tráele 3 CUBOS DE LAVA. Los cuenta y te los devuelve: son para que los eches TÚ (1 cubo = 1.000 de combustible)',
+        '── ✏ Uno Tuyo ──',
+        '15) Talla 1 MOLDE DE GRAFITO en el Banco: 2 carbones grasos + 4 de arcilla. Ahí NO hay fuego',
+        '── 🔩 La Que Tú Quieras ──',
+        '16) Forja UNA pieza cualquiera de las cinco (7 a 20 min reales). Elige la que use TU arma. Te la quedas tú',
+        '── 🔷 Lo Fundacional ──',
+        '17) Funde 1 ACERO FUNDACIONAL: 40 min reales, y SE COME el molde. Ponlo al fuego antes de irte a cualquier sitio',
+        '18) Te da el ESQUEMA de tu arma (la receta) — y de paso, tu fragua ya está a nivel 2: dos piezas a la vez',
+        '(→ siguiente: los otros esquemas, repartidos por el mundo; y la licencia de Maestro Armero)'],
+      desc:'Lolo lleva tres noches dándole vueltas y te lo suelta del tirón: quiere que entréis a medias. El problema es que el Ayuntamiento no reconoce sociedades entre gente sin título, y sacarse el de maestro herrero cuesta 600 Cacahuates de tasas. 🔑 Es la ENTRADA a la rama de la forja, y son TRES muebles con tres verbos: el yunque REPARA, la fragua FUNDE piezas (nunca un arma) y el banco MONTA armas del MMO (nunca metal). Todo cuelga de una sola materia escasa —el carbón graso de Tierra Hostil—, que en la fragua se QUEMA y en el banco se TALLA. Lolo lo resume mejor: «El carbón no siempre se quema. A veces se talla.»'},
     {id:'hostil', mundo:'Tierra Hostil', label:'⚓ El Barco de\nla Gabardina', npc:'Bacalao Gabardinez → Papriko', faction:'folk', type:'Saga · 2 misiones · la 2ª pide Expediente Jarvard', coins:23, status:'new',
       unlocks:'el barco a Tierra Hostil (los 5 minerales que no hay en ningún otro sitio)',
       steps:[
@@ -5395,20 +5526,19 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
      ========================================================================================== */
   /*FORJA:INICIO*/
   const NF = [
-    {"id": "f_fragua", "label": "🔥 La Fragua Apagada", "npc": "Lolo el Fundacional", "faction": "folk", "type": "Recado · entrada de la rama", "status": "new", "coins": 8, "unlocks": "La fragua de la herrería", "desc": "Lolo tiene un yunque, un delantal y una fragua que no ha encendido nunca. Dice que la tiene «en reposo». Lleva en reposo desde que llegó.", "steps": ["Hablar con Lolo", "Limpiar la fragua", "Encenderla por primera vez"], "como": "🟢 El plugin ya está instalado y sin usar. 🔴 Pero **la fragua hay que ponerla nosotros**: el plugin no trae bloque, su única puerta es un comando, y aquí los jugadores no teclean. Va a ser un **yunque custom dibujado**, dentro de la herrería, montado como la lavandería: el dibujo se coloca y se gira con Axiom y debajo hay un bloque invisible que recibe el clic y abre la fragua. 🔑 Así no depende de ningún bloque vanilla — que estaban casi todos pillados — y la fragua pasa a ser un SITIO de Lolo en vez de un menú que se lleva encima."},
-    {"id": "f_licencia", "label": "📜 Licencia de Fuego", "npc": "Interventor → Lolo el Fundacional", "faction": "gold", "type": "Burocracia · Entregar", "status": "live", "coins": -20, "desc": "Encender fuego dentro del pueblo requiere autorización. El Ayuntamiento no sabe qué fuegos hay encendidos, pero la autorización se cobra igual.", "steps": ["Ir al Ayuntamiento", "Pagar la tasa de fuego (20🥜)", "Traerle el papel a Lolo"], "como": "🟢 Trámite de los de siempre. 🔑 Y además es EL CANDADO de la rama: el permiso de forjar viene abierto de fábrica para todo el mundo, así que hay que cerrarlo y darlo aquí — si no, cualquiera forja desde el minuto uno y la saga no significa nada."},
-    {"id": "f_primera", "label": "🔨 La Primera Pieza", "npc": "Lolo el Fundacional", "faction": "folk", "type": "Forjar · TUTORIAL", "status": "new", "unlocks": "Forjar de verdad: piezas con espera real", "desc": "Lolo te enseña a forjar. Su método tiene tres pasos y dos son mirar el fuego.", "steps": ["Meter el material", "Echar combustible", "Esperar. Esperar de verdad", "Recoger la pieza"], "como": "🟢 Es la mecánica base del plugin: metes ingredientes, gasta combustible y la pieza tarda un tiempo REAL en salir. 🔑 Esa espera es lo que convierte la forja en un oficio y no en una mesa de crafteo: es el mismo truco que hace que la parcela de cultivos sea un sitio al que volver."},
-    {"id": "f_lava", "label": "🌋 De Dónde Sale el Fuego", "npc": "Lolo el Fundacional", "faction": "folk", "type": "Recoger · combustible", "status": "new", "coins": 10, "unlocks": "Saber que la fragua come lava", "desc": "La fragua no come carbón: come lava. Lolo lo dice como si fuera lo normal y, en su cabeza, lo es.", "steps": ["Bajar a por lava", "Traer 3 cubos", "Echárselos a la fragua"], "como": "🔑🟢 **El combustible del plugin es literalmente un cubo de lava** (cada uno da 1000 de combustible). Eso ata la rama al mundo: hay que BAJAR a por ella. Y engancha con la saga de Calderón, donde ya se le quitó el cubo al jugador para que se buscara la vida."},
-    {"id": "f_graso", "label": "🛢️ El Carbón que Arde Más", "npc": "Bacalao Gabardinez → Lolo el Fundacional", "faction": "folk", "type": "Expedición · Tierra Hostil", "status": "future", "coins": 30, "desc": "Corre la voz de que al otro lado del agua, en la tierra de los desastres, hay un carbón que arde el doble. Lolo quiere. Lolo no piensa ir.", "steps": ["Cruzar en el barco", "Picar carbón graso entre temblores", "Volver antes de que se caiga todo"], "como": "🟢 El carbón graso **ya existe** en Tierra Hostil y arde más que el normal sin una línea de código (se lo da su material base). 🔴 Lo que habría que construir es el bidón de gasolina, que está diseñado y parado por un detalle: su material se puede colocar como bloque."},
+    {"id": "f_licencia", "label": "✅ ⚒ Socio Fundacional", "npc": "Interventor → Lolo el Fundacional", "faction": "gold", "type": "Burocracia · CONSTRUIDA", "status": "live", "coins": -600, "desc": "✅ CONSTRUIDA (2026-08-11). Lolo quiere que entréis A MEDIAS, pero el Ayuntamiento no inscribe una sociedad si los dos socios no son maestros — y él lo es porque lo pone en una revista que tiene guardada, cosa que allí no vale. El título lo sacas tú.", "steps": ["Ujier → Sellos → Interventor", "Pagar la tasa: 250 + 200 + 150 = 600🥜", "Registrador → el título, escrito a mano", "Bajárselo a Lolo → te abre la fragua"], "como": "✅ **YA EXISTE**, con 6 fases y la ventanilla de cobro. 🔑 Es EL CANDADO de la rama: `forging999.use` viene abierto de fábrica para todo el mundo, así que se cierra y se da aquí. 🔴 La tasa son **600**, no 20: es el sumidero grande de la rama y está calibrado en `economia.md`."},
+    {"id": "f_primera", "label": "✅ 🔨 La Primera Pieza", "npc": "Lolo el Fundacional", "faction": "folk", "type": "Forjar · TUTORIAL · CONSTRUIDA", "status": "live", "unlocks": "Forjar de verdad: piezas con espera real", "desc": "✅ CONSTRUIDA (2026-08-11). Lolo te enseña a forjar y te regala el material… incluido UN carbón graso. Uno. Forjas 4 clavos y se doblan con dos dedos igual.", "steps": ["Te regala 2 lingotes, un cubo de lava y UN carbón graso", "Forjar 4 Clavos Fundacionales", "Llevárselos — y descubrir que lleva cuatro años racionando"], "como": "✅ **YA EXISTE**. 🔑 La espera real es lo que convierte la forja en un oficio y no en una mesa de crafteo. Y el gancho no es que falte un ingrediente: es que **se le acaba**."},
+    {"id": "f_lava", "label": "✅ 🌋 Esto Come", "npc": "Lolo el Fundacional", "faction": "folk", "type": "Recoger · combustible · CONSTRUIDA", "status": "live", "coins": 12, "unlocks": "Saber que la fragua come lava, y que se acaba", "desc": "✅ CONSTRUIDA (2026-08-12), y es la PRIMERA de la saga a propósito. La fragua no come carbón: come lava. Lolo lo dice como si fuera lo normal y, en su cabeza, lo es.", "steps": ["Traerle 3 cubos de lava", "Él los cuenta y TE LOS DEVUELVE", "Échalos tú a la fragua"], "como": "✅ **YA EXISTE**. 🔴 Y no es tematica: **sin esta mision la saga se queda SIN COMBUSTIBLE a mitad**. Un cubo da 1.000 y tras el tutorial quedan 900; lo que viene detras gasta mas. Y `/forge` no tiene subcomando de combustible y es `players-only`, asi que **ni desde consola** se puede regalar: la unica forma de que entre es que un jugador eche un cubo."},
+    {"id": "f_graso", "label": "✅ 🔧 El Carbón que No se Quema", "npc": "Bacalao Gabardinez → Lolo el Fundacional", "faction": "folk", "type": "Expedición · Tierra Hostil · CONSTRUIDA", "status": "live", "coins": 25, "unlocks": "EL BANCO DEL FUNDACIONAL: montar armas del MMO", "desc": "✅ CONSTRUIDA (2026-08-12). Lolo lleva semanas dándole vueltas al clavo doblado y cae en que el carbón no solo se quema. Al volver de la isla NO lo echa al fuego: lo TALLA.", "steps": ["Cruzar en el barco de Gabardinez", "Picar 3 carbones grasos entre desastres", "Volver — y ver cómo talla uno", "Se destapa el BANCO + tu primer esquema"], "como": "✅ **YA EXISTE**. 🔑 Es la misión que cierra el sistema: enseña en un gesto que **quemar y tallar son dos cosas**, y con eso Tierra Hostil pasa a ser la columna de la rama entera. 🔴 **El carbón graso NO es combustible mejorado** (eso decía este nodo y era imposible: el combustible de la fragua es un CONTADOR, no un ítem) — va de **ingrediente**, que es donde el plugin sí distingue un ítem nuestro de otro."},
     {"id": "f_abismo", "label": "🕳️ Lava de Mil Abajo", "npc": "Doctora Pizarrica", "faction": "sci", "type": "Expedición · el Abismo", "status": "future", "coins": 35, "desc": "Pizarrica sostiene que la lava del fondo no es la misma. Quiere una muestra, y quiere que la traiga alguien que no sea ella.", "steps": ["Bajar al Abismo", "Llenar el cubo abajo del todo", "Subir sin morirte"], "como": "🟢 El Abismo ya existe, con su helicóptero y sus mil bloques. Un cubo de lava traído de allí es el mismo objeto, así que **la misión es el viaje**: no hay que programar nada nuevo."},
     {"id": "f_noche", "label": "🌙 La Pieza que se Deja Toda la Noche", "npc": "Lolo el Fundacional", "faction": "folk", "type": "Forjar · espera larga", "status": "new", "coins": 15, "noche": true, "desc": "Hay piezas que tardan lo que tardan. Lolo la mete al fuego, te dice que vuelvas mañana y se sienta a mirarla, que es su forma de trabajar.", "steps": ["Empezar la pieza", "Irte a hacer otra cosa", "Volver cuando esté"], "como": "🟢 Las recetas llevan su tiempo en segundos y **la espera corre aunque te desconectes**. Es el patrón del fermento de Sor Eufrasia y del secado del laboratorio de fotos: una espera que no se puede acelerar es la mecánica, no un estorbo."},
     {"id": "f_prisa", "label": "⏱️ El Encargo con Prisa", "npc": "Ministro → Lolo el Fundacional", "faction": "gold", "type": "Contrarreloj · burocracia", "status": "future", "coins": 25, "desc": "El Ayuntamiento necesita una pieza «para ayer». Lolo explica que el hierro no entiende de urgencias. Al Ayuntamiento le da igual lo que entienda el hierro.", "steps": ["Aceptar el encargo imposible", "Correr a por combustible", "Entregar a tiempo (o no)"], "como": "🔴 Aquí hay que construir un poco: la cuenta atrás sería un datapack con marca de tiempo, que ya hacemos en tres sitios. Lo que el plugin pone es la espera de la pieza; la prisa la ponemos nosotros alrededor."},
-    {"id": "f_segundo", "label": "🔧 Dos Cosas a la Vez", "npc": "Lolo el Fundacional", "faction": "folk", "type": "Progresión · segunda ranura", "status": "new", "unlocks": "Forjar dos piezas a la vez", "desc": "Cuando llevas suficientes horas al fuego, te da por meter dos cosas. Lolo lo llama «tener oficio». Es, básicamente, tener prisa.", "steps": ["Acumular tiempo de forja", "Que Lolo se dé cuenta", "Desbloquear la segunda ranura"], "como": "🔑🟢 El nivel de forja **sube solo, acumulando tiempo forjado** (20 min para el segundo nivel, y unas 4 horas en total para el quinto). Cada nivel da **una ranura más y un 10% menos de tiempo**. La misión no tiene que medir nada: se apoya en el propio progreso del plugin."},
+    {"id": "f_segundo", "label": "✅ 🔧 Dos Cosas a la Vez", "npc": "Lolo el Fundacional", "faction": "folk", "type": "Progresión · YA PASA SOLA", "status": "live", "unlocks": "Forjar dos piezas a la vez", "desc": "Cuando llevas suficientes horas al fuego, te da por meter dos cosas. Lolo lo llama «tener oficio». Es, básicamente, tener prisa.", "steps": ["Acumular tiempo de forja", "Que Lolo se dé cuenta", "Desbloquear la segunda ranura"], "como": "🔑🟢 El nivel de forja **sube solo, acumulando tiempo forjado** (20 min para el segundo nivel, y unas 4 horas en total para el quinto). Cada nivel da **una ranura más y un 10% menos de tiempo**. La misión no tiene que medir nada: se apoya en el propio progreso del plugin."},
     {"id": "f_maestria", "label": "⚒️ Las Cinco Bocas", "npc": "Lolo el Fundacional", "faction": "folk", "type": "Progresión · nivel máximo", "status": "future", "coins": 40, "unlocks": "La fragua al máximo: cinco piezas a la vez", "desc": "Cinco piezas al fuego a la vez. Lolo nunca ha pasado de dos y lo mira como quien ve un truco de magia que sabe que tiene trampa.", "steps": ["Llegar al nivel máximo de forja", "Enseñárselo", "Que no se lo crea"], "como": "🟢 Es el techo del plugin (nivel 5). Como se sube por tiempo acumulado, esta misión es de las que **se completan solas jugando**: el reto es de constancia, no de dificultad."},
-    {"id": "f_partes", "label": "🪓 Cabezas y Mangos", "npc": "Lolo el Fundacional", "faction": "folk", "type": "Forjar · las piezas sueltas", "status": "new", "coins": 12, "desc": "Un pico no es un pico: es una cabeza y un palo. Lolo insiste mucho en esto y tiene, por una vez, toda la razón.", "steps": ["Forjar 3 cabezas de pico", "Montarlas", "Enseñárselas"], "como": "🟢 El plugin ya viene con una receta de cabeza de pico. 🔑 Y su resultado admite **modelo propio**, así que las piezas pueden tener su sprite y verse como piezas de verdad, no como un lingote más."},
+    {"id": "f_partes", "label": "✅ 🔩 La Que Tú Quieras", "npc": "Lolo el Fundacional", "faction": "folk", "type": "Forjar · las 5 piezas · CONSTRUIDA", "status": "live", "coins": 18, "desc": "✅ CONSTRUIDA (2026-08-12). Un arma no es un arma: son tres piezas. Y hay cinco entre las que elegir, cada una con su tiempo.", "steps": ["Forjar UNA pieza cualquiera de las cinco", "Te la quedas tú", "Enseñársela a Lolo"], "como": "✅ **YA EXISTE**, y pide *una cualquiera* a proposito: 🔴 la Cabeza de Martillo **solo la usa el Funcionario**, asi que pedir una pieza concreta haria que 4 de cada 5 jugadores forjaran algo inutil. 🔑 Y es un objetivo que **PikaMug no sabe expresar**: existe solo gracias al datapack, que detecta la pieza SIN consumirla."},
     {"id": "f_minerales", "label": "⛏️ Metal que No es de Aquí", "npc": "Doctora Pizarrica → Lolo el Fundacional", "faction": "sci", "type": "Forjar · minerales de Tierra Hostil", "status": "future", "coins": 30, "desc": "Los cinco minerales de allí no se funden como el hierro. Uno zumba, otro envenena y otro no se apaga. Lolo quiere probarlos todos, en ese orden.", "steps": ["Traer los minerales", "Fundir cada uno", "Apuntar lo que pasa"], "como": "🟢 Los cinco minerales de Tierra Hostil **ya existen** y son items nuestros. Meterlos como ingredientes de recetas es escribir configuración: material, cantidad, tiempo y combustible."},
     {"id": "f_arma", "label": "🗡️ Un Arma que Aguante", "npc": "Lolo el Fundacional", "faction": "folk", "type": "Forjar · equipo del MMO", "status": "future", "coins": 35, "unlocks": "Forjar equipo del MMO de verdad", "desc": "La primera arma de verdad salida de esa fragua. Lolo la mira, dice que le falta «lo fundacional» y no sabe explicar qué es eso.", "steps": ["Reunir el material bueno", "Forjarla (tarda)", "Probarla en algo que se mueva"], "como": "🟢 **Se puede, y sin escribir una línea de código** — pero no lo hace la fragua: lo hace la **forja propia del MMO**, que lleva meses instalada y sin usar. La fragua saca las PIEZAS (el metal, la hoja, el mango) y la forja del MMO monta el ARMA con ellas. Cada plugin hace lo que sabe hacer y la cadena cierra sola."},
-    {"id": "f_esquema", "label": "📜 El Primer Esquema", "npc": "Lolo el Fundacional", "faction": "folk", "type": "Sistema · aprender una receta", "status": "future", "coins": 15, "unlocks": "Los esquemas: cada receta hay que encontrarla", "desc": "Lolo no te enseña a hacer un anillo: te da un papel arrugado donde está dibujado un anillo. Insiste en que no es lo mismo y, esta vez, tiene razón.", "steps": ["Que te dé el esquema del anillo de hierro", "Leerlo (se gasta)", "Ver la receta aparecer en la fragua"], "como": "🟢🔑 **La pieza que convierte la forja en una colección.** Un esquema es un pergamino de UN USO que al leerlo desbloquea esa receta **para siempre**; la receta la pide con `permission{}`, que es la condición que la propia estación del MMO usa en su ejemplo de fábrica. Y con `hide-when-locked` la receta que no tienes **ni se ve** — así la fragua de cada uno es distinta."},
+    {"id": "f_esquema", "label": "✅ 📜 El Primer Esquema", "npc": "Lolo el Fundacional", "faction": "folk", "type": "Sistema · CONSTRUIDO (premio de la saga)", "status": "live", "coins": 30, "unlocks": "Los esquemas: cada receta hay que encontrarla", "desc": "Lolo no te enseña a hacer un anillo: te da un papel arrugado donde está dibujado un anillo. Insiste en que no es lo mismo y, esta vez, tiene razón.", "steps": ["Que te dé el esquema del anillo de hierro", "Leerlo (se gasta)", "Ver la receta aparecer en la fragua"], "como": "🟢🔑 **La pieza que convierte la forja en una colección.** Un esquema es un pergamino de UN USO que al leerlo desbloquea esa receta **para siempre**; la receta la pide con `permission{}`, que es la condición que la propia estación del MMO usa en su ejemplo de fábrica. Y con `hide-when-locked` la receta que no tienes **ni se ve** — así la fragua de cada uno es distinta."},
     {"id": "f_planos", "label": "🗺️ Los Esquemas Perdidos", "npc": "medio Reino", "faction": "gold", "type": "Coleccionar · repartido por el mundo", "status": "future", "coins": 25, "desc": "Los esquemas no están todos en la herrería. Hay uno en el fondo de una mina, otro que el Interventor tiene archivado sin saber qué es, y uno que solo suelta algo muy grande al morir.", "steps": ["Encontrar esquemas por el mundo", "Comprar el que vende el Cárabo", "Arrancarle a un jefe el suyo"], "como": "🟢 Cada esquema es **un enganche a contenido que ya existe**: botín de jefe, premio de dungeon, trámite del Ayuntamiento, mercancía del Puerto. 🔑 Es lo que hace que la forja no viva encerrada en la herrería: para forjar bien hay que **jugar a todo lo demás**."},
     {"id": "f_mercado_planos", "label": "🤝 Un Esquema por Otro", "npc": "otros jugadores", "faction": "arc", "type": "Intercambio · entre jugadores", "status": "future", "coins": 0, "desc": "Un esquema sin leer se puede regalar, cambiar o vender. Uno leído ya no: se te quedó en la cabeza y de ahí no hay quien lo saque.", "steps": ["Conseguir un esquema repetido", "Cambiárselo a alguien", "O guardarlo por si sube"], "como": "🟢 Sale gratis: el esquema es un ítem normal hasta que se usa. 🔑 Crea un **mercado de esquemas** entre jugadores sin tocar la economía — el comercio entre personas es suma cero (`economia.md`), mueve dinero pero no lo crea. Y hay un plugin de trueque instalado y sin usar."},
     {"id": "f_clase", "label": "🎓 Cada Oficio, su Hierro", "npc": "Lolo el Fundacional", "faction": "folk", "type": "Forjar · el arma de TU clase", "status": "future", "coins": 40, "unlocks": "El arma de tu clase, forjada por ti", "desc": "Lolo se ha dado cuenta de que no todo el mundo pega igual, y se lo toma como un descubrimiento personal. Ha hecho cinco dibujos. Tres son el mismo dibujo.", "steps": ["Decirle de qué palo vas", "Traer lo que pida para TU arma", "Forjarla"], "como": "🟢 La forja del MMO puede filtrar una receta **por la clase del jugador**, así que la tuya te sale barata y rápida. 🔑 Esto no cierra nada: es el atajo del que forja para sí mismo. Lo de los demás también se puede, pero cuesta — ahí abajo."},
@@ -5422,10 +5552,9 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
     {"id": "f_fundacional", "label": "📖 Qué Significa Fundacional", "npc": "Lolo el Fundacional", "faction": "secret", "type": "🔒 Final · el remate", "status": "future", "coins": 50, "unlocks": "El final de la rama", "desc": "Lleva toda la vida diciendo esa palabra. Al final de la rama, alguien le pregunta qué quiere decir. Y por primera vez contesta bien.", "steps": ["Terminar el oficio", "Preguntárselo", "Escuchar la respuesta"], "como": "🟢 Solo diálogo. 🔑 Y es el cierre que la rama pide: el chiste de Lolo lleva meses siendo que usa una palabra que no entiende — el final es que, después de todo esto, resulta que ya sí."},
   ];
   const EF = [
-    ["f_fragua", "f_licencia"],
     ["f_licencia", "f_primera"],
-    ["f_primera", "f_lava"],
-    ["f_lava", "f_graso"],
+    ["f_primera", "f_graso"],
+    ["f_graso", "f_lava"],
     ["f_lava", "f_abismo"],
     ["f_primera", "f_noche"],
     ["f_noche", "f_prisa"],
@@ -5447,7 +5576,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
     ["f_armero", "f_tienda"],
     ["f_partes", "f_reja"],
     ["f_arma", "f_qa"],
-    ["f_fragua", "f_dungeon"],
+    ["f_licencia", "f_dungeon"],
     ["f_maestria", "f_abuelo"],
     ["f_abuelo", "f_fundacional"],
     ["f_armero", "f_fundacional", "future"],
@@ -5498,6 +5627,11 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
     return els;
   }
   const VISTAS = {reino:{n:N, e:E}, cultivos:{n:NC, e:EC}, pesca:{n:NP, e:EP}, forja:{n:NF, e:EF}};
+  /* Bandas de aviso que el usuario ya ha cerrado. Se recuerda mientras dure la visita: si
+     vuelves a la misma rama no te lo repite, pero al entrar en OTRA rama sí sale el suyo
+     (cada uno dice una cosa distinta). No se persiste entre sesiones a propósito: el aviso
+     de «esto no existe» tiene que volver a verlo quien abra el mapa mañana. */
+  const AVISO_OFF = {};
   let VISTA = 'reino';
   const elements = construir(N, E);
 
@@ -5764,6 +5898,11 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
       this.filtrarCultivos();
     },
     cerrarCultivos:()=>document.getElementById('modalCultivos').classList.remove('on'),
+    /* 🏗️ La lista de edificaciones de la vega. Es HTML fijo (no se genera de ningún pack),
+       así que aquí solo hay que enseñarlo. Se puede enlazar de fuera con `#cultivos-obra`
+       — lo usa la página FEATURES para llevar directo a la lista sin explicar dónde pulsar. */
+    obra:function(){ document.getElementById('modalObra').classList.add('on'); },
+    cerrarObra:()=>document.getElementById('modalObra').classList.remove('on'),
     filtrarCultivos:function(){
       const q=(document.getElementById('cFiltro').value||'').trim().toLowerCase();
       let n=0;
@@ -5784,15 +5923,25 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
       document.body.classList.toggle('sim', k!=='reino');
       document.body.classList.toggle('sim-cultivos', k==='cultivos');
       document.body.classList.toggle('sim-pesca', k==='pesca');
-      document.getElementById('aviso-cultivos').classList.toggle('on', k==='cultivos');
-      document.getElementById('aviso-pesca').classList.toggle('on', k==='pesca');
-      document.getElementById('aviso-forja').classList.toggle('on', k==='forja');
+      // La banda solo sale si esa rama la tiene Y el usuario no la ha cerrado ya.
+      ['cultivos','pesca','forja'].forEach(t=>{
+        const a=document.getElementById('aviso-'+t);
+        if(a) a.classList.toggle('on', k===t && !AVISO_OFF[t]);
+      });
       this.close(); document.getElementById('stats').classList.remove('on');
       const b=document.getElementById('buscar'); if(b) b.value='';
       cy.elements().remove();
       cy.add(construir(VISTAS[k].n, VISTAS[k].e));
       try{ colocar(); }catch(e){ cy.layout(LAY).run(); }
+      cy.resize();          // la banda cambia el alto del contenedor: hay que remedirlo
       cy.fit(undefined,50);
+    },
+    /* Cerrar la banda de aviso. Devuelve el alto al mapa (`resize`) para que el grafo
+       aproveche el hueco en vez de quedarse encogido con una franja en blanco. */
+    cerrarAviso:function(k){
+      AVISO_OFF[k]=1;
+      const a=document.getElementById('aviso-'+k); if(a) a.classList.remove('on');
+      try{ cy.resize(); }catch(e){}
     },
     /* Buscar por nombre de misión o de NPC. Nace de un fallo real (2026-08-05): el
        usuario dio por hecho que la misión de La Fátima "no estaba en el mapa" — sí
@@ -5843,8 +5992,13 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
      `datos()`: aquí ya está todo declarado. */
   (function(){
     const ir = () => {
-      const k = decodeURIComponent(location.hash || '').slice(1);
+      let k = decodeURIComponent(location.hash || '').slice(1);
+      // `#cultivos-obra` abre la rama Y la lista de edificaciones de un tirón: así FEATURES
+      // puede llevar directo a la lista en vez de dejar al lector buscando qué botón pulsar.
+      const obra = k.endsWith('-obra');
+      if(obra) k = k.slice(0, -5);
       if(k && VISTAS[k]) ER6.tab(k);
+      if(obra && k === 'cultivos') ER6.obra();
     };
     ir();
     addEventListener('hashchange', ir);
