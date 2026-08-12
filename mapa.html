@@ -5039,6 +5039,16 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
         '5) Bájaselo a Gabardinez, que te da la parte práctica: un solo viaje al día, el búnker del atraque, y que lo que construyas allí no estará mañana',
         '6) A partir de ahí la terminal de embarque te reconoce'],
       desc:'La saga que abre Tierra Hostil —la otra orilla, al otro lado del agua— y le da por fin oficio a Gabardinez — un pez con gabardina que lleva desde el primer día en el puerto sin una sola misión. 🔑 Sus dos mitades están MUY separadas a propósito: la primera te la encuentras nada más entrar en el Gremio y solo sirve para plantar la zanahoria (hay algo al otro lado del agua, y el camino es largo); la segunda llega cuando Papriko ya te ha fichado. Y el aviso lo reparten los dos: él la ciencia, Gabardinez lo que de verdad te sirve para volver.'},
+    // ⬜ la insertó mapa_auto.py: nombre, NPC, pasos y de quién cuelga salen del
+    //    juego y son exactos. Falta darle una `desc` con voz propia, comprobar la FACCIÓN (nadie más da este NPC, así que va adivinada)
+    //    y, si toca, `unlocks`.
+    {id:'duke', label:'📢 La Lectura Pública', npc:'Miu → Mau', faction:'sci', type:'Misión · DESBLOQUEA el 2º mapa', coins:12, status:'new',
+      unlocks:'EL MAPA DE LA COMPAÑÍA: el mismo mapa, pero en él salen los DEMÁS JUGADORES',
+      desc:'El examen del Devocionario lo hiciste a puerta cerrada, y por lo visto eso no cuenta: hay un punto que no admite lectura silenciosa. Miu te sortea dos fórmulas de adhesión al Emperador —no las eliges, van por sorteo— y hay que decirlas EN EL CHAT, donde las lea todo el Reino. Ella no se ríe ni una vez; Mau, al fondo, cuenta. Y cuando consta, resulta que a partir de ahora hace falta que el Despacho sepa dónde está todo el mundo.',
+      steps:['1) La Lectura Pública (Miu) → al aceptar te tocan DOS frases al azar de un pool de 24. Te las escribe en el chat, y el Devocionario Ampliado te las recuerda cuando quieras',
+             '2) Escríbelas en el CHAT PÚBLICO, tal cual: las verá todo el server. Las mayúsculas y los acentos dan igual; lo demás va clavado (si la escribes mal, también se ve)',
+             '3) Cuando las dos consten te dan el Acta de Lectura Pública: entrégasela a Miu',
+             '4) Habla con Mau: te da el Mapa de la Compañía']},
   ];
   // ===== CONEXIONES (aristas): source -> target =====
   const E = [
@@ -5062,6 +5072,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
     ['talentos','yogur'],   // ← lo puso mapa_auto.py
     ['lolo_ap','forja'],   // ← lo puso mapa_auto.py
     ['bolsa','hostil'],['jarvard','hostil'],   // ← lo puso mapa_auto.py
+    ['mapa_reino','duke'],   // ← lo puso mapa_auto.py
   ];
 
   /* ==========================================================================================
