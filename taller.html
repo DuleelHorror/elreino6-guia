@@ -1,8 +1,3 @@
-<!doctype html>
-<html lang="es">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>El Taller — El Reino 6</title>
 <style>
 /* ═══════════════════════════════════════════════════════════════════════════
@@ -252,8 +247,6 @@ details.bloque .rejilla{margin-top:20px}
 .vacio{color:var(--tinta-3); padding:40px 0; text-align:center}
 mark{background:var(--acento-suave); color:var(--acento); border-radius:3px; padding:0 2px}
 </style>
-</head>
-<body>
 
 <nav class="nav">
 <a class="marca" href="https://duleelhorror.github.io/elreino6-guia/inicio.html"><span class="ico">⌂</span> El Reino <b>6</b></a>
@@ -404,8 +397,8 @@ const DATA = [
  falta:'El <b>mundo bosque tenebroso</b> no existe todavía. El plugin está desactivado esperándolo.', tags:['doc:PLUGINS-TODO.md']},
 
 /* ───────────── 4. IDEAS SIN EMPEZAR ───────────── */
-{g:'idea', t:'⛏️🌪️ Tierra Hostil — el mundo explotable', d:'Una isla a la que se llega <b>en el barco de Gabardinez</b>: construyes lo que quieras, salen minerales que no existen en ningún otro sitio, y los desastres la revientan cada dos por tres. <b>Te quedas porque el barco tiene horario</b>: si lo pierdes, te comes la noche allí — que son unos 20 minutos reales, lo justo para que «¿una veta más o corro al muelle?» sea una decisión de verdad.',
- falta:'Está <b>diseñado y medido, sin construir</b>. El paso 1 es tuyo: crear el mundo. Lo bueno es que casi todo ya está pagado — solo hay que comprar el plugin de desastres.<br>🔑 Y hay un regalo: el servidor <b>ya genera 7 minerales propios con su textura</b> (rubí, espinela, turquesa, aqua aura, amatista oscura, casiterita y el misterioso) <b>en el mundo normal, y no los usa nadie</b>. Moverlos a la isla cuesta dos ficheros y de paso el Reino vuelve a ser un sitio normal.<br>🔴 Dos agujeros que hay que tapar o la mecánica no existe: hoy se vuelve a casa escribiendo <code>/spawn</code>, y <b>morirse es un billete gratis</b> con toda la carga. Los dos se tapan sin comprar nada.<br>❓ Falta decidir <b>para qué sirven esos minerales</b>: si no sirven para nada, el mundo es bonito y vacío.', tags:['doc:tierra-hostil.md','€ 9,5 €','diseño cerrado','lo pidió el usuario']},
+{g:'hecho', t:'⛏️🌪️ Tierra Hostil — el mundo de los desastres', d:'La otra orilla, a la que se llega <b>en el barco de Gabardinez</b> y solo se zarpa <b>una vez al día, al amanecer</b>. Construyes lo que quieras, salen <b>5 minerales que no existen en ningún otro sitio</b>, y los desastres la revientan cada dos por tres. <b>Te quedas porque el barco tiene horario</b>: si lo pierdes, te comes el día allí.',
+ falta:'<b>Está montado y funcionando</b> — mundo creado, barco con sus dos misiones, minerales generándose, y los desastres <b>comprobados en el servidor el 12-ago</b>: 27 desastres ocurridos, 11 muertes y siete millones de bloques destruidos, sin un error ni una caída de rendimiento.<br>Lo que queda es <b>contenido</b>: 3 o 4 búnkeres más (hoy solo hay uno, el del Gordo Falcioni), y decidir <b>qué se hace con los minerales</b> — el carbón graso ya mueve la forja y los otros cuatro acaban de entrar en las recetas de accesorios, pero dan para mucho más.<br>🔴 Y una trampa apuntada: si algún día regeneras el mundo con <code>/mv regen</code> <b>cambia de UUID y se queda sin desastres en silencio</b>. Por eso el reset diario es el del mini-plugin, que conserva su identidad.', tags:['doc:tierra-hostil.md','€ ya pagado','verificado en el server']},
 {g:'idea', t:'🏬 Zona comercial con parcelas', d:'Un barrio donde los jugadores alquilan un local y montan su tienda (herrería, comida, decoración). Lo pidió un seguidor veterano.',
  falta:'Diseñarla y construirla: dónde, cuántas parcelas, si se alquilan (sería un <b>sumidero excelente</b>) y quién las gestiona. Es lo que desbloquea QuickShop.', tags:['doc:ideas-comunidad.md','desbloquea QuickShop']},
 {g:'idea', t:'🏚️ Barrio Rico y Barrio Pobre', d:'Dividir el pueblo en dos zonas con tono social distinto, y una mecánica que obligue a que la gente se mezcle en vez de quedarse siempre los mismos arriba.',
@@ -524,6 +517,3 @@ function pinta(){
 function F(k){ filtro = k; pinta(); }
 pinta();
 </script>
-
-</body>
-</html>
