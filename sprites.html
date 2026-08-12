@@ -1426,9 +1426,36 @@ const G = [
     "d": "ídem, oscuro y denso"
    }
   ]
+ },
+ {
+  "t": "🏹🔴 LOS ARCOS — <b>95 armas sin dibujo, y en la hoja de 1.920 no venía ni uno</b> (2026-08-12)",
+  "sub": "Lo apuntó el propio usuario: <b>«me falta poner los sprites de todos los arcos nuevos»</b>. Es el único tipo de arma DE CLASE que se quedó fuera del reparto de la hoja grande. 🔑 <b>Lo que desbloquea, y por eso importa</b>: el Abuelo es <b>la única clase sin arma de maestro nueva</b>. Las otras cuatro sagas ya cierran con un arma exclusiva de hierro y con dibujo propio; la suya sigue dando un arco que se ve como un arco de Minecraft. 📖 La receta para meter otra hoja está escrita entera en <code>.claude/rules/armas-sprites.md</code> §0-7, y el handoff en <code>PENDIENTE.md</code> §FALTAN LOS SPRITES DE LOS ARCOS. 🔴 Este sí <b>exige el ciclo de pack</b> (<code>/iazip</code> → <code>publish_pack.py</code> → <code>?v</code> → reiniciar): serían texturas nuevas de verdad.",
+  "items": [
+   {
+    "e": "⬜",
+    "o": "<b>los 71 arcos</b> (<code>ABU_*</code>, <code>BOW</code>)",
+    "n": "el arsenal del 🔫 Abuelo Cebolleta",
+    "m": "<code>bow</code>",
+    "d": "🔴 <b>una hoja de 10 diseños × 4 materiales</b>, como la anterior: cobre / hierro / oro / acero azul. Con eso el reparto por rareza sale solo"
+   },
+   {
+    "e": "⬜",
+    "o": "las 12 ballestas (<code>CROSSBOW</code>)",
+    "n": "—",
+    "m": "<code>crossbow</code>",
+    "d": "misma hoja, si cabe"
+   },
+   {
+    "e": "⬜",
+    "o": "los 12 mosquetes (<code>MUSKET</code>)",
+    "n": "—",
+    "m": "—",
+    "d": "ídem"
+   }
+  ]
  }
 ];
-const FALTAN = 57, ITEMS = 71;
+const FALTAN = 60, ITEMS = 74;
 
 function TH(){const r=document.documentElement;
   const cur=r.dataset.theme||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');
