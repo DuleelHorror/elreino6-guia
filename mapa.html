@@ -5049,6 +5049,10 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
              '2) Escríbelas en el CHAT PÚBLICO, tal cual: las verá todo el server. Las mayúsculas y los acentos dan igual; lo demás va clavado (si la escribes mal, también se ve)',
              '3) Cuando las dos consten te dan el Acta de Lectura Pública: entrégasela a Miu',
              '4) Habla con Mau: te da el Mapa de la Compañía']},
+    // ⬜ la insertó mapa_auto.py: nombre, NPC, pasos y de quién cuelga salen del
+    //    juego y son exactos. Falta darle una `desc` con voz propia, comprobar la FACCIÓN (nadie más da este NPC, así que va adivinada)
+    //    y, si toca, `unlocks`.
+    {id:'falcioni', label:'🏝️ El Informe de Falcioni', npc:'El Gordo Falcioni', faction:'sci', type:'Saga · 4 misiones · Tierra Hostil', coins:95, status:'new', unlocks:'Las 5 recetas de arma del Banco del Fundacional', desc:'Vino a hacer un informe de viabilidad de la concesión y lleva cuatro años sin poder entregarlo: el barco trae, pero no lleva. Le faltan cuatro apartados y tú te mueves por ahí fuera. Paga con unas recetas de herrería que se encontró explorando y que a él no le sirven de nada — está gordo, no tonto.', steps:['1) 📋 El Inventario de la Concesión → un ejemplar de cada mineral de la isla MENOS el uranio (fulgurita, piedra sorda, alabastro y carbón graso). El alabastro pide pico de hierro','2) ☢ Lo que No se Toca → 3 de uranio. Suelto te envenena: va DENTRO DE UN SACO. Y ojo, él no puede verlo ahí dentro — hay que sacarlo delante de él','3) 🥫 La Despensa → 16 panes, 16 filetes de ternera cocinada y 3 frascos con agua. Eso se trae del Reino: allí no hay con qué','4) ⏱ A la Intemperie → aguantar 60 minutos FUERA del búnker. El contador se ve en pantalla y se PAUSA en la zona segura; morir no lo reinicia']},
   ];
   // ===== CONEXIONES (aristas): source -> target =====
   const E = [
@@ -5073,6 +5077,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
     ['lolo_ap','forja'],   // ← lo puso mapa_auto.py
     ['carpincho','hostil'],['jarvard','hostil'],   // ← 2026-08-12: hostil_01 pasó de bolsa_trabajo a resort_06_careo
     ['mapa_reino','duke'],   // ← lo puso mapa_auto.py
+    ['hostil','falcioni'],   // ← lo puso mapa_auto.py
   ];
 
   /* ==========================================================================================
