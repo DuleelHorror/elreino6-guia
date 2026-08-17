@@ -5061,6 +5061,10 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
     {id:'ranas', label:'🐸 Tres Personas Distintas', npc:'Nico → Mau', faction:'gold', type:'Saga · 6 misiones', coins:52, status:'new',
       unlocks:'la Rana como mascota (mostrador del Refugio)',
       steps:['1) 🐸 Tres Personas Distintas (Nico) → tres vecinos han visto ranas haciendo cosas de persona. Sube a la 3ª planta del Ayuntamiento y habla con MAU','2) 📐 Trece Cosas que se Mueven (Mau) → Miu dice que trece ranas no son terreno, son FAUNA. Baja al REGISTRADOR','3) 📋 Epígrafe Cuarenta y Uno (Registrador) → la tasa no está fijada: el INTERVENTOR se la inventa delante de ti (7 Cacahuates)','4) 🗺 El Mapa de las Ranas (Interventor) → vuelve con Mau y ESPERA mientras dibuja (45 s). Te da el Cuaderno de Campo','5) 🔍 El Censo (Nico) → busca las TRECE ranas por el Reino y haz CLIC DERECHO en cada una (brillitos verdes). Sale el censo → a Nico','6) ✅ Archivado sin Actuación (Nico) → llévalo al Registro (lo archiva sin leerlo) y vuelve. Nico te da la Rana'], desc:'Desde que la Torre zumba más fuerte, las ranas del Reino hacen cosas de persona: una pesca, otra lleva corona, otra seca vasos detrás de una barra. A Nico no le preocupa el prodigio: le preocupa que nadie las haya contado.'},
+    // ⬜ la insertó mapa_auto.py: nombre, NPC, pasos y de quién cuelga salen del
+    //    juego y son exactos. Falta darle una `desc` con voz propia y, si toca, `unlocks`.
+    {id:'lolo_ex', label:'📓 Lo que No Está Apuntado', npc:'Lolo el Fundacional', faction:'folk', type:'Saga · 5 misiones', coins:66, status:'new',
+      steps:['1) 📓 Lo que No Está Apuntado (Lolo el Fundacional) → Ve a El Cuaderno del Fundacional · Habla con Lolo el Fundacional','2) 🔥 Las Dos a la Vez (Lolo el Fundacional) → Entrega Cuerda Trenzada x1, Mango Reforzado x1 a Lolo el Fundacional','3) ⏳ Horas de Fuego (Lolo el Fundacional) → Entrega Cabeza de Martillo x1 a Lolo el Fundacional','4) 🔨 La Mella (Lolo el Fundacional) → Entrega Pieza Reparada por Lolo x1 a Lolo el Fundacional','5) 📜 El Papel Azul (Lolo el Fundacional) → Entrega Cuerda Trenzada x2 a Lolo el Fundacional'], desc:'Lolo tiene un cuaderno que lleva once años en blanco. Dice que ahora se escribe solo.', unlocks:'El Estante de Lolo: la tienda donde se compran los esquemas de accesorio'},
   ];
   // ===== CONEXIONES (aristas): source -> target =====
   const E = [
@@ -5088,6 +5092,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
     ['hostil','falcioni'],   // ← lo puso mapa_auto.py
     ['forja','armero'],   // ← lo puso mapa_auto.py
     ['nico','ranas'],   // ← lo puso mapa_auto.py
+    ['forja','lolo_ex'],   // ← lo puso mapa_auto.py
   ];
 
   /* ==========================================================================================
