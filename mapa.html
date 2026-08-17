@@ -5056,6 +5056,11 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
     // ⬜ la insertó mapa_auto.py: nombre, NPC, pasos y de quién cuelga salen del
     //    juego y son exactos. Falta darle una `desc` con voz propia y, si toca, `unlocks`.
     {id:'armero', label:'🏅 Aprendiz de Armero', npc:'los cinco maestros de clase → Lolo el Fundacional', faction:'folk', type:'Saga · 6 misiones · en paralelo', coins:115, status:'new', unlocks:'Forjar el arma de CUALQUIER clase, no solo la tuya (las 5 recetas «por encargo» del Banco). Es la chapa de APRENDIZ: las maestrías de cada oficio se estudian en otro sitio', desc:'Cinco encargos sueltos, uno por maestro de clase, y cada uno te pide LA PIEZA de su arma: la cuerda del arco, el mango de la vara, el núcleo de la varita, la hoja del hacha y la cabeza del martillo. No les puedes forjar el arma entera —para eso hace falta justo la licencia que buscas—, pero sí la pieza. Cuando los cinco han hablado bien de ti, Lolo te da la chapa que a él nunca le dieron.', steps:['1) 🏹 La Cuerda del Semental → fórjale una Cuerda Trenzada (6:40 de fragua). Se le ha dado de sí la del arco','2) 🔥 El Mango de Calderón → un Mango Reforzado (10 min). Se le quemó el suyo, y trabaja doce horas al día','3) 🍓 El Núcleo de Sor Eufrasia → un Núcleo Hueco (13:20). El de su vara se rajó; si la piedra baila, no sirve','4) ⚔️ La Hoja de Rancio → una Hoja en Bruto (15 min). Sin filo: el filo se lo pone él','5) 🛡️ La Cabeza del Guardia → una Cabeza de Martillo (20 min). Se le descabezó la porra reglamentaria','6) 🏅 Aprendiz de Armero → fórjale a Lolo UN CLAVO. El mismo del tutorial, el que se doblaba con dos dedos. Quiere ver el de ahora']},
+    // ⬜ la insertó mapa_auto.py: nombre, NPC, pasos y de quién cuelga salen del
+    //    juego y son exactos. Falta darle una `desc` con voz propia y, si toca, `unlocks`.
+    {id:'ranas', label:'🐸 Tres Personas Distintas', npc:'Nico → Mau', faction:'gold', type:'Saga · 6 misiones', coins:52, status:'new',
+      unlocks:'la Rana como mascota (mostrador del Refugio)',
+      steps:['1) 🐸 Tres Personas Distintas (Nico) → tres vecinos han visto ranas haciendo cosas de persona. Sube a la 3ª planta del Ayuntamiento y habla con MAU','2) 📐 Trece Cosas que se Mueven (Mau) → Miu dice que trece ranas no son terreno, son FAUNA. Baja al REGISTRADOR','3) 📋 Epígrafe Cuarenta y Uno (Registrador) → la tasa no está fijada: el INTERVENTOR se la inventa delante de ti (7 Cacahuates)','4) 🗺 El Mapa de las Ranas (Interventor) → vuelve con Mau y ESPERA mientras dibuja (45 s). Te da el Cuaderno de Campo','5) 🔍 El Censo (Nico) → busca las TRECE ranas por el Reino y haz CLIC DERECHO en cada una (brillitos verdes). Sale el censo → a Nico','6) ✅ Archivado sin Actuación (Nico) → llévalo al Registro (lo archiva sin leerlo) y vuelve. Nico te da la Rana'], desc:'Desde que la Torre zumba más fuerte, las ranas del Reino hacen cosas de persona: una pesca, otra lleva corona, otra seca vasos detrás de una barra. A Nico no le preocupa el prodigio: le preocupa que nadie las haya contado.'},
   ];
   // ===== CONEXIONES (aristas): source -> target =====
   const E = [
@@ -5082,6 +5087,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
     ['mapa_reino','duke'],   // ← lo puso mapa_auto.py
     ['hostil','falcioni'],   // ← lo puso mapa_auto.py
     ['forja','armero'],   // ← lo puso mapa_auto.py
+    ['nico','ranas'],   // ← lo puso mapa_auto.py
   ];
 
   /* ==========================================================================================
