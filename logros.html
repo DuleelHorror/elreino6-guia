@@ -288,6 +288,7 @@ thead th{font-size:.74rem; text-transform:uppercase; letter-spacing:.07em; color
 <a class="pag" href="https://duleelhorror.github.io/elreino6-guia/logros.html" aria-current="page"><span>🏆</span> Logros</a>
 <a class="pag" href="https://duleelhorror.github.io/elreino6-guia/armas.html"><span>⚔️</span> Armas del MMO</a>
 <a class="pag" href="https://duleelhorror.github.io/elreino6-guia/catalogo.html"><span>🖼️</span> Catálogo de sprites</a>
+<a class="pag" href="https://duleelhorror.github.io/elreino6-guia/zonas.html"><span>🧭</span> El plano del Reino</a>
 </div>
 <div class="der">
 <a class="fuera" href="https://duleelhorror.github.io/elreino6-guia/inicio.html">⌂ Herramientas</a>
@@ -476,7 +477,7 @@ const L = [
   "quest": "Vía Crucis Administrativa",
   "npc": "Toni Tutorial Jr",
   "comose": "",
-  "antes": "Esto No Ha Pasao"
+  "antes": "Plan de Carrera"
  },
  {
   "id": "gremio",
@@ -1055,12 +1056,36 @@ const L = [
   "antes": "Química de Salón"
  },
  {
+  "id": "ranas_mapa",
+  "titulo": "Trece Cosas que se Mueven",
+  "desc": "Mau llevaba cuatro años dibujando cosas quietas.",
+  "marco": "task",
+  "oculto": false,
+  "bloque": "Las ranas del reino",
+  "quest": "El Mapa de las Ranas",
+  "npc": "Interventor",
+  "comose": "",
+  "antes": "Una Emergencia Delicada"
+ },
+ {
+  "id": "ranas",
+  "titulo": "Archivado sin Actuación",
+  "desc": "Trece ranas que ahora constan. Nadie ha leído el papel.",
+  "marco": "challenge",
+  "oculto": false,
+  "bloque": "Las ranas del reino",
+  "quest": "Archivado sin Actuación",
+  "npc": "Nico",
+  "comose": "",
+  "antes": "Trece Cosas que se Mueven"
+ },
+ {
   "id": "forja",
   "titulo": "El Fundacional",
   "desc": "Lolo leyó esa palabra en una revista y ya no la ha soltado.",
   "marco": "task",
   "oculto": false,
-  "bloque": "El establo, el refugio y la herrería",
+  "bloque": "Las ranas del reino",
   "quest": "La Fragua del Fundacional",
   "npc": "Toni Tutorial Jr",
   "comose": "",
@@ -1072,7 +1097,7 @@ const L = [
   "desc": "Un anillo. Se le nota que no ha hecho muchos.",
   "marco": "task",
   "oculto": false,
-  "bloque": "El establo, el refugio y la herrería",
+  "bloque": "Las ranas del reino",
   "quest": "El Anillo",
   "npc": "Lolo el Fundacional",
   "comose": "",
@@ -1084,7 +1109,7 @@ const L = [
   "desc": "Seis piezas después, Lolo ya te llama «socio».",
   "marco": "task",
   "oculto": false,
-  "bloque": "El establo, el refugio y la herrería",
+  "bloque": "Las ranas del reino",
   "quest": "La Capa",
   "npc": "Lolo el Fundacional",
   "comose": "",
@@ -1096,7 +1121,7 @@ const L = [
   "desc": "Once joyas después, Lolo sigue convencido de que sirve para los clavos.",
   "marco": "challenge",
   "oculto": false,
-  "bloque": "El establo, el refugio y la herrería",
+  "bloque": "Las ranas del reino",
   "quest": "La Obra Maestra",
   "npc": "Lolo el Fundacional",
   "comose": "",
@@ -1108,7 +1133,7 @@ const L = [
   "desc": "Cuarenta hornos abiertos, porque un maestro COMPRUEBA.",
   "marco": "task",
   "oculto": false,
-  "bloque": "El establo, el refugio y la herrería",
+  "bloque": "Las ranas del reino",
   "quest": "El Aprendiz al Revés · La Prueba del Calor",
   "npc": "Lolo el Fundacional",
   "comose": "",
@@ -1120,7 +1145,7 @@ const L = [
   "desc": "Lo hiciste todo mal. Exactamente igual que él en su día.",
   "marco": "goal",
   "oculto": false,
-  "bloque": "El establo, el refugio y la herrería",
+  "bloque": "Las ranas del reino",
   "quest": "El Aprendiz al Revés · La Prueba del Sacrificio",
   "npc": "Lolo el Fundacional",
   "comose": "",
@@ -1132,7 +1157,7 @@ const L = [
   "desc": "Cien lingotes. Al final se te olvida el horno y las manos van solas.",
   "marco": "goal",
   "oculto": false,
-  "bloque": "El establo, el refugio y la herrería",
+  "bloque": "Las ranas del reino",
   "quest": "El Aprendiz al Revés · La Prueba de la Fundición",
   "npc": "Lolo el Fundacional",
   "comose": "",
@@ -1144,7 +1169,7 @@ const L = [
   "desc": "A él le pusieron el lacre pequeño. A ti te han puesto el gordo.",
   "marco": "challenge",
   "oculto": false,
-  "bloque": "El establo, el refugio y la herrería",
+  "bloque": "Las ranas del reino",
   "quest": "Socio Fundacional",
   "npc": "Lolo el Fundacional",
   "comose": "",
@@ -1156,7 +1181,7 @@ const L = [
   "desc": "Cuatro clavos que se doblan con dos dedos. Todo el mundo empieza por los clavos.",
   "marco": "task",
   "oculto": false,
-  "bloque": "El establo, el refugio y la herrería",
+  "bloque": "Las ranas del reino",
   "quest": "La Primera Pieza",
   "npc": "Lolo el Fundacional",
   "comose": "",
@@ -1168,7 +1193,7 @@ const L = [
   "desc": "Cuarenta años echándolo al fuego. Y resulta que también se tallaba.",
   "marco": "goal",
   "oculto": false,
-  "bloque": "El establo, el refugio y la herrería",
+  "bloque": "Las ranas del reino",
   "quest": "El Carbón que No se Quema",
   "npc": "Lolo el Fundacional",
   "comose": "",
@@ -1180,7 +1205,7 @@ const L = [
   "desc": "Cuarenta años bajando a por lava. Nunca le pareció raro.",
   "marco": "task",
   "oculto": false,
-  "bloque": "El establo, el refugio y la herrería",
+  "bloque": "Las ranas del reino",
   "quest": "Esto Come",
   "npc": "Lolo el Fundacional",
   "comose": "",
@@ -1192,7 +1217,7 @@ const L = [
   "desc": "Lo tallaste tú. Tiene el borde limpio y todo.",
   "marco": "task",
   "oculto": false,
-  "bloque": "El establo, el refugio y la herrería",
+  "bloque": "Las ranas del reino",
   "quest": "Uno Tuyo",
   "npc": "Lolo el Fundacional",
   "comose": "",
@@ -1204,7 +1229,7 @@ const L = [
   "desc": "Lleva carbón dentro. Lleva tiempo dentro. Lleva un rato tuyo dentro.",
   "marco": "task",
   "oculto": false,
-  "bloque": "El establo, el refugio y la herrería",
+  "bloque": "Las ranas del reino",
   "quest": "La Que Tú Quieras",
   "npc": "Lolo el Fundacional",
   "comose": "",
@@ -1216,7 +1241,7 @@ const L = [
   "desc": "Esto ya no es hierro. No lo explica. Vuelve a lo suyo.",
   "marco": "challenge",
   "oculto": false,
-  "bloque": "El establo, el refugio y la herrería",
+  "bloque": "Las ranas del reino",
   "quest": "Lo Fundacional",
   "npc": "Lolo el Fundacional",
   "comose": "",
@@ -1228,11 +1253,83 @@ const L = [
   "desc": "Un barco con más agujeros morales que madera sana. Pero llega.",
   "marco": "goal",
   "oculto": false,
-  "bloque": "El establo, el refugio y la herrería",
+  "bloque": "Las ranas del reino",
   "quest": "Permiso de Embarque",
   "npc": "Bacalao Gabardinez",
   "comose": "",
   "antes": "Titulado por Jarvard"
+ },
+ {
+  "id": "falcioni_uranio",
+  "titulo": "Dentro del Saco",
+  "desc": "Suelto envenena. Dentro no. Nadie sabe por qué, y funciona.",
+  "marco": "task",
+  "oculto": false,
+  "bloque": "Las ranas del reino",
+  "quest": "Lo que No se Toca",
+  "npc": "El Gordo Falcioni",
+  "comose": "",
+  "antes": "El Pez que Sabe Llegar"
+ },
+ {
+  "id": "falcioni_informe",
+  "titulo": "Cuatro de Cuatro",
+  "desc": "El informe queda cerrado. Sigue sin haber a quién dárselo.",
+  "marco": "challenge",
+  "oculto": false,
+  "bloque": "Las ranas del reino",
+  "quest": "A la Intemperie",
+  "npc": "El Gordo Falcioni",
+  "comose": "",
+  "antes": "Dentro del Saco"
+ },
+ {
+  "id": "taller_mella",
+  "titulo": "Entera Otra Vez",
+  "desc": "Veinte Cacahuates. Te van a doler la primera y la décima.",
+  "marco": "task",
+  "oculto": false,
+  "bloque": "Las ranas del reino",
+  "quest": "La Mella",
+  "npc": "Lolo el Fundacional",
+  "comose": "",
+  "antes": "Lo Fundacional"
+ },
+ {
+  "id": "taller",
+  "titulo": "El Estante de Lolo",
+  "desc": "Llevaban años entre dos tablas. Unos eran del maestro. Otros no se acuerda.",
+  "marco": "goal",
+  "oculto": false,
+  "bloque": "Las ranas del reino",
+  "quest": "El Papel Azul",
+  "npc": "Lolo el Fundacional",
+  "comose": "",
+  "antes": "Entera Otra Vez"
+ },
+ {
+  "id": "armero_cuerda",
+  "titulo": "Que Tense",
+  "desc": "Le has hecho una herramienta a alguien que no es como tú. Quedan cuatro.",
+  "marco": "task",
+  "oculto": false,
+  "bloque": "Las ranas del reino",
+  "quest": "La Cuerda del Semental",
+  "npc": "Semental de la Flecha",
+  "comose": "",
+  "antes": "Lo Fundacional"
+ },
+ {
+  "id": "armero",
+  "titulo": "Aprendiz de Armero",
+  "desc": "Cinco oficios, cinco piezas, y ninguna la puedes usar tú. Y esto solo pone aprendiz.",
+  "marco": "challenge",
+  "oculto": false,
+  "bloque": "Las ranas del reino",
+  "quest": "Aprendiz de Armero",
+  "npc": "Lolo el Fundacional",
+  "comose": "",
+  "antes": "Que Tense"
  },
  {
   "id": "campana",
@@ -1571,7 +1668,7 @@ const L = [
   "antes": "El Nuevo Fichaje"
  }
 ];
-const BLOQUES = ["La espina", "El pueblo", "Operación carpincho y lo que abre", "La ciencia y la piedra", "Los nexos", "El establo, el refugio y la herrería", "Los dedos largos", "Secretas", "Sueltas", "De cosecha propia"];
+const BLOQUES = ["La espina", "El pueblo", "Operación carpincho y lo que abre", "La ciencia y la piedra", "Los nexos", "El establo, el refugio y la herrería", "Las ranas del reino", "Los dedos largos", "Secretas", "Sueltas", "De cosecha propia"];
 
 function TH(){const r=document.documentElement;
   const cur=r.dataset.theme||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');
