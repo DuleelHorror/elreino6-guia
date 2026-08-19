@@ -335,11 +335,11 @@ const G = [
   "sub": "&gt; 🗿 Van por base64, no por el pack: se sacan con <code>/hdb</code> → coger la cabeza → `/data get entity @s &gt; SelectedItem<code> → copiar el </code>value`. Cambiarlas es <b>una línea</b> en su generador.",
   "items": [
    {
-    "e": "⬜",
+    "e": "✅",
     "o": "cabeza de <b>cuaderno</b>",
     "n": "El Cuaderno del Fundacional",
-    "m": "cabeza de terminal (la de las consolas)",
-    "d": "La <b>herrería de Lolo</b>. El usuario eligió piel de cuaderno/tablón: un libro abierto de tapa de cuero, o una tablilla de madera con papeles clavados. 🔑 La terminal del spawn es del Ayuntamiento y es una consola; ésta es de un herrero y debería parecer <b>lo que él usa para apuntar</b>. Se pone en <code>SISTEMAS</code> de <code>mmo-generadores/gen_manual.py</code>, campo <code>cabeza</code>"
+    "m": "<b>libro abierto</b> (cabeza custom)",
+    "d": "✅ <b>RESUELTO 2026-08-18</b>: no hizo falta dibujar nada — se usa una cabeza ya existente, «libro abierto», hash <code>214cd54f72c110134c69cee5775d158386a6876095f379dd427fed73fb3b6740</code> (verificado 200 contra Mojang). Está en <code>CABEZA_TERMINAL</code> de <code>gen_manual.py</code> + su cartel flotante. 🔴 Antes salía como <b>Alex</b> porque el hash anterior daba 404: LECCIÓN 110"
    }
   ]
  },
@@ -524,7 +524,7 @@ const G = [
  },
  {
   "t": "✅🧺 La LAVANDERÍA (entregados por el usuario el 2026-08-08)",
-  "sub": "Los 6 sprites del minijuego de lavar ropa + la plantilla de cubo de la lavadora. Namespace <code>lavanderia</code> (CMD 10278-10283 en PAPER) y el bloque en <code>maquinas</code>. Doc: <code>.claude/rules/lavanderia.md</code>.",
+  "sub": "Los 6 sprites del minijuego de lavar ropa + la plantilla de cubo de la lavadora. Namespace <code>lavanderia</code> (CMD 10278-10283 en PAPER) y el bloque en <code>maquinas</code>. Doc: <code>.claude/docs/lavanderia.md</code>.",
   "items": [
    {
     "e": "✅",
@@ -892,7 +892,7 @@ const G = [
  },
  {
   "t": "✅🎞️ LAS FASES DEL REVELADO (laboratorio de fotos)",
-  "sub": "El <b>carrete</b> ya tiene sprite (el usuario lo hizo el 3-ago), pero **las 5 fases intermedias son papel pelado** — y el jugador las va pasando de máquina en máquina, así que las mira todas. Ver <code>.claude/rules/laboratorio-fotos.md</code>. ✅✅ <b>HECHAS (2026-08-09)</b> — las entregó el usuario. Cada baño cambia el color del negativo (gris → cían → marrón → rojizo), así que <b>la cadena se lee de un vistazo</b>: hasta hoy las 5 fases eran papel pelado y en el inventario se veían idénticas. 🔑 Sus CMD (<b>10313-10317</b>) viven en <code>CMD_FASE</code> de <b><code>mmo-generadores/gen_foto.py</code></b>, NO en <code>instalar_sprites.py</code>: ese generador reescribe el datapack entero, y un CMD puesto a mano duraría hasta la siguiente ejecución.",
+  "sub": "El <b>carrete</b> ya tiene sprite (el usuario lo hizo el 3-ago), pero **las 5 fases intermedias son papel pelado** — y el jugador las va pasando de máquina en máquina, así que las mira todas. Ver <code>.claude/docs/laboratorio-fotos.md</code>. ✅✅ <b>HECHAS (2026-08-09)</b> — las entregó el usuario. Cada baño cambia el color del negativo (gris → cían → marrón → rojizo), así que <b>la cadena se lee de un vistazo</b>: hasta hoy las 5 fases eran papel pelado y en el inventario se veían idénticas. 🔑 Sus CMD (<b>10313-10317</b>) viven en <code>CMD_FASE</code> de <b><code>mmo-generadores/gen_foto.py</code></b>, NO en <code>instalar_sprites.py</code>: ese generador reescribe el datapack entero, y un CMD puesto a mano duraría hasta la siguiente ejecución.",
   "items": [
    {
     "e": "✅",
@@ -948,12 +948,19 @@ const G = [
     "n": "<i>(vale para TODOS los discos)</i>",
     "m": "music_disc_*",
     "d": "🔴 <b>UN solo dibujo para todos los discos custom</b> (Pan, 2026-08-09): el mismo skin salvo que digamos lo contrario para uno concreto. Así añadir un disco no pide dibujo nuevo — y cuando alguno lo merezca, se le hace el suyo y punto. Vinilo negro con etiqueta al centro, <b>la etiqueta en blanco</b> (sin texto), para que sirva para cualquiera"
+   },
+   {
+    "e": "✅",
+    "o": "<code>esquirla_torre</code>",
+    "n": "Esquirla de la Torre",
+    "m": "<b>flint</b>",
+    "d": "🎨 <b>DIBUJADA POR MÍ</b> (2026-08-19): <code>objetos:esquirla_torre</code>, CMD <b>10001</b>, generador <code>texturas/gen_sprite_esquirla.py</code>. Cuña negra en punta con una veta violeta (el zumbido de la Torre). 🔴 Base <b>FLINT</b> a propósito: es el único material que <b>no compra ninguna tienda</b> (ECHO_SHARD/COAL/AMETHYST_SHARD sí) → el botín exclusivo no se puede colar como vanilla en la joyería. Lo suelta SOLO el jefe de la invasión"
    }
   ]
  },
  {
   "t": "⬜🍳 BLOQUES de la cocina de Calderón (no son items: son BLOQUES de ItemsAdder)",
-  "sub": "Hoy las 4 estaciones son bloques vanilla sin función propia (mesa de fletching, muela, rejilla de cobre, cobre cincelado): <b>funcionan</b>, pero no parecen una cocina. Con un bloque propio de IA cada estación sería inconfundible y, además, <b>se podrían encender las 3 apagadas</b> (vaporera, exprimidor y barril de fermentación) sin pisar a BreweryX. Detalle en <code>.claude/rules/cocina-calderon.md</code>. 🔴 Van en <b>16×16 por cara</b> (bloque, no item). Al tenerlas: definir el bloque IA, <code>/iazip</code>, publicar el pack, subir <code>?v</code>, reiniciar, y cambiar <code>block_item_sources</code> a <code>itemsadder-&lt;ns&gt;:&lt;id&gt;</code>.",
+  "sub": "Hoy las 4 estaciones son bloques vanilla sin función propia (mesa de fletching, muela, rejilla de cobre, cobre cincelado): <b>funcionan</b>, pero no parecen una cocina. Con un bloque propio de IA cada estación sería inconfundible y, además, <b>se podrían encender las 3 apagadas</b> (vaporera, exprimidor y barril de fermentación) sin pisar a BreweryX. Detalle en <code>.claude/docs/cocina-calderon.md</code>. 🔴 Van en <b>16×16 por cara</b> (bloque, no item). Al tenerlas: definir el bloque IA, <code>/iazip</code>, publicar el pack, subir <code>?v</code>, reiniciar, y cambiar <code>block_item_sources</code> a <code>itemsadder-&lt;ns&gt;:&lt;id&gt;</code>.",
   "items": [
    {
     "e": "⬜",
@@ -1020,8 +1027,63 @@ const G = [
   ]
  },
  {
+  "t": "⬜⚒️ LA FRAGUA Y EL BANCO DEL FUNDACIONAL — lo que aún sale vanilla (2026-08-19)",
+  "sub": "Lo pilló el usuario mirando la rama: «<b>los clavos son solo pepitas de hierro</b>». Auditado el sistema entero: de las <b>7 piezas</b> de la Fragua, seis tienen sprite y <b>el Clavo no lo tiene a propósito</b> (<code>sprite=None</code> en <code>mmo-generadores/forja_piezas.py</code>), más <b>6 papeles</b> de las dos sagas nuevas que son folio en blanco. Las 5 armas, el Molde, el Título y los 8 accesorios SÍ tienen dibujo. 🔑 El Clavo es <b>lo primero que forja el jugador</b> y además <b>se le entrega a Lolo</b>: es la pieza que más se mira de las siete, y hoy es indistinguible de una pepita cualquiera del suelo. ⚠️ Al ponerle sprite al Clavo hay que rellenar su <code>sprite=</code> en <code>forja_piezas.py</code> y re-ejecutar <code>gen_forja_recetas.py</code> (el campo existe ya; hoy va a <code>None</code>). 🚫 <b>La insignia ×12</b> está apuntada arriba, en su familia de accesorios — no duplicarla aquí. 📌 Los <b>24 esquemas</b> comparten a propósito el mismo papel azul (<code>esquema_receta</code>): si algún día se quiere uno por receta, es una decisión de diseño, no un sprite que falte.",
+  "items": [
+   {
+    "e": "⬜",
+    "o": "<code>clavo_fundacional</code>",
+    "n": "Clavo Fundacional",
+    "m": "iron_nugget",
+    "d": "⚒ Fragua · la pieza del tutorial, y <b>se le entrega a Lolo</b> · cuatro clavos de hierro basto, uno con la punta <b>doblada</b> (es el chiste de la misión: se doblan con dos dedos)"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>ApunteMolde</code>",
+    "n": "Apunte: un molde",
+    "m": "paper",
+    "d": "⚒ saga de la forja · nota pequeña con el contorno de un molde dibujado a lápiz"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>ApuntePieza</code>",
+    "n": "Apunte: una pieza",
+    "m": "paper",
+    "d": "⚒ la misma libreta · nota con una pieza acotada, con medidas"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>ApunteAcero</code>",
+    "n": "Apunte: el acero",
+    "m": "paper",
+    "d": "⚒ la misma libreta · nota con un lingote y una temperatura apuntada"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>CertificadoPrimerFilo</code>",
+    "n": "Certificado de Primer Filo",
+    "m": "paper",
+    "d": "⚒ encargos · certificado con orla y un filo dibujado en el sello"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>EncargoAnillo</code>",
+    "n": "Encargo: un anillo para la Casa Goldstein",
+    "m": "paper",
+    "d": "⚒ encargos · nota de pedido con un anillo dibujado al margen"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>EncargoGuantes</code>",
+    "n": "Encargo: unos guantes para Olegario",
+    "m": "paper",
+    "d": "⚒ encargos · nota de pedido con la silueta de una mano"
+   }
+  ]
+ },
+ {
   "t": "✅⛏️ LOS MINERALES DE TIERRA HOSTIL (5 vetas + 5 gemas + el bidón)",
-  "sub": "La isla de los desastres a la que se llega en el barco de Gabardinez. Los minerales son **el motivo para ir**, así que son exclusivos de allí. Diseño completo en <code>.claude/rules/tierra-hostil.md</code>. 🔴 <b>Las VETAS van a 16×16 por cara</b> (son bloques); las gemas y el bidón, 16×16 de item. 🔑 <b>Que se distingan A OSCURAS y de un vistazo</b>: cada uno tiene **un color y una FORMA de inclusión distintos** (tubos / anillos / grietas / motas grasas / motas brillantes), para que no dependa solo del color — en una cueva con antorcha, la silueta se lee antes que el tono. ✅✅ <b>LOS 10 DEFINITIVOS, PUESTOS (2026-08-09)</b> — los entregó el usuario y se colocaron con <code>texturas/poner_minerales_th.py</code>. 🔴 <b>Ojo si llegan más: los nombres vienen AL REVÉS</b> — su <code>X_bloque.png</code> (64×48, plantilla de cubo) es <b>la VETA</b> y va a <code>block/ores/X_ore.png</code>; su <code>X_ore.png</code> (16×16) es <b>la GEMA</b> y va a <code>item/ores/X.png</code>. Copiando por nombre, la gema acaba empotrada en la pared y la roca en la mano, sin un solo error en el log. Las 6 caras del cubo eran idénticas, así que se recorta una (el script avisa si alguna vez no lo son). (histórico) Hubo placeholder desde el 2026-08-08 — los 10 están dibujados y subidos<b>, y </b>el juego ya se puede probar**: cada mineral tiene su color y su forma de inclusión, así que se distinguen de un vistazo. Los dibujó <code>mmo-generadores/gen_minerales_tierra_hostil.py</code> (pixel art a mano, dentro del propio script). 🖼️ Míralos todos juntos en <b><code>texturas/_preview_tierra_hostil.png</code></b>. 🔑 <b>Sustituir uno por el bueno = sobrescribir el PNG en la MISMA RUTA</b> y rehacer el pack. Cero cambios de config: mismo id, mismo CMD, mismo generador. Por eso <b>no corre ninguna prisa</b> y se pueden ir dando de uno en uno. Las rutas son <code>ItemsAdder/contents/tierra_hostil/resourcepack/tierra_hostil/textures/{block,item}/ores/</code>. 📌 Los que <b>más ganan</b> con un dibujo de verdad son <b>las 5 gemas y el bidón</b> (las vetas placeholder ya cumplen bastante bien; las gemas son manchas con silueta).",
+  "sub": "La isla de los desastres a la que se llega en el barco de Gabardinez. Los minerales son **el motivo para ir**, así que son exclusivos de allí. Diseño completo en <code>.claude/docs/tierra-hostil.md</code>. 🔴 <b>Las VETAS van a 16×16 por cara</b> (son bloques); las gemas y el bidón, 16×16 de item. 🔑 <b>Que se distingan A OSCURAS y de un vistazo</b>: cada uno tiene **un color y una FORMA de inclusión distintos** (tubos / anillos / grietas / motas grasas / motas brillantes), para que no dependa solo del color — en una cueva con antorcha, la silueta se lee antes que el tono. ✅✅ <b>LOS 10 DEFINITIVOS, PUESTOS (2026-08-09)</b> — los entregó el usuario y se colocaron con <code>texturas/poner_minerales_th.py</code>. 🔴 <b>Ojo si llegan más: los nombres vienen AL REVÉS</b> — su <code>X_bloque.png</code> (64×48, plantilla de cubo) es <b>la VETA</b> y va a <code>block/ores/X_ore.png</code>; su <code>X_ore.png</code> (16×16) es <b>la GEMA</b> y va a <code>item/ores/X.png</code>. Copiando por nombre, la gema acaba empotrada en la pared y la roca en la mano, sin un solo error en el log. Las 6 caras del cubo eran idénticas, así que se recorta una (el script avisa si alguna vez no lo son). (histórico) Hubo placeholder desde el 2026-08-08 — los 10 están dibujados y subidos<b>, y </b>el juego ya se puede probar**: cada mineral tiene su color y su forma de inclusión, así que se distinguen de un vistazo. Los dibujó <code>mmo-generadores/gen_minerales_tierra_hostil.py</code> (pixel art a mano, dentro del propio script). 🖼️ Míralos todos juntos en <b><code>texturas/_preview_tierra_hostil.png</code></b>. 🔑 <b>Sustituir uno por el bueno = sobrescribir el PNG en la MISMA RUTA</b> y rehacer el pack. Cero cambios de config: mismo id, mismo CMD, mismo generador. Por eso <b>no corre ninguna prisa</b> y se pueden ir dando de uno en uno. Las rutas son <code>ItemsAdder/contents/tierra_hostil/resourcepack/tierra_hostil/textures/{block,item}/ores/</code>. 📌 Los que <b>más ganan</b> con un dibujo de verdad son <b>las 5 gemas y el bidón</b> (las vetas placeholder ya cumplen bastante bien; las gemas son manchas con silueta).",
   "items": [
    {
     "e": "✅",
@@ -1241,7 +1303,7 @@ const G = [
  },
  {
   "t": "🟡🌿 LOS ÍTEMS DE SPDRUG (la maría y el tabaco) — 9 puestos, 4 por dibujar",
-  "sub": "🔴🔴 <b>Éstos NO se texturizan como los demás.</b> Los fabrica <b>el plugin</b>, y el SPdrug de fábrica <b>no sabe nada de custom-model-data</b> (0 referencias en sus 33 clases): no había casilla donde poner una textura. ✅ <b>Se le añadió al plugin, en nuestro FORK</b> (<code>spdrug-elreino6</code>, el mismo que quitó la tecla F del minijuego). Ahora cada ítem lee un <code>custom-model-data</code> <b>opcional</b> de la misma sección donde ya viven su <code>name</code> y su <code>lore</code>. Sin esa clave se comporta igual que antes. Generador: <b><code>mmo-generadores/gen_sprites_drogas.py</code></b> · doc completa: <code>.claude/rules/drogas-spdrug.md</code>. 🧨 Se intentó antes con <b>MythicChanger</b> y <b>no aplicaba nada</b> (ni una regla de prueba que solo cambiaba el nombre de la piedra). No volver por ahí. ⚠️ <b>Al recibir un PNG nuevo</b>: fila en <code>ITEMS</code> del generador → <code>--aplicar</code> → y **comprobar que su creador de <code>ItemFactory.java</code> llama a <code>applyModel</code>**; si no, hay que tocar el fork y recompilar (GitHub Actions, ~30 s). 🔴🔴 <b>DOS COSAS QUE HAY QUE SABER ANTES DE DIBUJAR ESTOS:</b> 1. <b>Los 10 químicos son TODOS <code>snowball</code>.</b> Como el custom-model-data va <b>por material</b>, los 10 necesitan <b>10 números distintos</b> — al revés que los trofeos, que comparten el 10310 porque cada uno usa un material propio. Y hoy son <b>diez bolas de nieve idénticas</b>: de toda la lista, esto es lo que más se notaría. 2. 🔴 <b><code>createChemicalItem</code> NO llama a <code>applyModel</code></b> (solo lo hacen 6 creadores). Los químicos, y cualquier ítem que no esté en esos 6, <b>piden tocar el fork y recompilar</b> antes de que su sprite sirva de algo. (Las <b>semillas</b> no entran aquí: se decidió que <b>no llevan sprite</b>.) Detalle en <code>.claude/rules/drogas-spdrug.md</code>. 📌 <b>Prioridad, por si hay que elegir</b>: lo de arriba del todo (el invernadero y el laboratorio) se ve <b>todos los días</b> en el juego. La coca, las 6 drogas y los químicos existen en el plugin pero <b>hoy no los juega nadie</b> en el Reino — se apuntan para no perderlos de vista, no porque corran prisa.",
+  "sub": "🔴🔴 <b>Éstos NO se texturizan como los demás.</b> Los fabrica <b>el plugin</b>, y el SPdrug de fábrica <b>no sabe nada de custom-model-data</b> (0 referencias en sus 33 clases): no había casilla donde poner una textura. ✅ <b>Se le añadió al plugin, en nuestro FORK</b> (<code>spdrug-elreino6</code>, el mismo que quitó la tecla F del minijuego). Ahora cada ítem lee un <code>custom-model-data</code> <b>opcional</b> de la misma sección donde ya viven su <code>name</code> y su <code>lore</code>. Sin esa clave se comporta igual que antes. Generador: <b><code>mmo-generadores/gen_sprites_drogas.py</code></b> · doc completa: <code>.claude/docs/drogas-spdrug.md</code>. 🧨 Se intentó antes con <b>MythicChanger</b> y <b>no aplicaba nada</b> (ni una regla de prueba que solo cambiaba el nombre de la piedra). No volver por ahí. ⚠️ <b>Al recibir un PNG nuevo</b>: fila en <code>ITEMS</code> del generador → <code>--aplicar</code> → y **comprobar que su creador de <code>ItemFactory.java</code> llama a <code>applyModel</code>**; si no, hay que tocar el fork y recompilar (GitHub Actions, ~30 s). 🔴🔴 <b>DOS COSAS QUE HAY QUE SABER ANTES DE DIBUJAR ESTOS:</b> 1. <b>Los 10 químicos son TODOS <code>snowball</code>.</b> Como el custom-model-data va <b>por material</b>, los 10 necesitan <b>10 números distintos</b> — al revés que los trofeos, que comparten el 10310 porque cada uno usa un material propio. Y hoy son <b>diez bolas de nieve idénticas</b>: de toda la lista, esto es lo que más se notaría. 2. 🔴 <b><code>createChemicalItem</code> NO llama a <code>applyModel</code></b> (solo lo hacen 6 creadores). Los químicos, y cualquier ítem que no esté en esos 6, <b>piden tocar el fork y recompilar</b> antes de que su sprite sirva de algo. (Las <b>semillas</b> no entran aquí: se decidió que <b>no llevan sprite</b>.) Detalle en <code>.claude/docs/drogas-spdrug.md</code>. 📌 <b>Prioridad, por si hay que elegir</b>: lo de arriba del todo (el invernadero y el laboratorio) se ve <b>todos los días</b> en el juego. La coca, las 6 drogas y los químicos existen en el plugin pero <b>hoy no los juega nadie</b> en el Reino — se apuntan para no perderlos de vista, no porque corran prisa.",
   "items": [
    {
     "e": "✅",
@@ -1450,7 +1512,7 @@ const G = [
  },
  {
   "t": "🏹🔴 LOS ARCOS — <b>95 armas sin dibujo, y en la hoja de 1.920 no venía ni uno</b> (2026-08-12)",
-  "sub": "Lo apuntó el propio usuario: <b>«me falta poner los sprites de todos los arcos nuevos»</b>. Es el único tipo de arma DE CLASE que se quedó fuera del reparto de la hoja grande. 🔑 <b>Lo que desbloquea, y por eso importa</b>: el Abuelo es <b>la única clase sin arma de maestro nueva</b>. Las otras cuatro sagas ya cierran con un arma exclusiva de hierro y con dibujo propio; la suya sigue dando un arco que se ve como un arco de Minecraft. 📖 La receta para meter otra hoja está escrita entera en <code>.claude/rules/armas-sprites.md</code> §0-7, y el handoff en <code>PENDIENTE.md</code> §FALTAN LOS SPRITES DE LOS ARCOS. 🔴 Este sí <b>exige el ciclo de pack</b> (<code>/iazip</code> → <code>publish_pack.py</code> → <code>?v</code> → reiniciar): serían texturas nuevas de verdad.",
+  "sub": "Lo apuntó el propio usuario: <b>«me falta poner los sprites de todos los arcos nuevos»</b>. Es el único tipo de arma DE CLASE que se quedó fuera del reparto de la hoja grande. 🔑 <b>Lo que desbloquea, y por eso importa</b>: el Abuelo es <b>la única clase sin arma de maestro nueva</b>. Las otras cuatro sagas ya cierran con un arma exclusiva de hierro y con dibujo propio; la suya sigue dando un arco que se ve como un arco de Minecraft. 📖 La receta para meter otra hoja está escrita entera en <code>.claude/docs/armas-sprites.md</code> §0-7, y el handoff en <code>PENDIENTE.md</code> §FALTAN LOS SPRITES DE LOS ARCOS. 🔴 Este sí <b>exige el ciclo de pack</b> (<code>/iazip</code> → <code>publish_pack.py</code> → <code>?v</code> → reiniciar): serían texturas nuevas de verdad.",
   "items": [
    {
     "e": "⬜",
@@ -1476,7 +1538,7 @@ const G = [
   ]
  }
 ];
-const FALTAN = 62, ITEMS = 76;
+const FALTAN = 68, ITEMS = 82;
 
 function TH(){const r=document.documentElement;
   const cur=r.dataset.theme||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');
