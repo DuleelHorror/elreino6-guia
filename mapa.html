@@ -5067,6 +5067,10 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
     //    juego y son exactos. Falta darle una `desc` con voz propia y, si toca, `unlocks`.
     {id:'lolo_ex', label:'📓 Lo que No Está Apuntado', npc:'Lolo el Fundacional', faction:'folk', type:'Saga · 5 misiones', coins:66, status:'new',
       steps:['1) 📓 Lo que No Está Apuntado (Lolo el Fundacional) → Ve a El Cuaderno del Fundacional · Habla con Lolo el Fundacional','2) 🔥 Las Dos a la Vez (Lolo el Fundacional) → Entrega Cuerda Trenzada x1, Mango Reforzado x1 a Lolo el Fundacional','3) ⏳ Horas de Fuego (Lolo el Fundacional) → Entrega Cabeza de Martillo x1 a Lolo el Fundacional','4) 🔨 La Mella (Lolo el Fundacional) → Entrega Pieza Reparada por Lolo x1 a Lolo el Fundacional','5) 📜 El Papel Azul (Lolo el Fundacional) → Entrega Cuerda Trenzada x2 a Lolo el Fundacional'], desc:'Lolo tiene un cuaderno que lleva once años en blanco. Dice que ahora se escribe solo.', unlocks:'El Estante de Lolo: la tienda donde se compran los esquemas de accesorio'},
+    // ⬜ la insertó mapa_auto.py: nombre, NPC, pasos y de quién cuelga salen del
+    //    juego y son exactos. Falta darle una `desc` con voz propia y, si toca, `unlocks`.
+    {id:'encargo', label:'🗡 El Primer Filo', npc:'Lolo el Fundacional → Vera Pedregal', faction:'gold', type:'Saga · 8 misiones', coins:295, status:'new',
+      steps:['1) 🗡 El Primer Filo (Lolo el Fundacional) → Entrega Certificado de Primer Filo x1 a Lolo el Fundacional','2) 📋 Los Tres que Preguntan (Lolo el Fundacional) → Ve a La excavación, bajo la Torre, La iglesia, El Ayuntamiento · Habla con Lolo el Fundacional','3) 🔨 Otro Mazo para Vera (Vera Pedregal) → Entrega Cabeza de Martillo x1 a Vera Pedregal','4) 🔔 El Badajo de la Campana (Sor Eufrasia) → Entrega Núcleo Hueco x1 a Sor Eufrasia','5) 🪟 La Reja de la Ventanilla (Ujier) → Entrega Hoja en Bruto x2 a Ujier','6) 💍 El Anillo que Nunca Hubo (Yael Goldstein) → Entrega Encargo: un anillo para la Casa Go x1 a Yael Goldstein','7) 🧤 La Casilla de Olegario (Olegario) → Entrega Encargo: unos guantes para Olegari x1 a Olegario','8) ⚒ El Relevo del Fundacional (Lolo el Fundacional) → Entrega Acero Fundacional x1 a Lolo el Fundacional'], desc:'Lolo dice que ya va siendo hora de que te montes un arma para ti.'},
   ];
   // ===== CONEXIONES (aristas): source -> target =====
   const E = [
@@ -5095,6 +5099,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
     ['forja','armero'],   // ← lo puso mapa_auto.py
     ['nico','ranas'],   // ← lo puso mapa_auto.py
     ['forja','lolo_ex'],   // ← lo puso mapa_auto.py
+    ['armero','encargo'],   // ← lo puso mapa_auto.py
   ];
 
   /* ==========================================================================================
