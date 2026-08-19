@@ -4952,8 +4952,9 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
     // Futuro
     {id:'torre', label:'🗼 Arco de la Torre Negra', npc:'Los científicos', faction:'future', type:'Historia principal (futuro)', status:'future',
       desc:'El gran misterio: la puerta sellada, la Torre del Mago («¿magia o ciencia?») y la mina. Por diseñar.'},
-    {id:'invasion', label:'⚔️ El Despertar de la Torre', npc:'Evento (admin)', faction:'future', type:'Boss raid · evento (futuro)', status:'future',
-      desc:'Invasión de Ecos del Multiverso: 3 oleadas + jefe. Autorado, pendiente de desplegar.'},
+    {id:'invasion', label:'⚔️ El Despertar de la Torre', npc:'Dr. Papriko', faction:'sci', type:'Saga · 2 misiones · raid en la plaza', coins:25, reward:'La Sirena de la Torre + la Esquirla de la Torre', status:'new', unlocks:'La Sirena de la Torre: convocar la invasión cuando quieras (el server admite una cada 3 h)',
+      steps:['1) «El Conteo de la Torre» — la antena que reparaste capta un conteo atrás; bajas a la plaza y el pulso atraviesa. 3 oleadas de Ecos y el Eco del Rey Caído. Le llevas a Papriko una Esquirla y te quedas la Sirena','2) «La Vigilia» (repetible cada 24 h) — subir a la antena a realinearla y traer material para RECARGAR la sirena'],
+      desc:'El evento ya no lo lanza un admin: lo convocan los jugadores con la Sirena, y cuando alguien la toca se entera todo el server por el chat, así que se puede ir a ayudar. Se recomienda aguantarla entre varios: el jefe suelta una onda de área cada 8 s y el botín es para TODOS los que peleen. Tres candados para que no se farmee: la sirena se gasta, el server solo admite una invasión cada 3 h, y recargarla cuesta un viaje a la antena. Único sitio del que sale la Esquirla de la Torre.'},
     {id:'talentos', label:'🗺️ El Escalafón', npc:'Maestro Anselmo', faction:'sci', type:'Tutorial de talentos (obligatorio)', coins:6, reward:'Mapa de Talentos + 1 punto de talento', status:'live', unlocks:'El árbol de talentos (/skilltrees)',
       steps:['Matar 6 zombis','Volver a hablar con Anselmo'], desc:'Anselmo (RRHH) te explica el árbol de talentos como tu «plan de carrera». Tras una «evaluación de desempeño» te da el Mapa de Talentos (abre /skilltrees) y 1 punto para estrenar. Va en la espina obligatoria: entre el Semental y la Alquimista.'},
     {id:'sabio', label:'📚 El Sabio', npc:'⬜ NPC por crear', faction:'future', type:'Enciclopedia de clases (futuro)', status:'future',
@@ -5085,11 +5086,12 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
     ['olegario','colada'],['colada','lavanderia'],
     ['tablon_luz','banco'],['banco','cuenta'],['cuenta','mercado'],
     // futuro (punteadas)
-    ['permiso','torre','future'],['torre','invasion','future'],['clase','sabio','future'],
+    ['permiso','torre','future'],['clase','sabio','future'],
     // en camino (2026-07-16), colgadas del nodo más lógico
     ['nando','dedos'],['dedos','gremio','future'],['gremio','caza','future'],['mercado','lonja','future'],
     ['banco','bodas','future'],['tablon','cosmeticos','future'],['pecio','pesca','future'],
     ['talentos','fuego'],   // ← lo puso mapa_auto.py
+    ['papriko_antena','invasion'],   // la antena es la que capta el pulso
     ['talentos','guardia'],   // ← lo puso mapa_auto.py
     ['talentos','yogur'],   // ← lo puso mapa_auto.py
     ['lolo_ap','forja'],   // ← lo puso mapa_auto.py
