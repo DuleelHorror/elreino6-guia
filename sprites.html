@@ -932,6 +932,68 @@ const G = [
   ]
  },
  {
+  "t": "⬜🔍 LO QUE SALIÓ DE LA AUDITORÍA DE OBJETOS DE MISIÓN (2026-08-20)",
+  "sub": "&gt; Encargo del usuario: *\"en las misiones antiguas algunas te daban armas y cosas que no tenían &gt; sprite, mira si ahora las que te dan tienen sprite porque debería ser así\"*. &gt; 📊 <b>Medido, no estimado</b>: se barrieron TODOS los <code>give</code> de <code>quests.yml</code>, <code>actions.yml</code> y los &gt; datapacks. <b>389 objetos con nombre propio: 101 con sprite y 56 sin él</b> — y de esos 56, la mayoría &gt; ya estaban apuntados más arriba. Éstos <b>no lo estaban</b>. &gt; 🟢 <b>Las ARMAS ya están bien</b>: ninguna misión entrega hoy una espada, un hacha ni un arco pelados &gt; (las del MMO salen de la hoja de sprites). Lo único con forma de arma sin dibujo es el escudo. &gt; 🗺️ <b>Los <code>filled_map</code> NO entran aquí a propósito</b> (las 8 fotos del laboratorio y el mapa de las &gt; ranas): son mapas de verdad, y así es como deben verse.",
+  "items": [
+   {
+    "e": "⬜",
+    "o": "<code>Tijeras Prestadas</code>",
+    "n": "Tijeras Prestadas",
+    "m": "shears",
+    "d": "saga del censo de ranas · unas tijeras viejas con cinta en el mango"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>Frasco de la Botica</code>",
+    "n": "Frasco de la Botica",
+    "m": "glass_bottle",
+    "d": "Alquimista · frasco con etiqueta escrita a mano"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>El Hilo Que Sobro</code>",
+    "n": "El Hilo Que Sobró",
+    "m": "string",
+    "d": "⚠️ <b>y de paso: le falta la tilde en «Sobró»</b> (está en la lista de AMBIGUAS de <code>fix_tildes.py</code>, así que la decide un humano) · un ovillo de hilo mal enrollado"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>Parte de Regreso</code>",
+    "n": "Parte de Regreso",
+    "m": "paper",
+    "d": "Falcioni, El Anexo · parte sellado de vuelta"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>Rancio_Frase_Primera</code>",
+    "n": "(las 3 frases de Rancio)",
+    "m": "PAPER",
+    "d": "ExecutableItem · papelajo sucio y arrugado ×3"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>Devocionario_Ampliado</code>",
+    "n": "Devocionario Ampliado",
+    "m": "PAPER",
+    "d": "el Convento · librito de rezos con anexos pegados"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>Correa_Refugio</code>",
+    "n": "Correa del Refugio",
+    "m": "LEAD",
+    "d": "Nico, las mascotas · correa de cuero gastada"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>Backrooms_Entrada</code>",
+    "n": "(entrada a las Backrooms)",
+    "m": "YELLOW_TERRACOTTA",
+    "d": "🚫 probablemente NO lleva sprite: es un bloque de paso, decidir"
+   }
+  ]
+ },
+ {
   "t": "⬜ Objetos sueltos que cantan",
   "sub": "",
   "items": [
@@ -1031,11 +1093,11 @@ const G = [
   "sub": "Lo pilló el usuario mirando la rama: «<b>los clavos son solo pepitas de hierro</b>». Auditado el sistema entero: de las <b>7 piezas</b> de la Fragua, seis tienen sprite y <b>el Clavo no lo tiene a propósito</b> (<code>sprite=None</code> en <code>mmo-generadores/forja_piezas.py</code>), más <b>6 papeles</b> de las dos sagas nuevas que son folio en blanco. Las 5 armas, el Molde, el Título y los 8 accesorios SÍ tienen dibujo. 🔑 El Clavo es <b>lo primero que forja el jugador</b> y además <b>se le entrega a Lolo</b>: es la pieza que más se mira de las siete, y hoy es indistinguible de una pepita cualquiera del suelo. ⚠️ Al ponerle sprite al Clavo hay que rellenar su <code>sprite=</code> en <code>forja_piezas.py</code> y re-ejecutar <code>gen_forja_recetas.py</code> (el campo existe ya; hoy va a <code>None</code>). 🚫 <b>La insignia ×12</b> está apuntada arriba, en su familia de accesorios — no duplicarla aquí. 📌 Los <b>24 esquemas</b> comparten a propósito el mismo papel azul (<code>esquema_receta</code>): si algún día se quiere uno por receta, es una decisión de diseño, no un sprite que falte.",
   "items": [
    {
-    "e": "⬜",
+    "e": "✅",
     "o": "<code>clavo_fundacional</code>",
     "n": "Clavo Fundacional",
     "m": "iron_nugget",
-    "d": "⚒ Fragua · la pieza del tutorial, y <b>se le entrega a Lolo</b> · cuatro clavos de hierro basto, uno con la punta <b>doblada</b> (es el chiste de la misión: se doblan con dos dedos)"
+    "d": "⚒ Fragua · <b>HECHO 2026-08-20</b> (dibujo de Pan). CMD 10306 en <code>IRON_NUGGET</code>, <code>sprite=</code> puesto en <code>forja_piezas.py</code> y recetas regeneradas"
    },
    {
     "e": "⬜",
@@ -1538,7 +1600,7 @@ const G = [
   ]
  }
 ];
-const FALTAN = 68, ITEMS = 82;
+const FALTAN = 75, ITEMS = 89;
 
 function TH(){const r=document.documentElement;
   const cur=r.dataset.theme||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');
