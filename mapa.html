@@ -4953,7 +4953,10 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
     //    terminada la de VOSTOK P1 y la del Despertar de la Torre.
     {id:'rastro', label:'🕵 Rastro Frío', npc:'Dr. Papriko', faction:'sci', type:'Saga · 1 misión · investigación', coins:22, status:'new',
       steps:['1) Rastro Frío → Papriko ata cabos: un buque no se asalta de paso, alguien estuvo esperando. Sigue la brújula hasta una cueva al oeste del buque e investiga los 5 puntos que brillan (la televisión rayada, el archivador, las cajas vacías, los papeles de cuentas y una caja forrada de plomo) → llévale el «Informe de Rastreo»'], desc:'Los que asaltaron el buque acamparon a 168 bloques de él y nadie los vio. En la cueva quedan sus restos: dos corporaciones militares en los mismos papeles (VOSTOK con su unidad BOGATIR, y la inglesa BLACK DIVISION) y una caja blindada que no es para transportar picos. Lo que se llevaron no era material de excavación.'},
-
+    {id:'luzroja', label:'🔴 Luz Roja', npc:'Dr. Papriko → Pimpón', faction:'sci', type:'Misión · recado a Puerto Negro', coins:12, status:'new',
+      steps:['1) Luz Roja → Papriko ha cruzado el manifiesto con la aduana: VOSTOK mandó a revelar un carrete a Puerto Negro por error. Sigue la brújula hasta el cuarto oscuro y habla con Pimpón, el fotógrafo → él pone su precio'], desc:'En Puerto Negro solo hay un cuarto oscuro, y el que lo lleva guarda copia de todo lo que revela. Por eso revela gratis. Papriko no puede ir en persona: allí le conocen desde lo del buque.'},
+    {id:'contactos', label:'📇 Hoja de Contactos', npc:'Pimpón → Dr. Papriko', faction:'sci', type:'Misión · peaje: Los Carretes III', coins:30, status:'new',
+      steps:['1) Hoja de Contactos → con la tanda de Los Carretes III cerrada (hasta «Verano», el carrete de El Pipas), Pimpón saca la copia de la caja y te la da → entrégasela al Dr. Papriko en el campamento científico'], desc:'Pimpón no cobra en dinero: cobra en trabajo. Treinta y seis fotogramas del mismo documento, tomados deprisa, con el canto de una mesa colándose en el borde. VOSTOK no fotografiaba sus planos: fotografiaba los de otro.'},
     // Futuro
     {id:'torre', label:'🗼 Arco de la Torre Negra', npc:'Los científicos', faction:'future', type:'Historia principal (futuro)', status:'future',
       desc:'El gran misterio: la puerta sellada, la Torre del Mago («¿magia o ciencia?») y la mina. Por diseñar.'},
@@ -5112,6 +5115,9 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
     // 🕵 «Rastro Frío» CONVERGE las dos ramas de Papriko: pide terminadas «Señal Perdida»
     //    (vostok_p1) y «El Despertar de la Torre» (invasion). Por eso tiene DOS padres.
     ['vostok_p1','rastro'],['invasion','rastro'],
+    // 🎞️ Las dos del cuarto oscuro. `contactos` tiene DOS padres: la anterior y el
+    //    peaje de Pimpón (cerrar la tanda de Los Carretes III).
+    ['rastro','luzroja'],['luzroja','contactos'],['pimpon_3','contactos'],
     // 🟡 La Fátima no la ofrece nadie: te la encuentras de noche en el camino. Cuelga de
     //    `talentos` como el Rancio, que es el otro «te lo encuentras dando una vuelta».
     ['talentos','fatima'],
