@@ -4956,8 +4956,8 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
       steps:['1) Rastro Frío → Papriko ata cabos: un buque no se asalta de paso, alguien estuvo esperando. Sigue la brújula hasta una cueva al oeste del buque e investiga los 5 puntos que brillan (la televisión rayada, el archivador, las cajas vacías, los papeles de cuentas y una caja forrada de plomo) → llévale el «Informe de Rastreo»'], desc:'Los que asaltaron el buque acamparon a 168 bloques de él y nadie los vio. En la cueva quedan sus restos: dos corporaciones militares en los mismos papeles (VOSTOK con su unidad BOGATIR, y la inglesa BLACK DIVISION) y una caja blindada que no es para transportar picos. Lo que se llevaron no era material de excavación.'},
     {id:'luzroja', label:'🔴 Luz Roja', npc:'Dr. Papriko → Pimpón', faction:'sci', type:'Misión · recado a Puerto Negro', coins:12, status:'new',
       steps:['1) Luz Roja → Papriko ha cruzado el manifiesto con la aduana: VOSTOK mandó a revelar un carrete a Puerto Negro por error. Sigue la brújula hasta el cuarto oscuro y habla con Pimpón, el fotógrafo → él pone su precio'], desc:'En Puerto Negro solo hay un cuarto oscuro, y el que lo lleva guarda copia de todo lo que revela. Por eso revela gratis. Papriko no puede ir en persona: allí le conocen desde lo del buque.'},
-    {id:'contactos', label:'📇 Hoja de Contactos', npc:'Pimpón → Dr. Papriko', faction:'sci', type:'Misión · peaje: Los Carretes III', coins:30, status:'new',
-      steps:['1) Hoja de Contactos → con la tanda de Los Carretes III cerrada (hasta «Verano», el carrete de El Pipas), Pimpón saca la copia de la caja y te la da → entrégasela al Dr. Papriko en el campamento científico'], desc:'Pimpón no cobra en dinero: cobra en trabajo. Treinta y seis fotogramas del mismo documento, tomados deprisa, con el canto de una mesa colándose en el borde. VOSTOK no fotografiaba sus planos: fotografiaba los de otro.'},
+    {id:'contactos', label:'📇 Hoja de Contactos', npc:'Pimpón → Dr. Papriko', faction:'sci', type:'Misión · peaje: el carrete de Macho Melón', coins:30, status:'new',
+      steps:['1) Hoja de Contactos → con el carrete de Macho Melón el Guardia revelado («Sin Nadie», el quinto encargo de Pimpón), Pimpón saca la copia de la caja y te la da → entrégasela al Dr. Papriko en el campamento científico'], desc:'Pimpón no cobra en dinero: cobra en trabajo. Treinta y seis fotogramas del mismo documento, tomados deprisa, con el canto de una mesa colándose en el borde. VOSTOK no fotografiaba sus planos: fotografiaba los de otro.'},
     // Futuro
     {id:'torre', label:'🗼 Arco de la Torre Negra', npc:'Los científicos', faction:'future', type:'Historia principal (futuro)', status:'future',
       desc:'El gran misterio: la puerta sellada, la Torre del Mago («¿magia o ciencia?») y la mina. Por diseñar.'},
@@ -5104,9 +5104,26 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
       steps:['38) La Bestia — el carrete de la Dra. Pizarrica (8 fotos)','39) Sábado por la Mañana — el carrete de Mss. Margarette (8 fotos)','40) Solos — el carrete de Saturnino (8 fotos)','41) La Fiesta — el carrete de La Fátima (8 fotos)','42) El Anuncio — el carrete de Don Simón (8 fotos)','43) Descanso — el carrete de Pamela Chu (8 fotos)','44) Colores — el carrete de Pitita Bacab (8 fotos)'],
       desc:'Encargos de revelado en el laboratorio. Cada carrete es una mision suelta: se pueden intercalar otras en medio.'},
     // <<< NODOS · LOS CARRETES DE PIMPON <<<
+    // ⬜ la insertó mapa_auto.py: nombre, NPC, pasos y de quién cuelga salen del
+    //    juego y son exactos. Falta darle una `desc` con voz propia, comprobar la FACCIÓN (nadie más da este NPC, así que va adivinada)
+    //    y, si toca, `unlocks`.
+    {id:'pincel', label:'🖌 El Soporte', npc:'Pincelino Kandinsky', faction:'sci', type:'Saga · 9 misiones', coins:60, status:'new',
+      steps:['1) 🖌 El Soporte (Pincelino Kandinsky) → Entrega papeles x3 a Pincelino Kandinsky','2) • El Punto (Pincelino Kandinsky) → Entrega Ficha 1 - El Punto x1 a Pincelino Kandinsky','3) ╱ La Línea (Pincelino Kandinsky) → Di la contraseña','4) ▬ El Plano (Pincelino Kandinsky) → Entrega Ficha 3 - El Plano x1 a Pincelino Kandinsky','5) ♪ El que Suena a Trompeta (Pincelino Kandinsky) → Di la contraseña','6) △ El Cuestionario (Pincelino Kandinsky) → Di la contraseña','7) ○ Las Tres Formas (Pincelino Kandinsky) → Entrega Ficha 6 - Las Tres Formas x1 a Pincelino Kandinsky','8) ▦ El Muro (Pincelino Kandinsky) → Entrega Ficha 7 - El Muro x1 a Pincelino Kandinsky','9) 🖼 La Exposición (Pincelino Kandinsky) → Entrega Solicitud de Exposición x1 a Pincelino Kandinsky'], desc:'Pincelino: Le voy a enseñar a pintar. Pero antes, algo aburrido: tráigame papel.'},
+    // ⬜ la insertó mapa_auto.py: nombre, NPC, pasos y de quién cuelga salen del
+    //    juego y son exactos. Falta darle una `desc` con voz propia y, si toca, `unlocks`.
+    {id:'nbq', label:'☢ Protocolo de Contención', npc:'Aniceto Morcillo → Lolo el Fundacional', faction:'sci', type:'Saga · 6 misiones · DESBLOQUEA la Zona Prohibida', coins:225, status:'new', mundo:'Zona Prohibida', unlocks:'El TRAJE NBQ (se fabrica en mesa) y el pasaje del barco a la Zona Prohibida', 
+      steps:['1) 🧪 La Lectura Imposible (Aniceto Morcillo) → Ve a El muelle del Reino, La excavación de la Torre, El Nexo del Reino · Entrega Las Tres Bolsitas x1 a Aniceto Morcillo','2) 🔬 El Barco Laboratorio (Aniceto Morcillo) → Ve a El barco laboratorio de Villaputa · Habla con Dr.Sterling, Dr Cremosa, El Vieju Dr, Dra Mango · Entrega La Lista del Laboratorio x1 a Aniceto Morcillo','3) 🥼 El Traje que Ya Existe (Aniceto Morcillo) → Habla con Gordon Wizman · Entrega Las Medidas del Sellado x1 a Aniceto Morcillo','4) ⛏ Ocho por Pieza (Aniceto Morcillo) → Picar 32 iron ore, 32 deepslate iron ore · Fundir lingotes de hierro x32 · Habla con Aniceto Morcillo','5) ⚒ La Bolsa con Remaches (Lolo el Fundacional) → Entrega La Especificación de Aniceto x1 a Lolo el Fundacional · Entrega El Visto Bueno del Fundacional x1 a Lolo el Fundacional','6) 🏙 La Primera Vuelta (Aniceto Morcillo) → Ve a El cohete estrellado · Entrega Muestra de la Zona x1 a Aniceto Morcillo'], desc:'Aniceto Morcillo lleva once años midiendo piedras que no le importan a nadie: las mete en bolsitas, las etiqueta y anota la diferencia a los tres meses. Once años de lecturas aburridas, que es lo que uno quiere que salga. Hasta el mes pasado. Una de sus tres bolsitas ha dado un número que no puede dar, y no lo puede confirmar solo: los aparatos buenos nunca subieron al campamento — se quedaron en el barco laboratorio de Villaputa con el resto del equipo de Papriko. De ahí sale todo lo demás: un acta, un hombre que no habla y lleva el único traje sellado del Reino, treinta y dos lingotes, y un herrero al que le ofende profundamente que le encarguen algo que no corta.'},
+    // ⬜ la insertó mapa_auto.py: nombre, NPC, pasos y de quién cuelga salen del
+    //    juego y son exactos. Falta darle una `desc` con voz propia y, si toca, `unlocks`.
+    {id:'plano', label:'🗺 El Plano de la Zona', npc:'Mau', faction:'sci', type:'Misión · DESBLOQUEA el 3er mapa', coins:25, status:'new', unlocks:'EL PLANO DE LA ZONA PROHIBIDA: nace en blanco y se dibuja solo con lo que pisas', 
+      steps:['1) 🗺 El Plano de la Zona (Mau) → Entrega Notas de Ruta x1 a Mau'], desc:'Va DESPUÉS de la primera visita, y no antes, por un motivo que Mau dice a la cara: ese plano nace en blanco y solo dibuja lo que ya has pisado. Dártelo antes de cruzar sería darte una hoja en blanco que parece rota. Le llevas tus notas de ruta —mal medidas, porque ibas con miedo y los pasos se acortan— y ella las corrige. Nueve años levantando el plano de un pueblo que ya estaba levantado, y se va a jubilar dibujando la única ciudad de la comarca que no tiene nombre.'},
   ];
   // ===== CONEXIONES (aristas): source -> target =====
   const E = [
+    // 🎨 La saga de Pincelino cuelga del CONTRATO, o sea de la raíz: es SUELTA y se puede
+    //    hacer desde el primer día (no pide ninguna otra misión). Sin esta flecha el nodo
+    //    existiría en el fichero y NO SE DIBUJARÍA.
+    ['contrato','pincel'],
     ['contrato','fichaje'],['fichaje','clase'],['clase','semental'],['semental','talentos'],['talentos','alquimista'],['alquimista','nando'],
     ['nando','cultivo'],['cultivo','vender'],
     ['talentos','permiso'],['permiso','bolsa'],['bolsa','jobs'],['bolsa','carpincho'],
@@ -5117,7 +5134,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
     //    (vostok_p1) y «El Despertar de la Torre» (invasion). Por eso tiene DOS padres.
     ['vostok_p1','rastro'],['invasion','rastro'],
     // 🎞️ Las dos del cuarto oscuro. `contactos` tiene DOS padres: la anterior y el
-    //    peaje de Pimpón (cerrar la tanda de Los Carretes III).
+    //    peaje de Pimpón (revelar el carrete de Macho Melón, el 5º encargo).
     ['rastro','luzroja'],['luzroja','contactos'],['pimpon_3','contactos'],
     // 🟡 La Fátima no la ofrece nadie: te la encuentras de noche en el camino. Cuelga de
     //    `talentos` como el Rancio, que es el otro «te lo encuentras dando una vuelta».
@@ -5154,6 +5171,12 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
     ['pimpon_4','pimpon_5'],
     ['pimpon_5','pimpon_6'],
     // <<< ARISTAS · LOS CARRETES DE PIMPON <<<
+    // ☢ «Protocolo de Contención» CONVERGE las dos ramas largas: pide terminada la
+    //    última de Papriko («Hoja de Contactos») Y la última de Falcioni («El Anexo»).
+    //    Por eso tiene DOS padres — aquí eso se escribe repitiendo el destino.
+    ['contactos','nbq'],['falcioni','nbq'],
+    // 🗺 Y el plano cuelga de la saga: solo tiene sentido cuando ya has pisado la ciudad.
+    ['nbq','plano'],
   ];
 
   /* ==========================================================================================

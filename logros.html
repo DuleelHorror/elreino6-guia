@@ -1020,12 +1020,48 @@ const L = [
   "antes": "Rastro Frío"
  },
  {
+  "id": "nbq_traje",
+  "titulo": "La Bolsa con Remaches",
+  "desc": "Lolo te hizo un traje que no corta nada. Es lo mejor que ha hecho.",
+  "marco": "goal",
+  "oculto": false,
+  "bloque": "Protocolo de contencion",
+  "quest": "La Bolsa con Remaches",
+  "npc": "Lolo el Fundacional",
+  "comose": "",
+  "antes": "Hoja de Contactos"
+ },
+ {
+  "id": "nbq_zona",
+  "titulo": "Protocolo de Contención",
+  "desc": "Cruzaste a la ciudad sin nombre, cogiste una muestra y volviste.",
+  "marco": "challenge",
+  "oculto": false,
+  "bloque": "Protocolo de contencion",
+  "quest": "La Primera Vuelta",
+  "npc": "Aniceto Morcillo",
+  "comose": "",
+  "antes": "La Bolsa con Remaches"
+ },
+ {
+  "id": "nbq_plano",
+  "titulo": "Cartografía ha Vuelto",
+  "desc": "Mau se jubila dibujando la única ciudad que no tenía plano.",
+  "marco": "task",
+  "oculto": false,
+  "bloque": "Protocolo de contencion",
+  "quest": "El Plano de la Zona",
+  "npc": "Mau",
+  "comose": "",
+  "antes": "Protocolo de Contención"
+ },
+ {
   "id": "apie",
   "titulo": "A Pie por el Reino",
   "desc": "Horse Luis te vio llegar andando y le dio pena.",
   "marco": "task",
   "oculto": false,
-  "bloque": "El establo, el refugio y la herrería",
+  "bloque": "Protocolo de contencion",
   "quest": "A Pie por el Reino",
   "npc": "Toni Tutorial Jr",
   "comose": "",
@@ -1037,7 +1073,7 @@ const L = [
   "desc": "Te quedaste quieto y le escuchaste las tres historias enteras.",
   "marco": "goal",
   "oculto": false,
-  "bloque": "El establo, el refugio y la herrería",
+  "bloque": "Protocolo de contencion",
   "quest": "El Galope bajo la Tormenta",
   "npc": "Horse Luis",
   "comose": "",
@@ -1049,7 +1085,7 @@ const L = [
   "desc": "Heno y lana. Nico se emocionó igual.",
   "marco": "task",
   "oculto": false,
-  "bloque": "El establo, el refugio y la herrería",
+  "bloque": "Protocolo de contencion",
   "quest": "Una Manita pal Refugio",
   "npc": "Nico",
   "comose": "",
@@ -1061,7 +1097,7 @@ const L = [
   "desc": "Es un refugio. Que no se entere el Ayuntamiento.",
   "marco": "task",
   "oculto": false,
-  "bloque": "El establo, el refugio y la herrería",
+  "bloque": "Protocolo de contencion",
   "quest": "Mantas pal Refugio",
   "npc": "Nico",
   "comose": "",
@@ -1073,7 +1109,7 @@ const L = [
   "desc": "Lo dice él. Cada dos por tres y sin que venga a cuento.",
   "marco": "task",
   "oculto": false,
-  "bloque": "El establo, el refugio y la herrería",
+  "bloque": "Protocolo de contencion",
   "quest": "El Gato del Rincón",
   "npc": "Yaniko",
   "comose": "",
@@ -1085,7 +1121,7 @@ const L = [
   "desc": "Aprendiste el oficio de Yaniko. Y aprendiste a no preguntar.",
   "marco": "goal",
   "oculto": false,
-  "bloque": "El establo, el refugio y la herrería",
+  "bloque": "Protocolo de contencion",
   "quest": "La Hermana",
   "npc": "Nico",
   "comose": "",
@@ -1097,7 +1133,7 @@ const L = [
   "desc": "Nico lloró. Nico llora bastante. Esta vez tocaba.",
   "marco": "goal",
   "oculto": false,
-  "bloque": "El establo, el refugio y la herrería",
+  "bloque": "Protocolo de contencion",
   "quest": "Una Emergencia Delicada",
   "npc": "Nico",
   "comose": "",
@@ -1752,7 +1788,7 @@ const L = [
   "antes": "El Nuevo Fichaje"
  }
 ];
-const BLOQUES = ["La espina", "El pueblo", "Operación carpincho y lo que abre", "La ciencia y la piedra", "Los nexos", "El establo, el refugio y la herrería", "Las ranas del reino", "Los dedos largos", "Secretas", "Sueltas", "De cosecha propia"];
+const BLOQUES = ["La espina", "El pueblo", "Operación carpincho y lo que abre", "La ciencia y la piedra", "Los nexos", "Protocolo de contencion", "Las ranas del reino", "Los dedos largos", "Secretas", "Sueltas", "De cosecha propia"];
 
 function TH(){const r=document.documentElement;
   const cur=r.dataset.theme||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');
