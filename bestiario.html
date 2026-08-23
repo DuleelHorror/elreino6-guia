@@ -203,17 +203,9 @@ thead th{font-size:.74rem; text-transform:uppercase; letter-spacing:.07em; color
   @view-transition{ navigation:none }
 }
 
-  
-  
-  
-  
   *{box-sizing:border-box}
   body{margin:0;background:var(--lienzo);color:var(--tinta);
     font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.55}
-  .topbar{position:sticky;top:0;z-index:5;display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;
-    justify-content:space-between;padding:.7rem 1rem;background:var(--tarjeta);
-    border-bottom:1px solid var(--linea-2);box-shadow:var(--sombra)}
-  .brand{font-family:ui-serif,Palatino,Georgia,serif;font-size:1.05rem;display:flex;align-items:center;gap:.4em}
   .btn{border:1px solid var(--linea-2);background:var(--hundido);color:var(--tinta);
     border-radius:.55rem;padding:.35rem .7rem;font-size:.85rem;cursor:pointer;text-decoration:none;display:inline-block}
   .btn.arc{background:var(--acento);border-color:var(--acento);color:#fff}
@@ -233,7 +225,7 @@ thead th{font-size:.74rem; text-transform:uppercase; letter-spacing:.07em; color
   .grid{display:grid;gap:1rem;grid-template-columns:repeat(auto-fill,minmax(330px,1fr))}
   .mob{background:var(--tarjeta);border:1px solid var(--linea);border-left:4px solid var(--linea-2);
     border-radius:.8rem;padding:1rem 1.1rem;box-shadow:var(--sombra)}
-  .mob.jefe{border-left-color:var(--alerta)} .mob.elite{border-left-color:var(--aviso)}
+  .mob.jefe{border-left-color:var(--alerta)} .mob.elite{border-left-color:var(--llave)}
   .mob.comun{border-left-color:var(--ok)}
   .mob header{display:flex;align-items:flex-start;gap:.7rem;margin-bottom:.5rem}
   .mob header h3{margin:0;font-size:1.08rem;font-family:ui-serif,Palatino,Georgia,serif}
@@ -242,13 +234,13 @@ thead th{font-size:.74rem; text-transform:uppercase; letter-spacing:.07em; color
   .tag{margin-left:auto;font-size:.7rem;padding:.16rem .5rem;border-radius:1rem;white-space:nowrap;
     background:var(--acento-suave);color:var(--tinta-2);border:1px solid var(--linea)}
   .t-jefe{color:var(--alerta);border-color:var(--alerta)}
-  .t-elite{color:var(--aviso);border-color:var(--aviso)}
+  .t-elite{color:var(--llave);border-color:var(--llave)}
   .que{margin:.5rem 0 .7rem;font-size:.93rem}
   .stats{display:flex;flex-wrap:wrap;gap:.35rem;margin-bottom:.7rem}
   .stats span{font-size:.76rem;background:var(--hundido);border:1px solid var(--linea);
     border-radius:.4rem;padding:.16rem .45rem;color:var(--tinta-2)}
   .stats b{color:var(--tinta)}
-  .stats .warn{color:var(--aviso);border-color:var(--aviso)}
+  .stats .warn{color:var(--llave);border-color:var(--llave)}
   .stats .boss{color:var(--alerta);border-color:var(--alerta)}
   .mob h4{margin:.6rem 0 .3rem;font-size:.78rem;text-transform:uppercase;
     letter-spacing:.06em;color:var(--tinta-3)}
@@ -352,15 +344,15 @@ thead th{font-size:.74rem; text-transform:uppercase; letter-spacing:.07em; color
     <span title="Vida"><b>420</b> vida</span>
     <span title="Daño por golpe"><b>11</b> daño</span>
     <span title="Armadura"><b>6</b> armadura</span>
-    <span title="Tamaño">×2.8 su tamano normal</span>
+    <span title="Tamaño">×2.8 su tamaño normal</span>
     
     <span class="boss">barra de jefe</span>
   </div>
   <h4>Dónde y cómo aparece</h4>
   <ul class="apar"><li><span class="pct">0.4%</span> bajo tierra (por debajo de Y=20) · a mas de 800 bloques del Reino <span class="lv">nivel 2</span></li></ul>
   <p class="esc"><b>Escala con la zona:</b> +60 vida y +2 daño por nivel. Aquí sale de nivel 2.</p>
-  <p class="loot"><b>Suelta:</b> Mucho hilo, ojos de arana y su Glandula de veneno.</p>
-  <p class="tip"><b>Consejo:</b> No te entretengas con las crias o te comen el sitio. Ve a por ella y acabala rapido.</p>
+  <p class="loot"><b>Suelta:</b> Mucho hilo, ojos de araña y su Glándula de veneno.</p>
+  <p class="tip"><b>Consejo:</b> No te entretengas con las crias o te comen el sitio. Ve a por ella y acabala rápido.</p>
   <div class="cmd" title="Comando de admin para invocarlo (clic para copiar)" onclick="ER6B.copy(this)">
     <span class="k">/mm mobs spawn AranaMadre 1</span><span class="copy">copiar</span>
   </div>
@@ -380,7 +372,7 @@ thead th{font-size:.74rem; text-transform:uppercase; letter-spacing:.07em; color
     <span title="Vida"><b>6</b> vida</span>
     <span title="Daño por golpe"><b>2</b> daño</span>
     <span title="Armadura"><b></b> armadura</span>
-    <span title="Tamaño">×0.45 su tamano normal</span>
+    <span title="Tamaño">×0.45 su tamaño normal</span>
     <span class="warn">sin nombre visible</span>
     
   </div>
@@ -402,20 +394,20 @@ thead th{font-size:.74rem; text-transform:uppercase; letter-spacing:.07em; color
     </div>
     <span class="tag t-comun">Común</span>
   </header>
-  <p class="que">Una arana del tamano de un perro. Te envenena al morder y te deja pegado con telarana.</p>
+  <p class="que">Una araña del tamaño de un perro. Te envenena al morder y te deja pegado con telaraña.</p>
   
   <div class="stats">
     <span title="Vida"><b>55</b> vida</span>
     <span title="Daño por golpe"><b>6</b> daño</span>
     <span title="Armadura"><b>2</b> armadura</span>
-    <span title="Tamaño">×1.9 su tamano normal</span>
+    <span title="Tamaño">×1.4 su tamaño normal</span>
     <span class="warn">sin nombre visible</span>
     
   </div>
   <h4>Dónde y cómo aparece</h4>
   <ul class="apar"><li><span class="pct">12.0%</span> a mas de 300 bloques del Reino · a menos de 1200 bloques del Reino <span class="lv">nivel 1</span></li><li><span class="pct">20.0%</span> a mas de 1200 bloques del Reino · a menos de 3000 bloques del Reino <span class="lv">nivel 4</span></li><li><span class="pct">28.0%</span> a mas de 3000 bloques del Reino <span class="lv">nivel 7</span></li><li><span class="pct">30.0%</span> en el abismo (por debajo de Y=0) <span class="lv">nivel 6</span></li></ul>
   <p class="esc"><b>Escala con la zona:</b> +14 vida y +1.3 daño por nivel. Aquí sale de nivel 1, 4, 6, 7.</p>
-  <p class="loot"><b>Suelta:</b> Hilo y ojos de arana.</p>
+  <p class="loot"><b>Suelta:</b> Hilo y ojos de araña.</p>
   <p class="tip"><b>Consejo:</b> Si te frena, no corras: te alcanza. Pelea de espaldas a una pared.</p>
   <div class="cmd" title="Comando de admin para invocarlo (clic para copiar)" onclick="ER6B.copy(this)">
     <span class="k">/mm mobs spawn BichaGranero 1</span><span class="copy">copiar</span>
@@ -440,7 +432,7 @@ thead th{font-size:.74rem; text-transform:uppercase; letter-spacing:.07em; color
     <span title="Vida"><b>40</b> vida</span>
     <span title="Daño por golpe"><b>5</b> daño</span>
     <span title="Armadura"><b>2</b> armadura</span>
-    <span title="Tamaño">×1.1 su tamano normal</span>
+    <span title="Tamaño">×1.1 su tamaño normal</span>
     <span class="warn">sin nombre visible</span>
     
   </div>
@@ -468,7 +460,7 @@ thead th{font-size:.74rem; text-transform:uppercase; letter-spacing:.07em; color
     <span title="Vida"><b>8</b> vida</span>
     <span title="Daño por golpe"><b>2</b> daño</span>
     <span title="Armadura"><b></b> armadura</span>
-    <span title="Tamaño">×0.75 su tamano normal</span>
+    <span title="Tamaño">×0.75 su tamaño normal</span>
     <span class="warn">sin nombre visible</span>
     
   </div>
@@ -494,13 +486,13 @@ thead th{font-size:.74rem; text-transform:uppercase; letter-spacing:.07em; color
     </div>
     <span class="tag t-jefe">Mini-jefe</span>
   </header>
-  <p class="que">El jefe de la banda. No lleva el trasto de sus hombres: lleva un WINCHESTER, y dispara en RAFAGA DE 3. Ademas va LLAMANDO A LOS SUYOS mientras pelea.</p>
+  <p class="que">El jefe de la banda. No lleva el trasto de sus hombres: lleva un WINCHESTER, y dispara en RAFAGA DE 3. Además va LLAMANDO A LOS SUYOS mientras pelea.</p>
   <p class="rel invoca">↳ <b>Va soltando:</b> Bandolero (llama a los suyos)</p>
   <div class="stats">
     <span title="Vida"><b>300</b> vida</span>
     <span title="Daño por golpe"><b>8</b> daño</span>
     <span title="Armadura"><b>6</b> armadura</span>
-    <span title="Tamaño">×1.4 su tamano normal</span>
+    <span title="Tamaño">×1.4 su tamaño normal</span>
     
     <span class="boss">barra de jefe</span>
   </div>
@@ -508,7 +500,7 @@ thead th{font-size:.74rem; text-transform:uppercase; letter-spacing:.07em; color
   <ul class="apar"><li><span class="pct">0.6%</span> a mas de 1200 bloques del Reino · a cielo abierto <span class="lv">nivel 2</span></li></ul>
   <p class="esc"><b>Escala con la zona:</b> +45 vida y +1.7 daño por nivel. Aquí sale de nivel 2.</p>
   <p class="loot"><b>Suelta:</b> Su Bolsa del bandolero, casi siempre.</p>
-  <p class="tip"><b>Consejo:</b> A media vida TIRA EL RIFLE y saca el machete: deja de dispararte de lejos y se te echa encima mucho mas rapido. Cuidado con confiarte cuando le veas soltar el arma.</p>
+  <p class="tip"><b>Consejo:</b> A media vida TIRA EL RIFLE y saca el machete: deja de dispararte de lejos y se te echa encima mucho mas rápido. Cuidado con confiarte cuando le veas soltar el arma.</p>
   <div class="cmd" title="Comando de admin para invocarlo (clic para copiar)" onclick="ER6B.copy(this)">
     <span class="k">/mm mobs spawn CabecillaBandoleros 1</span><span class="copy">copiar</span>
   </div>
@@ -528,7 +520,7 @@ thead th{font-size:.74rem; text-transform:uppercase; letter-spacing:.07em; color
     <span title="Vida"><b>50</b> vida</span>
     <span title="Daño por golpe"><b>4</b> daño</span>
     <span title="Armadura"><b>3</b> armadura</span>
-    <span title="Tamaño">tamano normal</span>
+    <span title="Tamaño">tamaño normal</span>
     <span class="warn">sin nombre visible</span>
     
   </div>
@@ -536,7 +528,7 @@ thead th{font-size:.74rem; text-transform:uppercase; letter-spacing:.07em; color
   <ul class="apar"><li><span class="pct">20.0%</span> a mas de 300 bloques del Reino · a menos de 1500 bloques del Reino · a cielo abierto <span class="lv">nivel 1</span></li><li><span class="pct">18.0%</span> a mas de 1500 bloques del Reino · a cielo abierto <span class="lv">nivel 4</span></li></ul>
   <p class="esc"><b>Escala con la zona:</b> +12 vida y +1.2 daño por nivel. Aquí sale de nivel 1, 4.</p>
   <p class="loot"><b>Suelta:</b> A veces su Bolsa del bandolero.</p>
-  <p class="tip"><b>Consejo:</b> Su arma es LENTA: primero le oyes amartillar y un segundo despues sale el tiro. Si oyes el clic, muevete o cubrete.</p>
+  <p class="tip"><b>Consejo:</b> Su arma es LENTA: primero le oyes amartillar y un segundo después sale el tiro. Si oyes el clic, muevete o cubrete.</p>
   <div class="cmd" title="Comando de admin para invocarlo (clic para copiar)" onclick="ER6B.copy(this)">
     <span class="k">/mm mobs spawn Bandolero 1</span><span class="copy">copiar</span>
   </div>
@@ -560,7 +552,7 @@ thead th{font-size:.74rem; text-transform:uppercase; letter-spacing:.07em; color
     <span title="Vida"><b>600</b> vida</span>
     <span title="Daño por golpe"><b>12</b> daño</span>
     <span title="Armadura"><b>6</b> armadura</span>
-    <span title="Tamaño">tamano normal</span>
+    <span title="Tamaño">tamaño normal</span>
     
     <span class="boss">barra de jefe</span>
   </div>
@@ -568,7 +560,7 @@ thead th{font-size:.74rem; text-transform:uppercase; letter-spacing:.07em; color
   <ul class="apar"><li><span class="pct">0.3%</span> biomas concretos · a mas de 1000 bloques del Reino · a cielo abierto <span class="lv">nivel 1</span></li></ul>
   <p class="esc"><b>Escala con la zona:</b> +70 vida y +2 daño por nivel. Aquí sale de nivel 1.</p>
   <p class="loot"><b>Suelta:</b> Bolas de limo a punta pala y un arma de nivel bajo de una de las 5 clases (Funcionario, Loco, Parrillero, Abuelo o Yogur).</p>
-  <p class="tip"><b>Consejo:</b> A media vida SE PARTE POR LA MITAD: suelta una camada entera y se vuelve mas rapido. Aguanta ese momento y lo tienes. Al morir suelta un ARMA del MMO de una clase AL AZAR, y se la lleva TODO el que este peleando.</p>
+  <p class="tip"><b>Consejo:</b> A media vida SE PARTE POR LA MITAD: suelta una camada entera y se vuelve mas rápido. Aguanta ese momento y lo tienes. Al morir suelta un ARMA del MMO de una clase AL AZAR, y se la lleva TODO el que este peleando.</p>
   <div class="cmd" title="Comando de admin para invocarlo (clic para copiar)" onclick="ER6B.copy(this)">
     <span class="k">/mm mobs spawn KingSlime 1</span><span class="copy">copiar</span>
   </div>
@@ -582,13 +574,13 @@ thead th{font-size:.74rem; text-transform:uppercase; letter-spacing:.07em; color
     </div>
     <span class="tag t-comun">Común</span>
   </header>
-  <p class="que">Las crias que escupe el King Slime. Pequenas y blandas.</p>
+  <p class="que">Las crias que escupe el King Slime. Pequeñas y blandas.</p>
   <p class="rel cria">↰ <b>Lo suelta:</b> 👑 King Slime</p>
   <div class="stats">
     <span title="Vida"><b>14</b> vida</span>
     <span title="Daño por golpe"><b>3</b> daño</span>
     <span title="Armadura"><b></b> armadura</span>
-    <span title="Tamaño">tamano normal</span>
+    <span title="Tamaño">tamaño normal</span>
     <span class="warn">sin nombre visible</span>
     
   </div>
@@ -614,21 +606,21 @@ thead th{font-size:.74rem; text-transform:uppercase; letter-spacing:.07em; color
     </div>
     <span class="tag t-jefe">Mini-jefe</span>
   </header>
-  <p class="que">Mini-jefe del pantano, con pinta de bruja vieja cubierta de liquen. Va soltando sanguijuelas, envenena el agua y TIRA DE TI hacia ella.</p>
-  <p class="rel invoca">↳ <b>Va soltando:</b> Sanguijuela (sin parar)</p>
+  <p class="que">Mini-jefe del pantano, con pinta de bruja vieja cubierta de liquen. Va soltando cucas, envenena el agua y TIRA DE TI hacia ella.</p>
+  <p class="rel invoca">↳ <b>Va soltando:</b> Cuca (sin parar)</p>
   <div class="stats">
     <span title="Vida"><b>360</b> vida</span>
     <span title="Daño por golpe"><b>10</b> daño</span>
     <span title="Armadura"><b>5</b> armadura</span>
-    <span title="Tamaño">×1.9 su tamano normal</span>
+    <span title="Tamaño">×1.9 su tamaño normal</span>
     
     <span class="boss">barra de jefe</span>
   </div>
   <h4>Dónde y cómo aparece</h4>
   <ul class="apar"><li><span class="pct">0.4%</span> biomas concretos · a mas de 800 bloques del Reino <span class="lv">nivel 2</span></li></ul>
   <p class="esc"><b>Escala con la zona:</b> +50 vida y +1.8 daño por nivel. Aquí sale de nivel 2.</p>
-  <p class="loot"><b>Suelta:</b> Bolas de limo y su Diente de sanguijuela.</p>
-  <p class="tip"><b>Consejo:</b> A media vida se hunde y reaparece DETRAS de ti con mas sanguijuelas. Cuando creas que la tienes, mira atras.</p>
+  <p class="loot"><b>Suelta:</b> Bolas de limo y un Caparazón de cuca.</p>
+  <p class="tip"><b>Consejo:</b> A media vida se hunde y reaparece DETRAS de ti con mas cucas. Cuando creas que la tienes, mira atras.</p>
   <div class="cmd" title="Comando de admin para invocarlo (clic para copiar)" onclick="ER6B.copy(this)">
     <span class="k">/mm mobs spawn ComadreCieno 1</span><span class="copy">copiar</span>
   </div>
@@ -648,7 +640,7 @@ thead th{font-size:.74rem; text-transform:uppercase; letter-spacing:.07em; color
     <span title="Vida"><b>10</b> vida</span>
     <span title="Daño por golpe"><b>2</b> daño</span>
     <span title="Armadura"><b></b> armadura</span>
-    <span title="Tamaño">×0.9 su tamano normal</span>
+    <span title="Tamaño">×0.9 su tamaño normal</span>
     <span class="warn">sin nombre visible</span>
     
   </div>
@@ -677,15 +669,15 @@ thead th{font-size:.74rem; text-transform:uppercase; letter-spacing:.07em; color
     <span title="Vida"><b>520</b> vida</span>
     <span title="Daño por golpe"><b>14</b> daño</span>
     <span title="Armadura"><b>10</b> armadura</span>
-    <span title="Tamaño">×1.6 su tamano normal</span>
+    <span title="Tamaño">×1.6 su tamaño normal</span>
     
     <span class="boss">barra de jefe</span>
   </div>
   <h4>Dónde y cómo aparece</h4>
-  <ul class="apar"><li><span class="pct">2.0%</span> en el Nether · bajo tierra (por debajo de Y=22) <span class="lv">nivel 1</span></li></ul>
+  <ul class="apar"><li><span class="pct">2.0%</span> en el Nether · bajo tierra (por debajo de Y=22) <span class="lv">nivel 1</span></li><li><span class="pct">2.0%</span> en el Nether · bajo tierra (entre Y=4 y Y=23) <span class="lv">nivel 1</span></li></ul>
   <p class="esc"><b>Escala con la zona:</b> +70 vida y +2.5 daño por nivel. Aquí sale de nivel 1.</p>
-  <p class="loot"><b>Suelta:</b> Su Nucleo fundido.</p>
-  <p class="tip"><b>Consejo:</b> Es EL motivo de que no se baje a por netherita el primer dia. Ve con equipo o no vayas.</p>
+  <p class="loot"><b>Suelta:</b> Su Núcleo fundido.</p>
+  <p class="tip"><b>Consejo:</b> Es EL motivo de que no se baje a por netherita el primer día. Ve con equipo o no vayas.</p>
   <div class="cmd" title="Comando de admin para invocarlo (clic para copiar)" onclick="ER6B.copy(this)">
     <span class="k">/mm mobs spawn GuardianDebris 1</span><span class="copy">copiar</span>
   </div>
@@ -705,7 +697,7 @@ thead th{font-size:.74rem; text-transform:uppercase; letter-spacing:.07em; color
     <span title="Vida"><b>380</b> vida</span>
     <span title="Daño por golpe"><b>12</b> daño</span>
     <span title="Armadura"><b>7</b> armadura</span>
-    <span title="Tamaño">×2.2 su tamano normal</span>
+    <span title="Tamaño">×2.2 su tamaño normal</span>
     
     <span class="boss">barra de jefe</span>
   </div>
@@ -713,7 +705,7 @@ thead th{font-size:.74rem; text-transform:uppercase; letter-spacing:.07em; color
   <ul class="apar"><li><span class="pct">0.3%</span> biomas nevados · a mas de 1200 bloques del Reino <span class="lv">nivel 3</span></li></ul>
   <p class="esc"><b>Escala con la zona:</b> +55 vida y +2 daño por nivel. Aquí sale de nivel 3.</p>
   <p class="loot"><b>Suelta:</b> Bolas de nieve y su Pello de yeti.</p>
-  <p class="tip"><b>Consejo:</b> Su ventisca pega en area y ralentiza: no te quedes quieto a su lado.</p>
+  <p class="tip"><b>Consejo:</b> Su ventisca pega en área y ralentiza: no te quedes quieto a su lado.</p>
   <div class="cmd" title="Comando de admin para invocarlo (clic para copiar)" onclick="ER6B.copy(this)">
     <span class="k">/mm mobs spawn YetiEscarcha 1</span><span class="copy">copiar</span>
   </div>
@@ -733,15 +725,15 @@ thead th{font-size:.74rem; text-transform:uppercase; letter-spacing:.07em; color
     <span title="Vida"><b>80</b> vida</span>
     <span title="Daño por golpe"><b>6</b> daño</span>
     <span title="Armadura"><b>4</b> armadura</span>
-    <span title="Tamaño">×1.5 su tamano normal</span>
+    <span title="Tamaño">×1.5 su tamaño normal</span>
     <span class="warn">sin nombre visible</span>
     
   </div>
   <h4>Dónde y cómo aparece</h4>
-  <ul class="apar"><li><span class="pct">25.0%</span> biomas concretos · a mas de 300 bloques del Reino <span class="lv">nivel 3</span></li></ul>
+  <ul class="apar"><li><span class="pct">6.0%</span> biomas concretos · a mas de 300 bloques del Reino <span class="lv">nivel 3</span></li></ul>
   <p class="esc"><b>Escala con la zona:</b> +16 vida y +1.3 daño por nivel. Aquí sale de nivel 3.</p>
   <p class="loot"><b>Suelta:</b> Nada, solo experiencia.</p>
-  <p class="tip"><b>Consejo:</b> Lo que mata aqui es ahogarse, no su dano. Sube a respirar aunque le estes ganando.</p>
+  <p class="tip"><b>Consejo:</b> Lo que mata aquí es ahogarse, no su daño. Sube a respirar aunque le estes ganando.</p>
   <div class="cmd" title="Comando de admin para invocarlo (clic para copiar)" onclick="ER6B.copy(this)">
     <span class="k">/mm mobs spawn AhogadoAncla 1</span><span class="copy">copiar</span>
   </div>
@@ -761,7 +753,7 @@ thead th{font-size:.74rem; text-transform:uppercase; letter-spacing:.07em; color
     <span title="Vida"><b>110</b> vida</span>
     <span title="Daño por golpe"><b>9</b> daño</span>
     <span title="Armadura"><b>5</b> armadura</span>
-    <span title="Tamaño">×1.7 su tamano normal</span>
+    <span title="Tamaño">×1.7 su tamaño normal</span>
     <span class="warn">sin nombre visible</span>
     
   </div>
@@ -789,7 +781,7 @@ thead th{font-size:.74rem; text-transform:uppercase; letter-spacing:.07em; color
     <span title="Vida"><b>90</b> vida</span>
     <span title="Daño por golpe"><b>8</b> daño</span>
     <span title="Armadura"><b>4</b> armadura</span>
-    <span title="Tamaño">×1.1 su tamano normal</span>
+    <span title="Tamaño">×1.1 su tamaño normal</span>
     <span class="warn">sin nombre visible</span>
     
   </div>
@@ -817,12 +809,12 @@ thead th{font-size:.74rem; text-transform:uppercase; letter-spacing:.07em; color
     <span title="Vida"><b>60</b> vida</span>
     <span title="Daño por golpe"><b>8</b> daño</span>
     <span title="Armadura"><b>4</b> armadura</span>
-    <span title="Tamaño">×1.2 su tamano normal</span>
+    <span title="Tamaño">×1.2 su tamaño normal</span>
     <span class="warn">sin nombre visible</span>
     
   </div>
   <h4>Dónde y cómo aparece</h4>
-  <ul class="apar"><li><span class="pct">45.0%</span> en el Nether <span class="lv">nivel 2</span></li><li><span class="pct">55.0%</span> en el Nether · bajo tierra (por debajo de Y=22) <span class="lv">nivel 8</span></li></ul>
+  <ul class="apar"><li><span class="pct">45.0%</span> en el Nether <span class="lv">nivel 2</span></li><li><span class="pct">55.0%</span> en el Nether · bajo tierra (por debajo de Y=22) <span class="lv">nivel 8</span></li><li><span class="pct">10.0%</span> en el Nether · bajo tierra (entre Y=4 y Y=23) <span class="lv">nivel 8</span></li></ul>
   <p class="esc"><b>Escala con la zona:</b> +16 vida y +1.5 daño por nivel. Aquí sale de nivel 2, 8.</p>
   <p class="loot"><b>Suelta:</b> Pepitas de oro y carne podrida.</p>
   <p class="tip"><b>Consejo:</b> Ya no hace falta pegarles para que se enfaden: vienen solos.</p>
@@ -839,13 +831,13 @@ thead th{font-size:.74rem; text-transform:uppercase; letter-spacing:.07em; color
     </div>
     <span class="tag t-comun">Común</span>
   </header>
-  <p class="que">No te persigue de frente: se lanza y te CAE ENCIMA. Rapido y con poca vida.</p>
+  <p class="que">No te persigue de frente: se lanza y te CAE ENCIMA. Rápido y con poca vida.</p>
   
   <div class="stats">
     <span title="Vida"><b>45</b> vida</span>
     <span title="Daño por golpe"><b>7</b> daño</span>
     <span title="Armadura"><b>2</b> armadura</span>
-    <span title="Tamaño">×0.95 su tamano normal</span>
+    <span title="Tamaño">×0.95 su tamaño normal</span>
     <span class="warn">sin nombre visible</span>
     
   </div>
@@ -873,7 +865,7 @@ thead th{font-size:.74rem; text-transform:uppercase; letter-spacing:.07em; color
     <span title="Vida"><b>40</b> vida</span>
     <span title="Daño por golpe"><b>4</b> daño</span>
     <span title="Armadura"><b>1</b> armadura</span>
-    <span title="Tamaño">×1.3 su tamano normal</span>
+    <span title="Tamaño">×1.3 su tamaño normal</span>
     <span class="warn">sin nombre visible</span>
     
   </div>
@@ -901,7 +893,7 @@ thead th{font-size:.74rem; text-transform:uppercase; letter-spacing:.07em; color
     <span title="Vida"><b>55</b> vida</span>
     <span title="Daño por golpe"><b>6</b> daño</span>
     <span title="Armadura"><b>3</b> armadura</span>
-    <span title="Tamaño">×1.2 su tamano normal</span>
+    <span title="Tamaño">×1.2 su tamaño normal</span>
     <span class="warn">sin nombre visible</span>
     
   </div>
@@ -927,17 +919,17 @@ thead th{font-size:.74rem; text-transform:uppercase; letter-spacing:.07em; color
   
   <div class="stats">
     <span title="Vida"><b>65</b> vida</span>
-    <span title="Daño por golpe"><b>5</b> daño</span>
-    <span title="Armadura"><b>7</b> armadura</span>
-    <span title="Tamaño">×1.1 su tamano normal</span>
+    <span title="Daño por golpe"><b>3</b> daño</span>
+    <span title="Armadura"><b>5</b> armadura</span>
+    <span title="Tamaño">×1.1 su tamaño normal</span>
     <span class="warn">sin nombre visible</span>
     
   </div>
   <h4>Dónde y cómo aparece</h4>
   <ul class="apar"><li><span class="pct">14.0%</span> a mas de 300 bloques del Reino · a menos de 1500 bloques del Reino <span class="lv">nivel 1</span></li><li><span class="pct">10.0%</span> a mas de 1500 bloques del Reino <span class="lv">nivel 4</span></li></ul>
-  <p class="esc"><b>Escala con la zona:</b> +14 vida y +1.2 daño por nivel. Aquí sale de nivel 1, 4.</p>
+  <p class="esc"><b>Escala con la zona:</b> +14 vida y +0.8 daño por nivel. Aquí sale de nivel 1, 4.</p>
   <p class="loot"><b>Suelta:</b> Carne podrida y su Cono de obra cuando se le rompe.</p>
-  <p class="tip"><b>Consejo:</b> A media vida el cono SE LE CAE, lo suelta al suelo (te lo puedes poner) y entonces se vuelve mas rapido y pega mas fuerte. No te confies cuando le veas perder el cono.</p>
+  <p class="tip"><b>Consejo:</b> A media vida el cono SE LE CAE, lo suelta al suelo (te lo puedes poner) y entonces se vuelve mas rápido y pega mas fuerte. No te confies cuando le veas perder el cono.</p>
   <div class="cmd" title="Comando de admin para invocarlo (clic para copiar)" onclick="ER6B.copy(this)">
     <span class="k">/mm mobs spawn ZombiDelCono 1</span><span class="copy">copiar</span>
   </div>
