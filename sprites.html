@@ -348,6 +348,27 @@ const G = [
   "sub": "Lo que sueltan los bichos y el jugador guarda: la prueba de haber matado algo. 🔑 <b>Montados así</b>: namespace <b><code>trofeos</code></b> de ItemsAdder + <b>CMD 10310</b> en los 9 (el CMD es por MATERIAL, y cada trofeo usa uno distinto, así que pueden repetir número sin pisarse) + <code>Options.Model</code> en cada MythicItem de <code>items/reino_loot.yml</code>. Generador: <b><code>mmo-generadores/gen_trofeos_sprites.py</code></b>. 🔴 <b>Un cambio</b>: <code>PelloDeYeti</code> era <b>WHITE_WOOL</b>, un BLOQUE que Minecraft dibuja como cubo → pasó a <b>RABBIT_HIDE</b> (plano, y pega más con «pellejo»). Seguro: el botín se suelta por ID, no por material.",
   "items": [
    {
+    "e": "⬜",
+    "o": "<code>HojaContactos</code>",
+    "n": "Hoja de Contactos",
+    "m": "<b>paper</b> (liso)",
+    "d": "«Hoja de Contactos» (<code>vostok_06_contactos</code>, Pimpón → Papriko) · <b>una hoja de contactos de verdad</b>: rejilla de fotogramas diminutos en blanco y negro sobre papel, con los bordes perforados del carrete a los lados. Miré el banco de sprites y no hay nada que lea como eso"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>ActaMedicion</code>",
+    "n": "Acta de Medición",
+    "m": "<b>paper</b> (liso)",
+    "d": "«La Inspección» (<code>mapa_03_alfombra</code>) · un impreso oficial con una rejilla de casillas y cuatro cifras escritas a mano en los márgenes"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>PanoCeremonial</code>",
+    "n": "Paño Ceremonial",
+    "m": "<b>paper</b> (liso)",
+    "d": "idem · un paño blanco doblado, con una esquina gris de suciedad. 🔴 Que NO parezca papel: es tela"
+   },
+   {
     "e": "✅",
     "o": "<code>ColaDeRata</code>",
     "n": "Cola de rata",
@@ -1204,11 +1225,11 @@ const G = [
     "d": "trozo negro <b>brillante</b>, no mate, con el mismo reflejo de charco"
    },
    {
-    "e": "🟡",
+    "e": "✅",
     "o": "<code>bidon_gasolina</code>",
     "n": "Bidón de gasolina",
-    "m": "<i>(item nuevo)</i>",
-    "d": "🎨 <b>EL SPRITE YA ESTÁ</b> (entregado 2026-08-09, guardado en <code>texturas/sprites/bidon_gasolina.png</code>) — pero <b>el ÍTEM no existe todavía</b>, así que no se puede colocar. Lo que falta NO es dibujo: es decidir cómo se impide colocarlo en el suelo, porque para arder 80 en el horno tiene que ser <code>COAL_BLOCK</code> y eso lo hace colocable (ItemsAdder no tiene ninguna clave para evitarlo — verificado). La salida buena: hacerlo también ExecutableItem con <code>cancelEvent: true</code>, el truco de la <code>Cabeza_Grageas</code> (LECCIÓN 54). Ver <code>tierra-hostil.md</code> §3"
+    "m": "<code>tierra_hostil:bidon_gasolina</code>",
+    "d": "🟢 <b>HECHO el 2026-08-23.</b> El sprite estaba desde el 2026-08-09 y llevaba dos semanas sin ítem: lo que faltaba no era dibujo, era que para arder 80 tenía que ser <code>COAL_BLOCK</code> y eso lo hacía colocable. <b>Se resolvió sin ExecutableItem</b>: ItemsAdder tiene un behaviour <b><code>fuel</code></b> (<code>burn_ticks: 16000</code>), así que el material base deja de mandar y va sobre <b><code>CHARCOAL</code></b> — plano y no colocable. Receta: 2×2 de carbón graso. <b>LECCIÓN 165</b>"
    },
    {
     "e": "✅",
@@ -1600,7 +1621,7 @@ const G = [
   ]
  }
 ];
-const FALTAN = 75, ITEMS = 89;
+const FALTAN = 78, ITEMS = 92;
 
 function TH(){const r=document.documentElement;
   const cur=r.dataset.theme||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');
