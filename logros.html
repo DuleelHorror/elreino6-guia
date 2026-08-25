@@ -468,12 +468,60 @@ const L = [
   "antes": "Sombra y Paciencia"
  },
  {
+  "id": "catador",
+  "titulo": "Sabe a Cola. Casi.",
+  "desc": "Te bebiste el primero a cielo abierto. La caída fue cosa tuya.",
+  "marco": "task",
+  "oculto": false,
+  "bloque": "Las catas de la alquimista",
+  "quest": "Sabor a Cola 🎈",
+  "npc": "La Alquimista",
+  "comose": "",
+  "antes": "Contacto en la Botica"
+ },
+ {
+  "id": "mediacata",
+  "titulo": "La Leche No Sirve",
+  "desc": "Lo comprobaste tú. Es lo que hace un catador de verdad.",
+  "marco": "task",
+  "oculto": false,
+  "bloque": "Las catas de la alquimista",
+  "quest": "La Leche No Te Va a Servir 🥛",
+  "npc": "La Alquimista",
+  "comose": "",
+  "antes": "Sabe a Cola. Casi."
+ },
+ {
+  "id": "catas",
+  "titulo": "Trece Frascos",
+  "desc": "Doce catas y la cola. Sigues aquí, que ya es un dato.",
+  "marco": "goal",
+  "oculto": false,
+  "bloque": "Las catas de la alquimista",
+  "quest": "El Jarabe del Lunes 🐌",
+  "npc": "La Alquimista",
+  "comose": "",
+  "antes": "La Leche No Sirve"
+ },
+ {
+  "id": "poso",
+  "titulo": "El Poso de las Catas",
+  "desc": "Lo que no se disolvió. La parte cabezota.",
+  "marco": "challenge",
+  "oculto": false,
+  "bloque": "Las catas de la alquimista",
+  "quest": "El Poso de las Catas 🧿",
+  "npc": "La Alquimista",
+  "comose": "",
+  "antes": "Trece Frascos"
+ },
+ {
   "id": "permiso",
   "titulo": "Sellado, Firmado y Traspapelado",
   "desc": "Seis ventanillas para un permiso que ya estaba concedido.",
   "marco": "goal",
   "oculto": false,
-  "bloque": "El pueblo",
+  "bloque": "Las catas de la alquimista",
   "quest": "Vía Crucis Administrativa",
   "npc": "Toni Tutorial Jr",
   "comose": "",
@@ -485,7 +533,7 @@ const L = [
   "desc": "Ya eres mano de obra oficial del Reino. Enhorabuena, supongo.",
   "marco": "task",
   "oculto": false,
-  "bloque": "El pueblo",
+  "bloque": "Las catas de la alquimista",
   "quest": "Alta en el Gremio",
   "npc": "Toni Tutorial Jr",
   "comose": "",
@@ -497,7 +545,7 @@ const L = [
   "desc": "Zanahorias y patatas. El Gordi Mamón lo tenía apuntado.",
   "marco": "task",
   "oculto": false,
-  "bloque": "El pueblo",
+  "bloque": "Las catas de la alquimista",
   "quest": "Cosecha de Temporada",
   "npc": "Gordi Mamon",
   "comose": "",
@@ -509,7 +557,7 @@ const L = [
   "desc": "El Gordi Mamón siempre dice que el tiempo pasa. Y el Gordi Mamón acierta.",
   "marco": "goal",
   "oculto": false,
-  "bloque": "El pueblo",
+  "bloque": "Las catas de la alquimista",
   "quest": "El Termómetro",
   "npc": "Gordi Mamon",
   "comose": "",
@@ -1536,6 +1584,18 @@ const L = [
   "antes": null
  },
  {
+  "id": "vip",
+  "titulo": "Socio V.I.P.",
+  "desc": "Pagaste veinte, te devolvió dos y no sabe quién eres.",
+  "marco": "goal",
+  "oculto": false,
+  "bloque": "Correos · «los cuatro chester»",
+  "quest": "Yo a Usted No Le Conozco 😐",
+  "npc": "Lucia Mochilón",
+  "comose": "",
+  "antes": null
+ },
+ {
   "id": "correos",
   "titulo": "Los Cuatro Chester",
   "desc": "Cuatro carteros, un solo nombre y un acta que dice que no pasa nada.",
@@ -1812,7 +1872,7 @@ const L = [
   "antes": "El Nuevo Fichaje"
  }
 ];
-const BLOQUES = ["La espina", "El pueblo", "Operación carpincho y lo que abre", "La ciencia y la piedra", "Los nexos", "Protocolo de contencion", "Las ranas del reino", "Los dedos largos", "Correos · «los cuatro chester»", "Secretas", "Sueltas", "De cosecha propia"];
+const BLOQUES = ["La espina", "El pueblo", "Las catas de la alquimista", "Operación carpincho y lo que abre", "La ciencia y la piedra", "Los nexos", "Protocolo de contencion", "Las ranas del reino", "Los dedos largos", "Correos · «los cuatro chester»", "Secretas", "Sueltas", "De cosecha propia"];
 
 function TH(){const r=document.documentElement;
   const cur=r.dataset.theme||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');
