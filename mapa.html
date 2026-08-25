@@ -5146,6 +5146,10 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
     //    juego y son exactos. Falta darle una `desc` con voz propia y, si toca, `unlocks`.
     {id:'toni_zurron', label:'Un Sitio Donde Meterlo', npc:'Toni Tutorial Jr', faction:'sci', type:'Misión', status:'new',
       steps:['1) Un Sitio Donde Meterlo (Toni Tutorial Jr) → Entrega cuero x8 a Toni Tutorial Jr'], desc:'Toni: Los papeles de misión ya no se pueden dejar en un cofre. Traé 8 de cuero y te coso un zurrón.'},
+    // ⬜ la insertó mapa_auto.py: nombre, NPC, pasos y de quién cuelga salen del
+    //    juego y son exactos. Falta darle una `desc` con voz propia y, si toca, `unlocks`.
+    {id:'alq_cola', label:'Sabor a Cola 🎈', npc:'La Alquimista', faction:'folk', type:'Misión', coins:8, status:'new',
+      steps:['1) Sabor a Cola 🎈 (La Alquimista) → Entrega Frasco Vacío x1 a La Alquimista'], desc:'La Alquimista: ¡Cielo! Ven, que te doy a probar una cosa. Pero te la bebes FUERA, ¿eh? Fuera y a cielo abierto.'},
   ];
   // ===== CONEXIONES (aristas): source -> target =====
   const E = [
@@ -5219,6 +5223,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
     ['contactos','nbq'],['falcioni','nbq'],
     // 🗺 Y el plano cuelga de la saga: solo tiene sentido cuando ya has pisado la ciudad.
     ['nbq','plano'],
+    ['alquimista','alq_cola'],   // ← lo puso mapa_auto.py
   ];
 
   /* ==========================================================================================
