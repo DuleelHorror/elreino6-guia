@@ -5148,8 +5148,17 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
       steps:['1) Un Sitio Donde Meterlo (Toni Tutorial Jr) → Entrega cuero x8 a Toni Tutorial Jr'], desc:'Toni: Los papeles de misión ya no se pueden dejar en un cofre. Traé 8 de cuero y te coso un zurrón.'},
     // ⬜ la insertó mapa_auto.py: nombre, NPC, pasos y de quién cuelga salen del
     //    juego y son exactos. Falta darle una `desc` con voz propia y, si toca, `unlocks`.
+    {id:'alq_cata', label:'Que Se Te Vea 🌟', npc:'La Alquimista', faction:'folk', type:'Saga · 13 misiones', coins:271, status:'new',
+      steps:['1) Que Se Te Vea 🌟 (La Alquimista) → Entrega Frasco del Fulgor x1 a La Alquimista','2) Piernas Ajenas 🏃 (La Alquimista) → Entrega Frasco de las Piernas x1, Contador de Pasos x1 a La Alquimista','3) Firma Aquí Abajo ⚰️ (La Alquimista) → Entrega Consentimiento Informado x1 a La Alquimista · Entrega Parte de Defunción x1 a La Alquimista','4) Segunda Cucaracha 🪳 (La Alquimista) → Entrega Frasco de la Cucaracha x1, Aire de Arriba x1 a La Alquimista','5) Remiendo por Dentro ❤️ (La Alquimista) → Entrega Frasco del Remiendo x1 a La Alquimista','6) La Leche No Te Va a Servir 🥛 (La Alquimista) → Entrega Frasco de la Naranjada x1 a La Alquimista','7) Cabe Más Sangre 🫀 (La Alquimista) → Entrega Frasco del Tinto x1 a La Alquimista','8) Mejor No Mires 🕶️ (La Alquimista) → Entrega Frasco de la Nada x1 a La Alquimista','9) Branquias de Prestado 🫧 (La Alquimista) → Entrega Frasco de las Branquias x1, Barro del Fondo x1 a La Alquimista','10) Enciéndete Tú Primero 🔥 (La Alquimista) → Entrega Frasco del Rescoldo x1, Brasa del Fondo x1 a La Alquimista','11) Café Sin Taza ⛏️ (La Alquimista) → Entrega Frasco del Café x1 a La Alquimista · Picar 60 piedra','12) El Jarabe del Lunes 🐌 (La Alquimista) → Entrega Frasco del Jarabe x1 a La Alquimista','13) El Poso de las Catas 🧿 (La Alquimista) → Entrega fragmentos de amatista x16 a La Alquimista'], desc:'La Alquimista: Criatura, prueba esto DE NOCHE, que de día no se aprecia nada.'},
+    // ⬜ la insertó mapa_auto.py: nombre, NPC, pasos y de quién cuelga salen del
+    //    juego y son exactos. Falta darle una `desc` con voz propia y, si toca, `unlocks`.
     {id:'alq_cola', label:'Sabor a Cola 🎈', npc:'La Alquimista', faction:'folk', type:'Misión', coins:8, status:'new',
       steps:['1) Sabor a Cola 🎈 (La Alquimista) → Entrega Frasco Vacío x1 a La Alquimista'], desc:'La Alquimista: ¡Cielo! Ven, que te doy a probar una cosa. Pero te la bebes FUERA, ¿eh? Fuera y a cielo abierto.'},
+    // ⬜ la insertó mapa_auto.py: nombre, NPC, pasos y de quién cuelga salen del
+    //    juego y son exactos. Falta darle una `desc` con voz propia, comprobar la FACCIÓN (nadie más da este NPC, así que va adivinada)
+    //    y, si toca, `unlocks`.
+    {id:'lucia', label:'Veinte Cacahuates y un Grito 🎒', npc:'Lucia Mochilón', faction:'sci', type:'Saga · 2 misiones', coins:2, status:'new',
+      steps:['1) Veinte Cacahuates y un Grito 🎒 (Lucia Mochilón) → Entrega Cacahuate x20 a Lucia Mochilón','2) Yo a Usted No Le Conozco 😐 (Lucia Mochilón) → Entrega Carné de Socio VIP x1 a Lucia Mochilón'], desc:'Lucía Mochilón: *grita y señala un cartel: SOCIO V.I.P., 20 CACAHUATES, DESCUENTOS SUCULENTOS*'},
   ];
   // ===== CONEXIONES (aristas): source -> target =====
   const E = [
@@ -5224,6 +5233,10 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
     // 🗺 Y el plano cuelga de la saga: solo tiene sentido cuando ya has pisado la ciudad.
     ['nbq','plano'],
     ['alquimista','alq_cola'],   // ← lo puso mapa_auto.py
+    ['alq_cola','alq_cata'],     // ← LAS CATAS cuelgan del refresco de cola: su
+                                 //   `requirements.quests` es alq_cola
+    ['contrato','lucia'],        // ← SUELTA, como `pincel` y `correos`: no depende
+                                 //   de ninguna rama y su faena la da el grupo default
   ];
 
   /* ==========================================================================================
