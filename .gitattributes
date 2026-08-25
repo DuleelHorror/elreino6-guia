@@ -1,0 +1,41 @@
+# ==========================================================================
+# GUIA DE ADMIN DE EL REINO 6 — finales de linea
+#
+# 🔴 ESTE ES OTRO REPO. El `.gitattributes` de `C:\er6` NO llega hasta aqui:
+#    `guia-site/` es un clon aparte (DuleelHorror/elreino6-guia), asi que
+#    necesita el suyo. Sin el, `core.autocrlf=true` —el valor por defecto de
+#    Git for Windows, puesto a nivel GLOBAL en las maquinas del equipo—
+#    dejaba las 20 paginas en CRLF en el disco.
+#
+# 🩸 QUE PASABA POR NO TENERLO (2026-08-25). Estas paginas las ESCRIBE
+#    `web/comun/envolver.py`, que ademas lo hacia sin `newline="\n"`. Con las
+#    dos cosas juntas, cada `build_*.py` dejaba el HTML en CRLF y git lo veia
+#    "modificado" aunque el contenido fuera IDENTICO byte a byte. Resultado:
+#    `validate_quests.py` cantaba 🔴 "HAY PAGINAS CONSTRUIDAS Y SIN PUBLICAR"
+#    en cada pasada, siempre, sin que fuera verdad ni una sola vez.
+#
+#    Y eso no es una molestia: es un ERROR que salta siempre, y un error que
+#    salta siempre se deja de leer. El dia que de verdad quede una pagina sin
+#    publicar, ese aviso ya no lo mira nadie. Es el mismo razonamiento que
+#    hay escrito en `revisar.py`: "un informe que sale rojo siempre entrena a
+#    ignorarlo".
+#
+#    Arreglado por los dos lados: el `newline="\n"` en `envolver.py` (lo
+#    vigila `mmo-generadores/audit_finales_linea.py`, que desde hoy mira
+#    tambien `guia-site/`) y este fichero, que protege al proximo clon.
+#
+# 📖 LECCION 194 (el autocrlf) y LECCION 126 (el generador sin newline).
+# ==========================================================================
+
+* text=auto eol=lf
+
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.webp binary
+*.woff binary
+*.woff2 binary
+*.ttf binary
+*.zip binary
