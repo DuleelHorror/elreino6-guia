@@ -1093,8 +1093,8 @@ const L = [
  },
  {
   "id": "nbq_plano",
-  "titulo": "Cartografía ha Vuelto",
-  "desc": "Mau se jubila dibujando la única ciudad que no tenía plano.",
+  "titulo": "Un Recorrido No Es Una Ciudad",
+  "desc": "La cartógrafa no dibuja lo que le cuentan. Búscale a alguien que lo viera.",
   "marco": "task",
   "oculto": false,
   "bloque": "Protocolo de contencion",
@@ -1104,12 +1104,48 @@ const L = [
   "antes": "Protocolo de Contención"
  },
  {
+  "id": "pigmentos",
+  "titulo": "Una Hoguera Apagada",
+  "desc": "El blanco es el silencio de antes. El negro es el de después.",
+  "marco": "task",
+  "oculto": false,
+  "bloque": "El boceto de la ciudad",
+  "quest": "El Otro Silencio ⚫",
+  "npc": "Pincelino Kandinsky",
+  "comose": "",
+  "antes": "Un Recorrido No Es Una Ciudad"
+ },
+ {
+  "id": "boceto",
+  "titulo": "Sin el Lapislázuli No Me Acuerdo",
+  "desc": "Cinco pigmentos, y con el último se acordó del mar.",
+  "marco": "goal",
+  "oculto": false,
+  "bloque": "El boceto de la ciudad",
+  "quest": "La Quietud Sin Esperanza 🩶",
+  "npc": "Pincelino Kandinsky",
+  "comose": "",
+  "antes": "Una Hoguera Apagada"
+ },
+ {
+  "id": "plano",
+  "titulo": "Cartografía ha Vuelto",
+  "desc": "Nueve años levantando un pueblo ya levantado, y se jubila con esto.",
+  "marco": "challenge",
+  "oculto": false,
+  "bloque": "El boceto de la ciudad",
+  "quest": "La Ciudad Que Recordaba 🗺",
+  "npc": "Mau",
+  "comose": "",
+  "antes": "Sin el Lapislázuli No Me Acuerdo"
+ },
+ {
   "id": "apie",
   "titulo": "A Pie por el Reino",
   "desc": "Horse Luis te vio llegar andando y le dio pena.",
   "marco": "task",
   "oculto": false,
-  "bloque": "Protocolo de contencion",
+  "bloque": "El boceto de la ciudad",
   "quest": "A Pie por el Reino",
   "npc": "Toni Tutorial Jr",
   "comose": "",
@@ -1121,7 +1157,7 @@ const L = [
   "desc": "Te quedaste quieto y le escuchaste las tres historias enteras.",
   "marco": "goal",
   "oculto": false,
-  "bloque": "Protocolo de contencion",
+  "bloque": "El boceto de la ciudad",
   "quest": "El Galope bajo la Tormenta",
   "npc": "Horse Luis",
   "comose": "",
@@ -1133,7 +1169,7 @@ const L = [
   "desc": "Heno y lana. Nico se emocionó igual.",
   "marco": "task",
   "oculto": false,
-  "bloque": "Protocolo de contencion",
+  "bloque": "El boceto de la ciudad",
   "quest": "Una Manita pal Refugio",
   "npc": "Nico",
   "comose": "",
@@ -1145,7 +1181,7 @@ const L = [
   "desc": "Es un refugio. Que no se entere el Ayuntamiento.",
   "marco": "task",
   "oculto": false,
-  "bloque": "Protocolo de contencion",
+  "bloque": "El boceto de la ciudad",
   "quest": "Mantas pal Refugio",
   "npc": "Nico",
   "comose": "",
@@ -1157,7 +1193,7 @@ const L = [
   "desc": "Lo dice él. Cada dos por tres y sin que venga a cuento.",
   "marco": "task",
   "oculto": false,
-  "bloque": "Protocolo de contencion",
+  "bloque": "El boceto de la ciudad",
   "quest": "El Gato del Rincón",
   "npc": "Yaniko",
   "comose": "",
@@ -1169,7 +1205,7 @@ const L = [
   "desc": "Aprendiste el oficio de Yaniko. Y aprendiste a no preguntar.",
   "marco": "goal",
   "oculto": false,
-  "bloque": "Protocolo de contencion",
+  "bloque": "El boceto de la ciudad",
   "quest": "La Hermana",
   "npc": "Nico",
   "comose": "",
@@ -1181,7 +1217,7 @@ const L = [
   "desc": "Nico lloró. Nico llora bastante. Esta vez tocaba.",
   "marco": "goal",
   "oculto": false,
-  "bloque": "Protocolo de contencion",
+  "bloque": "El boceto de la ciudad",
   "quest": "Una Emergencia Delicada",
   "npc": "Nico",
   "comose": "",
@@ -1872,7 +1908,7 @@ const L = [
   "antes": "El Nuevo Fichaje"
  }
 ];
-const BLOQUES = ["La espina", "El pueblo", "Las catas de la alquimista", "Operación carpincho y lo que abre", "La ciencia y la piedra", "Los nexos", "Protocolo de contencion", "Las ranas del reino", "Los dedos largos", "Correos · «los cuatro chester»", "Secretas", "Sueltas", "De cosecha propia"];
+const BLOQUES = ["La espina", "El pueblo", "Las catas de la alquimista", "Operación carpincho y lo que abre", "La ciencia y la piedra", "Los nexos", "Protocolo de contencion", "El boceto de la ciudad", "Las ranas del reino", "Los dedos largos", "Correos · «los cuatro chester»", "Secretas", "Sueltas", "De cosecha propia"];
 
 function TH(){const r=document.documentElement;
   const cur=r.dataset.theme||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');
