@@ -5161,6 +5161,10 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
     //    y, si toca, `unlocks`.
     {id:'lucia', label:'Veinte Cacahuates y un Grito 🎒', npc:'Lucia Mochilón', faction:'sci', type:'Saga · 3 misiones', coins:2, status:'new',
       steps:['1) Veinte Cacahuates y un Grito 🎒 (Lucia Mochilón) → Le pagas 20 Cacahuates y te da el Carné de Socio VIP','2) Yo a Usted No Le Conozco 😐 (Lucia Mochilón) → Vuelves a reclamar el descuento: se queda el carné y te devuelve 2 Cacahuates','3) Ahora Sí, de Verdad 📣 (Lucia Mochilón) → Reparte 10 panfletos por medio mapa (el Reino, el puerto, Villa Villez, el barco de Villaputa, la Granja y Cerezal) y vuelve con ella'], desc:'Lucía Mochilón: *grita y señala un cartel: SOCIO V.I.P., 20 CACAHUATES, DESCUENTOS SUCULENTOS*'},
+    // ⬜ la insertó mapa_auto.py: nombre, NPC, pasos y de quién cuelga salen del
+    //    juego y son exactos. Falta darle una `desc` con voz propia y, si toca, `unlocks`.
+    {id:'aviso', label:'📬 Avisar a Jarvard', npc:'Dr. Papriko → Chester el Cartero del Reino', faction:'sci', type:'1 misión · con DOS caminos', coins:34, status:'new',
+      steps:['A) Correo Atrasado 📬 — el camino normal: Chester está saturado y no manda tu carta hasta que le repartas tres de las suyas (Sor Eufrasia, Avraham, Vera). 6 pasos, 34 Cacahuates','B) Cortesía Profesional 📬 — el ATAJO, solo si ya has hecho la saga de Correos entera: te reconoce como el que desatascó el correo entre oficinas y la sella en el acto. 2 pasos, 20 Cacahuates'], desc:'🔀 Es UNA misión con dos caminos, y el jugador solo ve el suyo: el juego mira si has terminado «Los Cuatro Chester» y le ofrece a Papriko una versión o la otra. Papriko ha atado cabos —alguien fotografió esos planos ANTES que VOSTOK— y decide que esto le queda grande: escribe a la universidad para que manden equipos. Lo único que hace falta es echar la carta… y el cartero del Reino lleva once años haciendo el trabajo de cuatro.'},
   ];
   // ===== CONEXIONES (aristas): source -> target =====
   const E = [
@@ -5241,6 +5245,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
                                  //   `requirements.quests` es alq_cola
     ['contrato','lucia'],        // ← SUELTA, como `pincel` y `correos`: no depende
                                  //   de ninguna rama y su faena la da el grupo default
+    ['vostok_p1','aviso'],   // ← lo puso mapa_auto.py
   ];
 
   /* ==========================================================================================
