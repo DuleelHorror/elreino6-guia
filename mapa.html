@@ -5165,6 +5165,11 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
     //    juego y son exactos. Falta darle una `desc` con voz propia y, si toca, `unlocks`.
     {id:'aviso', label:'📬 Avisar a Jarvard', npc:'Dr. Papriko → Chester el Cartero del Reino', faction:'sci', type:'1 misión · con DOS caminos', coins:34, status:'new',
       steps:['A) Correo Atrasado 📬 — el camino normal: Chester está saturado y no manda tu carta hasta que le repartas tres de las suyas (Sor Eufrasia, Avraham, Vera). 6 pasos, 34 Cacahuates','B) Cortesía Profesional 📬 — el ATAJO, solo si ya has hecho la saga de Correos entera: te reconoce como el que desatascó el correo entre oficinas y la sella en el acto. 2 pasos, 20 Cacahuates'], desc:'🔀 Es UNA misión con dos caminos, y el jugador solo ve el suyo: el juego mira si has terminado «Los Cuatro Chester» y le ofrece a Papriko una versión o la otra. Papriko ha atado cabos —alguien fotografió esos planos ANTES que VOSTOK— y decide que esto le queda grande: escribe a la universidad para que manden equipos. Lo único que hace falta es echar la carta… y el cartero del Reino lleva once años haciendo el trabajo de cuatro.'},
+    // ⬜ la insertó mapa_auto.py: nombre, NPC, pasos y de quién cuelga salen del
+    //    juego y son exactos. Falta darle una `desc` con voz propia, comprobar la FACCIÓN (nadie más da este NPC, así que va adivinada)
+    //    y, si toca, `unlocks`.
+    {id:'lenador', label:'Madera de Ley 🪓', npc:'⬜ por decidir', faction:'sci', type:'Saga · 4 misiones', coins:31, status:'new',
+      steps:['1) Madera de Ley 🪓 → Picar 4 troncos de roble · Entrega troncos de roble x8 a alguien','2) El Cobertizo de Felipe 🛖 → Entrega oak planks x32 a alguien','3) Cuestión de Postura 🧎 → Picar 24 troncos de roble · Habla con alguien','4) Expediente Chupacabras 🐐 → Entrega papeles x3, plumas x1 a alguien · Habla con alguien · Habla con alguien'], desc:'Albahaca: Tú eres de los nuevos, ¿no? Entonces te han mandado a por leña sin explicarte lo principal.'},
   ];
   // ===== CONEXIONES (aristas): source -> target =====
   const E = [
@@ -5246,6 +5251,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
     ['contrato','lucia'],        // ← SUELTA, como `pincel` y `correos`: no depende
                                  //   de ninguna rama y su faena la da el grupo default
     ['vostok_p1','aviso'],   // ← lo puso mapa_auto.py
+    ['fichaje','lenador'],   // ← lo puso mapa_auto.py
   ];
 
   /* ==========================================================================================
