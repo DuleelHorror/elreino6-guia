@@ -4934,6 +4934,8 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
       steps:['Ir a hablar con Yael, en el banco'], desc:'Para cobrar la nómina necesitas cuenta bancaria. Toni te manda a la ventanilla de Yael.'},
     {id:'cuenta', label:'🏦 Capital Inicial', npc:'Yael Goldstein', faction:'gold', type:'Saga · 17 comisiones cutres', reward:'Cartilla del Banco (acceso a la Bolsa)', status:'new', unlocks:'La Bolsa del Reino (mercado dinámico de The Endex)',
       steps:['17 pagos crecientes (2,3,4…30)','Total: pagas 200 Cacahuates','Excusas cada vez más absurdas'], desc:'La cajera pesada y avariciosa te clava comisión tras comisión (200🥜 en total) con excusas patéticas, hasta abrirte la cuenta. SUMIDERO económico.'},
+    {id:'seguro', label:'👛 Seguro de Cobertura Básica Ampliada', npc:'Yael Goldstein', faction:'gold', type:'2 fases · te coloca un seguro', coins:-150, reward:'Carterita de Cacahuates (solo entran Cacahuates)', status:'new', unlocks:'La carterita, y los huecos extra que vende el Banco',
+      steps:['Seguro de Cobertura Básica Ampliada 🏦'], desc:'Ya que eres cliente, Yael te coloca el seguro estrella: 150 Cacahuates «barato, barato». La póliza no cubre prácticamente nada y el impreso y la pluma los pones tú — pero de regalo viene la carterita, que solo admite Cacahuates.'},
     {id:'mercado', loop:true, label:'💹 La Bolsa del Reino', npc:'Sistema (The Endex)', faction:'gold', type:'Mercado de valores · repetible', reward:'Compra/vende · precios dinámicos', status:'new',
       steps:['Clic en la campana de la Bolsa','Precios que suben y bajan solos','Eventos: cracks y fiebres'], desc:'El mercado dinámico: compra barato, vende caro. Precios que fluctúan y eventos locos. Se desbloquea al abrir la cuenta con Yael.'},
     {id:'anclaje', mundo:'Black Mesa y Fractal', label:'🗼 La Red de Anclaje', npc:'Toni → Saturnino → Gordon Wizman', faction:'sci', type:'Saga · 3 misiones · te presenta a Gordon y el colisionador', coins:18, reward:'Sincronización + Llave del Capincherío', status:'new',
@@ -5211,7 +5213,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
     ['duke','alfombra'],
     ['tablon_luz','olegario'],
     ['olegario','colada'],['colada','lavanderia'],
-    ['tablon_luz','banco'],['banco','cuenta'],['cuenta','mercado'],
+    ['tablon_luz','banco'],['banco','cuenta'],['cuenta','mercado'],['cuenta','seguro'],
     // futuro (punteadas)
     ['permiso','torre','future'],['clase','sabio','future'],
     // en camino (2026-07-16), colgadas del nodo más lógico
