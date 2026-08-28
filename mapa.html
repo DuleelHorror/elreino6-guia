@@ -5172,6 +5172,20 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
     //    y, si toca, `unlocks`.
     {id:'lenador', label:'Madera de Ley 🪓', npc:'⬜ por decidir', faction:'sci', type:'Saga · 4 misiones', coins:31, status:'new',
       steps:['1) Madera de Ley 🪓 → Picar 4 troncos de roble · Entrega troncos de roble x8 a alguien','2) El Cobertizo de Felipe 🛖 → Entrega oak planks x32 a alguien','3) Cuestión de Postura 🧎 → Picar 24 troncos de roble · Habla con alguien','4) Expediente Chupacabras 🐐 → Entrega papeles x3, plumas x1 a alguien · Habla con alguien · Habla con alguien'], desc:'Albahaca: Tú eres de los nuevos, ¿no? Entonces te han mandado a por leña sin explicarte lo principal.'},
+    // ⬜ la insertó mapa_auto.py: nombre, NPC, pasos y de quién cuelga salen del
+    //    juego y son exactos. Falta darle una `desc` con voz propia y, si toca, `unlocks`.
+    {id:'guarda', label:'Un Recado Para el de la Torre 🗼', npc:'Semental de la Flecha', faction:'folk', type:'Misión', coins:8, status:'new',
+      steps:['1) Un Recado Para el de la Torre 🗼 (Semental de la Flecha) → Habla con El Guarda Bosques Felipe Buñuelo'], desc:'Semental: Sube al pinar y habla con el guarda. Y no le lleves cerveza, hazme caso.'},
+    // ⬜ la insertó mapa_auto.py: nombre, NPC, pasos y de quién cuelga salen del
+    //    juego y son exactos. Falta darle una `desc` con voz propia, comprobar la FACCIÓN (nadie más da este NPC, así que va adivinada)
+    //    y, si toca, `unlocks`.
+    {id:'plagas', label:'Control de Plagas: Primavera 🐇', npc:'El Guarda Bosques Felipe Buñuelo', faction:'sci', type:'Saga · 4 misiones', coins:40, status:'new',
+      steps:['1) Control de Plagas: Primavera 🐇 (El Guarda Bosques Felipe Buñuelo) → Mata 12 rabbit · Habla con El Guarda Bosques Felipe Buñuelo','2) Control de Plagas: Verano ☀ (El Guarda Bosques Felipe Buñuelo) → Mata 10 husk · Habla con El Guarda Bosques Felipe Buñuelo','3) Control de Plagas: Otoño 🍂 (El Guarda Bosques Felipe Buñuelo) → Mata 10 cave spider · Habla con El Guarda Bosques Felipe Buñuelo','4) Control de Plagas: Invierno ❄ (El Guarda Bosques Felipe Buñuelo) → Mata 10 stray · Habla con El Guarda Bosques Felipe Buñuelo'], desc:'El Guarda Bosques: Faena de primavera. Que no se diga.'},
+    // ⬜ la insertó mapa_auto.py: nombre, NPC, pasos y de quién cuelga salen del
+    //    juego y son exactos. Falta darle una `desc` con voz propia, comprobar la FACCIÓN (nadie más da este NPC, así que va adivinada)
+    //    y, si toca, `unlocks`.
+    {id:'testdrive', label:'Test Drive: El Ratero 🎯', npc:'El Guarda Bosques Felipe Buñuelo', faction:'sci', type:'Saga · 6 misiones', coins:110, status:'new',
+      steps:['1) Test Drive: El Ratero 🎯 (El Guarda Bosques Felipe Buñuelo) → (sin objetivo)','2) Test Drive: La Cabra Rencorosa 🐐 (El Guarda Bosques Felipe Buñuelo) → (sin objetivo)','3) Test Drive: El del Cono 🚧 (El Guarda Bosques Felipe Buñuelo) → (sin objetivo)','4) Test Drive: El Bandolero 🏴 (El Guarda Bosques Felipe Buñuelo) → (sin objetivo)','5) Test Drive: La Rata de Alcantarilla 🐀 (El Guarda Bosques Felipe Buñuelo) → (sin objetivo)','6) Test Drive: La Bicha del Granero 🕷 (El Guarda Bosques Felipe Buñuelo) → (sin objetivo)'], desc:'El Guarda Bosques: Éste ha matado a 11 vecinos. Apúntalo tú también.'},
   ];
   // ===== CONEXIONES (aristas): source -> target =====
   const E = [
@@ -5254,6 +5268,11 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
                                  //   de ninguna rama y su faena la da el grupo default
     ['vostok_p1','aviso'],   // ← lo puso mapa_auto.py
     ['fichaje','lenador'],   // ← lo puso mapa_auto.py
+    ['pecio','guarda'],   // ← lo puso mapa_auto.py
+    // Las dos ramas del Guarda Bosques cuelgan de su recado: `mapa_auto.py` no puede
+    // deducirlo solo porque las dos las abre la MISMA quest (`guarda_00_recado`).
+    ['guarda','plagas'],
+    ['guarda','testdrive'],
   ];
 
   /* ==========================================================================================
