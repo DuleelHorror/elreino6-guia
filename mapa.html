@@ -5239,6 +5239,10 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
     //    juego y son exactos. Falta darle una `desc` con voz propia y, si toca, `unlocks`.
     {id:'chupa', label:'El Chupapinqui 🗼', npc:'El Guarda Bosques Felipe Buñuelo', faction:'folk', type:'Saga · 3 misiones', coins:36, status:'new',
       steps:['1) El Chupapinqui 🗼 (El Guarda Bosques Felipe Buñuelo) → Entrega Nido x4 a El Guarda Bosques Felipe Buñuelo','2) Cebo de Segunda 🗼 (El Guarda Bosques Felipe Buñuelo) → Entrega rotten flesh x12 a El Guarda Bosques Felipe Buñuelo','3) Parte de Avistamiento 🗼 (El Guarda Bosques Felipe Buñuelo) → Entrega Parte de Avistamiento del Chupapin x1 a Chester el Cartero del Reino'], desc:'Felipe Buñuelo se ríe del chupacabras de Albahaca —dice que eso es un cuento para no dormir solo— y luego te cuenta, completamente en serio, lo del Chupapinqui: una cosa que baja de noche por el barranco y que, si te pilla, te chupa el pinqui. Nadie ha conseguido que explique qué es un pinqui. Él lo intenta, pero solo sabe decir lo que NO es. Lleva dos años montando un señuelo en lo alto de su torre y le faltan nidos y algo que huela lo bastante mal; cuando por fin funciona, no lo ve, ve lo que deja —que según él es más fiable— y levanta un parte con la hora, el sitio y el hecho. La saga acaba en la ventanilla de Correos, con un cartero que lee el avistamiento de una criatura de arriba abajo y solo tiene una objeción: que viene sin franquear.'},
+    // ⬜ la insertó mapa_auto.py: nombre, NPC, pasos y de quién cuelga salen del
+    //    juego y son exactos. Falta darle una `desc` con voz propia y, si toca, `unlocks`.
+    {id:'expedicion', label:'Siete Piedras y Volver 🕳', npc:'Dra. Pizarrica', faction:'sci', type:'Misión', coins:45, status:'new',
+      steps:['1) Siete Piedras y Volver 🕳 (Dra. Pizarrica) → Entrega Caja de Muestras Precintada x1 a Dra. Pizarrica'], desc:'La última que pide Pizarrica, y la única en la que le importa más que vuelvas que lo que traigas. Quiere una serie completa del fondo del Abismo —una pieza de cada mineral, las siete— y la quiere en UN viaje: te da la caja sin precintar, y el precinto solo se pone si subes con todo y sin que te maten por el camino. Si te matan, el golpe se lleva las muestras y hay que volver a bajar. Ella lo explica como geología (una piedra que ha ido y venido en el bolsillo de un cadáver ya no dice nada) pero se le nota que es otra cosa, y cuando vuelves lo dice sin saber decirlo de otra manera: que se alegra de que subieras.'},
   ];
   // ===== CONEXIONES (aristas): source -> target =====
   const E = [
@@ -5340,6 +5344,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
     ['ampliacion_d_pedir','ampliacion_d_cadena'],
     ['correos','sheriff'],   // ← lo puso mapa_auto.py
     ['testdrive','chupa'],   // ← lo puso mapa_auto.py
+    ['cantera','expedicion'],   // ← lo puso mapa_auto.py
   ];
 
   /* ==========================================================================================
