@@ -1,3 +1,8 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>El Reino 6 — Mapa de Misiones</title>
 <style>/* ═══════════════════════════════════════════════════════════════════════════
    TEMA — El Reino 6 · herramientas del servidor
@@ -409,6 +414,8 @@ thead th{font-size:.74rem; text-transform:uppercase; letter-spacing:.07em; color
   .panel .who{font-size:.85rem;color:var(--tinta-3);margin:-6px 0 12px}
   @media(max-width:560px){.panel{width:100%;max-width:100%;height:62%;top:auto;bottom:0;border-left:0;border-top:1px solid var(--linea-2);transform:translateY(102%)}.panel.on{transform:none}}
 </style>
+</head>
+<body>
 
 <nav class="nav">
 <a class="marca" href="https://duleelhorror.github.io/elreino6-guia/index.html"><span class="ico">🗼</span> El Reino <b>6</b></a>
@@ -5223,6 +5230,11 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
     //    juego y son exactos. Falta darle una `desc` con voz propia y, si toca, `unlocks`.
     {id:'comercio', label:'La Licencia de Comercio 🏪', npc:'Yael Goldstein → Ujier', faction:'gold', type:'Saga · 6 misiones', coins:80, status:'new',
       steps:['1) La Licencia de Comercio 🏪 (Yael Goldstein) → Habla con Ujier','2) La Ventanilla Que No Usa Nadie 🏪 (Ujier) → Habla con TUNG TUNG SAHUR','3) Tres Copias del Mismo Impreso 🏪 (TUNG TUNG SAHUR) → Entrega Impreso de Comercio x3 a TUNG TUNG SAHUR','4) Sello y Número 🏪 (TUNG TUNG SAHUR) → Habla con Sellos · Espera 25 s · Habla con Registrador · Espera 30 s','5) La Liquidación 🏪 (Interventor) → Entrega Recibo de Licencia x1 a Interventor','6) El Día de Tung Tung Sahur 🏪 (Ministro) → Habla con TUNG TUNG SAHUR'], desc:'Yael: Dinero dormido. Vaya al Ayuntamiento a por la licencia de comercio.'},
+    // ⬜ la insertó mapa_auto.py: nombre, NPC, pasos y de quién cuelga salen del
+    //    juego y son exactos. Falta darle una `desc` con voz propia, comprobar la FACCIÓN (nadie más da este NPC, así que va adivinada)
+    //    y, si toca, `unlocks`.
+    {id:'sheriff', label:'Dese Usted un Paseo 🚔', npc:'Sheriff Makelele', faction:'gold', type:'Saga · 4 misiones', coins:56, status:'new',
+      steps:['1) Dese Usted un Paseo 🚔 (Sheriff Makelele) → Entrega Certificado de Paseo Reflexivo x1 a Sheriff Makelele','2) Tres Minutos de Cortesía 🚔 (Sheriff Makelele) → Entrega Hoja de Salida x1 a Sheriff Makelele','3) Usted No Ha Reconsiderado Nada 🚔 (Sheriff Makelele) → Entrega Hoja de Salida de la Segunda Recon x1 a Sheriff Makelele','4) Ronda de Buena Voluntad 🚔 (Sheriff Makelele) → Ve a Villa Villez, Cerezal del Valdemojón, Villaputa · Entrega Parte Trimestral de Novedades x1 a Sheriff Makelele'], desc:'El sheriff del Reino tiene placa, escopeta, despacho y cero delitos registrados. No porque los tape: para él el delito no existe como categoría —hace falta un dueño, un objeto y una intención, y la intención no se puede probar—, así que le sale un cero coma cero y ahí se acaba la conversación. Como no le vas a discutir, te manda a pensártelo andando mil bloques; luego te encierra tres minutos para que veas lo injusta que es una cárcel, y como sales igual que entrabas, te encierra cinco más. Al final te manda a patrullar Villa Villez, el Cerezal y Villaputa —el único sitio donde de verdad se mueve género—, vuelves con el parte y él lo archiva sin abrirlo. Aquí está la explicación de por qué en este pueblo roban tanto y nunca pasa nada.'},
   ];
   // ===== CONEXIONES (aristas): source -> target =====
   const E = [
@@ -5322,6 +5334,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
     ['ampliacion_c_pedir','ampliacion_c_temporada'],
     ['ampliacion_c_temporada','ampliacion_d_pedir'],
     ['ampliacion_d_pedir','ampliacion_d_cadena'],
+    ['correos','sheriff'],   // ← lo puso mapa_auto.py
   ];
 
   /* ==========================================================================================
@@ -6266,3 +6279,6 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
   })();
 })();
 </script>
+
+</body>
+</html>
