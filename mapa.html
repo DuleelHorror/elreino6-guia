@@ -5235,6 +5235,10 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
     //    y, si toca, `unlocks`.
     {id:'sheriff', label:'Dese Usted un Paseo 🚔', npc:'Sheriff Makelele', faction:'gold', type:'Saga · 4 misiones', coins:56, status:'new',
       steps:['1) Dese Usted un Paseo 🚔 (Sheriff Makelele) → Entrega Certificado de Paseo Reflexivo x1 a Sheriff Makelele','2) Tres Minutos de Cortesía 🚔 (Sheriff Makelele) → Entrega Hoja de Salida x1 a Sheriff Makelele','3) Usted No Ha Reconsiderado Nada 🚔 (Sheriff Makelele) → Entrega Hoja de Salida de la Segunda Recon x1 a Sheriff Makelele','4) Ronda de Buena Voluntad 🚔 (Sheriff Makelele) → Ve a Villa Villez, Cerezal del Valdemojón, Villaputa · Entrega Parte Trimestral de Novedades x1 a Sheriff Makelele'], desc:'El sheriff del Reino tiene placa, escopeta, despacho y cero delitos registrados. No porque los tape: para él el delito no existe como categoría —hace falta un dueño, un objeto y una intención, y la intención no se puede probar—, así que le sale un cero coma cero y ahí se acaba la conversación. Como no le vas a discutir, te manda a pensártelo andando mil bloques; luego te encierra tres minutos para que veas lo injusta que es una cárcel, y como sales igual que entrabas, te encierra cinco más. Al final te manda a patrullar Villa Villez, el Cerezal y Villaputa —el único sitio donde de verdad se mueve género—, vuelves con el parte y él lo archiva sin abrirlo. Aquí está la explicación de por qué en este pueblo roban tanto y nunca pasa nada.'},
+    // ⬜ la insertó mapa_auto.py: nombre, NPC, pasos y de quién cuelga salen del
+    //    juego y son exactos. Falta darle una `desc` con voz propia y, si toca, `unlocks`.
+    {id:'chupa', label:'El Chupapinqui 🗼', npc:'El Guarda Bosques Felipe Buñuelo', faction:'folk', type:'Saga · 3 misiones', coins:36, status:'new',
+      steps:['1) El Chupapinqui 🗼 (El Guarda Bosques Felipe Buñuelo) → Entrega Nido x4 a El Guarda Bosques Felipe Buñuelo','2) Cebo de Segunda 🗼 (El Guarda Bosques Felipe Buñuelo) → Entrega rotten flesh x12 a El Guarda Bosques Felipe Buñuelo','3) Parte de Avistamiento 🗼 (El Guarda Bosques Felipe Buñuelo) → Entrega Parte de Avistamiento del Chupapin x1 a Chester el Cartero del Reino'], desc:'Felipe Buñuelo se ríe del chupacabras de Albahaca —dice que eso es un cuento para no dormir solo— y luego te cuenta, completamente en serio, lo del Chupapinqui: una cosa que baja de noche por el barranco y que, si te pilla, te chupa el pinqui. Nadie ha conseguido que explique qué es un pinqui. Él lo intenta, pero solo sabe decir lo que NO es. Lleva dos años montando un señuelo en lo alto de su torre y le faltan nidos y algo que huela lo bastante mal; cuando por fin funciona, no lo ve, ve lo que deja —que según él es más fiable— y levanta un parte con la hora, el sitio y el hecho. La saga acaba en la ventanilla de Correos, con un cartero que lee el avistamiento de una criatura de arriba abajo y solo tiene una objeción: que viene sin franquear.'},
   ];
   // ===== CONEXIONES (aristas): source -> target =====
   const E = [
@@ -5335,6 +5339,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
     ['ampliacion_c_temporada','ampliacion_d_pedir'],
     ['ampliacion_d_pedir','ampliacion_d_cadena'],
     ['correos','sheriff'],   // ← lo puso mapa_auto.py
+    ['testdrive','chupa'],   // ← lo puso mapa_auto.py
   ];
 
   /* ==========================================================================================
