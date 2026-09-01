@@ -207,6 +207,23 @@ thead th{font-size:.74rem; text-transform:uppercase; letter-spacing:.07em; color
   
   
   
+  /* ── LA PALETA DEL GRAFO (solo de esta página) ──────────────────────────────
+     Se declara aquí y no en `tema.css` porque solo la usa el mapa: el marco común lo
+     comparten nueve páginas y ninguna otra quiere el fondo gris. */
+  :root{
+    --mapa-fondo:#dedde3;      /* gris apagado: el papel del organigrama */
+    --mapa-reja:#d8d7dd;       /* la cuadrícula: TIENE que ser casi invisible o compite
+                                  con las flechas, que es justo lo que veniamos a arreglar */
+    --mapa-linea:#7c7790;      /* LAS FLECHAS. Contraste 3.2:1 sobre el fondo */
+    --mapa-linea-2:#57526b;    /* la flecha resaltada */
+  }
+  :root[data-theme="dark"]{
+    --mapa-fondo:#14111d;
+    --mapa-reja:#191524;
+    --mapa-linea:#5d5480;
+    --mapa-linea-2:#9b8cd0;
+  }
+
   *{box-sizing:border-box}
   html,body{height:100%;margin:0}
   body{background:var(--lienzo);color:var(--tinta);
@@ -354,8 +371,23 @@ thead th{font-size:.74rem; text-transform:uppercase; letter-spacing:.07em; color
   .btn.find:focus{outline:none;border-color:var(--acento);box-shadow:0 0 0 3px var(--brillo)}
   @media(max-width:720px){.btn.find{width:130px}}
 
-  #cy{flex:1;width:100%;min-height:0;background:
-    radial-gradient(60% 60% at 50% 0%, var(--brillo), transparent 70%), var(--lienzo)}
+  /* 🎨🔴 EL LIENZO DEL GRAFO VA MÁS APAGADO QUE EL RESTO DE LA WEB, Y A PROPÓSITO
+     (usuario, 2026-09-01: «el fondo ponlo más gris apagado para que se vean bien las
+     líneas»). Antes era `var(--lienzo)` —#f6f5f9, casi blanco— con un resplandor morado
+     encima, y las flechas son `var(--linea)` —#e7e3f0, lavanda pálido—: gris clarísimo
+     sobre blanco. En la captura no se veía NINGUNA línea.
+     🔑 Por eso el mapa tiene sus PROPIAS variables y no reusa las del marco: el resto de
+     la web quiere ser luminosa, pero un grafo de 222 nodos necesita que el fondo se
+     calle para que se oigan las líneas. Cambiar `--lienzo` habría oscurecido las otras
+     ocho páginas.
+     🕸️ La cuadrícula tenue no es adorno: da referencia al arrastrar y al hacer zoom,
+     que sin ella el grafo parece flotar en la nada. */
+  #cy{flex:1;width:100%;min-height:0;
+    background-color:var(--mapa-fondo);
+    background-image:
+      linear-gradient(var(--mapa-reja) 1px, transparent 1px),
+      linear-gradient(90deg, var(--mapa-reja) 1px, transparent 1px);
+    background-size:44px 44px}
 
   .hint{position:fixed;left:50%;bottom:12px;transform:translateX(-50%);z-index:4;
     background:var(--tarjeta);border:1px solid var(--linea);border-radius:999px;
@@ -5932,7 +5964,11 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
 
   function v(name){return getComputedStyle(document.documentElement).getPropertyValue(name).trim();}
   function style(){
+    // 🔴 `edge` tiene su PROPIO color y no el de los bordes de los nodos: antes las dos
+    //    cosas eran `--linea` (lavanda pálido) y sobre el fondo claro las flechas
+    //    desaparecían. El borde del nodo puede ser tenue —la caja ya se ve—; la flecha no.
     const surface=v('--tarjeta'),ink=v('--tinta'),inkSoft=v('--tinta-2'),line=v('--linea'),chip=v('--acento-suave'),
+      hilo=v('--mapa-linea'),hilo2=v('--mapa-linea-2'),
       sci=v('--info'),folk=v('--ok'),gold=v('--aviso'),arc=v('--acento'),faint=v('--tinta-3'),key=v('--llave'),dng=v('--alerta');
     return [
       {selector:'node',style:{'background-color':surface,'border-width':2,'border-color':line,
@@ -6000,12 +6036,23 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
          🔴 `edge-distances: node-position` no es cosmético: hace que los codos se midan desde el
          CENTRO de los nodos, que es como los calcula colocar(). Con el valor por defecto
          ('intersection') se miden desde el borde y las flechas salen descolocadas. */
-      {selector:'edge',style:{'width':2.5,'line-color':line,'target-arrow-color':line,'target-arrow-shape':'triangle',
+      {selector:'edge',style:{'width':2.2,'line-color':hilo,'target-arrow-color':hilo,'target-arrow-shape':'triangle',
+        'arrow-scale':1.15,'line-opacity':.85,
         'curve-style':'segments','edge-distances':'node-position','segment-weights':.5,'segment-distances':0,
         'segment-radius':10,'radius-type':'arc-radius','arrow-scale':1.1}},
       {selector:'edge[kind="future"]',style:{'line-style':'dashed','line-color':faint,'target-arrow-color':faint,'width':2}},
-      {selector:'.faded',style:{'opacity':.16}},
-      {selector:'.hl',style:{'border-color':arc,'line-color':arc,'target-arrow-color':arc,'width':3.5}},
+      /* 🔦 EL APAGADO. Dos intensidades a proposito:
+         · `.faded`  — al hacer CLIC en una mision: se apaga fuerte, porque estas leyendo su
+                       ficha en el panel y el grafo es contexto.
+         · `.atenuado` — al pasar el RATON por encima: se apaga menos, porque sigues
+                       explorando y el resto del mapa tiene que seguir ahi. */
+      {selector:'.faded',style:{'opacity':.13}},
+      {selector:'.atenuado',style:{'opacity':.2}},
+      {selector:'.hl',style:{'border-color':arc,'line-color':arc,'target-arrow-color':arc,'width':4,'line-opacity':1,'z-index':20}},
+      /* la cadena bajo el raton: mas gruesa y en tinta oscura, no en el morado del clic,
+         para que se distinga de «esto es lo que estas leyendo» */
+      {selector:'.camino',style:{'line-color':hilo2,'target-arrow-color':hilo2,'width':4,'line-opacity':1,'z-index':15}},
+      {selector:'node.camino',style:{'border-width':4,'z-index':15}},
     ];
   }
 
@@ -6098,13 +6145,48 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
     if(d.como) h+='<div class="lbl">Cómo se hace</div><p class="como">'+esc(d.como)+'</p>';
     body.innerHTML=h; panel.classList.add('on');
   }
-  function close(){panel.classList.remove('on'); cy.elements().removeClass('faded hl'); cy.$(':selected').unselect();}
+  function close(){panel.classList.remove('on'); cy.elements().removeClass('faded hl atenuado camino'); cy.$(':selected').unselect();}
   function focus(n){
     const rel=n.predecessors().union(n).union(n.outgoers());
     cy.elements().addClass('faded'); rel.removeClass('faded'); rel.addClass('hl'); n.removeClass('hl');
   }
   cy.on('tap','node',e=>{show(e.target.data()); focus(e.target);});
   cy.on('tap',e=>{if(e.target===cy) close();});
+
+  /* ===== 🔦 SEGUIR UNA MISIÓN CON EL RATÓN (2026-09-01) =====
+     Encargo del usuario: «hay un lío de líneas pasando por encima de otras que ya no se
+     entiende nada».
+     🔑 Y el lío NO se arregla recolocando: dagre ya minimiza los cruces, y con 222 misiones
+     y 250 flechas dos ramas que se cruzan de verdad TIENEN que cruzarse en alguna parte.
+     Lo que se arregla es la LECTURA: pones el ratón encima de una misión y se enciende su
+     cadena entera —de dónde viene y a dónde lleva— mientras el resto se apaga. Deja de
+     hacer falta seguir una línea con el dedo entre otras cincuenta.
+     ⚠️ No se pisa con el clic: si el panel está abierto, el hover no toca nada, porque ahí
+     el resaltado ya significa otra cosa (lo que estás leyendo). */
+  let sobre=null;
+  function apagarHover(){
+    if(!sobre) return;
+    cy.elements().removeClass('atenuado camino');
+    sobre=null;
+  }
+  cy.on('mouseover','node',e=>{
+    if(panel.classList.contains('on')) return;   // manda el clic
+    const n=e.target;
+    /* 🔴 LO DE ANTES (`predecessors` + `successors`) NO SERVIA, y lo canta un numero: con el
+       raton sobre una mision TEMPRANA la «cadena» eran 207 de los 229 elementos del mapa —o
+       sea que no se apagaba nada y el hover no hacia nada. Es logico: todo lo que hay
+       despues de una mision del principio es CASI TODO.
+       ✅ Lo util es otra pregunta: «¿que necesito ANTES de esta, y que abre JUSTO despues?».
+       Asi que sube por los requisitos hasta la raiz, pero solo baja UN escalon. Es
+       exactamente lo que ya hacia el clic (`focus`), y ahora los dos coinciden. */
+    const cadena=n.predecessors().union(n.outgoers()).union(n);
+    cy.elements().addClass('atenuado');
+    cadena.removeClass('atenuado').addClass('camino');
+    sobre=n;
+  });
+  cy.on('mouseout','node',apagarHover);
+  // si el ratón se va del lienzo sin pasar por `mouseout` (pasa al salir por un borde)
+  document.getElementById('cy').addEventListener('mouseleave',apagarHover);
 
   /* ===== 📊 LA PANTALLA DE DATOS (2026-08-10, petición del usuario) =====
      TODO se cuenta a partir de N y E al abrir la página: aquí no hay ni un número escrito a mano,
