@@ -434,6 +434,68 @@ const G = [
   ]
  },
  {
+  "t": "⬜ LOS REFRESCOS DE LA ALQUIMISTA — 8 de las 12 catas van con botella teñida (2026-08-25)",
+  "sub": "&gt; Saga <code>alq_cata_*</code>. Los 12 refrescos son <code>POTION</code>. <b>Cuatro ya tienen dibujo</b>: se reutilizan las &gt; botellas libres de <code>ax_food_pack</code> (<code>beer 10008</code>, <code>fanta 10010</code>, <code>pepsi-cola 10011</code>, &gt; <code>sprite 10012</code>; la <code>coca-cola 10009</code> la usa el <code>Refresco_Cola</code> de <code>alq_cola</code>). &gt; Las otras <b>ocho</b> van con la botella de poción vanilla <b>teñida de un color distinto</b> cada una &gt; — se distinguen y cuestan cero, pero no tienen sprite propio. Se ven bien; no es urgente. &gt; 🔴 Si algún día se dibujan: son botellas de refresco, no frascos de alquimia. Etiqueta de papel &gt; pegada con cola, mayúsculas a mano, y que se note que las ha embotellado ELLA en su cocina.",
+  "items": [
+   {
+    "e": "⬜",
+    "o": "<code>Cata_Fulgor</code>",
+    "n": "Fulgor de Membrillo",
+    "m": "potion teñida <code>#FFF7A0</code>",
+    "d": "amarillo membrillo, y que el líquido ilumine el vidrio desde dentro"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>Cata_Ultima</code>",
+    "n": "La Última",
+    "m": "potion teñida <code>#2B2B2B</code>",
+    "d": "negra y quieta, sin una burbuja. La etiqueta, en blanco"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>Cata_Remiendo</code>",
+    "n": "Remiendo de Fresa",
+    "m": "potion teñida <code>#FF6B8B</code>",
+    "d": "rosa espeso, con la etiqueta de una fresa mal dibujada"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>Cata_Sangre</code>",
+    "n": "Tinto de la Casa",
+    "m": "potion teñida <code>#C42B2B</code>",
+    "d": "rojo casi negro, con un dedo de poso al fondo"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>Cata_Nada</code>",
+    "n": "Refresco de Nada",
+    "m": "potion teñida <code>#101033</code>",
+    "d": "negro que NO refleja: sin brillo especular, plano. Ése es el chiste"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>Cata_Branquias</code>",
+    "n": "Agua con Agua",
+    "m": "potion teñida <code>#2E8BC0</code>",
+    "d": "transparente pero con el vidrio combado por el peso"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>Cata_Cafe</code>",
+    "n": "Café Sin Taza",
+    "m": "potion teñida <code>#6F4E37</code>",
+    "d": "marrón con posos y una capa de espuma vieja arriba"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>Cata_Jarabe</code>",
+    "n": "Jarabe del Lunes",
+    "m": "potion teñida <code>#6B7A3A</code>",
+    "d": "verde pardo, opaco, y que dé pereza mirarlo"
+   }
+  ]
+ },
+ {
   "t": "⬜ Armas que LLEVAN los mobs en la mano (se ven de lejos)",
   "sub": "No las usa el jugador, pero se ven en la mano del bicho todo el combate.",
   "items": [
@@ -1621,7 +1683,7 @@ const G = [
   ]
  }
 ];
-const FALTAN = 78, ITEMS = 92;
+const FALTAN = 86, ITEMS = 100;
 
 function TH(){const r=document.documentElement;
   const cur=r.dataset.theme||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');
