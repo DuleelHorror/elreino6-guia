@@ -5283,6 +5283,11 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
     //    juego y son exactos. Falta darle una `desc` con voz propia y, si toca, `unlocks`.
     {id:'medida', label:'Doble Medida 📡', npc:'Gordon Wizman', faction:'sci', type:'Misión', coins:80, status:'new',
       steps:['1) Doble Medida 📡 (Gordon Wizman) → Entrega Doble Medida x1 a Gordon Wizman'], desc:'La última de Gordon Wizman, y la más larga del Reino: cincuenta minutos de reloj. Él no mide la piedra como la doctora — mide EL CAMPO —, y sospecha que el zumbido del fondo del Abismo y los desastres de Tierra Hostil son la misma señal vista por sus dos extremos. Para demostrarlo hacen falta dos lecturas: veinte minutos por debajo de la cota −500 en el Abismo, y otros treinta a la intemperie en Tierra Hostil, fuera de la concesión, donde cae todo. Con el aparato encima o no cuenta. Viajar, esperar el barco o desconectarte solo PAUSA el reloj; lo único que lo borra es MORIRSE, y lo borra entero: las dos medidas, y se vuelve a empezar por el Abismo. — Pide las dos ramas, la del helicóptero y la del barco, porque manda a los dos sitios.'},
+    // ⬜ la insertó mapa_auto.py: nombre, NPC, pasos y de quién cuelga salen del
+    //    juego y son exactos. Falta darle una `desc` con voz propia, comprobar la FACCIÓN (nadie más da este NPC, así que va adivinada)
+    //    y, si toca, `unlocks`.
+    {id:'cambio_destino', label:'Cambio de Destino 🔁', npc:'Anselmo', faction:'sci', type:'Misión', status:'new',
+      steps:['1) Cambio de Destino 🔁 (Anselmo) → Entrega papeles x1 a Anselmo'], desc:'Anselmo: ¿Que te quieres cambiar de puesto? Ay, cielo. Tráeme un papel en blanco y te lo sello, que el impreso lo pone usted. Cosas de Personal.'},
   ];
   // ===== CONEXIONES (aristas): source -> target =====
   const E = [
@@ -5388,6 +5393,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
     ['expedicion','ciego'],   // ← lo puso mapa_auto.py
     ['abismo','medida'],   // ← lo puso mapa_auto.py
     ['falcioni','medida'], // ← a mano: pide LAS DOS ramas (helicóptero Y barco)
+    ['clase','cambio_destino'],   // ← lo puso mapa_auto.py
   ];
 
   /* ==========================================================================================
