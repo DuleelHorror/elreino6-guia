@@ -5311,6 +5311,11 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
     //    juego y son exactos. Falta darle una `desc` con voz propia y, si toca, `unlocks`.
     {id:'balsa', label:'Un Bidón para la Primera ⛽', npc:'Aniceto Morcillo', faction:'sci', type:'Saga · 2 misiones', coins:110, status:'new',
       steps:['1) Un Bidón para la Primera ⛽ (Aniceto Morcillo) → Entrega Parte de Repostaje x1 a Aniceto Morcillo','2) Las Otras Cinco ⛽ (Aniceto Morcillo) → Entrega Parte de la Red x1 a Aniceto Morcillo'], desc:'Aniceto Morcillo: Hay una balsa amarrada a doce pasos del barco. Lleva ahí desde antes que nosotros y no la...'},
+    // ⬜ la insertó mapa_auto.py: nombre, NPC, pasos y de quién cuelga salen del
+    //    juego y son exactos. Falta darle una `desc` con voz propia, comprobar la FACCIÓN (nadie más da este NPC, así que va adivinada)
+    //    y, si toca, `unlocks`.
+    {id:'pili', label:'Clase de Prueba Gratis 🧘', npc:'Pili', faction:'folk', type:'Saga · 10 misiones', coins:122, status:'new',
+      steps:['1) Clase de Prueba Gratis 🧘 (Pili) → Entrega Hoja de los Veinte Saltos x1 a Pili','2) La Sentadilla Consciente 🧘 (Pili) → Entrega Hoja de las Sentadillas x1 a Pili','3) Postura del Árbol 🧘 (Pili) → Entrega Hoja de la Postura del Árbol x1 a Pili','4) Esterillas de Bambú 🧘 (Pili) → Entrega cañas de bambú x12, lana blanca x4 a Pili','5) El Saludo al Sol 🧘 (Pili) → Entrega Hoja del Saludo al Sol x1 a Pili','6) Respiración de Cerezo 🧘 (Pili) → Entrega Hoja de la Respiración x1 a Pili','7) Cardio por el Valdemojón 🧘 (Pili) → Entrega Hoja del Cardio x1 a Pili','8) La Queja del Vecino 🧘 (Pili) → Habla con Benito Camela · Habla con Pili','9) La Clase Completa 🧘 (Pili) → Entrega Hoja de la Clase Completa x1 a Pili','10) El Diploma de Pili 🧘 (Pili) → Entrega Hoja del Examen Final x1 a Pili'], desc:'Diez clases de yoga AL AIRE LIBRE en el Cerezal, y se hacen de verdad: saltar, hacer sentadillas, aguantar quieto, madrugar y esprintar. Cada clase acaba con una hoja firmada que se le entrega a ella. Rama SUELTA: se puede empezar el primer día.'},
   ];
   // ===== CONEXIONES (aristas): source -> target =====
   const E = [
@@ -5392,6 +5397,9 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
                                  //   `requirements.quests` es alq_cola
     ['contrato','lucia'],        // ← SUELTA, como `pincel` y `correos`: no depende
                                  //   de ninguna rama y su faena la da el grupo default
+    ['contrato','pili'],         // ← SUELTA igual: las clases de Pili no piden nada y su
+                                 //   faena la da el grupo default (tercera cosa que hacer
+                                 //   en el Cerezal, con Pincelino y Lucía)
     ['vostok_p1','aviso'],   // ← lo puso mapa_auto.py
     ['fichaje','lenador'],   // ← lo puso mapa_auto.py
     ['pecio','guarda'],   // ← lo puso mapa_auto.py
