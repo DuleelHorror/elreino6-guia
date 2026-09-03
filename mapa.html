@@ -5307,6 +5307,10 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
     //    juego y son exactos. Falta darle una `desc` con voz propia y, si toca, `unlocks`.
     {id:'testdrive4_creeper', label:'Test Drive 4 👊', npc:'El Guarda Bosques Felipe Buñuelo', faction:'sci', type:'Misión', coins:25, status:'new',
       steps:['1) Test Drive 4 👊 (El Guarda Bosques Felipe Buñuelo) → Mata 1 creepers'], desc:'El Guarda Bosques: Un creeper. Sin nada en la mano. Uno, y me vale.'},
+    // ⬜ la insertó mapa_auto.py: nombre, NPC, pasos y de quién cuelga salen del
+    //    juego y son exactos. Falta darle una `desc` con voz propia y, si toca, `unlocks`.
+    {id:'balsa', label:'Un Bidón para la Primera ⛽', npc:'Aniceto Morcillo', faction:'sci', type:'Saga · 2 misiones', coins:110, status:'new',
+      steps:['1) Un Bidón para la Primera ⛽ (Aniceto Morcillo) → Entrega Parte de Repostaje x1 a Aniceto Morcillo','2) Las Otras Cinco ⛽ (Aniceto Morcillo) → Entrega Parte de la Red x1 a Aniceto Morcillo'], desc:'Aniceto Morcillo: Hay una balsa amarrada a doce pasos del barco. Lleva ahí desde antes que nosotros y no la...'},
   ];
   // ===== CONEXIONES (aristas): source -> target =====
   const E = [
@@ -5419,6 +5423,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
     ['abismo','medida'],   // ← lo puso mapa_auto.py
     ['falcioni','medida'], // ← a mano: pide LAS DOS ramas (helicóptero Y barco)
     ['clase','cambio_destino'],   // ← lo puso mapa_auto.py
+    ['muestras','balsa'],   // ← lo puso mapa_auto.py
   ];
 
   /* ==========================================================================================
