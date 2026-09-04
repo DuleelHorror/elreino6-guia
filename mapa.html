@@ -441,6 +441,18 @@ thead th{font-size:.74rem; text-transform:uppercase; letter-spacing:.07em; color
     background:color-mix(in srgb,var(--llave) 18%,var(--tarjeta));border:1px solid var(--llave);
     box-shadow:0 0 0 1px color-mix(in srgb,var(--llave) 30%,transparent), 0 6px 18px color-mix(in srgb,var(--llave) 22%,transparent)}
   .sw.key{border-color:var(--llave)!important;box-shadow:0 0 6px var(--llave)}
+  /* 🔗 IR Y VENIR ENTRE MISIONES SIN SEGUIR UNA LÍNEA (2026-09-04).
+     Encargo del usuario: «cuesta seguir las relaciones». Y el problema no era el dibujo
+     —las flechas ya van quebradas y la cadena se enciende al pasar el ratón—, era que
+     esa información SOLO existía como línea. El panel te contaba la misión entera y no
+     te decía ni de dónde venía ni qué abría. Ahora lo dice con palabras y se puede
+     pulsar: se navega el árbol LEYENDO, sin perseguir ninguna flecha. */
+  .panel .rel{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 14px}
+  .panel .rel a{display:inline-block;font:inherit;font-size:.82rem;line-height:1.25;
+    padding:6px 10px;border-radius:9px;cursor:pointer;text-decoration:none;
+    background:var(--hundido);border:1px solid var(--linea);color:var(--tinta-2)}
+  .panel .rel a:hover{border-color:var(--acento);color:var(--tinta);background:var(--acento-suave)}
+  .panel .rel .nada{font-size:.82rem;color:var(--tinta-3);font-style:italic;padding:6px 0}
   .panel .lbl{font-size:.72rem;text-transform:uppercase;letter-spacing:.1em;color:var(--tinta-3);font-weight:800;margin:16px 0 8px}
   .panel ol{margin:0;padding-left:1.2em} .panel li{margin:.3em 0;color:var(--tinta-2);font-size:.9rem}
   .panel .who{font-size:.85rem;color:var(--tinta-3);margin:-6px 0 12px}
@@ -5318,9 +5330,11 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
     //    juego y son exactos. Falta darle una `desc` con voz propia y, si toca, `unlocks`.
     // ⬜ la insertó mapa_auto.py: nombre, NPC, pasos y de quién cuelga salen del
     //    juego y son exactos. Falta darle una `desc` con voz propia y, si toca, `unlocks`.
+    // ⬜ la insertó mapa_auto.py: nombre, NPC, pasos y de quién cuelga salen del
+    //    juego y son exactos. Falta darle una `desc` con voz propia y, si toca, `unlocks`.
     {id:'pesca', label:'Una Caña Prestada 🎣', npc:'Bacalao Gabardinez', faction:'folk', type:'Saga · 14 misiones', coins:298, status:'new',
-      steps:['1) Una Caña Prestada 🎣 (Bacalao Gabardinez) → Entrega Ficha de Especie x1 a Bacalao Gabardinez','2) El Sobre del 89 🕵️ (Bacalao Gabardinez) → Entrega Lo que Subió en el Tercer Lance x1 a Bacalao Gabardinez','3) No Consta 🏛️ (Bacalao Gabardinez) → Habla con Interventor · Entrega Certificado de Inexistencia x1 a Bacalao Gabardinez','4) El Expediente 📖 (Bacalao Gabardinez) → Entrega Ficha de Especie x1 a Bacalao Gabardinez','5) Un Testigo sin Nombre ⚖️ (Bacalao Gabardinez) → Entrega Hoja de Tasación x1 a Bacalao Gabardinez','6) El que Debía Dinero 💰 (Bacalao Gabardinez) → Entrega El que Debía Dinero x1 a Bacalao Gabardinez','7) El que Habló de Más 🤐 (Bacalao Gabardinez) → Entrega El que Habló de Más x1 a Bacalao Gabardinez','8) Dónde Pasó Cada Cosa ⚓ (Bacalao Gabardinez) → Ve a El amarre de levante, El amarre de los piratas · Entrega Boya de Amarre x1 a Bacalao Gabardinez','9) La Marea de las Tres 🌙 (Bacalao Gabardinez) → Entrega Parte de la Marea Nocturna x1 a Bacalao Gabardinez','10) Lo que se Echa al Caldero ⚗️ (Bacalao Gabardinez) → Habla con Lolo el Fundacional · Entrega Anzuelo Recuperado x1 a Bacalao Gabardinez','11) La Caña que Cuesta 🥇 (Bacalao Gabardinez) → Entrega Recibo de la Fragua x1 a Bacalao Gabardinez','12) Abrir la Lonja 🏪 (Bacalao Gabardinez) → Habla con Yael Goldstein · Entrega Libro de la Lonja x1 a Bacalao Gabardinez','13) El que No Hizo Nada 🕳️ (Bacalao Gabardinez) → Entrega El que No Hizo Nada x1 a Bacalao Gabardinez','14) Romualdo 🧥 (Bacalao Gabardinez) → Entrega Salvavidas del 89 x1 a Bacalao Gabardinez'], desc:'A Bacalao Gabardinez le ha llegado una carta con treinta y seis años de retraso, de la saca que se cayó al puerto en el 89. La leyó delante de todo el mundo y no dijo ni una palabra. Lo que no dijo es que el sobre no viene a su nombre. A partir de ahí te manda al agua: no a pescar, a preguntar. Para él cada pieza que sube es un testigo, el catálogo es un expediente y el muelle es una oficina con humedades. Catorce encargos, cuatro cañas cada una mejor que la anterior, y una lonja que no abre hasta que se fía de ti. El humor lo pone todo el mundo menos él: el Ayuntamiento, que certifica por escrito que el Puerto no existe; el enano de la fragua; y el banco, que firma que la lonja es real pero no que sea buena idea.'},
-      ];
+      steps:['1) Una Caña Prestada 🎣 (Bacalao Gabardinez) → Entrega Hoja de Cinco Lances x1 a Bacalao Gabardinez','2) El Sobre del 89 🕵️ (Bacalao Gabardinez) → Entrega Lo que Subió en el Tercer Lance x1 a Bacalao Gabardinez','3) No Consta 🏛️ (Bacalao Gabardinez) → Habla con Interventor · Entrega Certificado de Inexistencia x1 a Bacalao Gabardinez','4) El Expediente 📖 (Bacalao Gabardinez) → Entrega Ficha de Especie x1 a Bacalao Gabardinez','5) Un Testigo sin Nombre ⚖️ (Bacalao Gabardinez) → Entrega Hoja de Tasación x1 a Bacalao Gabardinez','6) El que Debía Dinero 💰 (Bacalao Gabardinez) → Entrega El que Debía Dinero x1 a Bacalao Gabardinez','7) El que Habló de Más 🤐 (Bacalao Gabardinez) → Entrega El que Habló de Más x1 a Bacalao Gabardinez','8) Dónde Pasó Cada Cosa ⚓ (Bacalao Gabardinez) → Ve a El amarre de levante, El amarre de los piratas · Entrega Boya de Amarre x1 a Bacalao Gabardinez','9) La Marea de las Tres 🌙 (Bacalao Gabardinez) → Entrega Parte de la Marea Nocturna x1 a Bacalao Gabardinez','10) Lo que se Echa al Caldero ⚗️ (Bacalao Gabardinez) → Habla con Lolo el Fundacional · Entrega Anzuelo Recuperado x1 a Bacalao Gabardinez','11) La Caña que Cuesta 🥇 (Bacalao Gabardinez) → Entrega Recibo de la Fragua x1 a Bacalao Gabardinez','12) Abrir la Lonja 🏪 (Bacalao Gabardinez) → Habla con Yael Goldstein · Entrega Libro de la Lonja x1 a Bacalao Gabardinez','13) El que No Hizo Nada 🕳️ (Bacalao Gabardinez) → Entrega El que No Hizo Nada x1 a Bacalao Gabardinez','14) Romualdo 🧥 (Bacalao Gabardinez) → Entrega Salvavidas del 89 x1 a Bacalao Gabardinez'], desc:'A Bacalao Gabardinez le ha llegado una carta con treinta y seis años de retraso, de la saca que se cayó al puerto en el 89. La leyó delante de todo el mundo y no dijo ni una palabra. Lo que no dijo es que el sobre no viene a su nombre. A partir de ahí te manda al agua: no a pescar, a preguntar. Para él cada pieza que sube es un testigo, el catálogo es un expediente y el muelle es una oficina con humedades. Catorce encargos, cuatro cañas cada una mejor que la anterior, y una lonja que no abre hasta que se fía de ti. El humor lo pone todo el mundo menos él: el Ayuntamiento, que certifica por escrito que el Puerto no existe; el enano de la fragua; y el banco, que firma que la lonja es real pero no que sea buena idea.'},
+          ];
   // ===== CONEXIONES (aristas): source -> target =====
   const E = [
     // 🎒 EL ZURRÓN DE MISIÓN cuelga del CONTRATO: la da Toni, no pide ninguna quest y
@@ -5436,8 +5450,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
     ['falcioni','medida'], // ← a mano: pide LAS DOS ramas (helicóptero Y barco)
     ['clase','cambio_destino'],   // ← lo puso mapa_auto.py
     ['muestras','balsa'],   // ← lo puso mapa_auto.py
-    ['correos','pesca'],   // ← lo puso mapa_auto.py
-    ['correos','pesca'],   // ← lo puso mapa_auto.py
+       // ← lo puso mapa_auto.py
   ];
 
   /* ==========================================================================================
@@ -6183,6 +6196,24 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
     if(d.unlocks) h+='<span class="chip key">🔓 Desbloquea</span>';
     h+='</div>';
     if(d.unlocks) h+='<div class="unlock">🔓 <span>Desbloquea: '+esc(d.unlocks)+'</span></div>';
+    /* 🔗 DE DÓNDE VIENE Y QUÉ ABRE. Se saca del propio grafo (`incomers`/`outgoers`), así
+       que no hay una segunda lista que mantener: si cambia una arista, esto cambia solo.
+       Va ARRIBA, antes de la descripción, porque es lo primero que se pregunta quien está
+       intentando entender el árbol: «¿y esto de qué cuelga?». */
+    const yo=cy.$id(d.id);
+    if(yo.length){
+      const antes=yo.incomers('node'), luego=yo.outgoers('node');
+      h+='<div class="lbl">Antes hace falta</div><div class="rel">';
+      h+= antes.length
+        ? antes.map(n=>'<a data-ir="'+n.id()+'">'+esc(n.data('label'))+'</a>').join('')
+        : '<span class="nada">Nada: se puede empezar sin haber hecho ninguna otra.</span>';
+      h+='</div>';
+      h+='<div class="lbl">Después se abre</div><div class="rel">';
+      h+= luego.length
+        ? luego.map(n=>'<a data-ir="'+n.id()+'">'+esc(n.data('label'))+'</a>').join('')
+        : '<span class="nada">Esta línea se acaba aquí.</span>';
+      h+='</div>';
+    }
     if(d.desc) h+='<p class="desc">'+esc(d.desc)+'</p>';
     let rw=[]; if(d.coins) rw.push('🥜 '+d.coins+' Cacahuates'); if(d.reward) rw.push(esc(d.reward));
     if(rw.length) h+='<p class="rw">Recompensa: '+rw.join(' · ')+'</p>';
@@ -6195,6 +6226,14 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
     if(d.como) h+='<div class="lbl">Cómo se hace</div><p class="como">'+esc(d.como)+'</p>';
     body.innerHTML=h; panel.classList.add('on');
   }
+  /* 🔗 Un ÚNICO manejador para todos los enlaces del panel (delegación). Antes esto era
+     un `onclick` por enlace y las comillas anidadas dejaron el JS sin compilar — lo cazó
+     el validador de `build_mapa.py`, que por eso existe. */
+  body.addEventListener('click',e=>{
+    const a=e.target.closest('a[data-ir]');
+    if(a){ e.preventDefault(); ER6.ir(a.getAttribute('data-ir')); }
+  });
+
   function close(){panel.classList.remove('on'); cy.elements().removeClass('faded hl atenuado camino'); cy.$(':selected').unselect();}
   function focus(n){
     const rel=n.predecessors().union(n).union(n.outgoers());
@@ -6291,6 +6330,18 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
 
   window.ER6={
     fit:()=>cy.fit(undefined,50),
+    /* 🔗 Saltar a otra misión desde el panel. Centra, resalta su cadena y abre su ficha,
+       o sea exactamente lo mismo que pulsarla en el grafo — pero sin tener que encontrarla
+       entre 119 nodos. Es lo que convierte el panel en un índice navegable. */
+    ir:function(id){
+      const n=cy.$id(id);
+      if(!n.length) return;
+      cy.elements().removeClass('faded hl atenuado camino');
+      cy.$(':selected').unselect();
+      n.select();
+      show(n.data()); focus(n);
+      cy.animate({center:{eles:n}, zoom:Math.max(cy.zoom(),0.75)}, {duration:320});
+    },
     /* 🌾 PESTAÑAS (2026-08-11). Cambia el dataset entero y vuelve a repartir el organigrama.
        🔴 La de cultivos es una SIMULACIÓN, no contenido del server (ver el comentario de NC).
        Va en pestaña aparte justo para no romper la regla de "el mapa solo enseña lo que se
