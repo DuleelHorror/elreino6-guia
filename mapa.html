@@ -5431,10 +5431,16 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
     ['contactos','nbq'],['falcioni','nbq'],
     // 🗺 Y el plano cuelga de la saga: solo tiene sentido cuando ya has pisado la ciudad.
     ['nbq','plano'],
-    ['plano','muestras'],
     ['alquimista','alq_cola'],   // ← lo puso mapa_auto.py
     ['plano','boceto'],       // ← Mau te manda al pintor en `plano_01_zona`, y
                               //   vuelves a ella con el boceto en `plano_02_boceto`
+    // ☘🔴 LA LINEA DE LA ZONA ES UNA SOLA, Y EL MAPA LA PINTABA COMO TRES (2026-09-06).
+    //    `mapa_auto.py` habia colgado `muestras` y `ruinas` de `plano`, asi que del
+    //    mismo nodo salian TRES flechas en paralelo y el jugador veia tres caminos
+    //    donde hay uno. Usuario: *«van todas seguidas, por el orden logico, no van
+    //    separadas, vas a liar al jugador»*. El orden real, leido de `quests.yml`:
+    //    nbq → plano(1) → boceto → plano(2) → muestras → balsa → ruinas.
+    ['boceto','muestras'],
     ['alq_cola','alq_cata'],     // ← LAS CATAS cuelgan del refresco de cola: su
                                  //   `requirements.quests` es alq_cola
     ['contrato','lucia'],        // ← SUELTA, como `pincel` y `correos`: no depende
@@ -5475,7 +5481,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
     ['clase','cambio_destino'],   // ← lo puso mapa_auto.py
     ['muestras','balsa'],   // ← lo puso mapa_auto.py
        // ← lo puso mapa_auto.py
-    ['plano','ruinas'],   // ← lo puso mapa_auto.py
+    ['balsa','ruinas'],
   ];
 
   /* ==========================================================================================
