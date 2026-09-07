@@ -5363,6 +5363,21 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
     //    ensucian la terminal. Lo que aporta esta misión es llegar ANTES y costar MENOS.
     {id:'refugio_cerdo', label:'Nadie se Queja del Menú 🐷', npc:'Nico', zona:'villavillez', faction:'gold', type:'Misión · 1 entrega', coins:4, reward:'la Correa del Refugio + poder adoptar El Cerdo sin Gusto (100 Cacahuates en el mostrador)', status:'new',
       steps:['1) Nadie se Queja del Menú 🐷 (Nico) → entrégale 8 trozos de carne podrida y 4 zanahorias; al acabar te da la Correa y se te abre el mostrador del refugio'], desc:'La puerta barata del refugio, y va justo después de la donación de heno y lana. Nico tiene un cerdo que no distingue lo que come, y por eso es el único al que puede dar de comer todos los días: se alimenta de lo que la gente tira. Al acabar te da la correa y te deja dar de alta la adopción en el mostrador de al lado. El alta la cobra el Ayuntamiento, no él.'},
+    // ⬜ la insertó mapa_auto.py: nombre, NPC, pasos y de quién cuelga salen del
+    //    juego y son exactos. Falta darle una `desc` con voz propia y, si toca, `unlocks`.
+    // 🐟 LA QUE ENSEÑA PARA QUÉ SIRVE COCINAR EL PESCADO (2026-09-07). No lleva
+    //    `unlocks` porque no abre ninguna mecánica nueva: lo que hace es CONTAR una
+    //    que ya existía y que no sabía usar nadie.
+    {id:'chef', label:'Reclamación por Sabor 🐟', npc:'Chef Calderón', zona:'reino', faction:'folk', type:'Misión · 1 entrega', coins:10, status:'new',
+      steps:['1) Reclamación por Sabor 🐟 (Chef Calderón) → pesca lo que sea, pásalo por un horno y entrégale 6 bacalaos cocinados'], desc:'Calderón quiere denunciar el Epígrafe Doce, la ordenanza que obliga a que todo el pescado, una vez cocinado, se sirva idéntico: da igual que fuera una sardina o un esturión de los caros. Como prueba quiere seis bacalaos en fila para ponerlos delante de un funcionario y que le señale cuál era el caro. De paso enseña lo único que se puede hacer con un pez fuera de la lonja, que es cocinarlo.'},
+    // ⬜ la insertó mapa_auto.py: nombre, NPC, pasos y de quién cuelga salen del
+    //    juego y son exactos. Falta darle una `desc` con voz propia, comprobar la FACCIÓN (nadie más da este NPC, así que va adivinada)
+    //    y, si toca, `unlocks`.
+    // 🔫 LA PRIMERA MISIÓN DEL PIPAS. Llevaba desde agosto colocado, con su plugin
+    //    probado entero, y sin ninguna. Cuelga solo de tener caña, así que la pesca
+    //    sale del muelle y se usa en otro sitio del mapa.
+    {id:'pipas', label:'Que Me Vean con Algo 🎣', npc:'El Pipas', zona:'villavillez', faction:'folk', type:'Misión · 7 capturas', coins:10, status:'new',
+      steps:['1) Que Me Vean con Algo 🎣 (El Pipas) → pesca 7 veces (cuenta cualquier captura) y llévale la ristra al camino del establo'], desc:'Su madre le ha vuelto a preguntar de qué vive, y a un pescador eso no se lo preguntan: llega con pescado y ya está. Él con la caña no puede, que es mu nervioso y se queda quieto dos minutos y se pone malo. Aviso serio: no le peguéis. Va armado, es invencible y el quinto disparo mata.'},
           ];
   // ===== CONEXIONES (aristas): source -> target =====
   const E = [
@@ -5488,6 +5503,8 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
        // ← lo puso mapa_auto.py
     ['balsa','ruinas'],
     ['nico','refugio_cerdo'],   // ← lo puso mapa_auto.py
+    ['carpincho','chef'],   // ← lo puso mapa_auto.py
+    ['pesca','pipas'],   // ← lo puso mapa_auto.py
   ];
 
   /* ==========================================================================================
