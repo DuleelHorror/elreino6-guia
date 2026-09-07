@@ -447,13 +447,35 @@ thead th{font-size:.74rem; text-transform:uppercase; letter-spacing:.07em; color
      esa información SOLO existía como línea. El panel te contaba la misión entera y no
      te decía ni de dónde venía ni qué abría. Ahora lo dice con palabras y se puede
      pulsar: se navega el árbol LEYENDO, sin perseguir ninguna flecha. */
-  /* 🗺️ LOS BOTONES DE ZONA (2026-09-05). El mapa tiene 119 nodos y 21 niveles: de una
+  /* 🗺️ EL FILTRO DE ZONA (2026-09-05). El mapa tiene 119 nodos y 21 niveles: de una
      tacada no se lee. Por zonas cada vista baja a 1-65. La zona de cada misión NO se
-     escribe a mano: la reparte `web/zonas_mapa.py` desde el Tablón de Faena. */
-  .zonas{display:inline-flex;flex-wrap:wrap;gap:4px;margin-right:8px}
-  .zonas .zona{font-size:.78rem;padding:5px 9px;opacity:.72}
-  .zonas .zona.on{opacity:1;border-color:var(--acento);color:var(--tinta);
-    background:var(--acento-suave);font-weight:700}
+     escribe a mano: la reparte `web/zonas_mapa.py` desde el Tablón de Faena.
+     🔻 DE NUEVE BOTONES A UN DESPLEGABLE (2026-09-07). Encargo del usuario: «que sea un
+     selector, no botones, porque está llena de demasiadas cosas el header». Y era verdad:
+     la barra llevaba 4 pestañas + 9 zonas + 6 botones + el buscador + el enlace al mapa
+     del mundo. Nueve botones que además solo se usan de uno en uno son justo lo que pide
+     un desplegable. */
+  .zonas{display:inline-flex;align-items:center;gap:6px;margin-right:8px}
+  .zonas .zl{font-size:.72rem;font-weight:700;color:var(--tinta-2);
+    text-transform:uppercase;letter-spacing:.06em}
+  .zsel{font-family:inherit;appearance:none;-webkit-appearance:none;padding-right:26px;
+    background-image:linear-gradient(45deg,transparent 50%,var(--tinta-2) 50%),
+                     linear-gradient(135deg,var(--tinta-2) 50%,transparent 50%);
+    background-position:calc(100% - 14px) 53%, calc(100% - 9px) 53%;
+    background-size:5px 5px,5px 5px;background-repeat:no-repeat}
+  .zsel:focus-visible{outline:2px solid var(--acento);outline-offset:1px}
+  /* 🔴 Con una zona puesta hay que NOTARLO. Es lo que hacía el botón `.on`: sin esa señal
+     el mapa sale filtrado y no se ve por qué le faltan misiones. */
+  .zsel.filtrando{border-color:var(--acento);color:var(--tinta);font-weight:800}
+  /* 📐 En pantalla estrecha se cae la etiqueta y el desplegable se encoge. Sin esto el
+     selector ocupaba 97 px MAS que los nueve botones que sustituye —los botones envolvian
+     y el no—, o sea que el cambio habria empeorado el movil en vez de arreglarlo.
+     ⚠️ La barra entera ya se sale en el movil desde antes (`.tb-r` no envuelve); eso es
+     otro arreglo y no se toca aqui, pero al menos esto no lo empeora. */
+  @media (max-width:640px){
+    .zonas .zl{display:none}
+    .zsel{max-width:116px;padding-left:8px;font-size:.78rem}
+  }
   .panel .rel{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 14px}
   .panel .rel a{display:inline-block;font:inherit;font-size:.82rem;line-height:1.25;
     padding:6px 10px;border-radius:9px;cursor:pointer;text-decoration:none;
@@ -502,17 +524,21 @@ thead th{font-size:.74rem; text-transform:uppercase; letter-spacing:.07em; color
       <button class="btn tab"    id="tab-pesca"    onclick="ER6.tab('pesca')">🎣 Rama de Pesca</button>
       <button class="btn tab"    id="tab-forja"    onclick="ER6.tab('forja')">⚒️ Rama de la Forja</button>
     </span>
-    <span class="zonas" id="zonas">
-      <button class="btn zona on" data-z="" onclick="ER6.zona('')">Todo</button>
-      <button class="btn zona" data-z="reino"        onclick="ER6.zona('reino')">🏰 El Reino</button>
-      <button class="btn zona" data-z="ayuntamiento" onclick="ER6.zona('ayuntamiento')">🔔 Ayuntamiento</button>
-      <button class="btn zona" data-z="afueras"      onclick="ER6.zona('afueras')">🌳 Afueras</button>
-      <button class="btn zona" data-z="villavillez"  onclick="ER6.zona('villavillez')">🐴 Villa Villez</button>
-      <button class="btn zona" data-z="valdemojon"   onclick="ER6.zona('valdemojon')">🌸 Cerezal</button>
-      <button class="btn zona" data-z="puertonegro"  onclick="ER6.zona('puertonegro')">🧨 Puerto Negro</button>
-      <button class="btn zona" data-z="tierrahostil" onclick="ER6.zona('tierrahostil')">🏝️ Tierra Hostil</button>
-      <button class="btn zona" data-z="varios"       onclick="ER6.zona('varios')">⚙️ Varios</button>
-    </span>
+    <label class="zonas" id="zonas" for="zonaSel"
+      title="Enseña solo las misiones de una zona. Las de fuera que enlazan con ellas se siguen viendo apagadas, para que no parezca que una cadena se corta.">
+      <span class="zl">Zona</span>
+      <select class="btn zsel" id="zonaSel" onchange="ER6.zona(this.value)">
+        <option value="">Todo el Reino</option>
+        <option value="reino">🏰 El Reino</option>
+        <option value="ayuntamiento">🔔 Ayuntamiento</option>
+        <option value="afueras">🌳 Afueras</option>
+        <option value="villavillez">🐴 Villa Villez</option>
+        <option value="valdemojon">🌸 Cerezal</option>
+        <option value="puertonegro">🧨 Puerto Negro</option>
+        <option value="tierrahostil">🏝️ Tierra Hostil</option>
+        <option value="varios">⚙️ Varios</option>
+      </select>
+    </label>
     <button class="btn solo-cultivos" id="btnCultivos" onclick="ER6.cultivos()">🌱 Los 30 cultivos</button>
     <button class="btn solo-cultivos" id="btnObra" onclick="ER6.obra()">🏗️ Las edificaciones</button>
     <input class="btn find" id="buscar" placeholder="Buscar misión o NPC…" autocomplete="off"
@@ -6396,8 +6422,11 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
     zonaActual:'',
     zona:function(z){
       ER6.zonaActual=z;
-      document.querySelectorAll('#zonas .zona').forEach(b=>
-        b.classList.toggle('on', (b.getAttribute('data-z')||'')===z));
+      /* 🔻 El desplegable es ahora quien enseña la zona puesta. Se pone SIEMPRE, no solo
+         cuando lo mueve el ratón: `zona()` la llaman también `ir()` y el clic en un nodo de
+         fuera, y si el selector no siguiera al mapa diría una zona y se estaría viendo otra. */
+      const sel=document.getElementById('zonaSel');
+      if(sel){ if(sel.value!==z) sel.value=z; sel.classList.toggle('filtrando', !!z); }
       /* 🔴 SE ENSEÑAN TAMBIÉN LOS VECINOS DE FUERA, y no es un capricho: 44 de las 116
          flechas CRUZAN de zona. Sin los vecinos, Villa Villez, el Cerezal y Tierra Hostil
          salían con CERO flechas —nodos flotando— y parecía que el mapa estaba roto.
@@ -6407,7 +6436,11 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
       /* 🛡️ Si el dataset de turno no trae zonas (las ramas simuladas), no se filtra
          NADA en vez de esconderlo todo. Un mapa en blanco parece roto; un mapa sin
          filtrar solo parece que el botón no hace nada, que es mucho menos grave. */
-      if(z && cy.nodes().filter(n=>n.data('zona')).length===0){ ER6.zonaActual=''; return; }
+      if(z && cy.nodes().filter(n=>n.data('zona')).length===0){
+        ER6.zonaActual='';
+        if(sel){ sel.value=''; sel.classList.remove('filtrando'); }   // no dejar el selector mintiendo
+        return;
+      }
       const dentro = z ? cy.nodes().filter(n=>n.data('zona')===z) : cy.nodes();
       const vis = z ? dentro.union(dentro.neighborhood('node')) : cy.nodes();
       cy.batch(()=>{
@@ -6567,6 +6600,27 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
   // crear el grafo, y entonces FAC todavía no existe (const, zona muerta) → la página se queda EN
   // BLANCO. Al final del todo está todo declarado y no hay nada que adivinar.
   datos();
+
+  /* 🔢 EL RECUENTO DE CADA ZONA, en el propio desplegable. Se saca del grafo, no de una
+     lista a mano, asi que una mision nueva se cuenta sola en cuanto `zonas_mapa.py` le pone
+     su zona. Es lo que un desplegable puede permitirse y nueve botones no: elegir sabiendo
+     cuantas misiones hay detras. */
+  (function(){
+    const sel=document.getElementById('zonaSel');
+    if(!sel) return;
+    const cuenta={};
+    cy.nodes().forEach(n=>{ const z=n.data('zona'); if(z) cuenta[z]=(cuenta[z]||0)+1; });
+    let total=0;
+    Array.prototype.forEach.call(sel.options, o=>{
+      if(!o.value) return;
+      const c=cuenta[o.value]||0; total+=c;
+      o.textContent = o.textContent.replace(/\s*\(\d+\)$/,'') + '  (' + c + ')';
+      /* una zona sin ninguna mision se deja VISIBLE pero apagada: esconderla haria pensar
+         que no existe, y lo que pasa es que todavia no tiene nada escrito. */
+      o.disabled = (c===0);
+    });
+    if(sel.options[0]) sel.options[0].textContent = 'Todo el Reino  (' + total + ')';
+  })();
 
   /* 🔗 Abrir directamente en una rama: `mapa.html#pesca` o `#cultivos`. Lo usa la página
      FEATURES para enlazar a cada propuesta — sin esto, el botón te deja en el mapa del Reino y
