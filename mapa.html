@@ -5408,6 +5408,10 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
     //    sale del muelle y se usa en otro sitio del mapa.
     {id:'pipas', label:'Que Me Vean con Algo 🎣', npc:'El Pipas', zona:'villavillez', faction:'folk', type:'Misión · 7 capturas', coins:10, status:'new',
       steps:['1) Que Me Vean con Algo 🎣 (El Pipas) → pesca 7 veces (cuenta cualquier captura) y llévale la ristra al camino del establo'], desc:'Su madre le ha vuelto a preguntar de qué vive, y a un pescador eso no se lo preguntan: llega con pescado y ya está. Él con la caña no puede, que es mu nervioso y se queda quieto dos minutos y se pone malo. Aviso serio: no le peguéis. Va armado, es invencible y el quinto disparo mata.'},
+    // ⬜ la insertó mapa_auto.py: nombre, NPC, pasos y de quién cuelga salen del
+    //    juego y son exactos. Falta darle una `desc` con voz propia y, si toca, `unlocks`.
+    {id:'corderos', label:'Lo que callan los Corderos · Parte 1 🐑', npc:'Ming Marea Baja', faction:'folk', type:'Misión', coins:8, status:'new',
+      steps:['1) Lo que callan los Corderos · Parte 1 🐑 (Ming Marea Baja) → Entrega El Croquis de la Finca x1 a Ming Marea Baja · Entrega La Carta para el Sheriff x1 a Sheriff Makelele'], desc:'Ming Marea Baja: Ha venido alguien del Ayuntamiento. Y no a denuncialnos.'},
           ];
   // ===== CONEXIONES (aristas): source -> target =====
   const E = [
@@ -5535,6 +5539,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
     ['nico','refugio_cerdo'],   // ← lo puso mapa_auto.py
     ['carpincho','chef'],   // ← lo puso mapa_auto.py
     ['pesca','pipas'],   // ← lo puso mapa_auto.py
+    ['gremio','corderos'],   // ← lo puso mapa_auto.py
   ];
 
   /* ==========================================================================================
