@@ -6081,8 +6081,29 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
     yogur:['El Yogur de Fresa','#d81b60']};
 
   /* Reparto del espacio. Generoso a propósito: el hueco entre filas es por donde se van a
-     encaminar las flechas (ver colocar()), así que apretarlo es lo que hace que se crucen. */
-  const REPARTO={rankdir:'TB', nodesep:38, edgesep:24, ranksep:110, marginx:40, marginy:40,
+     encaminar las flechas (ver colocar()), así que apretarlo es lo que hace que se crucen.
+
+     📏 `ranksep:140` NO está puesto a ojo (2026-09-09). Con 110 quedaban DOS flechas pasando
+     por encima de una misión, que es lo que de verdad hace ilegible el mapa. Medido sobre la
+     página renderizada con `python web/audit_mapa_cruces.py`:
+         ranksep 110 (lo de antes) ..  9 cruces · 2 flechas por encima de una misión
+         ranksep 125 ...............  9 cruces · 1
+         ranksep 140 (lo de ahora) ..  9 cruces · 0     ← el mínimo que las quita
+         ranksep 150 ...............  9 cruces · 0      (solo hace el mapa más alto)
+     Cuesta un 15 % de alto y no toca el ancho.
+
+     🔴🔴 Y LO QUE NO SE PUEDE ARREGLAR CON AJUSTES, para que nadie lo vuelva a intentar:
+     LOS 9 CRUCES. Se probaron las CUATRO alineaciones de dagre (UL/UR/DL/DR) y cinco órdenes
+     de entrada distintos (el del fichero, tres DFS y BFS), midiendo la página de verdad:
+     ninguna combinación baja de 9, y varias empeoran mucho (UL deja 12 flechas por encima de
+     una misión y ensancha el mapa un 18 %).
+     🩸 Y la trampa en la que caí: medirlo con cajas de 190×60 «de mentira» daba 9 → 5, así que
+     parecía una mejora — y en la página real, con las cajas del tamaño de SU ETIQUETA, era
+     9 → 10. **Si se toca esto, se mide sobre la página renderizada, no sobre un modelo.**
+     📌 Los 9 cruces son del GRAFO, no del dibujo: hay 6 misiones con DOS requisitos y un par
+     de nudos que reparten a media docena de ramas anchas. Eso tiene que cruzarse en alguna
+     parte. Lo que hace legible el mapa no es quitarlos: es el resaltado al pasar el ratón. */
+  const REPARTO={rankdir:'TB', nodesep:38, edgesep:24, ranksep:140, marginx:40, marginy:40,
     ranker:'network-simplex'};
   // el mismo reparto, en el formato del plugin — es el PLAN B si dagre suelto fallara
   const LAY={name:'dagre', rankDir:'TB', nodeSep:REPARTO.nodesep, rankSep:REPARTO.ranksep,
@@ -6273,6 +6294,10 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
     });
   }
 
+  /* 🔎 El grafo, accesible desde fuera. Es lo único que permite MEDIR el mapa ya dibujado
+     (`web/audit_mapa_cruces.py`) en vez de sobre un modelo de cajas inventado — que es como
+     estuve a punto de publicar un cambio que empeoraba el mapa creyendo que lo mejoraba. */
+  window.__cy = cy;
   cy.ready(()=>{
     try{ colocar(); }
     catch(err){ console.warn('[mapa] no se pudo encaminar las flechas, se deja el reparto simple', err); }
