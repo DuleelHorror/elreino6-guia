@@ -5415,6 +5415,10 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
              '2) Lo que callan los Corderos · Parte 2 🐑 (Ming Marea Baja) → Preguntar por quien hace la compra: Gordi Mamón (Mercadillo) → Señor Trapo (Bar Co) → Chef Calderón (Cocina), y volver a Ming con el nombre del cocinero de la casa',
              '3) Lo que callan los Corderos · Parte 3 🐑 (Ming Marea Baja) → Subir a la finca y escuchar al Chef Mc Tetis (le pagan en zanahorias). Buscar en el salón los dos estantes sin marcar entre todos los demás, y llevarle a Ming las dos hojas'],
       desc:'Nadie sabe quién es el Ministro P. Pero todo el mundo ha visto a su cocinero, porque el cocinero baja a comprar.'},
+    // ⬜ la insertó mapa_auto.py: nombre, NPC, pasos y de quién cuelga salen del
+    //    juego y son exactos. Falta darle una `desc` con voz propia y, si toca, `unlocks`.
+    {id:'niebla', label:'Lo Que Trae la Niebla 🦟', npc:'Dr. Papriko', faction:'sci', type:'Misión', coins:30, status:'new',
+      steps:['1) Lo Que Trae la Niebla 🦟 (Dr. Papriko) → (sin objetivo) · Habla con Dr. Papriko'], desc:'Dr. Papriko: El conteo se ha acelerado, muchacho. Y hay una niebla que sale del suelo y trae bichos.'},
           ];
   // ===== CONEXIONES (aristas): source -> target =====
   const E = [
@@ -5506,6 +5510,8 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
                                  //   faena la da el grupo default (tercera cosa que hacer
                                  //   en el Cerezal, con Pincelino y Lucía)
     ['vostok_p1','aviso'],   // ← lo puso mapa_auto.py
+    ['aviso','niebla'],      // 🦟 la Niebla cuelga del aviso: las DOS ramas de Jarvard
+                             //    conceden `reino.faena.niebla`, que es lo que la abre
     ['fichaje','lenador'],   // ← lo puso mapa_auto.py
     ['pecio','guarda'],   // ← lo puso mapa_auto.py
     // Las dos ramas del Guarda Bosques cuelgan de su recado: `mapa_auto.py` no puede
