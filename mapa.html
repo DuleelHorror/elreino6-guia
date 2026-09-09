@@ -5419,6 +5419,11 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
     //    juego y son exactos. Falta darle una `desc` con voz propia y, si toca, `unlocks`.
     {id:'niebla', label:'Lo Que Trae la Niebla 🦟', npc:'Dr. Papriko', faction:'sci', type:'Misión', coins:30, status:'new',
       steps:['1) Lo Que Trae la Niebla 🦟 (Dr. Papriko) → (sin objetivo) · Habla con Dr. Papriko'], desc:'Dr. Papriko: El conteo se ha acelerado, muchacho. Y hay una niebla que sale del suelo y trae bichos.'},
+    // ⬜ la insertó mapa_auto.py: nombre, NPC, pasos y de quién cuelga salen del
+    //    juego y son exactos. Falta darle una `desc` con voz propia, comprobar la FACCIÓN (nadie más da este NPC, así que va adivinada)
+    //    y, si toca, `unlocks`.
+    {id:'granja', label:'La Granja · La Hoja de los Víveres', npc:'Olegario → Ramiro el Hortelano', faction:'sci', type:'Saga · 3 misiones', coins:24, status:'new',
+      steps:['1) La Granja · La Hoja de los Víveres (Olegario) → Entrega Hoja de Víveres para Ramiro x1 a Ramiro el Hortelano','2) La Granja · Quién Come Aquí (Ramiro el Hortelano) → Habla con Macho Melon el Guardia · Habla con Ramiro el Hortelano','3) La Granja · Las Bocas (Ramiro el Hortelano) → Habla con Doña Perpetua · Habla con La Quesera · Habla con El Molinero · Habla con La Semillera · Habla con Ramiro el Hortelano'], desc:'Obrero Olegario: Firmé la casilla de víveres. Ahora hay que llenarla.'},
           ];
   // ===== CONEXIONES (aristas): source -> target =====
   const E = [
@@ -5549,6 +5554,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
     ['carpincho','chef'],   // ← lo puso mapa_auto.py
     ['pesca','pipas'],   // ← lo puso mapa_auto.py
     ['gremio','corderos'],   // ← lo puso mapa_auto.py
+    ['bolsa','granja'],   // ← lo puso mapa_auto.py
   ];
 
   /* ==========================================================================================
