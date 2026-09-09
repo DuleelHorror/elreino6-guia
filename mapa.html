@@ -5424,6 +5424,10 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
     //    y, si toca, `unlocks`.
     {id:'granja', label:'La Granja · La Hoja de los Víveres', npc:'Olegario → Ramiro el Hortelano', faction:'sci', type:'Saga · 3 misiones', coins:24, status:'new',
       steps:['1) La Granja · La Hoja de los Víveres (Olegario) → Entrega Hoja de Víveres para Ramiro x1 a Ramiro el Hortelano','2) La Granja · Quién Come Aquí (Ramiro el Hortelano) → Habla con Macho Melon el Guardia · Habla con Ramiro el Hortelano','3) La Granja · Las Bocas (Ramiro el Hortelano) → Habla con Doña Perpetua · Habla con La Quesera · Habla con El Molinero · Habla con La Semillera · Habla con Ramiro el Hortelano'], desc:'Obrero Olegario: Firmé la casilla de víveres. Ahora hay que llenarla.'},
+    // ⬜ la insertó mapa_auto.py: nombre, NPC, pasos y de quién cuelga salen del
+    //    juego y son exactos. Falta darle una `desc` con voz propia y, si toca, `unlocks`.
+    {id:'semillera', label:'La Semillera · El Albarán', npc:'La Semillera', faction:'folk', type:'Saga · 4 misiones', coins:36, status:'new',
+      steps:['1) La Semillera · El Albarán (La Semillera) → Ve a El palé de la Semillera · Habla con La Semillera','2) La Semillera · Lo que Pide la Tierra (La Semillera) → Ve a El invernadero · Habla con La Semillera','3) La Semillera · El Agua se Nota (La Semillera) → Habla con Pitita Bacab · Habla con La Semillera','4) La Semillera · El Aire de Aquí (La Semillera) → Ve a El huerto de la Granja · Espera 45 s · Habla con La Semillera'], desc:'La Semillera: Aquí la semilla no se pide de palabra. Se pide por papel.'},
           ];
   // ===== CONEXIONES (aristas): source -> target =====
   const E = [
@@ -5555,6 +5559,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
     ['pesca','pipas'],   // ← lo puso mapa_auto.py
     ['gremio','corderos'],   // ← lo puso mapa_auto.py
     ['bolsa','granja'],   // ← lo puso mapa_auto.py
+    ['granja','semillera'],   // ← lo puso mapa_auto.py
   ];
 
   /* ==========================================================================================
