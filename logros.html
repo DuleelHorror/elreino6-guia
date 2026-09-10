@@ -1116,6 +1116,18 @@ const L = [
   "antes": "Hoja de Contactos"
  },
  {
+  "id": "niebla",
+  "titulo": "Cinco en el Filo",
+  "desc": "Salió del suelo, trajo bichos y se fue. Papriko ya tiene su frasco.",
+  "marco": "goal",
+  "oculto": false,
+  "bloque": "Los nexos",
+  "quest": "Lo Que Trae la Niebla 🦟",
+  "npc": "Dr. Papriko",
+  "comose": "",
+  "antes": "Consta Que Se Entregó"
+ },
+ {
   "id": "nbq_traje",
   "titulo": "La Bolsa con Remaches",
   "desc": "Lolo te hizo un traje que no corta nada. Es lo mejor que ha hecho.",
@@ -1716,12 +1728,48 @@ const L = [
   "antes": "Once Segundos"
  },
  {
+  "id": "granja",
+  "titulo": "Las Bocas",
+  "desc": "Contar quien come es la primera forma de cuidar a alguien.",
+  "marco": "task",
+  "oculto": false,
+  "bloque": "La granja de la amistad infinita",
+  "quest": "La Granja · Las Bocas",
+  "npc": "Ramiro el Hortelano",
+  "comose": "",
+  "antes": "Alta en el Gremio"
+ },
+ {
+  "id": "semillera_surcos",
+  "titulo": "Lo que Pide la Tierra",
+  "desc": "El agua, el aire y los bichos. Media vega cabe en un cuaderno.",
+  "marco": "task",
+  "oculto": false,
+  "bloque": "La granja de la amistad infinita",
+  "quest": "La Semillera · Las Cuentas No Cuadran",
+  "npc": "La Semillera",
+  "comose": "",
+  "antes": "Las Bocas"
+ },
+ {
+  "id": "semillera",
+  "titulo": "El Registro",
+  "desc": "Todo lo que entra y todo lo que sale, con fecha y con nombre.",
+  "marco": "goal",
+  "oculto": false,
+  "bloque": "La granja de la amistad infinita",
+  "quest": "La Semillera · Lo Que Hay en el Arcón",
+  "npc": "La Semillera",
+  "comose": "",
+  "antes": "Lo que Pide la Tierra"
+ },
+ {
   "id": "corderos",
   "titulo": "Una Vivienda Modesta",
   "desc": "Mediste la casa entera con siete guardias dentro. Ya consta.",
   "marco": "goal",
   "oculto": false,
-  "bloque": "Los dedos largos",
+  "bloque": "La granja de la amistad infinita",
   "quest": "Lo que callan los Corderos · Parte 1 🐑",
   "npc": "Ming Marea Baja",
   "comose": "",
@@ -1733,7 +1781,7 @@ const L = [
   "desc": "Al poder no se le ve. A quien le hace la compra, sí.",
   "marco": "goal",
   "oculto": false,
-  "bloque": "Los dedos largos",
+  "bloque": "La granja de la amistad infinita",
   "quest": "Lo que callan los Corderos · Parte 2 🐑",
   "npc": "Ming Marea Baja",
   "comose": "",
@@ -1745,7 +1793,7 @@ const L = [
   "desc": "Dos estantes que nadie limpiaba. Le paga en zanahorias y lo apunta como gasto.",
   "marco": "goal",
   "oculto": false,
-  "bloque": "Los dedos largos",
+  "bloque": "La granja de la amistad infinita",
   "quest": "Lo que callan los Corderos · Parte 3 🐑",
   "npc": "Ming Marea Baja",
   "comose": "",
@@ -2196,7 +2244,7 @@ const L = [
   "antes": "El Nuevo Fichaje"
  }
 ];
-const BLOQUES = ["La espina", "El pueblo", "Las catas de la alquimista", "Operación carpincho y lo que abre", "La ciencia y la piedra", "Los nexos", "Protocolo de contencion", "El boceto de la ciudad", "Las ranas del reino", "Los dedos largos", "Correos · «los cuatro chester»", "Secretas", "Sueltas", "De cosecha propia"];
+const BLOQUES = ["La espina", "El pueblo", "Las catas de la alquimista", "Operación carpincho y lo que abre", "La ciencia y la piedra", "Los nexos", "Protocolo de contencion", "El boceto de la ciudad", "Las ranas del reino", "Los dedos largos", "La granja de la amistad infinita", "Correos · «los cuatro chester»", "Secretas", "Sueltas", "De cosecha propia"];
 
 function TH(){const r=document.documentElement;
   const cur=r.dataset.theme||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');
