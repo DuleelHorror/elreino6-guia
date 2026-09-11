@@ -42,6 +42,17 @@
   --sombra-alta:0 2px 6px rgba(30,20,60,.06), 0 20px 56px rgba(60,40,110,.13);
   --radio:16px; --radio-s:10px;
   --nav-alto:56px;
+
+  /* 🗺️ LOS CUATRO DEL MAPA. Viven AQUI y no en `mapa-fuente.html` porque la regla del
+     marco es que **la pagina no define su paleta** (`guia-html.md` §LA ARQUITECTURA), y
+     el mapa se la definia entera con un `:root{}` propio.
+     🔴 Y no era solo purismo: el JS del mapa las lee con `getComputedStyle`, asi que si
+     alguna faltara devolveria **cadena vacia** y las flechas se dibujarian SIN COLOR,
+     sin dar un solo error. Lo cantaba `build_web.py` desde hacia tiempo. */
+  --mapa-fondo:#dedde3;   /* gris apagado: el papel del organigrama */
+  --mapa-reja:#d8d7dd;    /* la cuadricula: casi invisible, o compite con las flechas */
+  --mapa-linea:#7c7790;   /* LAS FLECHAS. Contraste 3.2:1 sobre el fondo */
+  --mapa-linea-2:#57526b; /* la flecha resaltada */
 }
 
 /* 🌓 El claro es la IDENTIDAD, no un tema entre dos: por eso NO se sigue
@@ -63,6 +74,11 @@
   --r5:#8a6be8; --r6:#7757d8; --r7:#6546c1; --r8:#5438a5;
   --sombra:0 1px 2px rgba(0,0,0,.5), 0 8px 28px rgba(0,0,0,.4);
   --sombra-alta:0 2px 6px rgba(0,0,0,.55), 0 20px 56px rgba(0,0,0,.5);
+  /* 🗺️ los del mapa, en oscuro (mismos valores que tenia su `:root` propio) */
+  --mapa-fondo:#14111d;
+  --mapa-reja:#191524;
+  --mapa-linea:#5d5480;
+  --mapa-linea-2:#9b8cd0;
 }
 
 *{box-sizing:border-box}
@@ -295,7 +311,7 @@ thead th{font-size:.74rem; text-transform:uppercase; letter-spacing:.07em; color
 </div>
 <div class="der">
 <a class="fuera" href="https://duleelhorror.github.io/elreino6-guia/index.html">🗼 La guía</a>
-<span class="sello" title="Cuando se genero esta pagina. Si no es de hoy, tu navegador te esta ensenando una copia vieja: Ctrl+F5.">11/09/2026 10:49</span>
+<span class="sello" title="Cuando se genero esta pagina. Si no es de hoy, tu navegador te esta ensenando una copia vieja: Ctrl+F5.">11/09/2026 11:18</span>
 <button class="tema" onclick="TEMA()" title="Cambiar tema">◐</button>
 </div></nav>
 <script>function TEMA(){var r=document.documentElement;r.dataset.theme=r.dataset.theme==='dark'?'light':'dark';try{localStorage.setItem('er6tema',r.dataset.theme)}catch(e){}}try{var t=localStorage.getItem('er6tema');if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
