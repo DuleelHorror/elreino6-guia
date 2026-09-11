@@ -307,7 +307,7 @@ thead th{font-size:.74rem; text-transform:uppercase; letter-spacing:.07em; color
 </div>
 <div class="der">
 <a class="fuera" href="https://duleelhorror.github.io/elreino6-guia/index.html">🗼 La guía</a>
-<span class="sello" title="Cuando se genero esta pagina. Si no es de hoy, tu navegador te esta ensenando una copia vieja: Ctrl+F5.">11/09/2026 11:44</span>
+<span class="sello" title="Cuando se genero esta pagina. Si no es de hoy, tu navegador te esta ensenando una copia vieja: Ctrl+F5.">11/09/2026 20:45</span>
 <button class="tema" onclick="TEMA()" title="Cambiar tema">◐</button>
 </div></nav>
 <script>function TEMA(){var r=document.documentElement;r.dataset.theme=r.dataset.theme==='dark'?'light':'dark';try{localStorage.setItem('er6tema',r.dataset.theme)}catch(e){}}try{var t=localStorage.getItem('er6tema');if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
@@ -405,6 +405,13 @@ const G = [
     "n": "Paño Ceremonial",
     "m": "<b>paper</b> (liso)",
     "d": "idem · un paño blanco doblado, con una esquina gris de suciedad. 🔴 Que NO parezca papel: es tela"
+   },
+   {
+    "e": "⬜",
+    "o": "<code>CristalDelOsario</code>",
+    "n": "Cristal del Osario",
+    "m": "<b>amethyst_cluster</b>",
+    "d": "el <b>Nigromante del Osario</b> (jefe de cuevas profundas, 2026-09-11) · <b>una esquirla de cristal morado arrancada de un hueso</b>: no un cristal limpio de geoda, sino un trozo irregular con un anillo de hueso blanco todavía pegado en la base, como si se lo hubieran partido del brazo. Morado oscuro por dentro, con una veta clara. 🔴 Que NO parezca amatista de cueva: la gracia es que estaba creciendo DENTRO de algo"
    },
    {
     "e": "✅",
@@ -1728,7 +1735,7 @@ const G = [
   ]
  }
 ];
-const FALTAN = 87, ITEMS = 101;
+const FALTAN = 88, ITEMS = 102;
 
 function TH(){const r=document.documentElement;
   const cur=r.dataset.theme||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');
