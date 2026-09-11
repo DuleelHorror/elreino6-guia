@@ -203,6 +203,13 @@ thead th{font-size:.74rem; text-transform:uppercase; letter-spacing:.07em; color
   @view-transition{ navigation:none }
 }
 
+/* 🕐 EL SELLO DE FECHA de la barra. Discreto a proposito: es un dato de control, no
+   contenido. Sirve para responder «¿esto esta actualizado?» mirando en vez de discutiendo
+   -- si no pone hoy, el navegador esta sirviendo una copia vieja (Ctrl+F5). */
+.nav .sello{font-size:.72rem;opacity:.55;letter-spacing:.02em;white-space:nowrap;
+  padding:0 .5rem;font-variant-numeric:tabular-nums;cursor:help}
+@media (max-width:720px){.nav .sello{display:none}}
+
   /* Paleta y tipografía = las MISMAS de la guía del Reino (web/guia-fuente.html):
      esta página es una hoja más del mismo sitio, no un diseño aparte. */
   
@@ -292,6 +299,7 @@ thead th{font-size:.74rem; text-transform:uppercase; letter-spacing:.07em; color
 </div>
 <div class="der">
 <a class="fuera" href="https://duleelhorror.github.io/elreino6-guia/inicio.html">⌂ Herramientas</a>
+<span class="sello" title="Cuando se genero esta pagina. Si no es de hoy, tu navegador te esta ensenando una copia vieja: Ctrl+F5.">11/09/2026 10:49</span>
 <button class="tema" onclick="TEMA()" title="Cambiar tema">◐</button>
 </div></nav>
 <script>function TEMA(){var r=document.documentElement;r.dataset.theme=r.dataset.theme==='dark'?'light':'dark';try{localStorage.setItem('er6tema',r.dataset.theme)}catch(e){}}try{var t=localStorage.getItem('er6tema');if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
@@ -1884,12 +1892,48 @@ const L = [
   "antes": "La Cantera Cerrada"
  },
  {
+  "id": "desierto",
+  "titulo": "Mil Pasos y Vuelta",
+  "desc": "Encendiste el esqueje del sur y anduviste el desierto de punta a punta.",
+  "marco": "task",
+  "oculto": false,
+  "bloque": "La saga del desierto",
+  "quest": "El Desierto · Mil Pasos y Vuelta",
+  "npc": "Dra. Pizarrica",
+  "comose": "",
+  "antes": "Siete Piedras y Volver"
+ },
+ {
+  "id": "arqueologo",
+  "titulo": "Un Mar Sin Agua",
+  "desc": "Aprendiste a cepillar, y lo primero que sacaste fue una playa.",
+  "marco": "goal",
+  "oculto": false,
+  "bloque": "La saga del desierto",
+  "quest": "El Desierto · Un Mar Sin Agua",
+  "npc": "Dra. Pizarrica",
+  "comose": "",
+  "antes": "Mil Pasos y Vuelta"
+ },
+ {
+  "id": "cuaderno",
+  "titulo": "El Cuaderno de la Doctora",
+  "desc": "Un mar, un bosque, algo que corria, algo que mordia. Y algo que no encaja.",
+  "marco": "challenge",
+  "oculto": false,
+  "bloque": "La saga del desierto",
+  "quest": "El Desierto · El Cuaderno de la Doctora",
+  "npc": "Dra. Pizarrica",
+  "comose": "",
+  "antes": "Un Mar Sin Agua"
+ },
+ {
   "id": "ciego",
   "titulo": "Al Abismo y Buenas Noches",
   "desc": "Registraste la cota mil, te quedaste sin ver, y subiste igual.",
   "marco": "challenge",
   "oculto": false,
-  "bloque": "Correos · «los cuatro chester»",
+  "bloque": "La saga del desierto",
   "quest": "Al Abismo y Buenas Noches 🕳",
   "npc": "Dra. Pizarrica",
   "comose": "",
@@ -1901,7 +1945,7 @@ const L = [
   "desc": "Veinte minutos en el fondo y treinta a la intemperie, del tirón y sin morir.",
   "marco": "challenge",
   "oculto": false,
-  "bloque": "Correos · «los cuatro chester»",
+  "bloque": "La saga del desierto",
   "quest": "Doble Medida 📡",
   "npc": "Gordon Wizman",
   "comose": "",
@@ -1913,7 +1957,7 @@ const L = [
   "desc": "Cuatro nidos, doce carnes podridas y un parte registrado en Correos.",
   "marco": "goal",
   "oculto": false,
-  "bloque": "Correos · «los cuatro chester»",
+  "bloque": "La saga del desierto",
   "quest": "Parte de Avistamiento 🗼",
   "npc": "El Guarda Bosques Felipe Buñuelo",
   "comose": "",
@@ -1925,7 +1969,7 @@ const L = [
   "desc": "Mil bloques, ocho minutos de celda y tres pueblos. Nada que declarar.",
   "marco": "goal",
   "oculto": false,
-  "bloque": "Correos · «los cuatro chester»",
+  "bloque": "La saga del desierto",
   "quest": "Ronda de Buena Voluntad 🚔",
   "npc": "Sheriff Makelele",
   "comose": "",
@@ -2256,7 +2300,7 @@ const L = [
   "antes": "El Nuevo Fichaje"
  }
 ];
-const BLOQUES = ["La espina", "El pueblo", "Las catas de la alquimista", "Operación carpincho y lo que abre", "La ciencia y la piedra", "Los nexos", "Protocolo de contencion", "El boceto de la ciudad", "Las ranas del reino", "Los dedos largos", "La caza de la tribu escamaverde", "La granja de la amistad infinita", "Correos · «los cuatro chester»", "Secretas", "Sueltas", "De cosecha propia"];
+const BLOQUES = ["La espina", "El pueblo", "Las catas de la alquimista", "Operación carpincho y lo que abre", "La ciencia y la piedra", "Los nexos", "Protocolo de contencion", "El boceto de la ciudad", "Las ranas del reino", "Los dedos largos", "La caza de la tribu escamaverde", "La granja de la amistad infinita", "Correos · «los cuatro chester»", "La saga del desierto", "Secretas", "Sueltas", "De cosecha propia"];
 
 function TH(){const r=document.documentElement;
   const cur=r.dataset.theme||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');

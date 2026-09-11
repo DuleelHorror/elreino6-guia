@@ -203,6 +203,13 @@ thead th{font-size:.74rem; text-transform:uppercase; letter-spacing:.07em; color
   @view-transition{ navigation:none }
 }
 
+/* 🕐 EL SELLO DE FECHA de la barra. Discreto a proposito: es un dato de control, no
+   contenido. Sirve para responder «¿esto esta actualizado?» mirando en vez de discutiendo
+   -- si no pone hoy, el navegador esta sirviendo una copia vieja (Ctrl+F5). */
+.nav .sello{font-size:.72rem;opacity:.55;letter-spacing:.02em;white-space:nowrap;
+  padding:0 .5rem;font-variant-numeric:tabular-nums;cursor:help}
+@media (max-width:720px){.nav .sello{display:none}}
+
   
   
   
@@ -284,6 +291,7 @@ thead th{font-size:.74rem; text-transform:uppercase; letter-spacing:.07em; color
 </div>
 <div class="der">
 <a class="fuera" href="https://duleelhorror.github.io/elreino6-guia/index.html">🗼 La guía</a>
+<span class="sello" title="Cuando se genero esta pagina. Si no es de hoy, tu navegador te esta ensenando una copia vieja: Ctrl+F5.">11/09/2026 10:49</span>
 <button class="tema" onclick="TEMA()" title="Cambiar tema">◐</button>
 </div></nav>
 <script>function TEMA(){var r=document.documentElement;r.dataset.theme=r.dataset.theme==='dark'?'light':'dark';try{localStorage.setItem('er6tema',r.dataset.theme)}catch(e){}}try{var t=localStorage.getItem('er6tema');if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
@@ -1442,7 +1450,7 @@ const G = [
  },
  {
   "t": "🟡📼 MÚSICA: el disco (hecho) y los CASETES (falta la máquina)",
-  "sub": "🔴 <b>UN SOLO dibujo para todos los discos custom</b> (Pan, 2026-08-09): el mismo skin salvo que digamos lo contrario para uno concreto. Así añadir un disco no pide dibujo nuevo — y el día que alguno lo merezca, se le hace el suyo y punto. 📼 <b>Y los CASETES</b> (encargo del usuario, 2026-08-09) — ⚠️ **falta decidir qué SON antes de dibujarlos**, porque cambia el trabajo: - <b>(a) discos con otra cara</b>: el mismo sistema (CustomDiscs), pero un objeto con pinta de casete. Cuesta <i>un sprite</i> y una línea de config — su comando ya deja elegir el ítem base. 🟢 <b>DECIDIDO (usuario, 2026-08-09): la (b) — los casetes SOLO suenan en un RADIOCASETE</b>, no en la gramola. O sea que no es un sprite suelto: es una <b>máquina</b>. 🔴 <b>Y NO se puede hacer con CustomDiscs</b>, verificado en su jar: está atado al **JUKEBOX por código** (<code>onDiscInsert</code> lee <code>Material.JUKEBOX</code>), sin ninguna clave de config para el bloque. ✅ <b>Se hace SIN plugin</b>: <code>playsound ... record</code> en la posición del bloque y <code>stopsound</code> para pararlo, que es vanilla. El radiocasete = <b><code>item_display</code> + BARRIER con EB</b> (la regla de <code>bloques-maquina.md</code>, igual que la lavadora) + una función de datapack. Detalle en <code>tipos-de-quest.md</code> §CustomDiscs. ⚠️ <b>Para empezar hacen falta LOS AUDIOS de las cintas</b> — sin ellos no hay nada que sonar — y el dibujo del radiocasete (o pintarlo sobre la plantilla de cubo).",
+  "sub": "🔴 <b>UN SOLO dibujo para todos los discos custom</b> (Pan, 2026-08-09): el mismo skin salvo que digamos lo contrario para uno concreto. Así añadir un disco no pide dibujo nuevo — y el día que alguno lo merezca, se le hace el suyo y punto. 📼 <b>Y los CASETES</b> (encargo del usuario, 2026-08-09) — ✅ <b>HECHO el 2026-09-07</b>: los dos dibujos están y la máquina también (<code>.claude/docs/radiocasete.md</code>). 🟢 <b>DECIDIDO (usuario, 2026-08-09): los casetes SOLO suenan en un RADIOCASETE</b>, no en la gramola. O sea que no era un sprite suelto: era una <b>máquina</b>. 🔴 <b>Y NO se puede hacer con CustomDiscs</b>, verificado en su jar: está atado al **JUKEBOX por código** (<code>onDiscInsert</code> lee <code>Material.JUKEBOX</code>), sin ninguna clave de config para el bloque. ✅ <b>Se hizo SIN plugin</b>: <code>playsound ... record</code> en la posición del bloque y <code>stopsound</code> para pararlo, que es vanilla. El radiocasete = <b><code>item_display</code> + BARRIER con EB</b> (la regla de <code>bloques-maquina.md</code>, igual que la lavadora) + el datapack <code>reino_radio</code>. ⚠️ <b>Lo que sigue faltando son LOS AUDIOS</b>: una cinta necesita su OGG <b>en MONO</b>, y de los que hay en el pack el único mono es el de Chavitox — por eso hoy hay <b>una sola cinta</b>. Los cuatro de <code>musica/</code> son estéreo a propósito (música de ambiente) y no valen. Convertirlos pide <b>ffmpeg</b>, que en este PC no está.",
   "items": [
    {
     "e": "✅",
@@ -1452,11 +1460,18 @@ const G = [
     "d": "🎨 <b>PUESTO</b> (2026-08-09): <code>discos:disco_custom</code>, CMD <b>10001</b> — el número <b>no se elige</b>, lo fija el config de CustomDiscs. Vale para todos los discos custom que se añadan"
    },
    {
-    "e": "⬜",
+    "e": "✅",
+    "o": "<b>el casete</b>",
+    "n": "Cinta",
+    "m": "paper + CMD 10319",
+    "d": "🎨 <b>PUESTO</b> (2026-09-07): <code>cintas:cassette</code>, del sprite de 2026-08-09. Un solo dibujo para todas las cintas; cuál es vive en su <code>custom_data</code>"
+   },
+   {
+    "e": "✅",
     "o": "<b>el RADIOCASETE</b>",
-    "n": "<i>(bloque)</i>",
-    "m": "<i>(bloque nuevo)</i>",
-    "d": "🔴 es un <b>BLOQUE</b>, no un item: va en la <b>plantilla de cubo</b> (16×16 por cara). Radiocasete de los de asa, con altavoz, ruleta y las teclas"
+    "n": "Radiocasete",
+    "m": "<i>(bloque, CMD 10318)</i>",
+    "d": "🎨 <b>PUESTO</b> (2026-09-07): <code>maquinas:radiocasete_cubo</code>. Dibujado por <code>texturas/gen_cubo_radiocasete.py</code> <b>en ASCII</b>, para poder retocar un píxel en un diff. Frente con dial, dos altavoces, la pletina y la tecla roja de grabar"
    }
   ]
  },
@@ -1697,7 +1712,7 @@ const G = [
   ]
  }
 ];
-const FALTAN = 88, ITEMS = 102;
+const FALTAN = 87, ITEMS = 101;
 
 function TH(){const r=document.documentElement;
   const cur=r.dataset.theme||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');

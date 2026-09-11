@@ -203,6 +203,13 @@ thead th{font-size:.74rem; text-transform:uppercase; letter-spacing:.07em; color
   @view-transition{ navigation:none }
 }
 
+/* 🕐 EL SELLO DE FECHA de la barra. Discreto a proposito: es un dato de control, no
+   contenido. Sirve para responder «¿esto esta actualizado?» mirando en vez de discutiendo
+   -- si no pone hoy, el navegador esta sirviendo una copia vieja (Ctrl+F5). */
+.nav .sello{font-size:.72rem;opacity:.55;letter-spacing:.02em;white-space:nowrap;
+  padding:0 .5rem;font-variant-numeric:tabular-nums;cursor:help}
+@media (max-width:720px){.nav .sello{display:none}}
+
   *{box-sizing:border-box}
   body{margin:0;background:var(--lienzo);color:var(--tinta);
     font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.55}
@@ -297,6 +304,7 @@ thead th{font-size:.74rem; text-transform:uppercase; letter-spacing:.07em; color
 </div>
 <div class="der">
 <a class="fuera" href="https://duleelhorror.github.io/elreino6-guia/inicio.html">⌂ Herramientas</a>
+<span class="sello" title="Cuando se genero esta pagina. Si no es de hoy, tu navegador te esta ensenando una copia vieja: Ctrl+F5.">11/09/2026 10:49</span>
 <button class="tema" onclick="TEMA()" title="Cambiar tema">◐</button>
 </div></nav>
 <script>function TEMA(){var r=document.documentElement;r.dataset.theme=r.dataset.theme==='dark'?'light':'dark';try{localStorage.setItem('er6tema',r.dataset.theme)}catch(e){}}try{var t=localStorage.getItem('er6tema');if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
