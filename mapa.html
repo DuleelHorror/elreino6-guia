@@ -263,7 +263,7 @@ thead th{font-size:.74rem; text-transform:uppercase; letter-spacing:.07em; color
 </div>
 <div class="der">
 <a class="fuera" href="https://duleelhorror.github.io/elreino6-guia/inicio.html">⌂ Herramientas</a>
-<span class="sello" title="Cuando se genero esta pagina. Si no es de hoy, tu navegador te esta ensenando una copia vieja: Ctrl+F5.">13/09/2026 01:01</span>
+<span class="sello" title="Cuando se genero esta pagina. Si no es de hoy, tu navegador te esta ensenando una copia vieja: Ctrl+F5.">13/09/2026 01:14</span>
 <button class="tema" onclick="TEMA()" title="Cambiar tema">◐</button>
 </div></nav>
 <script>function TEMA(){var r=document.documentElement;r.dataset.theme=r.dataset.theme==='dark'?'light':'dark';try{localStorage.setItem('er6tema',r.dataset.theme)}catch(e){}}try{var t=localStorage.getItem('er6tema');if(t)document.documentElement.dataset.theme=t}catch(e){}</script>) y `build_web.py --auditar` la prohíbe por su nombre. Esto es otra cosa: no
@@ -286,7 +286,11 @@ thead th{font-size:.74rem; text-transform:uppercase; letter-spacing:.07em; color
     clip-path:polygon(50% 0,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%)}
   .sw.noche{border:none;border-radius:50%;background:#8ea2ff;
     box-shadow:inset -4px 0 0 0 var(--tarjeta)}
-  .tb-r{margin-left:auto;display:flex;gap:8px;align-items:center}
+  .tb-r{margin-left:auto;display:flex;gap:8px;align-items:center;flex-wrap:wrap;
+    justify-content:flex-end}
+  /* 📱 En pantalla estrecha la fila de pestanas se salia 180 px y no lo cazaba nadie
+     porque `audit_ancho.py` no se pasaba por el mapa. Ahora envuelve. */
+  @media(max-width:900px){ .tabs{flex-wrap:wrap} .tabs .tab{border-radius:8px;border-left:1px solid var(--linea)} }
   .btn{background:var(--tarjeta);border:1px solid var(--linea);color:var(--tinta-2);
     border-radius:9px;padding:7px 12px;font-weight:700;font-size:.82rem;cursor:pointer;text-decoration:none;white-space:nowrap}
   .btn:hover{color:var(--tinta);border-color:var(--linea-2)}
@@ -400,6 +404,66 @@ thead th{font-size:.74rem; text-transform:uppercase; letter-spacing:.07em; color
      ocho páginas.
      🕸️ La cuadrícula tenue no es adorno: da referencia al arrastrar y al hacer zoom,
      que sin ella el grafo parece flotar en la nada. */
+  /* ===== 📑 EL ÍNDICE (2026-09-13) =====
+     Encargo del usuario, y es la TERCERA vez que dice lo mismo: «ostia aun se entiende menos
+     que antes, busca otra manera». Las dos anteriores se contestaron con dibujo (resaltado al
+     pasar el raton, y bandas por zona) y las dos fallaron por lo mismo, que estaba medido y no
+     lo quise ver: **128 misiones dibujadas a la vez no se pueden leer**. Para que el arbol
+     quepa en una pantalla hay que alejarse a 0,13, y a ese zoom una caja mide 25 x 8 px: el
+     texto no existe. Ver el arbol entero y leerlo son incompatibles, se coloque como se
+     coloque.
+     ✅ Asi que la vista de salida ya no es un dibujo: es un INDICE. Zona -> saga -> misiones,
+     con la cadena escrita y la sangria haciendo de estructura. Se lee al 100 %, se busca con
+     Ctrl+F, se imprime, y no tiene ni una linea que cruzar. El arbol sigue ahi, pero para
+     UNA saga, que es el tamano al que un dibujo si dice algo. */
+  .indice{flex:1;min-height:0;overflow:auto;padding:18px 20px 60px;background:var(--fondo)}
+  /* La leyenda explica las FORMAS del dibujo: en el índice no pinta nada y quita sitio a la
+     barra, que ya iba justa. */
+  body.en-indice .legend, body.en-indice #btnFit{display:none}
+  .ix-zona{max-width:1180px;margin:0 auto 26px}
+  .ix-zona>h2{display:flex;align-items:center;gap:10px;margin:0 0 10px;padding:0 0 8px;
+    font-size:1.02rem;letter-spacing:.04em;text-transform:uppercase;color:var(--tinta-2);
+    border-bottom:2px solid var(--linea-2)}
+  .ix-zona>h2 .n{margin-left:auto;font-size:.78rem;color:var(--tinta-3);letter-spacing:0;
+    text-transform:none}
+  .ix-saga{border:1px solid var(--linea);border-radius:12px;background:var(--tarjeta);
+    margin:0 0 8px;overflow:hidden}
+  .ix-saga>summary{cursor:pointer;padding:11px 14px;display:flex;align-items:center;gap:10px;
+    list-style:none;font-weight:700;color:var(--tinta);font-size:.95rem}
+  .ix-saga>summary::-webkit-details-marker{display:none}
+  .ix-saga>summary::before{content:'▸';color:var(--tinta-3);font-weight:400;width:12px;flex:none}
+  .ix-saga[open]>summary::before{content:'▾'}
+  .ix-saga[open]>summary{background:var(--hundido);border-bottom:1px solid var(--linea)}
+  .ix-saga>summary:hover{background:var(--acento-suave)}
+  .ix-saga .quien{font-weight:500;color:var(--tinta-3);font-size:.85rem}
+  .ix-saga .cu{margin-left:auto;display:flex;gap:6px;align-items:center;flex:none}
+  .ix-chip{font-size:.7rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;
+    padding:3px 7px;border-radius:999px;border:1px solid var(--linea-2);color:var(--tinta-3)}
+  .ix-chip.new{border-color:var(--aviso);color:var(--aviso)}
+  .ix-chip.fut{border-style:dashed}
+  .ix-chip.key{border-color:var(--llave);color:var(--llave)}
+  .ix-chip.mun{border-color:#22d3ee;color:#22d3ee}
+  .ix-chip.dng{border-color:var(--alerta);color:var(--alerta)}
+  .ix-cuerpo{padding:12px 16px 16px 40px;font-size:.9rem;color:var(--tinta-2)}
+  .ix-cuerpo .desc{margin:0 0 10px}
+  .ix-cuerpo ol{margin:0;padding-left:1.25em}
+  .ix-cuerpo li{margin:.35em 0}
+  .ix-lazos{display:flex;flex-wrap:wrap;gap:6px;margin:12px 0 0;font-size:.82rem}
+  .ix-lazos b{color:var(--tinta-3);font-weight:700;align-self:center;
+    font-size:.72rem;text-transform:uppercase;letter-spacing:.08em}
+  .ix-lazos a{cursor:pointer;text-decoration:none;padding:4px 9px;border-radius:8px;
+    background:var(--hundido);border:1px solid var(--linea);color:var(--tinta-2)}
+  .ix-lazos a:hover{border-color:var(--acento);color:var(--tinta);background:var(--acento-suave)}
+  .ix-saga.destacada{border-color:var(--acento);box-shadow:0 0 0 3px var(--acento-suave)}
+  .ix-vacio{max-width:1180px;margin:40px auto;text-align:center;color:var(--tinta-3)}
+  .ix-arbolito{margin-left:6px;font-size:.78rem;color:var(--tinta-3);cursor:pointer;
+    border:1px solid var(--linea);border-radius:8px;padding:3px 8px;background:var(--fondo)}
+  .ix-arbolito:hover{border-color:var(--acento);color:var(--tinta)}
+  @media(max-width:620px){
+    .ix-saga>summary{flex-wrap:wrap}
+    .ix-saga .cu{margin-left:0;width:100%;flex-wrap:wrap}
+    .ix-cuerpo{padding-left:18px}
+  }
   #cy{flex:1;width:100%;min-height:0;
     background-color:var(--mapa-fondo);
     background-image:
@@ -521,7 +585,7 @@ thead th{font-size:.74rem; text-transform:uppercase; letter-spacing:.07em; color
 </div>
 <div class="der">
 <a class="fuera" href="https://duleelhorror.github.io/elreino6-guia/inicio.html">⌂ Herramientas</a>
-<span class="sello" title="Cuando se genero esta pagina. Si no es de hoy, tu navegador te esta ensenando una copia vieja: Ctrl+F5.">13/09/2026 01:01</span>
+<span class="sello" title="Cuando se genero esta pagina. Si no es de hoy, tu navegador te esta ensenando una copia vieja: Ctrl+F5.">13/09/2026 01:14</span>
 <button class="tema" onclick="TEMA()" title="Cambiar tema">◐</button>
 </div></nav>
 <script>function TEMA(){var r=document.documentElement;r.dataset.theme=r.dataset.theme==='dark'?'light':'dark';try{localStorage.setItem('er6tema',r.dataset.theme)}catch(e){}}try{var t=localStorage.getItem('er6tema');if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
@@ -564,8 +628,9 @@ thead th{font-size:.74rem; text-transform:uppercase; letter-spacing:.07em; color
       oninput="ER6.find(this.value)" onkeydown="if(event.key==='Enter')ER6.find(this.value,true)">
     <a class="btn arc" href="https://duleelhorror.github.io/elreino6-map/"
       title="El mapa del mundo renderizado: selector de mundos (el Reino y la Zona Prohibida), coordenadas, la cuadrícula A1/B3 y dónde están el barco y las balsas">🗺️ Mapa del mundo (coordenadas)</a>
+    <button class="btn" id="btnVista" onclick="ER6.vista()" title="Cambia entre el índice (se lee) y el árbol dibujado (se ve la forma)">🗺️ Árbol</button>
     <button class="btn" id="statsBtn" onclick="ER6.stats()">📊 Datos</button>
-    <button class="btn" onclick="ER6.fit()">Centrar</button>
+    <button class="btn" id="btnFit" onclick="ER6.fit()">Centrar</button>
   </div>
 </div>
 
@@ -708,9 +773,10 @@ thead th{font-size:.74rem; text-transform:uppercase; letter-spacing:.07em; color
   </div>
 </div>
 
-<div id="cy"></div>
+<div class="indice" id="indice"></div>
+<div id="cy" style="display:none"></div>
 <aside class="stats" id="stats"></aside>
-<div class="hint">Arrastra para mover · rueda para zoom · clic en un nodo para ver sus pasos</div>
+<div class="hint" id="hint">Pulsa una saga para desplegar sus misiones · busca con el cuadro de arriba o con Ctrl+F · «Ver el árbol» dibuja la rama</div>
 
 <aside class="panel" id="panel">
   <button class="x" onclick="ER6.close()">✕</button>
@@ -6338,11 +6404,18 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
      (`web/audit_mapa_cruces.py`) en vez de sobre un modelo de cajas inventado — que es como
      estuve a punto de publicar un cambio que empeoraba el mapa creyendo que lo mejoraba. */
   window.__cy = cy;
-  cy.ready(()=>{
+  /* 📑 La vista de salida es el ÍNDICE, así que al cargar el árbol está escondido — y con el
+     contenedor a `display:none` las cajas miden 0 y repartir no vale de nada. Se deja pendiente
+     y se reparte la primera vez que se enseña (`ER6.vista`). */
+  let repartoPendiente=true;
+  function repartirSiToca(){
+    if(document.getElementById('cy').style.display==='none') return;
     try{ colocar(); }
     catch(err){ console.warn('[mapa] no se pudo encaminar las flechas, se deja el reparto simple', err); }
     cy.fit(undefined,50);
-  });
+    repartoPendiente=false;
+  }
+  cy.ready(()=>{ repartirSiToca(); });
 
   const panel=document.getElementById('panel'), body=document.getElementById('panelBody');
   const FAC={sci:'Forasteros',folk:'Pueblo',gold:'Sistema',arc:'Loop diario',future:'Futuro',secret:'🟡 Secreta'};
@@ -6493,7 +6566,176 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
       + '<p class="nota">Se recuenta solo cada vez que abres el mapa.</p>';
   }
 
+  /* ===== 📑 EL ÍNDICE — la vista de salida (2026-09-13) =====
+     Encargo del usuario, y es la TERCERA vez que dice lo mismo: «ostia aun se entiende menos
+     que antes, busca otra manera». Las dos anteriores se contestaron con dibujo —el resaltado
+     al pasar el ratón y las bandas por zona— y las dos fallaron por lo mismo, que estaba
+     medido y no lo quise ver: **128 misiones dibujadas a la vez no se pueden leer**. Para que
+     el árbol quepa en una pantalla hay que alejarse a 0,13, y a ese zoom una caja mide 25×8
+     píxeles: el texto no existe. Ver el árbol entero y leerlo son incompatibles, se coloque
+     como se coloque.
+     ✅ Así que la vista de salida ya no es un dibujo: es un ÍNDICE. Zona → saga → misiones,
+     con la sangría haciendo de estructura. Se lee al 100 %, se busca con Ctrl+F y no tiene ni
+     una línea que cruzar. El árbol sigue estando, pero para UNA rama.
+     🔑 Se construye del MISMO `N`/`E` que el árbol: no hay una segunda lista que mantener, y
+     una misión nueva aparece aquí sola en cuanto entra en el mapa. */
+  const ZONA_ORD=['reino','ayuntamiento','afueras','villavillez','valdemojon','puertonegro',
+                  'tierrahostil','varios'];
+  function nombreZona(z){
+    const o=document.querySelector('#zonaSel option[value="'+(z||'')+'"]');
+    return o ? o.textContent.trim() : (z||'Sin zona');
+  }
+  function escH(t){return (t==null?'':String(t)).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
+  function sinTildes(t){return (t||'').normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase();}
+
+  /* Cuántos saltos hay desde una misión sin requisitos hasta ésta. Es el «capítulo» en el que
+     va cada saga, y es lo que ordena el índice: leyendo de arriba abajo se lee el Reino en el
+     orden en que se juega, no en orden alfabético. */
+  function profundidades(nodos, aristas){
+    const hijos={}, grado={};
+    nodos.forEach(n=>{grado[n.id]=0; hijos[n.id]=[];});
+    aristas.forEach(e=>{ if(hijos[e[0]]&&grado[e[1]]!==undefined){ hijos[e[0]].push(e[1]); grado[e[1]]++; } });
+    const prof={}, cola=[];
+    nodos.forEach(n=>{ if(!grado[n.id]){ prof[n.id]=0; cola.push(n.id); } });
+    while(cola.length){
+      const x=cola.shift();
+      (hijos[x]||[]).forEach(y=>{
+        prof[y]=Math.max(prof[y]===undefined?0:prof[y], prof[x]+1);
+        if(--grado[y]===0) cola.push(y);
+      });
+    }
+    // si algo quedara en un ciclo (no deberia haberlo) va al final, pero no se pierde
+    nodos.forEach(n=>{ if(prof[n.id]===undefined) prof[n.id]=99; });
+    return prof;
+  }
+
+  function pintarIndice(){
+    const D=VISTAS[VISTA]||{n:[],e:[]}, nodos=D.n, aristas=D.e;
+    const cont=document.getElementById('indice');
+    if(!cont) return;
+    const prof=profundidades(nodos, aristas);
+    const padres={}, abre={}, porId={};
+    nodos.forEach(n=>{padres[n.id]=[]; abre[n.id]=[]; porId[n.id]=n;});
+    aristas.forEach(e=>{ if(padres[e[1]]) padres[e[1]].push(e[0]); if(abre[e[0]]) abre[e[0]].push(e[1]); });
+
+    const grupos={};
+    nodos.forEach(n=>{ const z=n.zona||''; (grupos[z]=grupos[z]||[]).push(n); });
+    const zonas=Object.keys(grupos).sort((x,y)=>{
+      const a=ZONA_ORD.indexOf(x), b=ZONA_ORD.indexOf(y);
+      return (a<0?98:a)-(b<0?98:b);
+    });
+
+    const H=[];
+    zonas.forEach(z=>{
+      const lista=grupos[z].slice().sort((A,B)=>(prof[A.id]-prof[B.id]) ||
+        String(A.label).localeCompare(String(B.label),'es'));
+      H.push('<section class="ix-zona" data-zona="'+escH(z)+'">');
+      H.push('<h2>'+escH(zonas.length>1?nombreZona(z):'Todas las misiones')+
+             '<span class="n">'+lista.length+' entradas</span></h2>');
+      lista.forEach(n=>{
+        const pasos=(n.steps||[]);
+        const chips=[];
+        if(n.type)    chips.push('<span class="ix-chip">'+escH(n.type)+'</span>');
+        if(n.status==='new')    chips.push('<span class="ix-chip new">nuevo</span>');
+        if(n.status==='future') chips.push('<span class="ix-chip fut">futuro</span>');
+        if(n.dungeon) chips.push('<span class="ix-chip dng">dungeon</span>');
+        if(n.clase&&CLASE[n.clase]) chips.push('<span class="ix-chip">🎓 '+escH(CLASE[n.clase][0])+'</span>');
+        if(n.noche)   chips.push('<span class="ix-chip">🌙 de noche</span>');
+        if(n.mundo)   chips.push('<span class="ix-chip mun">🌍 '+escH(n.mundo)+'</span>');
+        if(n.unlocks) chips.push('<span class="ix-chip key">🔑 desbloquea</span>');
+        if(n.coins)   chips.push('<span class="ix-chip">🥜 '+n.coins+'</span>');
+        const lazo=(ids,etiqueta)=>{
+          const v=(ids||[]).filter(i=>porId[i]);
+          if(!v.length) return '';
+          return '<b>'+etiqueta+'</b>'+v.map(i=>'<a onclick="ER6.saltar(&quot;'+i+'&quot;)">'+
+                 escH(String(porId[i].label).split('\n')[0])+'</a>').join('');
+        };
+        const buscable=sinTildes([n.label,n.npc,n.type,n.desc,(n.steps||[]).join(' ')].join(' '));
+        H.push('<details class="ix-saga" id="ix-'+escH(n.id)+'" data-t="'+escH(buscable)+'">');
+        H.push('<summary><span class="tt">'+escH(String(n.label).split('\n')[0])+'</span>'+
+               (n.npc?'<span class="quien">· '+escH(n.npc)+'</span>':'')+
+               '<span class="cu">'+chips.join('')+'</span></summary>');
+        H.push('<div class="ix-cuerpo">');
+        if(n.desc) H.push('<p class="desc">'+escH(n.desc)+'</p>');
+        if(pasos.length){
+          H.push('<ol>');
+          pasos.forEach(p=>H.push('<li>'+escH(String(p).replace(/^\s*\d+\)\s*/,''))+'</li>'));
+          H.push('</ol>');
+        }else{
+          H.push('<p class="desc"><i>Sin pasos escritos todavía.</i></p>');
+        }
+        if(n.unlocks) H.push('<p class="desc">🔑 <b>Desbloquea:</b> '+escH(n.unlocks)+'</p>');
+        if(n.como)    H.push('<p class="desc">🛠️ '+escH(n.como)+'</p>');
+        const l1=lazo(padres[n.id],'Antes hay que hacer'), l2=lazo(abre[n.id],'Y luego se abre');
+        if(l1||l2) H.push('<div class="ix-lazos">'+l1+l2+'</div>');
+        H.push('<div class="ix-lazos"><button class="ix-arbolito" onclick="ER6.arbol(&quot;'+
+               escH(n.id)+'&quot;)">🗺️ ver esta rama dibujada</button></div>');
+        H.push('</div></details>');
+      });
+      H.push('</section>');
+    });
+    cont.innerHTML=H.join('')||'<p class="ix-vacio">No hay nada que ensenar aqui.</p>';
+    const b=document.getElementById('buscar');
+    filtrarIndice(b?b.value:'');
+  }
+
+  /* El buscador y el filtro de zona actúan sobre el índice escondiendo filas: es instantáneo y
+     no hay que volver a pintar nada. Y al buscar se abren solas las que casan, que si no hay
+     que ir pulsando una por una para ver dónde estaba la palabra. */
+  function filtrarIndice(q){
+    const cont=document.getElementById('indice'); if(!cont) return;
+    const t=sinTildes((q||'').trim()), z=ER6.zonaActual||'';
+    let vistos=0;
+    cont.querySelectorAll('.ix-zona').forEach(sec=>{
+      const suya = !z || sec.dataset.zona===z;
+      let n=0;
+      sec.querySelectorAll('.ix-saga').forEach(d=>{
+        const ok = suya && (t.length<2 || (d.dataset.t||'').includes(t));
+        d.style.display = ok?'':'none';
+        if(ok){ n++; if(t.length>=2) d.open=true; }
+      });
+      sec.style.display = n?'':'none';
+      vistos+=n;
+    });
+    const v=cont.querySelector('.ix-vacio-busca');
+    if(v) v.remove();
+    if(!vistos){
+      const p=document.createElement('p');
+      p.className='ix-vacio ix-vacio-busca';
+      p.textContent='Nada con eso. Prueba con menos letras, o con el nombre del NPC.';
+      cont.appendChild(p);
+    }
+  }
+
   window.ER6={
+    /* 📑 CAMBIAR DE VISTA. El índice es lo que se ve al entrar; el árbol es para mirar UNA
+       rama, que es el tamaño al que un dibujo dice algo. */
+    vista:function(cual){
+      const ix=document.getElementById('indice'), el=document.getElementById('cy'),
+            bt=document.getElementById('btnVista'), hi=document.getElementById('hint');
+      const aArbol = cual ? (cual==='arbol') : (el.style.display==='none');
+      el.style.display = aArbol?'':'none';
+      ix.style.display = aArbol?'none':'';
+      document.body.classList.toggle('en-indice', !aArbol);
+      if(bt) bt.textContent = aArbol?'📑 Índice':'🗺️ Árbol';
+      if(hi) hi.innerHTML = aArbol
+        ? 'Arrastra para mover · rueda para zoom · clic en un nodo para ver sus pasos'
+        : 'Pulsa una saga para desplegar sus misiones · busca arriba o con Ctrl+F · «Ver el árbol» dibuja la rama';
+      if(aArbol){ cy.resize(); repartirSiToca(); }
+    },
+    /* Del índice al árbol, ya centrado en esa saga. */
+    arbol:function(id){ ER6.vista('arbol'); setTimeout(()=>ER6.ir(id), 80); },
+    /* De una fila del índice a otra: los enlaces de «antes hay que hacer» y «y luego se abre». */
+    saltar:function(id){
+      const d=document.getElementById('ix-'+id); if(!d) return;
+      if(ER6.zonaActual){
+        const sec=d.closest('.ix-zona');
+        if(sec && sec.dataset.zona!==ER6.zonaActual) ER6.zona(sec.dataset.zona||'');
+      }
+      d.open=true; d.scrollIntoView({behavior:'smooth', block:'center'});
+      d.classList.add('destacada'); setTimeout(()=>d.classList.remove('destacada'), 1600);
+    },
+
     fit:()=>cy.fit(undefined,50),
     /* 🗺️ PARTIR EL MAPA POR ZONAS (2026-09-05). Encargo del usuario: «pártelo por zonas».
        119 nodos y 21 niveles no se leen de una tacada; por zonas cada vista queda en 1-65.
@@ -6534,6 +6776,9 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
         cy.edges().forEach(e=>e.style('display',
           (vis.contains(e.source()) && vis.contains(e.target())) ? 'element' : 'none'));
       });
+      filtrarIndice(document.getElementById('buscar') ?
+                    document.getElementById('buscar').value : '');
+      if(document.getElementById('cy').style.display==='none') return;   // 📑 en indice no hay nada que repartir
       try{ colocar(); }catch(err){ console.warn('[mapa] reparto por zona', err); }
       cy.fit(cy.elements(':visible'), 50);
     },
@@ -6619,6 +6864,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
       if(bz) bz.style.display = (k==='reino') ? '' : 'none';
       if(k!=='reino' && ER6.zonaActual) ER6.zonaActual='';
       if(k==='reino' && ER6.zonaActual){ setTimeout(()=>ER6.zona(ER6.zonaActual),0); }
+      pintarIndice();   // 📑 el indice tambien cambia de dataset
       document.body.classList.toggle('sim-cultivos', k==='cultivos');
       document.body.classList.toggle('sim-pesca', k==='pesca');
       // La banda solo sale si esa rama la tiene Y el usuario no la ha cerrado ya.
@@ -6646,6 +6892,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
        estaba, pero entre 71 nodos no hay forma humana de dar con una concreta.
        Resalta las que casan, apaga el resto, y con Enter centra la primera. */
     find:function(q, centrar){
+      filtrarIndice(q);          // 📑 el indice, que es la vista de salida
       q=(q||'').trim().toLowerCase();
       cy.elements().removeClass('faded hl');
       if(q.length<2) return;
@@ -6683,6 +6930,8 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
   // crear el grafo, y entonces FAC todavía no existe (const, zona muerta) → la página se queda EN
   // BLANCO. Al final del todo está todo declarado y no hay nada que adivinar.
   datos();
+  pintarIndice();   // 📑 la vista de salida
+  document.body.classList.add('en-indice');
 
   /* 🔢 EL RECUENTO DE CADA ZONA, en el propio desplegable. Se saca del grafo, no de una
      lista a mano, asi que una mision nueva se cuenta sola en cuanto `zonas_mapa.py` le pone
