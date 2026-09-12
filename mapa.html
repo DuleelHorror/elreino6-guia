@@ -263,7 +263,7 @@ thead th{font-size:.74rem; text-transform:uppercase; letter-spacing:.07em; color
 </div>
 <div class="der">
 <a class="fuera" href="https://duleelhorror.github.io/elreino6-guia/inicio.html">⌂ Herramientas</a>
-<span class="sello" title="Cuando se genero esta pagina. Si no es de hoy, tu navegador te esta ensenando una copia vieja: Ctrl+F5.">12/09/2026 16:22</span>
+<span class="sello" title="Cuando se genero esta pagina. Si no es de hoy, tu navegador te esta ensenando una copia vieja: Ctrl+F5.">12/09/2026 23:34</span>
 <button class="tema" onclick="TEMA()" title="Cambiar tema">◐</button>
 </div></nav>
 <script>function TEMA(){var r=document.documentElement;r.dataset.theme=r.dataset.theme==='dark'?'light':'dark';try{localStorage.setItem('er6tema',r.dataset.theme)}catch(e){}}try{var t=localStorage.getItem('er6tema');if(t)document.documentElement.dataset.theme=t}catch(e){}</script>) y `build_web.py --auditar` la prohíbe por su nombre. Esto es otra cosa: no
@@ -277,6 +277,10 @@ thead th{font-size:.74rem; text-transform:uppercase; letter-spacing:.07em; color
   /* La leyenda va por FORMA, no por color: el color ya significa otra cosa (la facción).
      Cada figurita es la misma que se dibuja en el grafo. */
   .sw.circ{border-radius:50%;border-style:double;border-width:3px}
+  /* 🛣️ la banda de zona y el puente entre bandas (2026-09-12) */
+  .sw.banda{border-style:dashed;background:var(--acento-suave);opacity:.75}
+  .sw.puente{border:none;border-radius:0;height:0;width:16px;
+    border-top:2px dashed var(--acento);align-self:center}
   .sw.hex{border:none;background:var(--alerta);border-radius:0;
     clip-path:polygon(25% 0,75% 0,100% 50%,75% 100%,25% 100%,0 50%)}
   .sw.tri{border:none;border-radius:0;clip-path:polygon(50% 0,100% 100%,0 100%);
@@ -521,7 +525,7 @@ thead th{font-size:.74rem; text-transform:uppercase; letter-spacing:.07em; color
 </div>
 <div class="der">
 <a class="fuera" href="https://duleelhorror.github.io/elreino6-guia/inicio.html">⌂ Herramientas</a>
-<span class="sello" title="Cuando se genero esta pagina. Si no es de hoy, tu navegador te esta ensenando una copia vieja: Ctrl+F5.">12/09/2026 16:22</span>
+<span class="sello" title="Cuando se genero esta pagina. Si no es de hoy, tu navegador te esta ensenando una copia vieja: Ctrl+F5.">12/09/2026 23:34</span>
 <button class="tema" onclick="TEMA()" title="Cambiar tema">◐</button>
 </div></nav>
 <script>function TEMA(){var r=document.documentElement;r.dataset.theme=r.dataset.theme==='dark'?'light':'dark';try{localStorage.setItem('er6tema',r.dataset.theme)}catch(e){}}try{var t=localStorage.getItem('er6tema');if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
@@ -535,6 +539,8 @@ thead th{font-size:.74rem; text-transform:uppercase; letter-spacing:.07em; color
     <span class="lg"><span class="sw noche"></span><b>Solo de noche</b></span>
     <span class="lg"><span class="sw mundo"></span><b>Abre un mundo</b></span>
     <span class="lg"><span class="sw key"></span>Desbloquea algo</span>
+    <span class="lg"><span class="sw banda"></span><b>Cada caja es una zona</b></span>
+    <span class="lg"><span class="sw puente"></span>Salto de zona <i>(pasa el ratón)</i></span>
   </div>
   <div class="tb-r">
     <span class="tabs">
@@ -710,7 +716,7 @@ thead th{font-size:.74rem; text-transform:uppercase; letter-spacing:.07em; color
 
 <div id="cy"></div>
 <aside class="stats" id="stats"></aside>
-<div class="hint">Arrastra para mover · rueda para zoom · clic en un nodo para ver sus pasos</div>
+<div class="hint">Cada caja es una <b>zona</b> y dentro se lee de izquierda a derecha · las rayas finas saltan de una zona a otra y <b>se encienden al pasar el ratón</b> · clic en una misión para ver sus pasos</div>
 
 <aside class="panel" id="panel">
   <button class="x" onclick="ER6.close()">✕</button>
@@ -6139,6 +6145,26 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
      📌 Los 9 cruces son del GRAFO, no del dibujo: hay 6 misiones con DOS requisitos y un par
      de nudos que reparten a media docena de ramas anchas. Eso tiene que cruzarse en alguna
      parte. Lo que hace legible el mapa no es quitarlos: es el resaltado al pasar el ratón. */
+  /* 🛣️🔴 LO DE ARRIBA ES HISTORIA DEL MAPA DE UNA SOLA PIEZA (hasta el 2026-09-12). Desde
+     que va POR BANDAS, `rankdir` de aquí solo manda en las pestañas simuladas: dentro de cada
+     banda se reparte de izquierda a derecha (§CARRIL_DIR). Lo que sigue valiendo entero es el
+     método —medir sobre la página, nunca sobre un modelo de cajas— y lo que se midió el día
+     del cambio, que es esto:
+
+        esquema                        cruces  pisan  lienzo         cabe en 1440x900
+        una pieza, TB (lo de antes)       9      0    6249 x 6721    NO (pedía 0,13 y el
+                                                                     tope de zoom era 0,25)
+        una pieza, LR                     9      3    9574 x 3513    no se probó más
+        BANDAS + network-simplex          3      2    6812 x 4427    SÍ, entero
+        BANDAS + longest-path             5      0    6562 x 5889    sí, un 33 % más pequeño
+        BANDAS + align UL/UR/DL/DR      3-5    3-5    hasta 5426     peor en las dos cosas
+
+     ✅ Se eligió **network-simplex**, y con ello se aceptan **2 flechas por encima de una
+     misión** (`carpincho>barco` sobre `lolo_ap`, y `bolsa>pecio` sobre `nico` y `torre`).
+     🔑 No es dejadez, es la cuenta: con `longest-path` el mapa crece un 33 % de alto y se ve
+     un 25 % más pequeño al encajarlo — y el encargo de hoy era justo poder verlo. Dos flechas
+     rozando tres misiones en una banda por lo demás limpia se sigue leyendo; un mapa que no
+     cabe, no. Si algún día sobra sitio, se cambia el `ranker` y se vuelve a medir. */
   const REPARTO={rankdir:'TB', nodesep:38, edgesep:24, ranksep:140, marginx:40, marginy:40,
     ranker:'network-simplex'};
   // el mismo reparto, en el formato del plugin — es el PLAN B si dagre suelto fallara
@@ -6168,8 +6194,46 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
       if(d.mundo) d.label=d.label+'\n🌍 Abre: '+d.mundo;
       els.push({data:d});
     });
+    /* 🛣️ LOS CARRILES (2026-09-12) — encargo del usuario: «puedes cambiar el tipo de esquema,
+       para que sea mas claro la estructura? pq hay tanto lio de lineas que pasan por encima de
+       otras que ya no se entiende nada».
+       🔑 Y el lío NO eran los cruces: medido con `audit_mapa_cruces.py`, el mapa tenía 9 cruces
+       y CERO flechas por encima de una misión. Lo que no se entendía era el TAMAÑO — 128
+       misiones en un lienzo de 6.249 × 6.721, o sea todo a un séptimo al encajarlo.
+       📐 Lo que sí lo arregla es agrupar: **el 80 % de las flechas (209 de 259) se queda dentro
+       de su zona**, así que una banda por zona deja casi todas las líneas dentro de su banda y
+       las 50 que saltan se leen como lo que son, puentes entre barrios.
+       🧱 Se hace con nodos COMPUESTOS de cytoscape (un padre por zona): la caja se ajusta sola
+       a lo que tenga dentro, así que no hay ninguna geometría que mantener a mano.
+       ⚠️ Solo para el dataset que trae `zona` — las pestañas simuladas (cultivos, pesca, forja)
+       no la tienen y se quedan exactamente como estaban. */
+    const zonas=[];
+    nodos.forEach(n=>{ if(n.zona && zonas.indexOf(n.zona)<0) zonas.push(n.zona); });
+    if(zonas.length>1){
+      zonas.sort((x,y)=>ORDEN_CARRIL.indexOf(x)-ORDEN_CARRIL.indexOf(y));
+      /* 🧷 El id se arma en una variable y NO en linea (`id:'carril_'+z`): `web/mapa_auto.py`
+         lee este fichero con una expresion regular y aquel literal le parecia un nodo llamado
+         «carril_» — lo cantaba como nodo suelto en cada pasada. El auditor tiene razon en
+         mirar, asi que lo que se cambia es esto. */
+      zonas.forEach(z=>{ const idc='carril_'+z;
+        els.push({data:{id:idc, label:nombreZona(z), carril:1},
+                  classes:'carril', selectable:false, grabbable:false, pannable:true}); });
+      els.forEach(el=>{ if(el.data.zona) el.data.parent='carril_'+el.data.zona; });
+    }
     aristas.forEach(e=>els.push({data:{id:e[0]+'>'+e[1], source:e[0], target:e[1], kind:e[2]||'main'}}));
     return els;
+  }
+
+  /* El orden de las bandas, de arriba abajo. Primero el pueblo —que es donde empieza todo y
+     donde está la mitad del árbol—, y después lo que cuelga de él por cercanía. Una zona que
+     no esté aquí se va al final, que es mejor que desaparecer. */
+  const ORDEN_CARRIL=['reino','ayuntamiento','afueras','villavillez','valdemojon','puertonegro',
+                      'tierrahostil','varios'];
+  /* El nombre de la banda sale del MISMO desplegable de zonas, para que no haya dos listas
+     diciendo lo mismo: el día que se renombre una zona, se renombra en un sitio. */
+  function nombreZona(z){
+    const o=document.querySelector('#zonaSel option[value="'+z+'"]');
+    return (o?o.textContent:z).trim().toUpperCase();
   }
   const VISTAS = {reino:{n:N, e:E}, cultivos:{n:NC, e:EC}, pesca:{n:NP, e:EP}, forja:{n:NF, e:EF}};
   /* Bandas de aviso que el usuario ya ha cerrado. Se recuerda mientras dure la visita: si
@@ -6193,6 +6257,29 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
         'label':'data(label)','color':ink,'font-size':'12px','font-weight':600,'text-wrap':'wrap','text-max-width':'155px',
         'text-valign':'center','text-halign':'center','width':'label','height':'label','padding':'12px',
         'shape':'round-rectangle','font-family':'system-ui,sans-serif'}},
+      /* 🛣️ EL CARRIL: la caja de la zona. Va DETRÁS de todo (`z-compound-depth:bottom`), sin
+         eventos —no se puede pulsar ni arrastrar, o taparía a sus misiones— y con el rótulo
+         arriba a la izquierda, como el nombre de un barrio en un plano. */
+      {selector:'node.carril',style:{'shape':'round-rectangle','background-color':chip,
+        'background-opacity':.30,'border-width':2,'border-color':line,'border-style':'dashed',
+        'label':'data(label)','text-valign':'top','text-halign':'center','text-margin-y':-10,
+        'font-size':'26px','font-weight':800,'color':inkSoft,'text-max-width':'900px',
+        'padding':'30px','events':'no','z-compound-depth':'bottom'}},
+      /* 🌉 La flecha que SALTA de una banda a otra: más gruesa y en el color de acento. Son 50
+         de 259 y son las que de verdad cuentan algo — que una rama de aquí abre otra de allá. */
+      /* 🌉 La flecha que SALTA de banda va en TAXI: baja en vertical, gira una vez y entra de
+         lado. Diagonales cruzando cuatro bandas es lo que convertia el mapa en una tela de
+         arana; en angulo recto el ojo la sigue sola. Son 50 de 259 y son las que cuentan algo:
+         que una rama de aqui abre otra de alla. */
+      {selector:'edge.salto',style:{'curve-style':'taxi','taxi-direction':'downward',
+        'taxi-turn':40,'taxi-turn-min-distance':12,'width':1.5,'line-color':arc,
+        'target-arrow-color':arc,'line-style':'dashed','opacity':.22}},
+      /* 🔎 Y EN VOZ BAJA HASTA QUE PREGUNTES. Son 50 y cruzan bandas enteras: a plena tinta
+         vuelven a ser la tela de araña que habia antes. Asi se ven —se sabe que la rama
+         continua en otro barrio— pero no gritan; y en cuanto pasas el raton por una mision,
+         SUS puentes se encienden enteros con el resto de su cadena. */
+      {selector:'edge.salto.camino',style:{'opacity':1,'width':4,'line-style':'solid','z-index':16}},
+      {selector:'edge.salto.hl',style:{'opacity':1,'width':3.5,'line-style':'solid','z-index':16}},
       {selector:'node[faction="sci"]',style:{'border-color':sci}},
       {selector:'node[faction="folk"]',style:{'border-color':folk}},
       {selector:'node[faction="gold"]',style:{'border-color':gold}},
@@ -6280,7 +6367,11 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
   const cy = cytoscape({
     container:document.getElementById('cy'), elements, style:style(),
     layout:LAY,   // <- PLAN B: si colocar() petara, el mapa ya queda repartido igualmente
-    wheelSensitivity:.28, minZoom:.25, maxZoom:2.4
+    /* 🔎 `minZoom` A .08 Y NO .25 (2026-09-12). Con .25 el mapa NO CABIA EN LA PANTALLA:
+       `fit()` pedia 0.203 para verlo entero, el tope lo dejaba en 0.25 y la pagina abria
+       SIEMPRE recortada —arriba y a la derecha— sin decir nada. O sea que una parte del
+       «no se entiende nada» era literal: no se veia entero ni queriendo. */
+    wheelSensitivity:.28, minZoom:.08, maxZoom:2.4
   });
 
   /* ===== EL ORGANIGRAMA (2026-08-10) =====
@@ -6294,38 +6385,117 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
      ⚠️ Honestamente: dagre MINIMIZA los cruces entre flechas, no los elimina — dos ramas que se
      cruzan de verdad tienen que cruzarse en alguna parte. Lo que sí se acaba es que una flecha
      pase por ENCIMA de una misión, que era lo que hacía ilegible el mapa. */
+  /* ⚙️ Dentro de cada banda se reparte de IZQUIERDA A DERECHA: una banda es ancha y baja, y
+     una cadena de misiones leída en horizontal es lo que se parece a una línea de tiempo.
+     El hueco entre bandas es generoso a propósito — ahí van el rótulo de la zona siguiente y
+     las flechas que saltan de una a otra. */
+  const CARRIL_DIR='LR', CARRIL_HUECO=170;
+  /* El ancho al que se va a la línea siguiente dentro de una banda, y el aire entre trozos.
+     3.400 no es un número redondo por gusto: es lo que hace que la banda del Ayuntamiento y la
+     de las Afueras quepan en dos filas en vez de en una cinta larguísima. Un trozo más ancho
+     que esto —la cadena principal del Reino lo es— se queda con su fila para él solo. */
+  const ANCHO_BANDA=3400, HUECO_TROZO=120;
+
   function colocar(){
     const dagre=window.dagre;
-    const g=new dagre.graphlib.Graph({multigraph:true});
-    g.setGraph(Object.assign({},REPARTO));
-    g.setDefaultEdgeLabel(()=>({}));
-    cy.nodes().forEach(n=>{
-      // 🔴 boundingBox() y NO width()/height(): mide el nodo CON su etiqueta. Es lo que hace que
-      // el texto que va debajo de los triángulos de clase tenga su hueco reservado y no se le
-      // eche encima la fila siguiente.
-      const bb=n.boundingBox();
-      g.setNode(n.id(),{width:bb.w+16, height:bb.h+16});
+    // los carriles no se reparten: son cajas que se ajustan solas a lo que tienen dentro
+    const vivos = cy.nodes().filter(n=>!n.data('carril') && n.style('display')!=='none');
+    if(!vivos.length) return;
+
+    /* 🛣️ EN BANDAS si el dataset trae zonas y hay más de una a la vista; si no —las pestañas
+       simuladas, o una zona filtrada a solas— se reparte todo junto, que es lo de siempre. */
+    const bandas=[]; const zonasVistas=[];
+    vivos.forEach(n=>{const z=n.data('zona')||''; if(zonasVistas.indexOf(z)<0) zonasVistas.push(z);});
+    const enBandas = zonasVistas.length>1 && zonasVistas.every(z=>z);
+    if(enBandas){
+      zonasVistas.sort((x,y)=>{
+        const a=ORDEN_CARRIL.indexOf(x), b=ORDEN_CARRIL.indexOf(y);
+        return (a<0?99:a)-(b<0?99:b);
+      });
+      zonasVistas.forEach(z=>bandas.push({z:z, nodos:vivos.filter(n=>n.data('zona')===z)}));
+    }else{
+      bandas.push({z:null, nodos:vivos});
+    }
+
+    const pos=new Map(), codos=new Map();
+    let yCursor=0;
+
+    bandas.forEach(b=>{
+      const dentro=new Set(b.nodos.map(n=>n.id()));
+      const suyas=cy.edges().filter(e=>e.style('display')!=='none'
+        && dentro.has(e.source().id()) && dentro.has(e.target().id()));
+
+      /* 🧩 POR TROZOS SUELTOS, Y NO DE UNA (2026-09-12). La primera versión repartía la banda
+         entera con dagre y las zonas pequeñas salían en COLUMNA: Villa Villez son 7 misiones
+         y ninguna enlaza con otra de su zona —sus flechas salen todas fuera—, así que dagre
+         las apilaba una debajo de otra y la banda medía 238 de ancho por 856 de alto. Ocho
+         bandas así estiraban el mapa hasta 7.058 de alto, o sea peor que antes de empezar.
+         ✅ Se reparte cada TROZO CONECTADO por su cuenta y luego se colocan los trozos como
+         las palabras de un párrafo: uno detrás de otro y salto de línea al llegar al ancho.
+         Villa Villez pasa a ser una fila de siete y la banda mide 150 de alto. */
+      const padre=new Map(); const raiz=x=>{while(padre.get(x)!==x) x=padre.get(x); return x;};
+      b.nodos.forEach(n=>padre.set(n.id(), n.id()));
+      suyas.forEach(e=>{const a=raiz(e.source().id()), c=raiz(e.target().id()); if(a!==c) padre.set(a,c);});
+      const trozos=new Map();
+      b.nodos.forEach(n=>{const r=raiz(n.id()); if(!trozos.has(r)) trozos.set(r,[]); trozos.get(r).push(n);});
+
+      const cajas=[];
+      trozos.forEach(grupo=>{
+        const ids=new Set(grupo.map(n=>n.id()));
+        const g=new dagre.graphlib.Graph({multigraph:true});
+        g.setGraph(Object.assign({},REPARTO,{rankdir:enBandas?CARRIL_DIR:REPARTO.rankdir}));
+        g.setDefaultEdgeLabel(()=>({}));
+        grupo.forEach(n=>{
+          // 🔴 boundingBox() y NO width()/height(): mide el nodo CON su etiqueta, que es lo que
+          // reserva el hueco del texto que va debajo de los triángulos de clase.
+          const bb=n.boundingBox(); g.setNode(n.id(),{width:bb.w+16, height:bb.h+16});
+        });
+        const aristas=suyas.filter(e=>ids.has(e.source().id())&&ids.has(e.target().id()));
+        aristas.forEach(e=>g.setEdge(e.source().id(), e.target().id(), {}, e.id()));
+        dagre.layout(g);
+        let x1=Infinity,y1=Infinity,x2=-Infinity,y2=-Infinity;
+        grupo.forEach(n=>{const d=g.node(n.id()); if(!d) return;
+          x1=Math.min(x1,d.x-d.width/2); x2=Math.max(x2,d.x+d.width/2);
+          y1=Math.min(y1,d.y-d.height/2); y2=Math.max(y2,d.y+d.height/2);});
+        if(isFinite(x1)) cajas.push({g:g, grupo:grupo, aristas:aristas, x1:x1, y1:y1, w:x2-x1, h:y2-y1});
+      });
+
+      // los trozos gordos primero: así los pequeños rellenan los huecos de la última fila
+      cajas.sort((A,B)=>B.h-A.h || B.w-A.w);
+      let cx=0, cy2=yCursor, filaAlto=0, altoBanda=0;
+      cajas.forEach(c=>{
+        if(cx>0 && cx+c.w>ANCHO_BANDA){ cx=0; cy2+=filaAlto+HUECO_TROZO; filaAlto=0; }
+        const dx=cx-c.x1, dy=cy2-c.y1;
+        c.grupo.forEach(n=>{const d=c.g.node(n.id()); if(d) pos.set(n.id(),{x:d.x+dx, y:d.y+dy});});
+        c.aristas.forEach(e=>{
+          const d=c.g.edge(e.source().id(), e.target().id(), e.id());
+          codos.set(e.id(), (((d&&d.points)||[]).map(P=>({x:P.x+dx, y:P.y+dy}))));
+        });
+        cx += c.w+HUECO_TROZO; filaAlto=Math.max(filaAlto,c.h);
+        altoBanda=Math.max(altoBanda, (cy2-yCursor)+c.h);
+      });
+      yCursor += altoBanda + CARRIL_HUECO;
     });
-    cy.edges().forEach(e=>g.setEdge(e.source().id(), e.target().id(), {}, e.id()));
-    dagre.layout(g);
 
     cy.batch(()=>{
-      cy.nodes().forEach(n=>{const d=g.node(n.id()); if(d) n.position({x:d.x, y:d.y});});
+      cy.nodes().forEach(n=>{const p=pos.get(n.id()); if(p) n.position(p);});
       cy.edges().forEach(e=>{
-        const d=g.edge(e.source().id(), e.target().id(), e.id());
         const S=e.source().position(), T=e.target().position();
         const vx=T.x-S.x, vy=T.y-S.y, L=Math.hypot(vx,vy)||1;
         const ws=[], ds=[];
-        (((d&&d.points)||[]).slice(1,-1)).forEach(P=>{
+        ((codos.get(e.id())||[]).slice(1,-1)).forEach(P=>{
           // de punto absoluto a como lo describe cytoscape: cuánto avanza por la recta
           // origen→destino (w) y cuánto se separa de ella (s, con signo)
           const ax=P.x-S.x, ay=P.y-S.y;
           const w=(ax*vx+ay*vy)/(L*L), s=(ay*vx-ax*vy)/L;
           if(w>0.02&&w<0.98&&Math.abs(s)>1){ ws.push(w.toFixed(4)); ds.push(Math.round(s)); }
         });
-        // sin codos = recta (el estilo `segments` EXIGE al menos un punto)
+        // sin codos = recta (el estilo `segments` EXIGE al menos un punto). Es lo que les pasa
+        // a las flechas que SALTAN de banda: van derechas de una zona a otra, y se marcan.
         e.style({'segment-weights': ws.length?ws.join(' '):'0.5',
                  'segment-distances': ds.length?ds.join(' '):'0'});
+        const zo=e.source().data('zona'), zd=e.target().data('zona');
+        e.toggleClass('salto', !!(zo&&zd&&zo!==zd&&enBandas));
       });
     });
   }
@@ -6398,7 +6568,8 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
   function close(){panel.classList.remove('on'); cy.elements().removeClass('faded hl atenuado camino'); cy.$(':selected').unselect();}
   function focus(n){
     const rel=n.predecessors().union(n).union(n.outgoers());
-    cy.elements().addClass('faded'); rel.removeClass('faded'); rel.addClass('hl'); n.removeClass('hl');
+    // 🛣️ los carriles se quedan como están: apagar la banda es apagar el plano del barrio
+    cy.elements().not('.carril').addClass('faded'); rel.removeClass('faded'); rel.addClass('hl'); n.removeClass('hl');
   }
   cy.on('tap','node',e=>{show(e.target.data()); focus(e.target);});
   cy.on('tap',e=>{if(e.target===cy) close();});
@@ -6430,7 +6601,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
        Asi que sube por los requisitos hasta la raiz, pero solo baja UN escalon. Es
        exactamente lo que ya hacia el clic (`focus`), y ahora los dos coinciden. */
     const cadena=n.predecessors().union(n.outgoers()).union(n);
-    cy.elements().addClass('atenuado');
+    cy.elements().not('.carril').addClass('atenuado');
     cadena.removeClass('atenuado').addClass('camino');
     sobre=n;
   });
@@ -6523,9 +6694,14 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__4__;
       const dentro = z ? cy.nodes().filter(n=>n.data('zona')===z) : cy.nodes();
       const vis = z ? dentro.union(dentro.neighborhood('node')) : cy.nodes();
       cy.batch(()=>{
-        cy.nodes().forEach(n=>n.style('display', vis.contains(n)?'element':'none'));
+        cy.nodes().not('.carril').forEach(n=>n.style('display', vis.contains(n)?'element':'none'));
+        /* 🛣️ El carril no se filtra por su zona: se enseña si le queda ALGUNA misión dentro.
+           Si se filtrara por zona, al mirar una sola zona desaparecerían las cajas de los
+           vecinos de fuera y sus misiones saldrían flotando sin banda, que es peor que antes. */
+        cy.nodes('.carril').forEach(p=>p.style('display',
+          p.children().filter(c=>vis.contains(c)).length ? 'element':'none'));
         cy.nodes().removeClass('fuera');
-        if(z) vis.difference(dentro).addClass('fuera');
+        if(z) vis.difference(dentro).not('.carril').addClass('fuera');
         // una flecha solo se pinta si se ven SUS DOS puntas: si no, sale una linea al vacio
         cy.edges().forEach(e=>e.style('display',
           (vis.contains(e.source()) && vis.contains(e.target())) ? 'element' : 'none'));
